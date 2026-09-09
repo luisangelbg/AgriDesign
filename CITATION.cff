@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "AgriDesign: a browser-based platform for the design and analysis of agricultural experiments"
+abstract: >-
+  AgriDesign is a self-contained web application for planning and analysing agricultural
+  experiments entirely in the browser, with no installation and no server-side computation.
+  It covers data import with tidy-format checks, descriptive statistics, verification of the
+  ANOVA assumptions with transformations and non-parametric alternatives, the classical
+  experimental designs (CRD, RCBD, Latin square, incomplete blocks, augmented, factorials,
+  split-plot, strip-plot, split-split-plot, nested, ANCOVA) with their error strata and eleven
+  mean-separation procedures, editable publication-quality figures, an automatic report, and a
+  generator of randomised field layouts, field books and replicate/power calculations.
+type: software
+authors:
+  - given-names: "Luis Ángel"
+    family-names: "Barrera-Guzmán"
+    email: lbarrerag@chapingo.mx
+    orcid: "https://orcid.org/0000-0001-8057-2583"
+version: 1.0.0
+date-released: "2026-09-09"
+license: GPL-3.0
+repository-code: "https://github.com/luisangelbg/AgriDesign"
+url: "https://luisangelbg.github.io/AgriDesign/"
+keywords:
+  - experimental design
+  - analysis of variance
+  - agricultural field experiments
+  - mean separation
+  - randomisation
+  - JavaScript
+  - browser-based

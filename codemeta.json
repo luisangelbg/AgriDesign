@@ -1,0 +1,17 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "name": "AgriDesign",
+  "description": "Browser-based platform for the design and analysis of agricultural experiments: data checks, descriptive statistics, ANOVA assumptions, classical experimental designs with mean-separation tests, editable figures, reports and randomised field layouts. No installation, no internet.",
+  "version": "1.0.0",
+  "dateCreated": "2026-09-07",
+  "datePublished": "2026-09-09",
+  "license": "https://spdx.org/licenses/GPL-3.0",
+  "codeRepository": "https://github.com/luisangelbg/AgriDesign",
+  "url": "https://luisangelbg.github.io/AgriDesign/",
+  "programmingLanguage": "JavaScript",
+  "runtimePlatform": "Web browser",
+  "operatingSystem": "Any",
+  "keywords": ["experimental design", "ANOVA", "agricultural experiments", "mean separation", "randomisation"],
+  "author": [{ "@type": "Person", "givenName": "Luis Ángel", "familyName": "Barrera-Guzmán", "email": "lbarrerag@chapingo.mx", "@id": "https://orcid.org/0000-0001-8057-2583" }]
+}

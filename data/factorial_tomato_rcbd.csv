@@ -1,0 +1,28 @@
+Block,Variety,Fertilizer,Yield_kg_plant,Height_cm
+1,Rio Grande,F0,2.85,118
+1,Rio Grande,F1,3.62,131
+1,Rio Grande,F2,3.91,136
+1,Saladette,F0,3.12,124
+1,Saladette,F1,3.98,139
+1,Saladette,F2,4.35,145
+1,Cherry,F0,1.94,142
+1,Cherry,F1,2.31,151
+1,Cherry,F2,2.42,155
+2,Rio Grande,F0,2.71,115
+2,Rio Grande,F1,3.48,128
+2,Rio Grande,F2,3.77,133
+2,Saladette,F0,2.98,121
+2,Saladette,F1,3.81,135
+2,Saladette,F2,4.19,141
+2,Cherry,F0,1.88,139
+2,Cherry,F1,2.19,148
+2,Cherry,F2,2.36,152
+3,Rio Grande,F0,2.93,120
+3,Rio Grande,F1,3.71,133
+3,Rio Grande,F2,4.02,138
+3,Saladette,F0,3.21,126
+3,Saladette,F1,4.08,141
+3,Saladette,F2,4.47,147
+3,Cherry,F0,2.02,144
+3,Cherry,F1,2.38,153
+3,Cherry,F2,2.51,158

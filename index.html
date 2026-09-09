@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgriDesign — Design and analysis of agricultural experiments</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="on-home">
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand" id="brand" title="Home"><span id="brandLogo"></span>AgriDesign <span class="brand-sub">· experimental design lab</span></div>
+    <nav class="stepper" id="stepper">
+      <button class="step-btn active" data-step="1"><span class="step-num">1</span> Home</button>
+      <button class="step-btn" data-step="2"><span class="step-num">2</span> Data</button>
+      <button class="step-btn" data-step="3" disabled><span class="step-num">3</span> Descriptive</button>
+      <button class="step-btn" data-step="4" disabled><span class="step-num">4</span> Assumptions</button>
+      <button class="step-btn" data-step="5" disabled><span class="step-num">5</span> Designs &amp; ANOVA</button>
+      <button class="step-btn" data-step="6" disabled><span class="step-num">6</span> Means &amp; graphics</button>
+      <button class="step-btn" data-step="7" disabled><span class="step-num">7</span> Report</button>
+      <button class="step-btn" data-step="8"><span class="step-num">8</span> Design generator</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ==================== BLOCK 1 · HOME ==================== -->
+<section class="step-panel active" id="panel-1">
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="eyebrow">Experimental design for agricultural research</div>
+        <h1>Design and analyse <span class="accent">agricultural experiments</span> without writing code</h1>
+        <p class="lead">From the field book to the publication figure: upload your data, let the platform recognise the
+          <b>design</b>, check the <b>ANOVA assumptions</b>, run the right analysis and mean-separation test,
+          and export <b>journal-quality figures</b>. No R, SAS or Python required.</p>
+        <div class="hero-cta">
+          <button class="btn btn-primary btn-lg" id="startBtn">Start with my data →</button>
+          <button class="btn btn-secondary btn-lg" id="exampleBtn">Try a worked example</button>
+        </div>
+        <div class="badge-row">
+          <span class="badge ok">Runs entirely in your browser</span>
+          <span class="badge ok">Your data never leave your computer</span>
+          <span class="badge ok">Figures up to 900 dpi · PNG, TIFF, SVG</span>
+          <span class="badge ok">Free for teaching and research</span>
+        </div>
+      </div>
+      <div class="hero-art" id="heroArt"></div>
+    </div>
+  </div>
+
+  <h2 class="section-title">How it works</h2>
+  <p class="section-sub">A guided workflow: every step explains the theory you need, checks your data and recommends what to do next.</p>
+  <div class="workflow">
+    <div class="wf-step"><div class="wf-n">STEP 1</div><div class="wf-t">Load data</div><div class="wf-d">xlsx, csv, json… one row per plot</div></div>
+    <div class="wf-step"><div class="wf-n">STEP 2</div><div class="wf-t">Assign roles</div><div class="wf-d">response, factors, blocks</div></div>
+    <div class="wf-step"><div class="wf-n">STEP 3</div><div class="wf-t">Explore</div><div class="wf-d">descriptive statistics &amp; plots</div></div>
+    <div class="wf-step"><div class="wf-n">STEP 4</div><div class="wf-t">Check assumptions</div><div class="wf-d">normality, homogeneity, additivity</div></div>
+    <div class="wf-step"><div class="wf-n">STEP 5</div><div class="wf-t">Analyse</div><div class="wf-d">ANOVA for your design + mean tests</div></div>
+    <div class="wf-step"><div class="wf-n">STEP 6</div><div class="wf-t">Publish</div><div class="wf-d">editable figures, tables, report</div></div>
+  </div>
+
+  <h2 class="section-title">What's inside</h2>
+  <p class="section-sub">Eight blocks, built in order. Click a card to jump to it.</p>
+  <div class="feature-grid" id="featureGrid"></div>
+
+  <h2 class="section-title">Experimental designs covered</h2>
+  <p class="section-sub">The platform recognises the structure of your data (factors, blocks, rows and columns) and offers the matching analysis. Colours are treatments; each rectangle is a plot.</p>
+  <div class="design-gallery" id="designGallery"></div>
+
+  <h2 class="section-title">Why AgriDesign</h2>
+  <div class="why-grid">
+    <div class="why"><div class="w-icon">🌽</div><h4>Built for agronomy</h4><p>Vocabulary, examples and checks follow field-trial practice: plots, blocks, replicates, CV, yield units.</p></div>
+    <div class="why"><div class="w-icon">🧭</div><h4>Guided, not just computed</h4><p>Every block explains the theory in plain language and tells you which test fits your data and why.</p></div>
+    <div class="why"><div class="w-icon">🔬</div><h4>Validated numerics</h4><p>Statistics computed in the browser and checked against R reference values. Exact <i>p</i>-values, studentized range, F and t distributions.</p></div>
+    <div class="why"><div class="w-icon">🎨</div><h4>Publication-ready figures</h4><p>Every plot is editable (colours, fonts, sizes, titles) and exports to PNG, TIFF, SVG, JPG and WEBP at up to 900 dpi with embedded resolution.</p></div>
+    <div class="why"><div class="w-icon">🔒</div><h4>Private and offline</h4><p>Nothing is uploaded. Works without internet, from a USB stick or a shared folder.</p></div>
+    <div class="why"><div class="w-icon">📚</div><h4>Complete toolbox</h4><p>Parametric and non-parametric ANOVA, all classical mean-separation tests, transformations, contrasts and covariance.</p></div>
+  </div>
+
+</section>
+
+<!-- ==================== BLOCK 2 · DATA ==================== -->
+<section class="step-panel" id="panel-2">
+
+  <div class="panel-title"><div class="pt-num">2</div><div><h2>Data: import, tidy check and variable roles</h2><p>Load the field book, verify that the table is well formed and tell the platform what each column means.</p></div></div>
+
+  <!-- ---------- THEORY ---------- -->
+  <div class="card theory-card">
+    <div class="card-head"><div><h2>Before you upload: what a good agricultural experiment needs</h2>
+      <p class="hint">Short, practical theory. Open the sections you need; the platform checks most of these points automatically once the data are loaded.</p></div></div>
+
+    <details class="acc" open>
+      <summary>1 · The three principles of experimental design (Fisher)</summary>
+      <div class="acc-body">
+        <p>R. A. Fisher, working at Rothamsted on agricultural field trials in the 1920s, established the three
+          principles that every valid experiment still relies on. They are the criteria the platform uses to judge your data.</p>
+        <div id="artReplication"></div>
+        <p><b>Replication.</b> Each treatment is applied to several independent experimental units (plots, pots, animals).
+          Replication is the <i>only</i> way to estimate the experimental error, and it increases precision: the standard
+          error of a treatment mean is <code>s/√r</code>. Measuring the same plot several times is <b>not</b> replication
+          (that is sub-sampling or pseudo-replication). Field trials typically use 3–6 replicates; 4 is the usual minimum.</p>
+        <div style="clear:both"></div>
+        <div id="artRandomization"></div>
+        <p><b>Randomisation.</b> Treatments are assigned to units by a chance mechanism (lottery, random numbers, software),
+          never by convenience. Randomisation protects against unknown biases (a fertile corner, the border of the field, the
+          order of harvest), makes the errors independent and justifies the F-test. Block 8 will generate randomised layouts for you.</p>
+        <div style="clear:both"></div>
+        <div id="artBlocking"></div>
+        <p><b>Local control (blocking).</b> Units are grouped so that those within a group are as alike as possible
+          (same soil, slope, moisture, planting date, harvest team). Every treatment then appears in every block, and the
+          block-to-block variation is removed from the error. Blocks should be laid out <i>across</i> the gradient of
+          fertility so that each block is homogeneous inside.</p>
+        <div style="clear:both"></div>
+        <div class="callout"><b>Other requirements you should be able to state</b>
+          A clearly written objective and hypotheses · the experimental unit (what receives the treatment) · the
+          observational unit (what is measured; may be smaller) · a control or check treatment · the response variables and their
+          units · the number of replicates justified by the expected CV · uniform management of everything that is not a treatment ·
+          border rows and guard plots to avoid interference between neighbours.</div>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary>2 · Vocabulary the platform uses</summary>
+      <div class="acc-body">
+        <table><thead><tr><th>Term</th><th>Meaning</th><th>Example</th></tr></thead><tbody>
+          <tr><td><b>Treatment</b></td><td>A condition whose effect you want to measure</td><td>0, 60, 120, 180 kg N/ha</td></tr>
+          <tr><td><b>Factor</b></td><td>A group of related treatments (its <i>levels</i>)</td><td>Factor "Nitrogen" with 4 levels</td></tr>
+          <tr><td><b>Factorial</b></td><td>Two or more factors studied together, all combinations</td><td>3 varieties × 3 fertiliser doses = 9 treatments</td></tr>
+          <tr><td><b>Experimental unit (plot)</b></td><td>The smallest unit that receives one treatment independently</td><td>A 5 × 4 m plot, a pot, a tree</td></tr>
+          <tr><td><b>Replicate</b></td><td>One complete set of all treatments (in blocked designs) or one unit per treatment</td><td>Block 1, Block 2…</td></tr>
+          <tr><td><b>Block</b></td><td>A group of homogeneous plots containing every treatment</td><td>A strip of land along the slope</td></tr>
+          <tr><td><b>Response variable</b></td><td>What is measured on each unit</td><td>Yield (t/ha), plant height (cm), severity (1–9)</td></tr>
+          <tr><td><b>Covariate</b></td><td>A numeric variable measured before the treatment acts, used to adjust the response</td><td>Initial plant stand, soil N</td></tr>
+          <tr><td><b>Experimental error</b></td><td>Variation among units treated alike; the yardstick against which treatment differences are judged</td><td>Estimated by the residual mean square</td></tr>
+          <tr><td><b>CV (%)</b></td><td>√MSE / grand mean × 100; a measure of trial precision</td><td>Yield trials: &lt; 15–20 % is acceptable</td></tr>
+        </tbody></table>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary>3 · How to arrange your table (one row per plot)</summary>
+      <div class="acc-body">
+        <p>The platform reads <b>tidy</b> (long-format) tables: <b>one row per experimental unit</b> and <b>one column per
+          variable</b>. The first row holds the column names. This is the layout used by R, SAS, SPSS and Excel pivot tables.</p>
+        <div class="good-bad">
+          <div class="good"><h5>✓ Correct</h5>
+            <table class="mini-table"><tr><th>Block</th><th>Nitrogen</th><th>Variety</th><th>Yield</th></tr>
+            <tr><td>1</td><td>0</td><td>A</td><td>4.6</td></tr><tr><td>1</td><td>60</td><td>A</td><td>6.2</td></tr>
+            <tr><td>1</td><td>0</td><td>B</td><td>5.1</td></tr><tr><td>2</td><td>0</td><td>A</td><td>3.9</td></tr><tr><td>…</td><td>…</td><td>…</td><td>…</td></tr></table>
+            <p style="margin:6px 0 0">Every value of Block, Nitrogen and Variety is repeated on each row. Each column has a single type.</p></div>
+          <div class="bad"><h5>✗ Avoid</h5>
+            <table class="mini-table"><tr><th></th><th>Block 1</th><th>Block 2</th><th>Block 3</th></tr>
+            <tr><td class="merged" rowspan="2">Nitrogen 0</td><td>4.6</td><td>3.9</td><td>4.3</td></tr><tr><td>5.1</td><td>4.4</td><td>4.8</td></tr>
+            <tr><td>Nitrogen 60</td><td>6.2</td><td>5.5</td><td>5.9</td></tr><tr><td><b>Mean</b></td><td>5.3</td><td>4.6</td><td>5.0</td></tr></table>
+            <p style="margin:6px 0 0">Blocks as columns, merged cells for the factor, two variables sharing a column, and a totals row.</p></div>
+        </div>
+        <ul>
+          <li><b>No merged cells.</b> Merged cells keep the value only in the first cell; the others become blanks. Fill every row.</li>
+          <li><b>No title rows, notes or totals</b> inside the table. Put them on another sheet.</li>
+          <li><b>Short headers</b> without spaces or special characters: <code>Yield_t_ha</code>, <code>Height_cm</code>, <code>Block</code>.</li>
+          <li><b>One decimal separator</b> (point or comma, not both) and no thousands separators or units inside the cells (<code>4.6</code>, not <code>4,6 t/ha</code>).</li>
+          <li><b>Missing plots</b>: leave the cell empty or write <code>NA</code>. Do not write 0 for a missing value.</li>
+          <li><b>Consistent level names</b>: <code>Control</code> and <code>control</code> and <code>Control </code> are three different treatments to a computer.</li>
+          <li><b>Wide tables</b> (treatments or blocks as columns) can be converted to long format with the reshape tool below.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary>4 · Types of variables and the role each column plays</summary>
+      <div class="acc-body">
+        <p>The platform detects whether each column is numeric or categorical and suggests a role; you can always change it.</p>
+        <table><thead><tr><th>Measurement scale</th><th>Examples</th><th>Usual role</th><th>Analysis consequences</th></tr></thead><tbody>
+          <tr><td><b>Nominal</b> (categories without order)</td><td>Variety, fungicide, soil type</td><td>Treatment factor / block</td><td>Compared with ANOVA and mean-separation tests</td></tr>
+          <tr><td><b>Ordinal</b> (ordered categories)</td><td>Disease score 1–9, vigour 1–5</td><td>Response (ordinal)</td><td>ANOVA is questionable; use Kruskal–Wallis / Friedman or ordinal models (Block 4)</td></tr>
+          <tr><td><b>Discrete counts</b></td><td>Number of pods, insects per plant</td><td>Response</td><td>√ or log transformation, or Poisson GLM, when counts are small or variance grows with the mean</td></tr>
+          <tr><td><b>Proportions / percentages</b></td><td>Germination %, incidence %</td><td>Response</td><td>Arcsine-√ (percentages from counts) or logit; values near 0 or 100 % are the problem</td></tr>
+          <tr><td><b>Continuous</b></td><td>Yield, height, dry mass, pH</td><td>Response</td><td>Ideal for ANOVA; check normality and homogeneity of variances</td></tr>
+          <tr><td><b>Quantitative factor</b></td><td>Dose 0/60/120/180, density</td><td>Treatment factor</td><td>ANOVA plus polynomial (trend) contrasts or regression on dose</td></tr>
+        </tbody></table>
+        <div class="callout tip"><b>Numeric codes for treatments</b>
+          If your treatments are coded 1, 2, 3, 4 the column looks numeric. The platform flags it as "integer codes" and
+          proposes <i>Treatment factor</i>. Confirm the role, otherwise the codes would be analysed as a measurement.</div>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary>5 · Which design do I have? (quick guide)</summary>
+      <div class="acc-body">
+        <table><thead><tr><th>Your data have…</th><th>Design</th><th>Model</th></tr></thead><tbody>
+          <tr><td>One factor, no blocking</td><td>Completely randomised (CRD)</td><td>y = μ + τ + ε</td></tr>
+          <tr><td>One factor, one block column, each treatment once per block</td><td>Randomised complete block (RCBD)</td><td>y = μ + β + τ + ε</td></tr>
+          <tr><td>One factor, each treatment several times per block</td><td>Generalised RCBD</td><td>y = μ + β + τ + (βτ) + ε</td></tr>
+          <tr><td>One factor, row and column blocking, t = rows = columns</td><td>Latin square</td><td>y = μ + ρ + γ + τ + ε</td></tr>
+          <tr><td>Two or more factors, all combinations, with or without blocks</td><td>Factorial in CRD / RCBD</td><td>y = μ + β + α + δ + (αδ) + ε</td></tr>
+          <tr><td>Two factors, one applied to large plots and the other to sub-plots inside them</td><td>Split-plot</td><td>Two error terms (main plot, sub-plot)</td></tr>
+          <tr><td>Three factors nested in plots, sub-plots, sub-sub-plots</td><td>Split-split-plot</td><td>Three error terms</td></tr>
+          <tr><td>Two factors applied in perpendicular strips</td><td>Strip-plot (split-block)</td><td>Three error terms</td></tr>
+          <tr><td>Many treatments, blocks smaller than the number of treatments</td><td>Incomplete blocks: lattice, alpha, BIBD</td><td>Adjusted means</td></tr>
+          <tr><td>Many new genotypes plus a few repeated checks</td><td>Augmented design</td><td>Checks estimate the error</td></tr>
+          <tr><td>The same plot measured on several dates</td><td>Repeated measures</td><td>Split-plot in time / mixed model</td></tr>
+          <tr><td>A numeric variable measured before treatment</td><td>Any of the above + covariate</td><td>ANCOVA</td></tr>
+        </tbody></table>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary>6 · Accepted file formats</summary>
+      <div class="acc-body">
+        <ul>
+          <li><b>Excel</b>: .xlsx, .xlsm, .xlsb, .xls (choose the sheet after loading).</li>
+          <li><b>Open formats</b>: .ods (LibreOffice), .csv, .tsv, .txt (any delimiter: comma, semicolon, tab, pipe), .dat, .prn.</li>
+          <li><b>JSON</b>: an array of objects (one per plot), an array of arrays, or <code>{columns:[…], data:[…]}</code>.</li>
+          <li><b>Clipboard</b>: copy a range in Excel and paste it in the box below.</li>
+        </ul>
+        <p>Files are read locally with the FileReader API; nothing is transmitted.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- ---------- UPLOAD ---------- -->
+  <div class="card">
+    <h2>1 · Load your data</h2>
+    <p class="hint">Drag a file or click to browse. The first row must contain the column names; one row per plot.</p>
+    <div class="drop-zone" id="dropZone">
+      <div class="dz-icon" id="dzIcon"></div>
+      <p><b>Drop your file here</b> or click to choose</p>
+      <div class="format-chips"><span>.xlsx</span><span>.xls</span><span>.xlsm</span><span>.xlsb</span><span>.ods</span><span>.csv</span><span>.tsv</span><span>.txt</span><span>.json</span><span>.dat</span></div>
+      <input type="file" id="fileInput" accept=".xlsx,.xls,.xlsm,.xlsb,.ods,.csv,.tsv,.txt,.json,.dat,.prn" hidden>
+    </div>
+    <div class="field-grid" style="margin-top:14px">
+      <div class="field"><label>Text delimiter</label>
+        <select id="delimSel"><option value="">Auto-detect</option><option value=",">Comma ( , )</option><option value=";">Semicolon ( ; )</option><option value="	">Tab</option><option value="|">Pipe ( | )</option></select>
+        <span class="field-help">Only for .csv / .txt files.</span></div>
+      <div class="field"><label>Decimal separator</label>
+        <select id="decimalSel"><option value="auto">Auto-detect</option><option value="dot">Point (4.65)</option><option value="comma">Comma (4,65)</option></select>
+        <span class="field-help">Latin American Excel often exports with a comma.</span></div>
+      <div class="field" id="sheetPicker" style="display:none"><label>Sheet</label><select id="sheetSelect"></select><span class="field-help">The workbook has several sheets.</span></div>
+    </div>
+    <details class="acc"><summary>Paste from the clipboard instead</summary>
+      <div class="acc-body">
+        <textarea id="pasteArea" rows="6" style="width:100%" placeholder="Block	Treatment	Yield&#10;1	A	4.6&#10;1	B	6.2&#10;…"></textarea>
+        <div class="btn-row"><button class="btn btn-secondary btn-sm" id="pasteBtn">Use pasted data</button></div>
+      </div>
+    </details>
+    <h4 style="margin-top:18px">Or try an example dataset</h4>
+    <div class="example-grid">
+      <button class="example-btn" data-path="data/rcbd_maize_nitrogen.csv" data-name="rcbd_maize_nitrogen.csv"><b>RCBD · maize × nitrogen</b><small>4 N doses, 4 blocks, yield t/ha</small></button>
+      <button class="example-btn" data-path="data/crd_bean_varieties.csv" data-name="crd_bean_varieties.csv"><b>CRD · bean varieties</b><small>5 varieties, 4 reps, yield kg/plot</small></button>
+      <button class="example-btn" data-path="data/latin_square_wheat.csv" data-name="latin_square_wheat.csv"><b>Latin square · wheat</b><small>4 treatments, 4 rows × 4 columns</small></button>
+      <button class="example-btn" data-path="data/factorial_tomato_rcbd.csv" data-name="factorial_tomato_rcbd.csv"><b>Factorial 3×3 in RCBD · tomato</b><small>variety × fertiliser, 3 blocks, 2 responses</small></button>
+      <button class="example-btn" data-path="data/split_plot_irrigation.csv" data-name="split_plot_irrigation.csv"><b>Split-plot · irrigation × variety</b><small>2 main plots, 4 sub-plots, 3 blocks</small></button>
+      <button class="example-btn" data-path="data/disease_scores_rcbd.csv" data-name="disease_scores_rcbd.csv"><b>Ordinal scores · fungicides</b><small>1–9 severity scale, 5 blocks (non-parametric)</small></button>
+      <button class="example-btn" data-path="data/wide_format_example.csv" data-name="wide_format_example.csv"><b>Wide table (needs reshaping)</b><small>treatments as columns — try the converter</small></button>
+    </div>
+    <div class="messages" id="dataMessages"></div>
+    <div id="gridIssues" class="check-list"></div>
+  </div>
+
+  <!-- ---------- VARIABLES ---------- -->
+  <div class="card" id="varCard" style="display:none">
+    <h2>2 · Variable roles and design structure</h2>
+    <p class="hint">The platform proposes a role for each column. Correct it if needed: the analysis in the following blocks depends on this.</p>
+    <div class="role-legend" id="roleLegend"></div>
+    <div class="table-scroll" id="varTable"></div>
+    <h3>Detected structure</h3>
+    <div class="design-summary" id="designSummary"></div>
+    <div class="check-list" id="designChecks"></div>
+    <div class="table-scroll" id="balanceTable" style="margin-top:12px"></div>
+    <div class="btn-row">
+      <button class="btn btn-secondary btn-sm" id="downloadCleanBtn">⬇ Download tidy CSV</button>
+      <span style="flex:1"></span>
+      <button class="btn btn-primary" id="nextBtn2" disabled>Continue to descriptive statistics →</button>
+    </div>
+  </div>
+
+  <!-- ---------- RESHAPE ---------- -->
+  <div class="card" id="reshapeCard" style="display:none">
+    <h2>Tool · Convert a wide table to long format</h2>
+    <p class="hint">Use this when treatments (or blocks, or dates) are spread across columns. The chosen columns are stacked into one <i>name</i> column and one <i>value</i> column.</p>
+    <div class="two-col">
+      <div><h4>Keep as identifiers</h4><div id="reshapeKeep"></div></div>
+      <div><h4>Stack these columns</h4><div id="reshapeStack"></div></div>
+    </div>
+    <div class="field-grid">
+      <div class="field"><label>Name for the new factor column</label><input type="text" id="reshapeName" value="Treatment"></div>
+      <div class="field"><label>Name for the new value column</label><input type="text" id="reshapeValue" value="Value"></div>
+    </div>
+    <div class="btn-row"><button class="btn btn-secondary" id="reshapeBtn">Reshape to long format</button></div>
+  </div>
+
+  <!-- ---------- PREVIEW ---------- -->
+  <div class="card" id="previewCard" style="display:none">
+    <h2>Data preview</h2>
+    <div class="table-scroll" id="previewTable"></div>
+  </div>
+</section>
+
+<!-- ==================== BLOCKS 3–8 (placeholders) ==================== -->
+<!-- ==================== BLOCK 3 · DESCRIPTIVE ==================== -->
+<section class="step-panel" id="panel-3">
+  <div class="panel-title"><div class="pt-num">3</div><div><h2>Descriptive statistics and exploratory graphics</h2><p>Look at the data before testing anything: location, spread, shape, outliers and how the groups compare.</p></div></div>
+
+  <div class="card theory-card">
+    <div class="card-head"><div><h2>Reading the numbers and the plots</h2><p class="hint">What each statistic tells you about a field experiment, and what to look for before the ANOVA.</p></div></div>
+    <details class="acc" open>
+      <summary>1 · Why explore first</summary>
+      <div class="acc-body">
+        <p>An ANOVA summarises the whole experiment in one F-test. Exploring first protects you from three classic mistakes:
+          analysing a typing error as if it were a treatment effect, testing means when the variances are wildly different,
+          and reporting a mean for a variable whose distribution has no meaningful centre (skewed counts, bounded scores).</p>
+        <ul>
+          <li><b>Location</b>: mean and median. If they differ noticeably, the distribution is skewed or has outliers.</li>
+          <li><b>Spread</b>: standard deviation (SD), interquartile range (IQR) and coefficient of variation (CV).</li>
+          <li><b>Shape</b>: skewness (asymmetry) and kurtosis (weight of the tails) relative to the normal distribution.</li>
+          <li><b>Structure</b>: do the groups differ in level? in spread? do the blocks behave consistently?</li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc">
+      <summary>2 · SD, SE and confidence interval — which one goes in the paper?</summary>
+      <div class="acc-body">
+        <table><thead><tr><th>Statistic</th><th>Formula</th><th>Describes</th><th>Use it when</th></tr></thead><tbody>
+          <tr><td><b>Standard deviation (SD)</b></td><td>√[Σ(y − ȳ)² / (n − 1)]</td><td>Variability of the individual plots</td><td>You want to show how spread out the observations are</td></tr>
+          <tr><td><b>Standard error (SE)</b></td><td>SD / √n</td><td>Precision of the mean</td><td>You compare means (most treatment-mean figures)</td></tr>
+          <tr><td><b>95 % confidence interval</b></td><td>ȳ ± t<sub>0.975, n−1</sub> · SE</td><td>Range of plausible values for the true mean</td><td>You want the reader to judge differences by eye</td></tr>
+          <tr><td><b>CV (%)</b></td><td>SD / ȳ × 100</td><td>Relative variability, unit-free</td><td>Comparing precision between trials or variables</td></tr>
+        </tbody></table>
+        <div class="callout"><b>CV benchmarks in agronomy</b>
+          For grain-yield field trials a CV of 10–20 % is normal; below 10 % is excellent; above 30 % suggests problems
+          (heterogeneous field, poor plot technique, errors). Plant height and phenology usually have CV &lt; 10 %; insect counts and
+          disease scores often exceed 30 %. The CV that journals ask for is the one from the ANOVA (√MSE / grand mean), which
+          Block 5 reports.</div>
+      </div>
+    </details>
+    <details class="acc">
+      <summary>3 · How to read the plots</summary>
+      <div class="acc-body">
+        <ul>
+          <li><b>Histogram + density</b>: shape of the whole sample. Compare the orange density with the dashed normal curve. Two humps usually mean two different treatments or blocks, not a problem.</li>
+          <li><b>Box plot</b>: box = middle 50 % (Q1 to Q3), line = median, ◆ = mean, whiskers = most extreme values within 1.5 × IQR, circles = potential outliers. Boxes of very different height signal unequal variances.</li>
+          <li><b>Violin</b>: a smoothed histogram on each side; shows bimodality that a box hides. Needs ≥ 5–6 observations per group to be meaningful.</li>
+          <li><b>Means with error bars</b>: the classic treatment figure. State in the caption what the bars are (SE, SD or CI). Overlapping SE bars do not imply "not significant" — the test decides.</li>
+          <li><b>Strip plot</b>: every plot is shown; the honest picture when replicates are few (3–4), where boxes and violins are misleading.</li>
+          <li><b>Block profiles</b>: one line per block across treatments. Roughly parallel lines mean the treatment ranking is consistent across blocks (additivity, an RCBD assumption). Crossing lines suggest a block × treatment interaction or an outlying plot.</li>
+          <li><b>Interaction plot</b> (two factors): parallel lines = no interaction, the factors act additively; converging or crossing lines = interaction, and the main effects should be interpreted with care.</li>
+          <li><b>Scatter vs. covariate</b>: if the response depends linearly on a variable measured before treatment, ANCOVA (Block 5) will increase precision.</li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc">
+      <summary>4 · Outliers: what to do</summary>
+      <div class="acc-body">
+        <p>A value flagged by Tukey's rule (beyond 1.5 × IQR) or by |z| &gt; 3 is <i>suspicious</i>, not wrong. Go back to the field book:
+          a decimal shifted, a plot damaged by animals or flooding, a mis-labelled sample. Correct documented errors; declare
+          damaged plots as missing (Block 5 handles missing plots); <b>never</b> delete a value only because it is inconvenient.
+          If in doubt, run the analysis with and without it and report both.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>Choose what to describe</h2>
+    <div class="field-grid">
+      <div class="field"><label>Response variable</label><select id="descResponse"></select></div>
+      <div class="field"><label>Group by</label><select id="descGroup"></select><span class="field-help">Factor, block, or all treatment combinations.</span></div>
+      <div class="field"><label>Decimals</label><input type="number" id="descDigits" value="3" min="0" max="6" step="1" style="width:90px"></div>
+      <div class="field"><label>&nbsp;</label><button class="btn btn-secondary btn-sm" id="descRefresh">↻ Recalculate</button></div>
+    </div>
+    <div class="results-summary" id="descTiles"></div>
+    <div class="table-scroll" id="descTable"></div>
+    <div class="btn-row"><button class="btn btn-secondary btn-sm" id="descDownload">⬇ Download table (CSV)</button></div>
+    <div class="table-scroll" id="descTwoWay" style="margin-top:14px"></div>
+    <h3>What the numbers say</h3>
+    <div class="check-list" id="descInterp"></div>
+  </div>
+
+  <div class="card">
+    <h2>Exploratory figures</h2>
+    <p class="hint">Every figure can be edited (⚙) and downloaded at publication resolution. Style settings you change are remembered for the next figures.</p>
+    <div id="descFigs"></div>
+  </div>
+</section>
+<!-- ==================== BLOCK 4 · ASSUMPTIONS ==================== -->
+<section class="step-panel" id="panel-4">
+  <div class="panel-title"><div class="pt-num">4</div><div><h2>ANOVA assumptions, transformations and non-parametric alternatives</h2><p>Are the data candidates for an analysis of variance and mean tests? If not, what to do instead.</p></div></div>
+
+  <div class="card theory-card">
+    <div class="card-head"><div><h2>The assumptions behind the F-test, in plain language</h2><p class="hint">The ANOVA model is <code>y = μ + treatment + block + ε</code>. Everything below is about ε, the experimental error, and is therefore checked on the <b>residuals</b> of the fitted model, never on the raw response.</p></div></div>
+    <details class="acc" open>
+      <summary>1 · The four assumptions and what happens when they fail</summary>
+      <div class="acc-body">
+        <table><thead><tr><th>Assumption</th><th>Meaning</th><th>How it is checked here</th><th>If it fails</th></tr></thead><tbody>
+          <tr><td><b>Independence</b></td><td>The error of one plot tells nothing about its neighbour</td><td>Guaranteed by randomisation; Durbin–Watson and the residuals-in-order plot only reveal gross patterns</td><td>Nothing fixes it afterwards: block properly next time; spatial models</td></tr>
+          <tr><td><b>Normality</b> of errors</td><td>Residuals follow a bell-shaped curve</td><td>Shapiro–Wilk (best for n &lt; 50), Anderson–Darling, Jarque–Bera; Q–Q plot</td><td>F is robust with balanced designs; transform, or rank-based tests</td></tr>
+          <tr><td><b>Homogeneity of variances</b></td><td>All treatments have the same error variance</td><td>Levene (median-centred; robust), Bartlett (sensitive to non-normality), Fligner–Killeen, Fmax; residuals vs fitted plot</td><td>Most damaging for mean comparisons; transform (log if SD ∝ mean), Welch, ranks</td></tr>
+          <tr><td><b>Additivity</b></td><td>Block and treatment effects add; no block × treatment interaction</td><td>Tukey's one-degree-of-freedom test; block profile lines in Block 3</td><td>Log transformation for multiplicative effects</td></tr>
+        </tbody></table>
+        <div class="callout"><b>How much does it matter?</b>
+          With equal replication and 3–6 treatments, the F-test keeps its nominal α well even under moderate non-normality
+          . Unequal variances matter more, especially when the treatment with the largest variance also has the
+          fewest replicates. A single wrong value can make every test fail at once — look at the outlier table first.</div>
+      </div>
+    </details>
+    <details class="acc">
+      <summary>2 · Reading the residual plots</summary>
+      <div class="acc-body">
+        <ul>
+          <li><b>Q–Q plot</b>: points on the line = normal. An S-shape = heavy or light tails; a curve = skewness; one or two points far off = outliers. The shaded band is a 95 % envelope: a few points outside it are expected.</li>
+          <li><b>Residuals vs fitted</b>: should look like a random cloud around zero. A funnel (wider spread at higher fitted values) = variance grows with the mean → log or square root. A curve = missing term (e.g. a quadratic dose effect) or non-additivity.</li>
+          <li><b>Scale–location</b>: √|residual| against fitted; an increasing trend confirms heteroscedasticity.</li>
+          <li><b>Residuals by treatment</b>: boxes of very different height = unequal variances among treatments.</li>
+          <li><b>Residuals in data order</b>: runs of positive then negative residuals suggest a trend along the field if rows follow the planting order.</li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc">
+      <summary>3 · Transformations: which one and why</summary>
+      <div class="acc-body">
+        <table><thead><tr><th>Situation</th><th>Transformation</th><th>Notes</th></tr></thead><tbody>
+          <tr><td>SD proportional to the mean; effects multiplicative (CV constant across treatments)</td><td>ln(y) or log₁₀(y)</td><td>Use ln(y + 1) when there are zeros. Back-transformed means are geometric means.</td></tr>
+          <tr><td>Counts (insects, weeds, colonies): variance ≈ mean</td><td>√y, or √(y + 0.5) with small counts</td><td>A Poisson or negative-binomial GLM is the modern alternative.</td></tr>
+          <tr><td>Percentages derived from counts (germination, incidence, mortality)</td><td>arcsine √(p)</td><td>Only needed when values fall below 20 % or above 80 %. Not for percentages that are ratios of continuous quantities (e.g. moisture %).</td></tr>
+          <tr><td>Proportions away from 0 and 1</td><td>logit</td><td>Or a binomial GLM.</td></tr>
+          <tr><td>Rates, times to an event; SD ∝ mean²</td><td>1/y</td><td>Rarely needed in agronomy.</td></tr>
+          <tr><td>Unsure</td><td>Box–Cox λ</td><td>The profile likelihood tells you which power is supported by the data; λ = 1 means "leave it".</td></tr>
+        </tbody></table>
+        <div class="callout warn"><b>Rules</b>
+          The whole analysis (ANOVA, mean separation, letters) is done on the transformed scale. Report back-transformed means for readability
+          and say so in the caption. Never transform only to "get significance". Ordinal scores (1–9) are not helped by transformations: use the rank-based methods.</div>
+      </div>
+    </details>
+    <details class="acc">
+      <summary>4 · Non-parametric analysis of designed experiments</summary>
+      <div class="acc-body">
+        <p>Rank-based procedures replace the observations by their ranks and therefore do not need normality; they are the natural choice for
+          ordinal scores, small samples with outliers and heavily skewed measurements.</p>
+        <table><thead><tr><th>Design</th><th>Test</th><th>Parametric analogue</th><th>Post-hoc comparisons</th></tr></thead><tbody>
+          <tr><td>One factor, completely randomised</td><td><b>Kruskal–Wallis</b></td><td>One-way ANOVA (CRD)</td><td>Dunn (z on mean ranks) or pairwise Mann–Whitney, with Holm / Bonferroni / FDR adjustment</td></tr>
+          <tr><td>One factor in complete blocks, one plot per block × treatment</td><td><b>Friedman</b></td><td>RCBD</td><td>Conover (t on rank sums) or Nemenyi (studentized range)</td></tr>
+          <tr><td>Two crossed factors</td><td><b>Scheirer–Ray–Hare</b></td><td>Two-way ANOVA</td><td>—</td></tr>
+          <tr><td>Any factorial or blocked design, interactions included</td><td><b>Aligned Rank Transform (ART)</b></td><td>Full factorial ANOVA</td><td>Tukey HSD on aligned ranks of each main effect</td></tr>
+          <tr><td>Normal data, unequal variances</td><td><b>Welch ANOVA</b></td><td>One-way ANOVA</td><td>Games–Howell</td></tr>
+        </tbody></table>
+        <p>Rank tests lose little power when the data are actually normal (about 5 % for Kruskal–Wallis vs the F-test) and can gain a lot
+          when they are not. Their hypotheses are about the whole distribution (stochastic dominance), usually summarised as medians.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>1 · Model and residual diagnostics</h2>
+    <div class="field-grid">
+      <div class="field"><label>Response variable</label><select id="assResponse"></select></div>
+      <div class="field"><label>Significance level α</label><select id="assAlpha"><option value="0.05" selected>0.05</option><option value="0.01">0.01</option><option value="0.10">0.10</option></select></div>
+      <div class="field"><label>Interactions</label><label class="checkbox-label"><input type="checkbox" id="assInter" checked> include all factor interactions</label></div>
+      <div class="field"><label>&nbsp;</label><button class="btn btn-primary" id="assRun">Run diagnostics</button></div>
+    </div>
+    <p class="hint">Model used for the residuals: <code id="assFormula"></code></p>
+    <div class="messages" id="assMessages"></div>
+    <div id="assResults" style="display:none">
+      <div class="verdict" id="assVerdict"></div>
+      <div class="results-summary" id="assTiles"></div>
+      <div class="check-list" id="assChecks"></div>
+      <h3>All tests</h3>
+      <div class="table-scroll" id="assTable"></div>
+      <h3>Suspicious observations</h3>
+      <div class="table-scroll" id="assOutliers"></div>
+      <h3>Residual plots</h3>
+      <div id="assFigs"></div>
+    </div>
+  </div>
+
+  <div class="card" id="transCard" style="display:none">
+    <h2>2 · Would a transformation help?</h2>
+    <p class="hint">Each candidate is applied to the response, the same model is refitted and the assumption tests are repeated. "Use" creates a new column (the original is never overwritten) and re-runs the diagnostics on it.</p>
+    <div id="transVerdict"></div>
+    <div class="table-scroll" id="transTable"></div>
+    <div class="two-col" style="margin-top:14px; align-items:start">
+      <div id="boxcoxHost"></div>
+      <div><h4>Box–Cox power transformation</h4><p id="boxcoxText" class="hint"></p><p class="hint">y<sup>(λ)</sup> = (y<sup>λ</sup> − 1)/λ; λ = 0 is the logarithm. The dashed line marks the 95 % likelihood interval: any λ inside it is compatible with the data, so choose the simplest conventional power.</p></div>
+    </div>
+  </div>
+
+  <div class="card" id="npCard" style="display:none">
+    <h2>3 · Non-parametric analysis</h2>
+    <p class="hint">The list only shows the procedures that fit the structure of your design. Use them when the assumptions fail and no transformation fixes them, or when the response is an ordinal score.</p>
+    <div class="field-grid">
+      <div class="field"><label>Procedure</label><select id="npMethod"></select></div>
+      <div class="field" id="npPostWrap" style="display:none"><label>Post-hoc (Friedman)</label><select id="npPost"><option value="conover">Conover</option><option value="nemenyi">Nemenyi</option></select></div>
+      <div class="field"><label>p-value adjustment</label><select id="npAdjust"><option value="holm" selected>Holm</option><option value="bonferroni">Bonferroni</option><option value="BH">Benjamini–Hochberg (FDR)</option><option value="hochberg">Hochberg</option><option value="none">None</option></select></div>
+      <div class="field"><label>&nbsp;</label><button class="btn btn-primary" id="npRun">Run</button></div>
+    </div>
+    <div id="npResults"></div>
+  </div>
+</section>
+<!-- ==================== BLOCK 5 · DESIGNS & ANOVA ==================== -->
+<section class="step-panel" id="panel-5">
+  <div class="panel-title"><div class="pt-num">5</div><div><h2>Experimental designs: ANOVA and mean-separation tests</h2><p>Choose the design that matches how the experiment was laid out, get the ANOVA with the right error terms, separate the means and test trends and contrasts.</p></div></div>
+
+  <div class="card theory-card">
+    <div class="card-head"><div><h2>Designs, error terms and mean separation — what you need to know</h2><p class="hint">Each design has a linear model and, sometimes, more than one experimental error. The platform builds the model for you; here is what it does and why.</p></div></div>
+    <details class="acc" open>
+      <summary>1 · Choosing the design: it is how the treatments were randomised, not how you wish to analyse</summary>
+      <div class="acc-body">
+        <table><thead><tr><th>Design</th><th>Randomisation</th><th>Model</th><th>Error terms</th><th>Typical use</th></tr></thead><tbody>
+          <tr><td><b>CRD</b></td><td>Treatments to units at random, no restriction</td><td>y = μ + τ + ε</td><td>1</td><td>Pots, greenhouse, lab; unequal replication allowed</td></tr>
+          <tr><td><b>RCBD</b></td><td>Each treatment once in each block, randomised within block</td><td>y = μ + β + τ + ε</td><td>1</td><td>Field trials with a gradient (slope, fertility)</td></tr>
+          <tr><td><b>Latin square</b></td><td>Each treatment once per row and per column</td><td>y = μ + ρ + γ + τ + ε</td><td>1</td><td>Two gradients; t = rows = columns (4–8 treatments)</td></tr>
+          <tr><td><b>Factorial</b></td><td>All A × B combinations, in CRD or RCBD</td><td>y = μ + β + α + δ + (αδ) + ε</td><td>1</td><td>Variety × fertiliser, dose × timing</td></tr>
+          <tr><td><b>Split-plot</b></td><td>A on main plots (within blocks), B on sub-plots within each main plot</td><td>two strata</td><td>2 (Error a, Error b)</td><td>Irrigation, tillage, sowing date × varieties</td></tr>
+          <tr><td><b>Split-split-plot</b></td><td>Three nested plot sizes</td><td>three strata</td><td>3</td><td>Irrigation × variety × N dose</td></tr>
+          <tr><td><b>Strip-plot</b></td><td>A in horizontal strips, B in vertical strips, both across the block</td><td>three strata</td><td>3</td><td>Machinery treatments in both directions</td></tr>
+          <tr><td><b>Incomplete blocks</b></td><td>Blocks smaller than t, nested in replicates (lattice, alpha, BIBD)</td><td>y = μ + ρ + β(ρ) + τ + ε</td><td>1</td><td>Variety trials with 16–100+ entries</td></tr>
+          <tr><td><b>Augmented</b></td><td>Checks in every block, new entries once</td><td>y = μ + β + τ + ε</td><td>1 (from checks)</td><td>Early generations in breeding</td></tr>
+          <tr><td><b>Nested</b></td><td>B levels differ inside each A</td><td>y = μ + α + δ(α) + ε</td><td>A tested vs B(A)</td><td>Trees within orchards, plants within plots</td></tr>
+        </tbody></table>
+        <div class="callout warn"><b>Split-plot is the most common mistake</b>
+          If the main-plot factor was applied to large plots and the sub-plot factor inside them, the main-plot factor must be tested against <b>Error a</b> (block × main plot), which has few degrees of freedom. Analysing it as a factorial RCBD uses the sub-plot error and produces false significance for the main-plot factor. The sub-plot factor and the interaction are tested against Error b and are estimated more precisely — this is the design's purpose.</div>
+        <p>Covariates (ANCOVA) are added to any of these models; treatment means are then adjusted to the mean of the covariate. Type III sums of squares are used by default so that unbalanced data and incomplete blocks give adjusted tests; for balanced data Type I and III coincide.</p>
+      </div>
+    </details>
+    <details class="acc">
+      <summary>2 · Reading the ANOVA table</summary>
+      <div class="acc-body">
+        <ul>
+          <li><b>SS</b> partitions the total variation; <b>MS = SS/df</b>; <b>F = MS(source) / MS(its error)</b>. The "tested against" column shows which error each F uses.</li>
+          <li><b>Partial η²</b> = SS(source) / [SS(source) + SS(error)]: proportion of variance attributable to the source; an effect size to accompany the p-value.</li>
+          <li><b>CV %</b> = √MSE / grand mean × 100: precision of the trial, the figure reviewers look for.</li>
+          <li><b>R²</b> of the model: how much of the total variation the design explains (blocks included).</li>
+          <li>A significant <b>block</b> effect is not a finding about treatments; it means blocking was worthwhile.</li>
+          <li>A significant <b>interaction</b> means the answer to "which level of A is best?" depends on B. Report the cell means and simple effects; the main-effect means alone can be misleading.</li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc">
+      <summary>3 · Which mean-separation test?</summary>
+      <div class="acc-body">
+        <table><thead><tr><th>Test</th><th>Error rate controlled</th><th>Power</th><th>Recommended when</th></tr></thead><tbody>
+          <tr><td><b>Tukey HSD</b></td><td>Family-wise, all pairs</td><td>Medium</td><td>Default choice for pairwise comparisons; Tukey–Kramer with unequal n</td></tr>
+          <tr><td><b>Fisher's LSD</b></td><td>Per comparison</td><td>High</td><td>Few (≤ 4) treatments after a significant F ("protected"); planned comparisons</td></tr>
+          <tr><td><b>Bonferroni / Šidák / Holm</b></td><td>Family-wise</td><td>Low → medium</td><td>A small set of pre-planned comparisons; Holm is always preferable to Bonferroni</td></tr>
+          <tr><td><b>Duncan</b></td><td>Neither (liberal)</td><td>High</td><td>Historically common in agronomy; many journals no longer accept it</td></tr>
+          <tr><td><b>SNK</b></td><td>Per step</td><td>Medium-high</td><td>Multiple range; can declare non-transitive groups</td></tr>
+          <tr><td><b>REGWQ</b></td><td>Family-wise</td><td>Medium-high</td><td>Best of the multiple range tests when many means are truly equal</td></tr>
+          <tr><td><b>Scheffé</b></td><td>All contrasts</td><td>Lowest</td><td>Contrasts decided after looking at the data</td></tr>
+          <tr><td><b>Dunnett</b></td><td>Family-wise, vs control</td><td>High for its question</td><td>Only "is each treatment different from the check?"</td></tr>
+          <tr><td><b>Games–Howell</b></td><td>Family-wise</td><td>Medium</td><td>Variances differ among treatments</td></tr>
+        </tbody></table>
+        <div class="callout"><b>Reading the letters</b>
+          Means followed by the same letter are not significantly different at the stated α. A level may carry two letters (ab) when it differs from neither group: the test found no transitivity, and that is a legitimate result, not an error. Always state the test and α in the table footnote or figure caption, and report the SE or the minimum significant difference.</div>
+        <p><b>Pairwise tests or contrasts?</b> When the factor is quantitative (doses, densities, dates), letters are a poor summary: fit a trend instead. Orthogonal polynomial contrasts partition the treatment SS into linear, quadratic… components; the highest significant one gives the shape of the response, and the fitted equation gives the optimum dose. When treatments have a structure (control vs the rest, organic vs mineral sources), a single planned contrast is more powerful and more informative than all pairwise comparisons.</p>
+      </div>
+    </details>
+    <details class="acc">
+      <summary>4 · Reporting the results (what reviewers expect)</summary>
+      <div class="acc-body">
+        <ul>
+          <li>The design, the number of replicates and the model, including any covariate and transformation.</li>
+          <li>The ANOVA table or, at least, F with its degrees of freedom and p for every treatment factor and interaction; the CV of the trial.</li>
+          <li>Tables of means with SE (or the LSD/HSD value) and letters, stating the test and α; back-transformed means when a transformation was used.</li>
+          <li>For quantitative factors, the fitted response curve with its equation and R².</li>
+          <li>Effect sizes (partial η²) and confidence intervals where possible; p-values alone are increasingly discouraged.</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>1 · Design and options</h2>
+    <div class="field-grid">
+      <div class="field"><label>Response variable</label><select id="anResponse"></select></div>
+      <div class="field"><label>Experimental design</label><select id="anDesign"></select><span class="field-help">Only designs compatible with the roles in Block 2 are enabled. ★ = suggested from the data structure.</span></div>
+      <div class="field"><label>Sums of squares</label><select id="anSS"><option value="3" selected>Type III (marginal, adjusted)</option><option value="1">Type I (sequential)</option></select></div>
+      <div class="field"><label>Significance level α</label><select id="anAlpha"><option value="0.05" selected>0.05</option><option value="0.01">0.01</option><option value="0.10">0.10</option></select></div>
+      <div class="field"><label>Mean-separation test</label><select id="anMethod">
+        <option value="tukey" selected>Tukey HSD</option><option value="lsd">Fisher's LSD</option><option value="duncan">Duncan's multiple range</option><option value="snk">Student–Newman–Keuls</option><option value="regwq">REGWQ</option><option value="bonferroni">Bonferroni</option><option value="sidak">Šidák</option><option value="holm">Holm</option><option value="scheffe">Scheffé</option><option value="dunnett">Dunnett (vs control)</option><option value="gameshowell">Games–Howell</option></select><span class="field-help" id="anMethodDesc"></span></div>
+      <div class="field" id="anControlWrap" style="display:none"><label>Control level (Dunnett)</label><select id="anControl"></select></div>
+    </div>
+    <div class="two-col" style="align-items:center">
+      <div><p class="hint" id="anDesignDesc"></p><div id="anDesignOpts"></div></div>
+      <div id="anDesignArt" style="max-width:260px"></div>
+    </div>
+    <div class="btn-row"><button class="btn btn-primary" id="anRun">Run the analysis</button></div>
+    <div class="messages" id="anMessages"></div>
+  </div>
+
+  <div id="anResults" style="display:none">
+    <div class="card">
+      <h2>2 · Analysis of variance</h2>
+      <div class="results-summary" id="anTiles"></div>
+      <div class="table-scroll" id="anTable"></div>
+      <p class="hint" style="margin-top:8px">Error strata: <span id="anStrata"></span></p>
+      <div class="btn-row"><button class="btn btn-secondary btn-sm" id="anDownloadAnova">⬇ Download ANOVA (CSV)</button></div>
+      <h3>Interpretation</h3>
+      <div class="check-list" id="anInterp"></div>
+      <div id="anNarrative"></div>
+    </div>
+    <div id="anMeans"></div>
+  </div>
+</section>
+<!-- ==================== BLOCK 6 · GRAPHICS ==================== -->
+<section class="step-panel" id="panel-6">
+  <div class="panel-title"><div class="pt-num">6</div><div><h2>Result graphics</h2><p>Publication figures built from the analysis in Block 5: means with letters, interactions, response curves, differences, variance partition, field maps and multi-panel composites. Everything is editable and exports at journal resolution.</p></div></div>
+
+  <div class="card theory-card">
+    <div class="card-head"><div><h2>Making a figure a reviewer will like</h2><p class="hint">Short guidelines, then the gallery.</p></div></div>
+    <details class="acc" open>
+      <summary>1 · Which figure for which result</summary>
+      <div class="acc-body">
+        <table><thead><tr><th>Result</th><th>Best figure</th><th>Avoid</th></tr></thead><tbody>
+          <tr><td>Means of a qualitative factor (varieties, products)</td><td>Points or bars with SE and letters; sort by mean when levels have no natural order</td><td>3-D bars, pie charts</td></tr>
+          <tr><td>Few replicates (3–4)</td><td>Show every observation (strip plot) with the mean bar; readers can judge the spread</td><td>Bars that hide the data</td></tr>
+          <tr><td>Quantitative factor (doses, densities, dates)</td><td>Response curve: means ± SE with the fitted equation and the optimum</td><td>Bars with letters (they discard the trend)</td></tr>
+          <tr><td>Two factors</td><td>Interaction plot (lines) if the interaction matters; grouped bars or a heat map for many levels</td><td>Separate main-effect plots when the interaction is significant</td></tr>
+          <tr><td>"Which pairs differ?"</td><td>Differences with confidence intervals (Tukey plot)</td><td>Letters alone when there are many treatments</td></tr>
+          <tr><td>Field trial with row/column layout</td><td>Field map coloured by the residual to reveal spatial trends</td><td>—</td></tr>
+        </tbody></table>
+      </div>
+    </details>
+    <details class="acc">
+      <summary>2 · Error bars, letters and captions</summary>
+      <div class="acc-body">
+        <ul>
+          <li>State what the bar is: <b>SE</b> (precision of the mean; the usual choice), <b>SD</b> (variability of plots) or <b>95 % CI</b>. Never leave it implicit.</li>
+          <li>Letters: "Means with the same letter are not significantly different (Tukey HSD, α = 0.05)". Put the test in the caption, not the title.</li>
+          <li>A level with two letters (ab) belongs to both groups; do not "fix" it by hand.</li>
+          <li>The Y axis of a bar chart must start at zero; a point plot may zoom in. Say which in the caption if you zoom.</li>
+          <li>Units in the axis label: "Grain yield (t ha⁻¹)".</li>
+          <li>Colour-blind-safe palettes (Okabe–Ito, Paul Tol) are available; use distinct line styles or markers in addition to colour when the figure may be printed in greyscale.</li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc">
+      <summary>3 · Technical requirements of journals</summary>
+      <div class="acc-body">
+        <ul>
+          <li><b>Resolution</b>: 300 dpi for colour/halftone, 600–1000 dpi for line art. The export bar shows the pixel size and the printed size in cm for each option.</li>
+          <li><b>Width</b>: single column ≈ 8.5 cm, double column ≈ 17.5 cm (Elsevier, Springer, Wiley are similar). At 300 dpi that is ≈ 1000 and 2100 px; choose "High · 4×" or "Publication · 8×" accordingly.</li>
+          <li><b>Formats</b>: TIFF (with resolution tag, uncompressed here), PNG, or vector (SVG → convert to EPS/PDF in Inkscape if the journal insists). JPG only for photographs.</li>
+          <li><b>Fonts</b>: Arial/Helvetica or Times, 8–12 pt at final size; the "Journal" presets below set this.</li>
+          <li><b>Multi-panel</b>: label panels (a), (b)… in bold at the top-left; keep the same axis scale across panels when they are compared.</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+
+  <div class="card" id="gfxNoResults">
+    <p class="hint">No analysis yet. Run Block 5 first: the figures here are built from its ANOVA, means and letters.</p>
+    <button class="btn btn-primary" id="gfxGo5">Go to Block 5 →</button>
+  </div>
+
+  <div id="gfxMain" style="display:none">
+    <div class="card">
+      <h2>Gallery settings</h2>
+      <div class="field-grid">
+        <div class="field"><label>Y axis label (units)</label><input type="text" id="gfxYlab" placeholder="e.g. Grain yield (t ha⁻¹)"><span class="field-help">Leave empty to use the variable name.</span></div>
+        <div class="field"><label>&nbsp;</label><button class="btn btn-secondary btn-sm" id="gfxRebuild">↻ Rebuild gallery</button></div>
+      </div>
+      <h4>Style presets (apply to every figure)</h4>
+      <div class="tabs" id="gfxPresets"></div>
+      <h4 style="margin-top:14px">Batch export</h4>
+      <div class="btn-row">
+        <span class="inline-label">Format</span>
+        <select id="gfxFmt"><option value="png">PNG</option><option value="tiff">TIFF</option><option value="svg">SVG</option><option value="jpg">JPG</option><option value="all">PNG + SVG</option></select>
+        <span class="inline-label">Resolution</span>
+        <select id="gfxRes"><option value="2">Screen · 2× (150 dpi)</option><option value="4" selected>High · 4× (300 dpi)</option><option value="8">Publication · 8× (600 dpi)</option><option value="12">Maximum · 12× (900 dpi)</option></select>
+        <button class="btn btn-primary" id="gfxZip">⬇ Download all figures (ZIP)</button>
+        <span class="hint" id="gfxCount" style="margin:0"></span>
+      </div>
+      <h4 style="margin-top:14px">Multi-panel figure</h4>
+      <p class="hint">Tick "Add to multi-panel figure" under the figures you want, then build. Panels are labelled (a), (b)… and share the style settings.</p>
+      <div class="btn-row"><button class="btn btn-secondary" id="gfxPanelBtn">Build multi-panel figure</button></div>
+      <div id="gfxPanelHost"></div>
+    </div>
+    <div id="gfxFigs"></div>
+  </div>
+</section>
+<!-- ==================== BLOCK 7 · REPORT ==================== -->
+<section class="step-panel" id="panel-7">
+  <div class="panel-title"><div class="pt-num">7</div><div><h2>Report and export</h2><p>A self-contained report with methods, tables and the figures exactly as you edited them; print it to PDF or download the whole package.</p></div></div>
+
+  <div class="card theory-card">
+    <div class="card-head"><div><h2>What goes into a good results report</h2></div></div>
+    <details class="acc">
+      <summary>Structure and reproducibility</summary>
+      <div class="acc-body">
+        <ul>
+          <li><b>Methods</b>: design, replicates, factors and levels, response and units, transformation, model and error terms, mean-separation test and α, software. The platform drafts this paragraph; edit it to your context.</li>
+          <li><b>Results</b>: the ANOVA (F, df, p, CV), means with SE and letters, trends for quantitative factors, and the interaction tables when relevant.</li>
+          <li><b>Figures</b>: numbered, with self-explanatory captions (what the bars are, which test, α). The report embeds them as vector graphics, so they stay sharp in the PDF and can be extracted.</li>
+          <li><b>Reproducibility</b>: the ZIP package includes the data as loaded, every table as CSV and every figure as SVG plus raster at the chosen resolution — enough for a supplementary-material file.</li>
+          <li>The HTML report opens in any browser without internet; "Print → Save as PDF" in the browser produces the PDF (A4 margins are pre-set).</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+
+  <div class="card" id="rpNoResults">
+    <p class="hint">No analysis yet. Run Block 5 first: the report is built from its results.</p>
+    <button class="btn btn-primary" id="rpGo5">Go to Block 5 →</button>
+  </div>
+
+  <div id="rpMain" style="display:none">
+    <div class="card">
+      <h2>1 · Report details</h2>
+      <div class="field-grid">
+        <div class="field"><label>Title</label><input type="text" id="rpTitle"></div>
+        <div class="field"><label>Authors</label><input type="text" id="rpAuthors" placeholder="Surname, N.; Surname, N."></div>
+        <div class="field"><label>Affiliation</label><input type="text" id="rpAffil" placeholder="Institution, department"></div>
+        <div class="field"><label>Trial (site, season)</label><input type="text" id="rpTrial" placeholder="Experimental field, spring–summer 2026"></div>
+        <div class="field"><label>Response units</label><input type="text" id="rpUnits" placeholder="t ha⁻¹"></div>
+      </div>
+      <div class="field"><label>Objective (optional)</label><textarea id="rpObjective" rows="2" style="width:100%" placeholder="To evaluate the effect of … on …"></textarea></div>
+      <h4 style="margin-top:14px">Sections</h4>
+      <div class="checkbox-grid">
+        <label class="checkbox-label"><input type="checkbox" id="rpSecData" checked> Data and descriptive statistics</label>
+        <label class="checkbox-label"><input type="checkbox" id="rpSecAssump" checked> Assumption tests (Block 4)</label>
+        <label class="checkbox-label"><input type="checkbox" id="rpSecFigs" checked> Figures</label>
+        <label class="checkbox-label"><input type="checkbox" id="rpSecPairs"> Appendix: pairwise comparisons</label>
+        <label class="checkbox-label"><input type="checkbox" id="rpSecRaw"> Appendix: raw data table</label>
+      </div>
+      <h4 style="margin-top:14px">Figures to include (as currently edited)</h4>
+      <div class="checkbox-grid">
+        <label class="checkbox-label"><input type="checkbox" id="rpFig3"> Block 3 · exploratory</label>
+        <label class="checkbox-label"><input type="checkbox" id="rpFig4"> Block 4 · residual diagnostics</label>
+        <label class="checkbox-label"><input type="checkbox" id="rpFig5" checked> Block 5 · means and trends</label>
+        <label class="checkbox-label"><input type="checkbox" id="rpFig6" checked> Block 6 · result graphics</label>
+      </div>
+      <p class="hint">Only figures that are currently rendered are available: open Blocks 3, 4 or 6 first if you want them in the report.</p>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="rpPreview">Build / refresh preview</button>
+        <button class="btn btn-secondary" id="rpMethods">Copy methods paragraph</button>
+        <span class="hint" id="rpInfo" style="margin:0"></span>
+      </div>
+      <div class="messages" id="rpMessages"></div>
+    </div>
+
+    <div class="card" id="rpPreviewCard" style="display:none">
+      <h2>2 · Preview and export</h2>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="rpHtml">⬇ Download report (HTML)</button>
+        <button class="btn btn-secondary" id="rpPrint">🖨 Print / save as PDF</button>
+        <span class="inline-label">Package figures as</span>
+        <select id="rpZipFmt"><option value="png" selected>PNG + SVG</option><option value="tiff">TIFF + SVG</option><option value="jpg">JPG + SVG</option><option value="svg">SVG only</option></select>
+        <select id="rpZipRes"><option value="4" selected>300 dpi</option><option value="8">600 dpi</option><option value="12">900 dpi</option></select>
+        <button class="btn btn-accent" id="rpZip">⬇ Download full package (ZIP)</button>
+      </div>
+      <iframe id="rpFrame" style="width:100%;height:760px;border:1px solid var(--border);border-radius:10px;background:#fff;margin-top:12px"></iframe>
+    </div>
+  </div>
+</section>
+<!-- ==================== BLOCK 8 · DESIGN GENERATOR ==================== -->
+<section class="step-panel" id="panel-8">
+  <div class="panel-title"><div class="pt-num">8</div><div><h2>Design generator: randomisation, field layout and replicates</h2><p>Plan the experiment before sowing: a reproducible randomisation, the field map, the field book to record the data, and the number of replicates you need.</p></div></div>
+
+  <div class="card theory-card">
+    <div class="card-head"><div><h2>Planning a field experiment</h2></div></div>
+    <details class="acc" open>
+      <summary>1 · Randomisation done right</summary>
+      <div class="acc-body">
+        <ul>
+          <li>Randomise with a documented <b>seed</b>: the same seed reproduces the same layout, so the plan can be regenerated and audited. Write the seed in the field book.</li>
+          <li>Randomise <b>within the structure</b> of the design: within each block (RCBD), within each row and column (Latin square), main plots within blocks and sub-plots within main plots (split-plot).</li>
+          <li>Never "improve" a randomisation by hand to avoid adjacent identical treatments; if a layout is agronomically impossible, change the seed and record why.</li>
+          <li>Number the plots in the direction of the field operations (serpentine numbering saves walking) and keep the same numbering for the whole season.</li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc">
+      <summary>2 · Plot size, shape and blocks</summary>
+      <div class="acc-body">
+        <ul>
+          <li><b>Long, narrow plots</b> oriented along the fertility gradient are more uniform than square ones; blocks are laid out across the gradient so that each block is homogeneous inside.</li>
+          <li>Plot size should be large enough to hold a harvest area free of border effects: <b>border rows</b> and plot ends are discarded (e.g. harvest the central 2 rows × 4 m of a 4-row × 5 m plot).</li>
+          <li>Typical field-crop plots: 10–30 m² for cereals, 20–50 m² for maize; pot experiments: one plant or a few plants per pot with more replicates.</li>
+          <li>Guard rows around the trial and alleys between blocks reduce interference between neighbouring treatments (fertiliser drift, shading, lodging).</li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc">
+      <summary>3 · How many replicates?</summary>
+      <div class="acc-body">
+        <p>The number of replicates <i>r</i> needed to detect a difference <i>d</i> (as % of the mean) between two treatments, with CV known from previous trials, comes from
+          <code>r ≥ 2 (t<sub>α/2</sub> + t<sub>β</sub>)² (CV / d)²</code>, solved iteratively because the t-values depend on the error degrees of freedom. The calculator below does this and
+          also answers the inverse question: with the replicates I can afford, how small a difference can I detect?</p>
+        <ul>
+          <li>Aim for at least <b>10–12 error degrees of freedom</b>; with fewer, F-tests and mean comparisons are weak.</li>
+          <li>A difference of 10–15 % of the mean with a CV of 10–15 % typically needs 4–6 replicates in an RCBD.</li>
+          <li>Power calculations use the CV; the biggest lever is reducing the CV through plot technique and blocking, not adding replicates.</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>1 · Generate a randomised layout</h2>
+    <div class="field-grid">
+      <div class="field"><label>Design</label><select id="gnDesign"></select></div>
+      <div class="field"><label>Seed</label><div class="btn-row" style="margin:0"><input type="number" id="gnSeed" value="2026" style="width:110px"><button class="btn btn-ghost btn-sm" id="gnNewSeed">new seed</button></div></div>
+      <div class="field" data-need="reps"><label>Replicates / blocks</label><input type="number" id="gnReps" value="4" min="1" max="50" style="width:90px"></div>
+      <div class="field" data-need="k"><label>Block size k (incomplete blocks)</label><input type="number" id="gnK" value="4" min="2" style="width:90px"></div>
+    </div>
+    <div class="two-col">
+      <div data-need="trts"><div class="field"><label>Treatments (one per line; leave empty to use T1…Tn)</label><textarea id="gnTrts" rows="5" style="width:100%" placeholder="Control&#10;N60&#10;N120&#10;N180"></textarea></div>
+        <div class="field" style="margin-top:8px"><label>…or number of treatments</label><input type="number" id="gnNTrts" value="4" min="2" max="200" style="width:90px"></div></div>
+      <div>
+        <div class="field" data-need="A"><label>Factor A levels (comma-separated) — main plots in split designs</label><input type="text" id="gnA" value="Drip, Furrow" style="width:100%"></div>
+        <div class="field" data-need="B" style="margin-top:8px"><label>Factor B levels — sub-plots</label><input type="text" id="gnB" value="V1, V2, V3, V4" style="width:100%"></div>
+        <div class="field" data-need="C" style="margin-top:8px"><label>Factor C levels (optional; required for split-split)</label><input type="text" id="gnC" value="" style="width:100%" placeholder="N0, N60, N120"></div>
+        <div class="field" data-need="checks" style="margin-top:8px"><label>Checks (replicated in every block)</label><input type="text" id="gnChecks" value="Check A, Check B" style="width:100%"></div>
+        <div class="field" data-need="entries" style="margin-top:8px"><label>New entries (unreplicated; comma-separated)</label><textarea id="gnEntries" rows="3" style="width:100%" placeholder="G1, G2, G3, …"></textarea></div>
+      </div>
+    </div>
+    <details class="acc"><summary>Layout, numbering and field-book options</summary>
+      <div class="acc-body">
+        <div class="field-grid">
+          <div class="field" data-need="cols"><label>Plots per row within a block (0 = one row)</label><input type="number" id="gnCols" value="0" min="0" style="width:90px"></div>
+          <div class="field" data-need="arr"><label>Block arrangement</label><select id="gnArr"><option value="stacked">Blocks stacked (one below the other)</option><option value="side">Blocks side by side</option></select></div>
+          <div class="field" data-need="arr"><label>Blocks per row (side by side)</label><input type="number" id="gnBpr" value="2" min="1" style="width:90px"></div>
+          <div class="field"><label>Alley between blocks</label><label class="checkbox-label"><input type="checkbox" id="gnGap"> leave an empty row/column</label></div>
+          <div class="field"><label>Plot numbering</label><select id="gnNum"><option value="seq">Sequential 1…n</option><option value="block">Block × 100 + plot (101, 102, 201…)</option></select></div>
+          <div class="field"><label>Serpentine</label><label class="checkbox-label"><input type="checkbox" id="gnSerp" checked> alternate direction on each row</label></div>
+          <div class="field"><label>Plot width (m)</label><input type="number" id="gnPW" value="3" step="0.1" style="width:90px"></div>
+          <div class="field"><label>Plot length (m)</label><input type="number" id="gnPL" value="5" step="0.1" style="width:90px"></div>
+          <div class="field"><label>Column name: block / replicate</label><input type="text" id="gnRepName" value="Block"></div>
+          <div class="field"><label>Column name: factor A</label><input type="text" id="gnAName" value="A"></div>
+          <div class="field"><label>Column name: factor B</label><input type="text" id="gnBName" value="B"></div>
+          <div class="field"><label>Column name: factor C</label><input type="text" id="gnCName" value="C"></div>
+          <div class="field"><label>Column name: treatment</label><input type="text" id="gnTrtName" value="Treatment"></div>
+          <div class="field"><label>Response columns to add (comma-separated)</label><input type="text" id="gnResp" value="Yield" placeholder="Yield, Height, Severity"></div>
+        </div>
+      </div>
+    </details>
+    <div class="btn-row"><button class="btn btn-primary" id="gnRun">Generate layout and field book</button></div>
+    <div class="messages" id="gnMessages"></div>
+  </div>
+
+  <div id="gnResults" style="display:none">
+    <div class="card">
+      <h2>2 · Layout</h2>
+      <div class="results-summary" id="gnTiles"></div>
+      <div id="gnLayout"></div>
+      <div class="table-scroll" id="gnDf" style="max-width:520px"></div>
+    </div>
+    <div class="card">
+      <h2>3 · Field book</h2>
+      <p class="hint">One row per plot, in plot order, with empty response columns to fill in the field. This is exactly the tidy format Block 2 reads back.</p>
+      <div class="btn-row">
+        <button class="btn btn-secondary" id="gnCsv">⬇ Field book (CSV)</button>
+        <button class="btn btn-secondary" id="gnXlsx">⬇ Field book (Excel)</button>
+        <button class="btn btn-accent" id="gnTemplate">Open as data template in Block 2 →</button>
+      </div>
+      <div class="table-scroll" id="gnBook" style="margin-top:12px"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>4 · Replicates and power</h2>
+    <div class="field-grid">
+      <div class="field"><label>Expected CV (%)</label><input type="number" id="pwCV" value="15" min="1" step="0.5" style="width:90px"><span class="field-help">From previous trials on the site.</span></div>
+      <div class="field"><label>Difference to detect (% of mean)</label><input type="number" id="pwD" value="15" min="1" step="0.5" style="width:90px"></div>
+      <div class="field"><label>α</label><select id="pwAlpha"><option value="0.05" selected>0.05</option><option value="0.01">0.01</option><option value="0.10">0.10</option></select></div>
+      <div class="field"><label>Target power</label><select id="pwPower"><option value="0.8" selected>0.80</option><option value="0.9">0.90</option><option value="0.95">0.95</option></select></div>
+      <div class="field"><label>Number of treatments</label><input type="number" id="pwT" value="4" min="2" style="width:90px"></div>
+      <div class="field"><label>Design</label><select id="pwDesign"><option value="rcbd" selected>RCBD</option><option value="crd">CRD</option></select></div>
+      <div class="field"><label>Replicates you can afford</label><input type="number" id="pwR" value="4" min="2" style="width:90px"></div>
+      <div class="field"><label>&nbsp;</label><button class="btn btn-primary" id="pwRun">Calculate</button></div>
+    </div>
+    <div id="pwResults" style="display:none">
+      <div class="results-summary" id="pwTiles"></div>
+      <div id="pwInterp"></div>
+      <div class="table-scroll" id="pwTable" style="max-width:720px"></div>
+      <div class="fig-grid"><div id="pwFig1"></div><div id="pwFig2"></div></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script src="vendor/xlsx.full.min.js"></script>
+<script src="js/core.js"></script>
+<script src="js/stats.js"></script>
+<script src="js/figure.js"></script>
+<script src="js/art.js"></script>
+<script src="js/data.js"></script>
+<script src="js/plots3.js"></script>
+<script src="js/block3.js"></script>
+<script src="js/lm.js"></script>
+<script src="js/assump.js"></script>
+<script src="js/nonpar.js"></script>
+<script src="js/plots4.js"></script>
+<script src="js/block4.js"></script>
+<script src="js/posthoc.js"></script>
+<script src="js/designs.js"></script>
+<script src="js/plots5.js"></script>
+<script src="js/block5.js"></script>
+<script src="js/zip.js"></script>
+<script src="js/plots6.js"></script>
+<script src="js/block6.js"></script>
+<script src="js/report.js"></script>
+<script src="js/gen.js"></script>
+<script src="js/plots8.js"></script>
+<script src="js/block8.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>
