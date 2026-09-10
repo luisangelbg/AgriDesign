@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0 — 2026-09-09
+## 1.0 — 2026-09-10 · DOI 10.5281/zenodo.22683047
 
 First public release.
 

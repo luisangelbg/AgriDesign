@@ -1,5 +1,9 @@
 # AgriDesign
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22683046.svg)](https://doi.org/10.5281/zenodo.22683046)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
+[![Use it online](https://img.shields.io/badge/Use%20it%20online-luisangelbg.github.io%2FAgriDesign-2f7d4f)](https://luisangelbg.github.io/AgriDesign/)
+
 **Design and analysis of agricultural experiments, without writing code.** All eight blocks are complete.
 
 A local web platform (HTML + JavaScript, no installation, no internet) that guides the user from the
@@ -94,9 +98,11 @@ Rules followed by every block:
 
 ## How to cite
 
-If you use AgriDesign in a publication, please cite the software (a citable DOI is provided by Zenodo for every release):
+If you use AgriDesign in a publication, please cite the software:
 
-> Barrera-Guzmán, L. Á. (2026). *AgriDesign: a browser-based platform for the design and analysis of agricultural experiments* (Version 1.0.0) [Computer software]. https://github.com/luisangelbg/AgriDesign
+> Barrera-Guzmán, L. Á. (2026). *AgriDesign: a browser-based platform for the design and analysis of agricultural experiments* (Version 1.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.22683046
+
+The concept DOI above always resolves to the latest version; the DOI of this specific release is [10.5281/zenodo.22683047](https://doi.org/10.5281/zenodo.22683047).
 
 The `CITATION.cff` file contains the same information in machine-readable form (GitHub shows a "Cite this repository" button).
 
