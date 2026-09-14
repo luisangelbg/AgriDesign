@@ -2,6 +2,15 @@
 
 (function () {
 const Report = {};
+/* ---------- software citation (kept in sync with CITATION.cff) ---------- */
+Report.CITE = {
+  author: 'Barrera-Guzmán, L. Á.', year: 2026, version: '1.0',
+  title: 'AgriDesign: a browser-based platform for the design and analysis of agricultural experiments',
+  doi: '10.5281/zenodo.22683046', url: 'https://doi.org/10.5281/zenodo.22683046', repo: 'https://github.com/luisangelbg/AgriDesign', online: 'https://luisangelbg.github.io/AgriDesign/',
+};
+Report.citation = () => { const c = Report.CITE; return `${c.author} (${c.year}). ${c.title} (Version ${c.version}) [Computer software]. Zenodo. ${c.url}`; };
+Report.bibtex = () => { const c = Report.CITE; return `@software{barrera_guzman_agridesign_${c.year},\n  author  = {Barrera-Guzmán, Luis Ángel},\n  title   = {${c.title}},\n  year    = {${c.year}},\n  version = {${c.version}},\n  doi     = {${c.doi}},\n  url     = {${c.url}}\n}`; };
+Report.citeSection = () => { const c = Report.CITE; return `<h2>How to cite</h2><p>If this analysis is published, please cite the software:</p><p style="padding-left:2em;text-indent:-2em">${esc(c.author)} (${c.year}). <i>${esc(c.title)}</i> (Version ${c.version}) [Computer software]. Zenodo. <a href="${c.url}">${c.url}</a></p><p class="small">The DOI is a concept DOI and always resolves to the latest version; version-specific DOIs are listed on the Zenodo record. Source code: <a href="${c.repo}">${c.repo}</a> · online version: <a href="${c.online}">${c.online}</a> · license GPL-3.0.</p><pre style="background:#f4f6f3;border-radius:8px;padding:10px 12px;font-size:12px;overflow-x:auto">${esc(Report.bibtex())}</pre>`; };
 const lc = s => { const t = s.replace(/\s*\(.*?\)\s*$/, ''); return t.charAt(0).toLowerCase() + t.slice(1); };
 const fx = (v, d) => fmtFixed(v, d == null ? 3 : d);
 let figN = 0, tabN = 0;
@@ -43,7 +52,7 @@ function methodsText(R, A, o) {
   const trans = R.transform ? ` The response was ${R.transform.label} transformed before analysis to meet the assumptions; means are reported back-transformed.` : '';
   const assum = A && (A.resp === R.resp || (R.transform && A.resp === R.resp)) ? ` Residuals were checked for normality (Shapiro–Wilk), homogeneity of variances (Levene's test${A.tk ? ') and additivity (Tukey\'s one-degree-of-freedom test' : ''}).` : ' Residuals were checked for normality (Shapiro–Wilk) and homogeneity of variances (Levene\'s test).';
   const cov = d.covariates.length ? ` ${d.covariates.join(', ')} ${d.covariates.length > 1 ? 'were' : 'was'} included as covariate${d.covariates.length > 1 ? 's' : ''} (ANCOVA).` : '';
-  return `<p>The experiment was laid out as a <b>${lc(c.name)}</b> with ${reps}. Treatment factor${d.factors.length > 1 ? 's were' : ' was'} ${facs}. The response variable was <b>${esc(R.resp.replace(/_(ln|log10|sqrt|sqrt05|asin|logit|inv|ln1)$/, ''))}</b>${o.units ? ' (' + esc(o.units) + ')' : ''}.${cov}${trans}${assum} Data were analysed by analysis of variance according to the model <code>${esc(c.model)}</code> with ${R.terms.some(t => t.isError) ? 'the appropriate error strata' : 'a single error term'} and Type ${+el('anSS').value === 1 ? 'I' : 'III'} sums of squares. Treatment means were compared with ${PH.methods[R.method].name} at α = ${R.alpha}${d.factors.some(f => R.levelsMap[f].length >= 3 && R.levelsMap[f].every(l => /^[+-]?\d+(\.\d+)?$/.test(l))) ? ', and trends over quantitative factors were examined with orthogonal polynomial contrasts' : ''}. All computations were performed with AgriDesign (browser-based platform for the design and analysis of agricultural experiments).</p>`;
+  return `<p>The experiment was laid out as a <b>${lc(c.name)}</b> with ${reps}. Treatment factor${d.factors.length > 1 ? 's were' : ' was'} ${facs}. The response variable was <b>${esc(R.resp.replace(/_(ln|log10|sqrt|sqrt05|asin|logit|inv|ln1)$/, ''))}</b>${o.units ? ' (' + esc(o.units) + ')' : ''}.${cov}${trans}${assum} Data were analysed by analysis of variance according to the model <code>${esc(c.model)}</code> with ${R.terms.some(t => t.isError) ? 'the appropriate error strata' : 'a single error term'} and Type ${+el('anSS').value === 1 ? 'I' : 'III'} sums of squares. Treatment means were compared with ${PH.methods[R.method].name} at α = ${R.alpha}${d.factors.some(f => R.levelsMap[f].length >= 3 && R.levelsMap[f].every(l => /^[+-]?\d+(\.\d+)?$/.test(l))) ? ', and trends over quantitative factors were examined with orthogonal polynomial contrasts' : ''}. All computations were performed with AgriDesign version ${Report.CITE.version} (${Report.CITE.author.replace(/,.*/, '')}, ${Report.CITE.year}; ${Report.CITE.url}), a browser-based platform for the design and analysis of agricultural experiments.</p>`;
 }
 function dataSection(R) {
   const d = R.d, trt = r => d.factors.map(f => r.f[f]).join(' × ');
@@ -136,6 +145,7 @@ Report.build = o => {
   if (o.secFigs) body += `<h2>Figures</h2>${figuresSection(o)}`;
   if (o.secPairs) body += `<h2>Appendix A · Pairwise comparisons</h2>${pairwiseAppendix(R)}`;
   if (o.secRaw) body += `<h2>Appendix B · Data</h2>` + htmlTable(state.rawHeader.map((h, j) => ({ key: j, label: esc(h), get: r => r[j] })), state.rawRows, 'Data as loaded.');
+  if (o.secCite !== false) body += Report.citeSection();
   body += `<div class="footer">AgriDesign — design and analysis of agricultural experiments. All computations were performed locally in the browser; figures are embedded as vector graphics and can be extracted from this file.</div>`;
   return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>${esc(o.title)}</title><style>${CSS}</style></head><body>${body}</body></html>`;
 };
@@ -166,7 +176,7 @@ Report.zip = async (o, html) => {
 function opts() {
   return {
     title: el('rpTitle').value.trim() || 'Analysis report', authors: el('rpAuthors').value.trim(), affil: el('rpAffil').value.trim(), trial: el('rpTrial').value.trim(), objective: el('rpObjective').value.trim(), units: el('rpUnits').value.trim(),
-    secData: el('rpSecData').checked, secAssump: el('rpSecAssump').checked, secFigs: el('rpSecFigs').checked, secPairs: el('rpSecPairs').checked, secRaw: el('rpSecRaw').checked,
+    secData: el('rpSecData').checked, secAssump: el('rpSecAssump').checked, secFigs: el('rpSecFigs').checked, secPairs: el('rpSecPairs').checked, secRaw: el('rpSecRaw').checked, secCite: el('rpSecCite').checked,
     figBlocks: [3, 4, 5, 6].filter(n => el('rpFig' + n).checked), zipFmt: el('rpZipFmt').value, zipRes: el('rpZipRes').value,
   };
 }

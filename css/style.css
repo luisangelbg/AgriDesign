@@ -392,3 +392,50 @@ details.fig-editor > summary { cursor: pointer; font-size: 0.82rem; color: var(-
 .fig6-wrap { margin: 14px 0 22px; }
 .fig6-pick { font-size: 0.8rem; color: var(--text-muted); margin: 4px 0 0 6px; }
 .preset-btn.active { background: var(--primary-soft); color: var(--primary); border-color: rgba(47,125,79,0.3); font-weight: 600; }
+
+/* ---------- Home: simulator (blocking vs CRD) ---------- */
+.playground { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px 20px 16px; }
+.pg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 900px) { .pg-grid { grid-template-columns: 1fr; } }
+.pg-pane { border: 1px solid var(--border); border-radius: 10px; background: var(--bg-soft); overflow: hidden; padding-bottom: 6px; }
+.pg-pane svg { width: 100%; height: auto; display: block; }
+.pg-title { font-size: 0.72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); padding: 8px 12px 4px; }
+.pg-controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
+.pg-status { font-size: 0.84rem; color: var(--text-muted); margin-top: 10px; min-height: 1.4em; }
+.pg-status b { color: var(--text); }
+.slider-row { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; font-size: 0.82rem; }
+.slider-row label { color: var(--text-muted); white-space: nowrap; }
+.slider-row input[type=range] { width: 100%; accent-color: var(--primary); }
+.sim-readout { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; padding: 6px 10px 4px; }
+.sim-readout .rd { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 5px 8px; }
+.sim-readout .rd-l { font-size: 0.62rem; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); font-weight: 700; }
+.sim-readout .rd-v { font-size: 0.98rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.sim-readout .rd.sig { border-color: var(--success); box-shadow: inset 3px 0 0 var(--success); }
+.pg-power-row { display: grid; grid-template-columns: 60px 1fr 52px; gap: 10px; align-items: center; font-size: 0.86rem; padding: 3px 12px; }
+.pg-power-bar { height: 14px; background: var(--bg-soft); border-radius: 7px; overflow: hidden; }
+.pg-power-bar div { height: 100%; border-radius: 7px; transition: width .4s; }
+#pgPower { margin-top: 12px; border: 1px dashed var(--border); border-radius: 10px; padding-bottom: 8px; }
+#pgPower:empty { display: none; }
+
+/* ---------- Home: kinds of experiments, methods, comparison, cite ---------- */
+.kind-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+.kind-tile { text-align: left; font-family: inherit; color: var(--text); background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 12px; padding: 10px 12px 12px; transition: border-color .15s, transform .15s; }
+.kind-tile:hover { border-color: var(--primary); transform: translateY(-2px); }
+.kind-tile svg { width: 100%; height: 76px; display: block; }
+.kind-tile .kt-t { font-weight: 700; font-size: 0.88rem; margin-top: 6px; }
+.kind-tile .kt-s { font-size: 0.76rem; color: var(--text-muted); line-height: 1.35; }
+.kind-tile .kt-k { display: inline-block; font-size: 0.64rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; margin-top: 6px; background: var(--primary-soft); color: var(--primary); }
+.method-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.mcard { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; display: flex; gap: 10px; align-items: flex-start; }
+.mcard svg { width: 64px; height: 44px; flex-shrink: 0; border-radius: 6px; background: var(--bg-soft); }
+.mcard .m-n { font-weight: 700; font-size: 0.86rem; }
+.mcard .m-s { font-size: 0.74rem; color: var(--text-muted); }
+.mcard .m-f { font-size: 0.62rem; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); font-weight: 700; }
+.compare-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; background: var(--card-bg); }
+.compare-wrap table { font-size: 0.86rem; }
+.compare-wrap td.yes { color: var(--success); font-weight: 700; text-align: center; }
+.acc > summary .acc-tag { margin-left: auto; font-size: 0.68rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; }
+.cite-card { border-left: 3px solid var(--primary); }
+.cite-ref { font-size: 1rem; line-height: 1.6; margin: 0; padding: 12px 16px; background: var(--bg-soft); border-radius: 10px; }
+.cite-ref a { word-break: break-all; }
+.cite-card .formula { white-space: pre; }

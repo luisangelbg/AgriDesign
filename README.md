@@ -30,7 +30,7 @@ Everything still runs in your browser; no data are uploaded anywhere.
 
 | Block | Content | Status |
 |---|---|---|
-| 1 | Home page: overview, workflow, designs covered | ✅ ready |
+| 1 | Home page: illustrated hero (blocked field trial with maize, chile, tomato and coffee; cow, sheep and goat in the paddock; means card), workflow, live simulator "why blocking beats a completely randomised layout" (real ANOVA of CRD vs RCBD under a fertility gradient, power over 300 randomisations), block cards, kinds of experiment (field, horticulture, perennial, livestock, laboratory, scores), design and method galleries, theory in plain language, how to cite | ✅ ready |
 | 2 | Data import (xlsx, xls, xlsm, xlsb, ods, csv, tsv, txt, json, clipboard), tidy-format diagnostics, variable roles, design structure and balance, wide→long reshaping | ✅ ready |
 | 3 | Descriptive statistics by treatment / block / combination, two-way means table, automatic interpretation (CV benchmarks, skewness, outliers, variance heterogeneity), editable figures: histogram + density, box, violin, means ± SE/SD/CI, strip, block profiles, interaction, covariate scatter, correlation heat map | ✅ ready |
 | 4 | Residual diagnostics on the fitted design model (Shapiro–Wilk, Anderson–Darling, Jarque–Bera, Levene, Bartlett, Fligner–Killeen, Fmax, Tukey additivity, Durbin–Watson, studentized residuals), residual plots, transformation comparison + Box–Cox with "Use" (creates a new column), non-parametric route: Kruskal–Wallis + Dunn / Mann–Whitney, Friedman + Conover / Nemenyi, Scheirer–Ray–Hare, Aligned Rank Transform ANOVA + Tukey on aligned ranks, Welch + Games–Howell, compact letters | ✅ ready |
@@ -51,7 +51,9 @@ js/figure.js      SVG figure engine: palettes, themes, axes, legends, editor pan
                   PNG (with DPI), TIFF (with DPI), SVG, JPG, WEBP at 2×–12×
 js/art.js         SVG illustrations (home page, design layouts, principles)
 js/data.js        Block 2
-js/home.js        Block 1
+js/home.js        Block 1 (home page: cards, galleries, theory art, citation card)
+js/art2.js        crops (chile, tomato, coffee, maize), animals (cow, sheep, goat), hero scene, kind tiles
+js/playground.js  home simulator: CRD vs RCBD under a gradient, analysed with the LM engine
 js/plots3.js      Block 3 figure constructors (P3.*)
 js/block3.js      Block 3 UI, tables and interpretation
 js/lm.js          linear-model engine: effect-coded model matrix, MGS-QR fit with aliasing, leverage, Type I / III ANOVA

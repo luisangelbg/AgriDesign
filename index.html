@@ -32,55 +32,205 @@
   <div class="hero">
     <div class="hero-inner">
       <div>
-        <div class="eyebrow">Experimental design for agricultural research</div>
+        <div class="eyebrow">Experimental design for agricultural research · crops and livestock</div>
         <h1>Design and analyse <span class="accent">agricultural experiments</span> without writing code</h1>
-        <p class="lead">From the field book to the publication figure: upload your data, let the platform recognise the
-          <b>design</b>, check the <b>ANOVA assumptions</b>, run the right analysis and mean-separation test,
-          and export <b>journal-quality figures</b>. No R, SAS or Python required.</p>
+        <p class="lead">Maize, tomato, chile or coffee plots; cows, sheep or goats in pens — the same guided route takes you from
+          the field book to <b>ANOVA with the right error terms</b>, <b>mean-separation letters</b>, <b>response curves</b> and
+          <b>journal-ready figures</b>, and back to the field with a randomised layout for the next trial.
+          No R, SAS or Python required.</p>
         <div class="hero-cta">
           <button class="btn btn-primary btn-lg" id="startBtn">Start with my data →</button>
-          <button class="btn btn-secondary btn-lg" id="exampleBtn">Try a worked example</button>
+          <button class="btn btn-secondary btn-lg" id="simBtn">Try the simulator</button>
+          <button class="btn btn-ghost btn-lg" id="theoryBtn">Read the theory</button>
+          <button class="btn btn-ghost btn-lg" id="citeBtn">How to cite</button>
         </div>
         <div class="badge-row">
           <span class="badge ok">Runs entirely in your browser</span>
           <span class="badge ok">Your data never leave your computer</span>
+          <span class="badge ok">Fourteen designs · eleven mean tests</span>
           <span class="badge ok">Figures up to 900 dpi · PNG, TIFF, SVG</span>
           <span class="badge ok">Free for teaching and research</span>
         </div>
+        <p class="hint" style="margin:14px 0 0">New here? <a href="#" id="exampleLink">Open a worked example</a> (maize × nitrogen in blocks) and walk through the blocks.</p>
       </div>
       <div class="hero-art" id="heroArt"></div>
     </div>
   </div>
 
   <h2 class="section-title">How it works</h2>
-  <p class="section-sub">A guided workflow: every step explains the theory you need, checks your data and recommends what to do next.</p>
+  <p class="section-sub">A guided route in the order an agricultural experiment is actually reported. Every step explains the idea in plain
+    language, checks whether your data support it and recommends what to do next.</p>
   <div class="workflow">
-    <div class="wf-step"><div class="wf-n">STEP 1</div><div class="wf-t">Load data</div><div class="wf-d">xlsx, csv, json… one row per plot</div></div>
-    <div class="wf-step"><div class="wf-n">STEP 2</div><div class="wf-t">Assign roles</div><div class="wf-d">response, factors, blocks</div></div>
-    <div class="wf-step"><div class="wf-n">STEP 3</div><div class="wf-t">Explore</div><div class="wf-d">descriptive statistics &amp; plots</div></div>
-    <div class="wf-step"><div class="wf-n">STEP 4</div><div class="wf-t">Check assumptions</div><div class="wf-d">normality, homogeneity, additivity</div></div>
-    <div class="wf-step"><div class="wf-n">STEP 5</div><div class="wf-t">Analyse</div><div class="wf-d">ANOVA for your design + mean tests</div></div>
-    <div class="wf-step"><div class="wf-n">STEP 6</div><div class="wf-t">Publish</div><div class="wf-d">editable figures, tables, report</div></div>
+    <div class="wf-step"><div class="wf-n">STEP 1</div><div class="wf-t">Load &amp; check</div><div class="wf-d">one row per plot, roles for every column</div></div>
+    <div class="wf-step"><div class="wf-n">STEP 2</div><div class="wf-t">Explore</div><div class="wf-d">descriptive statistics and plots</div></div>
+    <div class="wf-step"><div class="wf-n">STEP 3</div><div class="wf-t">Check assumptions</div><div class="wf-d">normality, variances, additivity</div></div>
+    <div class="wf-step"><div class="wf-n">STEP 4</div><div class="wf-t">Analyse</div><div class="wf-d">ANOVA for your design + mean tests</div></div>
+    <div class="wf-step"><div class="wf-n">STEP 5</div><div class="wf-t">Illustrate</div><div class="wf-d">editable figures with letters</div></div>
+    <div class="wf-step"><div class="wf-n">STEP 6</div><div class="wf-t">Publish</div><div class="wf-d">report, tables, ZIP</div></div>
+    <div class="wf-step"><div class="wf-n">STEP 7</div><div class="wf-t">Plan the next one</div><div class="wf-d">randomised layout, replicates</div></div>
+  </div>
+
+  <!-- ---------- Live simulator ---------- -->
+  <h2 class="section-title" id="simulator">Try it: why blocking beats a completely randomised layout</h2>
+  <p class="section-sub">Four treatments are laid out twice on the same field: completely at random (left) and in randomised complete
+    blocks (right). The field has a fertility gradient from the top row to the bottom row; both layouts receive the same treatment
+    effects and the same random noise. Each layout is then analysed with the platform's own ANOVA engine. Move the gradient up and
+    watch the CRD lose its power while the blocks keep it.</p>
+  <div class="playground">
+    <div class="pg-controls">
+      <button class="btn btn-primary btn-sm" id="pgRun">▶ Randomise again</button>
+      <button class="btn btn-secondary btn-sm" id="pgNew">New random seed</button>
+      <button class="btn btn-secondary btn-sm" id="pgBatch">Run 300 randomisations</button>
+    </div>
+    <div class="field-grid" style="margin-bottom:12px">
+      <div class="slider-row"><label>Replicates (blocks)</label><input type="range" id="pgR" min="2" max="6" step="1" value="4"><span class="range-val" id="pgRVal">4</span></div>
+      <div class="slider-row"><label>Treatment difference</label><input type="range" id="pgDelta" min="0" max="3" step="0.1" value="1.2"><span class="range-val" id="pgDeltaVal">1.2 SD</span></div>
+      <div class="slider-row"><label>Fertility gradient</label><input type="range" id="pgGrad" min="0" max="4" step="0.1" value="2"><span class="range-val" id="pgGradVal">2.0 SD</span></div>
+    </div>
+    <div class="pg-grid">
+      <div class="pg-pane">
+        <svg id="pgFieldCRD" viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div class="sim-readout">
+          <div class="rd"><div class="rd-l">F</div><div class="rd-v" id="pgCRDF">—</div></div>
+          <div class="rd"><div class="rd-l">p</div><div class="rd-v" id="pgCRDP">—</div></div>
+          <div class="rd"><div class="rd-l">CV</div><div class="rd-v" id="pgCRDCV">—</div></div>
+          <div class="rd"><div class="rd-l">df</div><div class="rd-v" id="pgCRDDF">—</div></div>
+        </div>
+      </div>
+      <div class="pg-pane">
+        <svg id="pgFieldRCBD" viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div class="sim-readout">
+          <div class="rd"><div class="rd-l">F</div><div class="rd-v" id="pgRCBDF">—</div></div>
+          <div class="rd"><div class="rd-l">p</div><div class="rd-v" id="pgRCBDP">—</div></div>
+          <div class="rd"><div class="rd-l">CV</div><div class="rd-v" id="pgRCBDCV">—</div></div>
+          <div class="rd"><div class="rd-l">df</div><div class="rd-v" id="pgRCBDDF">—</div></div>
+        </div>
+      </div>
+    </div>
+    <div id="pgPower"></div>
+    <div class="pg-status" id="pgStatus"></div>
   </div>
 
   <h2 class="section-title">What's inside</h2>
-  <p class="section-sub">Eight blocks, built in order. Click a card to jump to it.</p>
+  <p class="section-sub">Seven analysis blocks, in the order of the route. Click a card to jump to it.</p>
   <div class="feature-grid" id="featureGrid"></div>
 
-  <h2 class="section-title">Experimental designs covered</h2>
-  <p class="section-sub">The platform recognises the structure of your data (factors, blocks, rows and columns) and offers the matching analysis. Colours are treatments; each rectangle is a plot.</p>
+  <h2 class="section-title">Every kind of experiment</h2>
+  <p class="section-sub">The experimental unit and the type of response decide the design and the test. AgriDesign recognises the
+    structure of your table and offers only the analyses that make sense for it.</p>
+  <div class="kind-grid" id="kindGrid"></div>
+
+  <h2 class="section-title">Designs covered</h2>
+  <p class="section-sub">Colours are treatments; each rectangle is a plot. The platform recognises factors, blocks, rows and columns in
+    your data and builds the matching model with its error strata.</p>
   <div class="design-gallery" id="designGallery"></div>
 
-  <h2 class="section-title">Why AgriDesign</h2>
-  <div class="why-grid">
-    <div class="why"><div class="w-icon">🌽</div><h4>Built for agronomy</h4><p>Vocabulary, examples and checks follow field-trial practice: plots, blocks, replicates, CV, yield units.</p></div>
-    <div class="why"><div class="w-icon">🧭</div><h4>Guided, not just computed</h4><p>Every block explains the theory in plain language and tells you which test fits your data and why.</p></div>
-    <div class="why"><div class="w-icon">🔬</div><h4>Validated numerics</h4><p>Statistics computed in the browser and checked against R reference values. Exact <i>p</i>-values, studentized range, F and t distributions.</p></div>
-    <div class="why"><div class="w-icon">🎨</div><h4>Publication-ready figures</h4><p>Every plot is editable (colours, fonts, sizes, titles) and exports to PNG, TIFF, SVG, JPG and WEBP at up to 900 dpi with embedded resolution.</p></div>
-    <div class="why"><div class="w-icon">🔒</div><h4>Private and offline</h4><p>Nothing is uploaded. Works without internet, from a USB stick or a shared folder.</p></div>
-    <div class="why"><div class="w-icon">📚</div><h4>Complete toolbox</h4><p>Parametric and non-parametric ANOVA, all classical mean-separation tests, transformations, contrasts and covariance.</p></div>
+  <h2 class="section-title">Methods covered</h2>
+  <p class="section-sub">From the diagnosis of the residuals to the planning of the next trial.</p>
+  <div class="method-gallery" id="methodGallery"></div>
+
+  <h2 class="section-title">What it brings together</h2>
+  <p class="section-sub">One guided path from the data sheet to the figure, with the theory next to every result.</p>
+  <div class="compare-wrap" id="compareBody"></div>
+
+  <!-- ---------- Theory ---------- -->
+  <h2 class="section-title" id="theory">The theory, in plain language</h2>
+  <p class="section-sub">Enough to design a sound trial and defend the analysis in a seminar. Each block repeats the part it needs next to its results.</p>
+  <div class="card theory-card">
+    <details class="acc"><summary>What every experiment must have <span class="acc-tag">start here</span></summary>
+      <div class="acc-body">
+        <div id="homeArtRep"></div>
+        <p><b>Replication.</b> Each treatment goes to several independent experimental units — plots, pots, animals or pens.
+          Replication is the only way to estimate the experimental error, and it sharpens the estimate of every mean: the standard
+          error of a treatment mean is <code>s/√r</code>. Measuring the same plot several times is sub-sampling, not replication.</p>
+        <div style="clear:both"></div><div id="homeArtRand"></div>
+        <p><b>Randomisation.</b> Treatments are assigned by chance, never by convenience. It protects against unknown biases (a fertile
+          corner, the order of harvest, the first animals caught) and is what justifies the F-test. Block 8 generates the layouts.</p>
+        <div style="clear:both"></div><div id="homeArtBlock"></div>
+        <p><b>Local control.</b> Units are grouped into blocks that are homogeneous inside — same soil, same slope, same barn — and
+          every treatment appears in every block, so the block-to-block variation leaves the error. The simulator above shows how much that buys.</p>
+        <div style="clear:both"></div>
+      </div>
+    </details>
+    <details class="acc"><summary>The experimental unit decides everything <span class="acc-tag">plots, pots, animals</span></summary>
+      <div class="acc-body">
+        <p>The experimental unit is the smallest thing that receives a treatment independently: the plot in a field trial, the pot in a
+          greenhouse, the animal when diets are fed individually, but the <b>pen</b> when all animals in it eat from the same trough.
+          Counting animals as replicates when the pen was treated is the most frequent error in livestock trials: it multiplies the
+          replicates and invents significance. The same happens with plants inside a plot, trees inside a row or dishes inside an incubator.</p>
+        <p>Measurements taken on several plants of the same plot are averaged (or analysed as sub-samples) before the ANOVA;
+          measurements repeated on the same unit over time are repeated measures, analysed as a split-plot in time.</p>
+      </div>
+    </details>
+    <details class="acc"><summary>Choosing the design from the layout <span class="acc-tag">which model</span></summary>
+      <div class="acc-body">
+        <table><thead><tr><th>Your experiment has…</th><th>Design</th><th>Typical case</th></tr></thead><tbody>
+          <tr><td>One factor, homogeneous units, no gradient</td><td>Completely randomised (CRD)</td><td>pots on a bench, animals of one weight</td></tr>
+          <tr><td>One factor, one known gradient</td><td>Randomised complete block (RCBD)</td><td>field slope, litter or barn, sampling day</td></tr>
+          <tr><td>One factor, two gradients</td><td>Latin square</td><td>rows × columns of a field; animals × periods</td></tr>
+          <tr><td>Two or more factors studied together</td><td>Factorial in CRD or RCBD</td><td>variety × fertiliser, breed × diet</td></tr>
+          <tr><td>One factor applied to large plots, another inside them</td><td>Split-plot</td><td>irrigation × varieties, pasture × stocking</td></tr>
+          <tr><td>Many treatments, blocks too small to hold them all</td><td>Incomplete blocks (lattice, alpha)</td><td>variety trials with 20–100 entries</td></tr>
+          <tr><td>A numeric variable measured before the treatment</td><td>Any of the above + covariate (ANCOVA)</td><td>initial weight, plant stand, soil test</td></tr>
+        </tbody></table>
+      </div>
+    </details>
+    <details class="acc"><summary>Reading the ANOVA table <span class="acc-tag">F, p, CV</span></summary>
+      <div class="acc-body">
+        <p>The total variation is split among the sources of the design. Each F compares the mean square of a source with the mean square of
+          <b>its</b> error: in a split-plot the main-plot factor is tested against the main-plot error (Error a), which has few degrees of
+          freedom, and the sub-plot factor against Error b. Using the wrong error is the classic way to obtain false significance.</p>
+        <p>The coefficient of variation, √MSE / grand mean × 100, is the precision of the trial: 10–20 % is usual for field yields, lower for
+          controlled conditions and heights, higher for counts and scores. A significant block effect is not a result about treatments;
+          it means blocking was worthwhile.</p>
+      </div>
+    </details>
+    <details class="acc"><summary>Which mean-separation test <span class="acc-tag">letters</span></summary>
+      <div class="acc-body">
+        <p><b>Tukey HSD</b> is the default for all pairwise comparisons: it controls the family-wise error. <b>Fisher's LSD</b> is more
+          powerful but only defensible after a significant F and with few treatments. <b>Duncan</b> is liberal and increasingly refused by
+          journals. <b>Dunnett</b> answers one question only: does each treatment differ from the control? <b>Scheffé</b> protects contrasts
+          chosen after seeing the data. <b>Games–Howell</b> is for unequal variances.</p>
+        <p>Means with the same letter are not significantly different at the stated α; a level with two letters (ab) belongs to both groups.
+          When the factor is quantitative (doses, densities, dates) letters are the wrong summary: fit a trend and report the optimum.</p>
+      </div>
+    </details>
+    <details class="acc"><summary>When the assumptions fail <span class="acc-tag">transform or rank</span></summary>
+      <div class="acc-body">
+        <p>The F-test assumes independent errors with equal variance and a normal distribution, checked on the residuals — never on the raw
+          response. Unequal variances hurt more than mild non-normality. Counts usually need a square-root, percentages from counts an arcsine
+          or logit, and multiplicative effects a logarithm; the Box–Cox profile tells which power the data support.</p>
+        <p>Ordinal scores (1–9 severity, 1–5 vigour) are not helped by transformations: use Kruskal–Wallis, Friedman or the aligned rank
+          transform, which keep the structure of the design and still give letters.</p>
+      </div>
+    </details>
+    <details class="acc"><summary>How many replicates <span class="acc-tag">power</span></summary>
+      <div class="acc-body">
+        <p>The replicates needed to detect a difference <i>d</i> (as % of the mean) with a known CV follow from
+          <code>r ≥ 2 (t<sub>α/2</sub> + t<sub>β</sub>)² (CV / d)²</code>, solved iteratively. With a CV of 15 % and a 15 % difference, an RCBD
+          needs about 17 replicates; with a CV of 8 %, five are enough. Reducing the CV — uniform units, border rows, blocking along the
+          gradient, the pen as the unit — is usually cheaper than adding replicates. Aim for at least 10–12 error degrees of freedom.</p>
+      </div>
+    </details>
   </div>
 
+  <!-- ---------- Cite ---------- -->
+  <h2 class="section-title" id="cite">How to cite AgriDesign</h2>
+  <p class="section-sub">If the platform contributes to a thesis, a paper or a report, please cite it. The DOI is a concept DOI archived in Zenodo: it always resolves to the latest version.</p>
+  <div class="card cite-card">
+    <p class="cite-ref" id="citeRef"></p>
+    <div class="btn-row" style="margin-top:8px">
+      <button class="btn btn-secondary btn-sm" id="citeCopy">Copy reference (APA)</button>
+      <button class="btn btn-secondary btn-sm" id="citeCopyBib">Copy BibTeX</button>
+      <a class="btn btn-ghost btn-sm" id="citeDoi" target="_blank" rel="noopener">Open the Zenodo record ↗</a>
+      <a class="btn btn-ghost btn-sm" id="citeRepo" target="_blank" rel="noopener">Source code on GitHub ↗</a>
+      <span class="hint" id="citeMsg" style="margin:0"></span>
+    </div>
+    <details class="acc"><summary>BibTeX entry</summary><div class="acc-body"><pre class="formula" id="citeBib"></pre></div></details>
+    <p class="hint" style="margin:8px 0 0">Version-specific DOIs and the full metadata are in the <code>CITATION.cff</code> file of the repository (GitHub shows them under "Cite this repository"). The same reference is printed in every report generated in Block 7.</p>
+  </div>
+
+  <div class="next-bar" style="margin-top:30px"><button class="btn btn-primary btn-lg" data-go="2">Go to Block 2: load your data →</button></div>
 </section>
 
 <!-- ==================== BLOCK 2 · DATA ==================== -->
@@ -723,6 +873,7 @@
         <label class="checkbox-label"><input type="checkbox" id="rpSecFigs" checked> Figures</label>
         <label class="checkbox-label"><input type="checkbox" id="rpSecPairs"> Appendix: pairwise comparisons</label>
         <label class="checkbox-label"><input type="checkbox" id="rpSecRaw"> Appendix: raw data table</label>
+        <label class="checkbox-label"><input type="checkbox" id="rpSecCite" checked> How to cite the software (DOI, BibTeX)</label>
       </div>
       <h4 style="margin-top:14px">Figures to include (as currently edited)</h4>
       <div class="checkbox-grid">
@@ -887,6 +1038,7 @@
 <script src="js/stats.js"></script>
 <script src="js/figure.js"></script>
 <script src="js/art.js"></script>
+<script src="js/art2.js"></script>
 <script src="js/data.js"></script>
 <script src="js/plots3.js"></script>
 <script src="js/block3.js"></script>
@@ -906,6 +1058,7 @@
 <script src="js/gen.js"></script>
 <script src="js/plots8.js"></script>
 <script src="js/block8.js"></script>
+<script src="js/playground.js"></script>
 <script src="js/home.js"></script>
 </body>
 </html>
