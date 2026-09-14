@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>AgriDesign · Manual de usuario · Bloque 6: gráficos de resultados</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;1,500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../interior.css">
+<!-- reparte el contenido en hojas tamaño carta, con encabezados y números de página -->
+<script src="../paginar.js"></script>
+<style>
+  figure.chica .marco { width: 70%; margin: 0 auto; }
+  figure.chica figcaption { margin-left: 15%; margin-right: 15%; }
+  figure.mini .marco { width: 56%; margin: 0 auto; }
+  figure.mini figcaption { margin-left: 22%; margin-right: 22%; }
+  .par { display: grid; grid-template-columns: 1fr 1fr; gap: 0.16in; }
+  .par figure { margin: 0.08in 0 0.16in; }
+</style>
+</head>
+<body>
+
+<section class="capitulo" id="cap-b6" data-pestana="B6" data-orden="7" style="--acento: var(--b6)">
+  <div class="cap-apertura">
+    <div class="cap-num">B6</div>
+    <div class="cap-etiqueta">Capítulo siete · Bloque 6 · Means &amp; graphics</div>
+    <h1 data-corto="Bloque 6 · Gráficos de resultados">Gráficos de resultados</h1>
+    <div class="cap-regla"></div>
+    <p class="cap-resumen">Una tabla de medias con letras convence a un revisor; una buena figura convence a un lector. El Bloque 6 construye, a partir del análisis del Bloque 5, una galería de figuras editables para cada resultado: medias con letras en cuatro presentaciones, diferencias con intervalos, curvas de respuesta, interacciones, mapas de calor, partición de la varianza y mapas de campo. Con estilos de revista, figuras multipanel y exportación por lotes a la resolución que se pida.</p>
+    <div class="cap-franja"><span class="k6"></span><span class="k6" style="opacity:.75"></span><span class="k6" style="opacity:.5"></span><span class="k6" style="opacity:.3"></span></div>
+    <ul class="cap-contenido">
+      <li><b>7.1</b>Qué figura para qué resultado</li>
+      <li><b>7.2</b>La galería y los estilos predefinidos</li>
+      <li><b>7.3</b>Editar una figura</li>
+      <li><b>7.4</b>Figuras multipanel</li>
+      <li><b>7.5</b>Exportar a la resolución de la revista</li>
+    </ul>
+  </div>
+
+  <!-- 7.1 -->
+  <h2 id="s7-1"><span class="num">7.1</span>Qué figura para qué resultado</h2>
+  <p class="lead">El Bloque 6 no calcula nada nuevo: dibuja el análisis que se hizo en el Bloque 5, con sus medias ajustadas, sus errores estándar, sus letras y su curva. Si al abrirlo aparece <span class="ui">No analysis yet. Run Block 5 first</span>, falta correr ese análisis o los datos cambiaron desde entonces; el botón <span class="ui">Go to Block 5</span> lleva ahí.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/b6-teoria.png" alt="La tarjeta de teoría del Bloque 6"></div>
+    <figcaption><b>Figura 7.1.</b> La tarjeta <span class="ui">Making a figure a reviewer will like</span>: qué figura corresponde a cada resultado, cómo declarar barras de error y letras, y los requisitos técnicos de las revistas.</figcaption>
+  </figure>
+
+  <table>
+    <caption><b>Tabla 7.1.</b> La figura adecuada para cada resultado, y lo que conviene evitar.</caption>
+    <thead><tr><th style="width:28%">Resultado</th><th>Mejor figura</th><th style="width:26%">Evitar</th></tr></thead>
+    <tbody>
+      <tr><td>Medias de un factor cualitativo (variedades, productos)</td><td>Puntos o barras con EE y letras; ordenadas por la media si los niveles no tienen orden natural.</td><td>Barras en 3D, gráficos de pastel.</td></tr>
+      <tr><td>Pocas repeticiones (3 o 4)</td><td>Todas las observaciones con la media: el lector juzga la dispersión.</td><td>Barras que esconden los datos.</td></tr>
+      <tr><td>Factor cuantitativo (dosis, densidades, fechas)</td><td>Curva de respuesta: medias ± EE con la ecuación ajustada y el óptimo.</td><td>Barras con letras: descartan la tendencia.</td></tr>
+      <tr><td>Dos factores</td><td>Gráfico de interacción (líneas) si la interacción importa; barras agrupadas o mapa de calor si hay muchos niveles.</td><td>Figuras separadas de los efectos principales cuando la interacción es significativa.</td></tr>
+      <tr><td>«¿Qué pares difieren?»</td><td>Diferencias con intervalos de confianza.</td><td>Solo letras cuando hay muchos tratamientos.</td></tr>
+      <tr><td>Ensayo con filas y columnas</td><td>Mapa de campo coloreado por el residual para revelar tendencias espaciales.</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Regla de decisión · lo que no puede faltar en el pie de una figura</div>
+    <table class="compacta">
+      <thead><tr><th style="width:34%">Elemento</th><th>Cómo escribirlo</th></tr></thead>
+      <tbody>
+        <tr><td>Qué son las barras</td><td>«Medias ± error estándar (n = 4)». Nunca implícito.</td></tr>
+        <tr><td>Qué significan las letras</td><td>«Medias con la misma letra no difieren significativamente (Tukey, α = 0.05)». La prueba va en el pie, no en el título.</td></tr>
+        <tr><td>Letras dobles</td><td>«ab» pertenece a los dos grupos; no se corrige a mano.</td></tr>
+        <tr><td>Eje Y</td><td>Las barras empiezan en cero; los puntos pueden hacer zoom, y el pie lo dice.</td></tr>
+        <tr><td>Unidades</td><td>En el rótulo del eje: «Rendimiento de grano (t ha⁻¹)».</td></tr>
+        <tr><td>Color</td><td>Paletas seguras para daltonismo (Okabe–Ito, Paul Tol) y, si se imprimirá en gris, marcadores o tipos de línea distintos además del color.</td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">Las figuras de la app ya escriben en el subtítulo el tipo de barra y la prueba de las letras. Copia esa información al pie antes de borrar el subtítulo.</p>
+  </div>
+
+  <!-- 7.2 -->
+  <h2 id="s7-2"><span class="num">7.2</span>La galería y los estilos predefinidos</h2>
+  <p>La galería se arma sola al abrir el bloque y se reconstruye cada vez que el Bloque 5 produce un análisis nuevo. Arriba está la tarjeta <span class="ui">Gallery settings</span>; debajo, una tarjeta por resultado con sus figuras.</p>
+
+  <figure>
+    <div class="marco" style="position:relative">
+      <img src="../img/b6-ajustes.png" alt="La tarjeta de ajustes de la galería">
+      <span class="marca" style="left:9.3%;top:24%">1</span>
+      <span class="marca" style="left:48.6%;top:24%">2</span>
+      <span class="marca" style="left:9.3%;top:43%">3</span>
+      <span class="marca" style="left:9.3%;top:59%">4</span>
+      <span class="marca" style="left:9.3%;top:82%">5</span>
+    </div>
+    <figcaption><b>Figura 7.2.</b> <span class="ui">Gallery settings</span> con el ejemplo de maíz: 7 figuras.</figcaption>
+  </figure>
+  <ul class="leyenda-marcas">
+    <li><span class="n">1</span><span class="ui">Y axis label (units)</span>: el rótulo del eje Y para todas las figuras, con unidades. Vacío usa el nombre de la columna.</li>
+    <li><span class="n">2</span><span class="ui">Rebuild gallery</span> vuelve a dibujar la galería con el rótulo nuevo.</li>
+    <li><span class="n">3</span>Seis estilos predefinidos que se aplican a todas las figuras de golpe (tabla 7.3).</li>
+    <li><span class="n">4</span>Exportación por lotes: formato, resolución y un ZIP con todas las figuras.</li>
+    <li><span class="n">5</span>El compositor de figuras multipanel (sección 7.4).</li>
+  </ul>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Nota · nombres de columna y rótulos</div>
+    <p>Las figuras usan los nombres de las columnas tal como están en la tabla: <code>Yield_t_ha</code>, <code>Nitrogen_kg_ha</code>. Para una figura de artículo conviene escribir en <span class="ui">Y axis label</span> algo como «Rendimiento de grano (t ha⁻¹)» y pulsar <span class="ui">Rebuild gallery</span>. El rótulo del eje X y los títulos se cambian figura por figura en el editor (sección 7.3). Otra opción es nombrar bien las columnas desde la libreta de campo.</p>
+  </div>
+
+  <table>
+    <caption><b>Tabla 7.2.</b> Las figuras de la galería y cuándo aparecen. Con el maíz se generan 7; con el factorial de jitomate, 15; con el cuadro latino de trigo, 8.</caption>
+    <thead><tr><th style="width:28%">Figura</th><th style="width:26%">Aparece por…</th><th>Qué muestra</th></tr></thead>
+    <tbody>
+      <tr><td>Medias en barras</td><td>cada factor</td><td>Medias ajustadas ± EE con letras, eje desde cero.</td></tr>
+      <tr><td>Medias en puntos</td><td>cada factor</td><td>Las mismas medias con intervalos de confianza al 95&nbsp;%, eje ajustado a los datos.</td></tr>
+      <tr><td>Caja con letras</td><td>cada factor</td><td>La distribución de las parcelas de cada nivel, con la media y las letras.</td></tr>
+      <tr><td>Observaciones con letras</td><td>cada factor</td><td>Cada parcela como un punto, la media ± EE y las letras.</td></tr>
+      <tr><td>Diferencias con intervalos</td><td>cada factor</td><td>Cada par de medias con su diferencia ± diferencia crítica de la prueba; en rojo las significativas.</td></tr>
+      <tr><td>Curva de respuesta</td><td>cada factor cuantitativo con 3 o más niveles</td><td>Medias con letras y la curva polinomial ajustada, su ecuación y el óptimo.</td></tr>
+      <tr><td>Gráfico de interacción (dos orientaciones)</td><td>cada par de factores con interacción en el modelo</td><td>Líneas con letras de efectos simples: los niveles del segundo factor dentro de cada nivel del primero.</td></tr>
+      <tr><td>Barras agrupadas</td><td>ídem</td><td>Las combinaciones con letras de la comparación conjunta (o de los efectos simples en parcelas divididas).</td></tr>
+      <tr><td>Mapa de calor de celdas</td><td>ídem</td><td>La tabla de dos vías coloreada por la media, con letras.</td></tr>
+      <tr><td>Partición de la varianza</td><td>siempre</td><td>Qué fracción de la suma de cuadrados total corresponde a cada fuente y al error.</td></tr>
+      <tr><td>Mapas de campo (respuesta y residuales)</td><td>diseños con fila y columna</td><td>El ensayo como estaba en el campo, coloreado por la respuesta y por el residual.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Cuatro presentaciones de las mismas medias</h3>
+  <p>Para cada factor, la galería ofrece el mismo resultado en cuatro formas. No es redundancia: cada revista, cada número de repeticiones y cada público piden una distinta.</p>
+
+  <div class="par">
+    <figure>
+      <div class="marco"><img src="../img/b6-bars.png" alt="Medias en barras"></div>
+      <figcaption><b>Figura 7.3.</b> Barras con EE y letras: la presentación clásica, eje desde cero.</figcaption>
+    </figure>
+    <figure>
+      <div class="marco"><img src="../img/b6-points.png" alt="Medias en puntos con IC"></div>
+      <figcaption><b>Figura 7.4.</b> Puntos con intervalos al 95&nbsp;%: el eje se ajusta a los datos y las diferencias se ven mejor.</figcaption>
+    </figure>
+    <figure>
+      <div class="marco"><img src="../img/b6-box.png" alt="Cajas con letras"></div>
+      <figcaption><b>Figura 7.5.</b> Cajas con las parcelas, la media (rombo) y las letras.</figcaption>
+    </figure>
+    <figure>
+      <div class="marco"><img src="../img/b6-strip.png" alt="Observaciones con letras"></div>
+      <figcaption><b>Figura 7.6.</b> Cada parcela con la media ± EE: la opción honesta con cuatro repeticiones.</figcaption>
+    </figure>
+  </div>
+
+  <div class="par">
+    <figure>
+      <div class="marco"><img src="../img/b6-diff.png" alt="Diferencias con intervalos"></div>
+      <figcaption><b>Figura 7.7.</b> Diferencias por pares con el intervalo de la prueba de Tukey. Un intervalo que cruza el cero no es significativo; el de 120 − 180 lo roza pero no lo cruza (−0.30, diferencia crítica 0.283).</figcaption>
+    </figure>
+    <figure>
+      <div class="marco"><img src="../img/b6-trend.png" alt="Curva de respuesta con letras"></div>
+      <figcaption><b>Figura 7.8.</b> Curva de respuesta con las letras de Tukey en cada dosis, la ecuación, R² y el máximo en 179.5 kg.</figcaption>
+    </figure>
+  </div>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/b6-ss.png" alt="Partición de la suma de cuadrados"></div>
+    <figcaption><b>Figura 7.9.</b> Partición de la suma de cuadrados del maíz: el nitrógeno explica el 94.7&nbsp;%, los bloques el 4.7&nbsp;% y el error el 0.6&nbsp;%. Una forma compacta de mostrar la tabla de ANOVA en una presentación.</figcaption>
+  </figure>
+
+  <h3>Dos factores: interacción, barras agrupadas y mapa de calor</h3>
+
+  <div class="par">
+    <figure>
+      <div class="marco"><img src="../img/b6-tom-int.png" alt="Gráfico de interacción del jitomate"></div>
+      <figcaption><b>Figura 7.10.</b> Interacción variedad × fertilización con las letras de la fertilización dentro de cada variedad. La segunda orientación, fertilización en el eje X, se genera también.</figcaption>
+    </figure>
+    <figure>
+      <div class="marco"><img src="../img/b6-tom-heat.png" alt="Mapa de calor del jitomate"></div>
+      <figcaption><b>Figura 7.11.</b> Mapa de calor de las nueve celdas con la media y la letra de la comparación conjunta: Saladette con F2 es la celda más oscura (4.34, a).</figcaption>
+    </figure>
+  </div>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Nota · letras que se enciman</div>
+    <p>En el gráfico de interacción, cuando dos medias casi coinciden (Cherry con F1 y F2 en la figura 7.10), sus letras pueden encimarse. Hay tres salidas: reducir <span class="ui">Letter size</span> en el editor, desactivar <span class="ui">Letters at each point</span> y usar las barras agrupadas o el mapa de calor, donde cada celda tiene su espacio, o exportar en SVG y mover la letra en un editor vectorial.</p>
+  </div>
+
+  <h3>Mapas de campo: el ensayo como estaba en el terreno</h3>
+  <p>Cuando el diseño tiene fila y columna, la galería dibuja el croquis real del ensayo dos veces: coloreado por la respuesta y coloreado por el residual del modelo. El segundo es una herramienta de diagnóstico: si los residuales positivos se juntan en una esquina o en una franja, hay una tendencia espacial que el diseño no absorbió.</p>
+
+  <div class="par">
+    <figure>
+      <div class="marco"><img src="../img/b6-campo.png" alt="Mapa de campo del rendimiento"></div>
+      <figcaption><b>Figura 7.12.</b> Rendimiento del cuadro latino de trigo en su posición: el tratamiento C es el más oscuro en las cuatro filas.</figcaption>
+    </figure>
+    <figure>
+      <div class="marco"><img src="../img/b6-residuos.png" alt="Mapa de campo de los residuales"></div>
+      <figcaption><b>Figura 7.13.</b> Residuales en la escala rojo–azul centrada en cero: positivos en rojo, negativos en azul. No hay manchas; solo destaca la parcela D de la fila 4, columna 1 (+0.12).</figcaption>
+    </figure>
+  </div>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Regla de decisión · leer el mapa de residuales</div>
+    <table class="compacta">
+      <thead><tr><th style="width:44%">Si los colores…</th><th>entonces…</th></tr></thead>
+      <tbody>
+        <tr><td>se reparten sin patrón, como un tablero al azar</td><td>El diseño absorbió la variación del terreno. Lo esperado.</td></tr>
+        <tr><td>forman una franja del mismo signo a lo largo de una fila o columna</td><td>Un gradiente que el bloqueo no capturó; en el siguiente ensayo, orienta los bloques perpendiculares a esa franja.</td></tr>
+        <tr><td>forman una mancha en una esquina</td><td>Un problema local (encharcamiento, borde, sombra); revisa la libreta.</td></tr>
+        <tr><td>destacan en una sola parcela</td><td>Una parcela sospechosa; compárala con la tabla de observaciones sospechosas del Bloque 4.</td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">La casilla <span class="ui">Centre the colour scale at zero</span> viene activada en el mapa de residuales para que el color neutro corresponda a un residual nulo.</p>
+  </div>
+
+  <h3>Estilos predefinidos</h3>
+  <p>Los botones de <span class="ui">Style presets</span> cambian a la vez el tema, la tipografía, la rejilla y el tamaño de letra de todas las figuras de la galería, y se recuerdan para las figuras que se dibujen después en cualquier bloque.</p>
+
+  <table class="compacta">
+    <caption><b>Tabla 7.3.</b> Los seis estilos predefinidos.</caption>
+    <thead><tr><th style="width:32%">Botón</th><th>Qué cambia</th><th style="width:26%">Para…</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Colour (screen)</span></td><td>Tema claro, Helvetica, rejilla, paleta AgriDesign.</td><td>Trabajar en pantalla; también devuelve el color tras el gris.</td></tr>
+      <tr><td><span class="ui">Journal (black axes, no grid, Arial)</span></td><td>Ejes negros, sin rejilla, Arial, letra 10&nbsp;% mayor.</td><td>La mayoría de las revistas.</td></tr>
+      <tr><td><span class="ui">Journal serif (Times)</span></td><td>Igual, con Times New Roman.</td><td>Revistas y tesis con tipografía serif.</td></tr>
+      <tr><td><span class="ui">Greyscale print</span></td><td>Estilo de revista con paleta en grises.</td><td>Impresión en blanco y negro.</td></tr>
+      <tr><td><span class="ui">Presentation (large fonts)</span></td><td>Letra 50&nbsp;% mayor, títulos de ejes en negrita, rejilla punteada.</td><td>Diapositivas y carteles.</td></tr>
+      <tr><td><span class="ui">Dark background</span></td><td>Fondo oscuro, letra 20&nbsp;% mayor.</td><td>Presentaciones con fondo oscuro.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="par">
+    <figure>
+      <div class="marco"><img src="../img/b6-revista.png" alt="Estilo de revista"></div>
+      <figcaption><b>Figura 7.14.</b> <span class="ui">Journal</span>: ejes negros, sin rejilla, leyenda con marco.</figcaption>
+    </figure>
+    <figure>
+      <div class="marco"><img src="../img/b6-grises.png" alt="Estilo en grises"></div>
+      <figcaption><b>Figura 7.15.</b> <span class="ui">Greyscale print</span>: las tres dosis de fertilización en tres grises distinguibles.</figcaption>
+    </figure>
+  </div>
+
+  <!-- 7.3 -->
+  <h2 id="s7-3"><span class="num">7.3</span>Editar una figura</h2>
+  <p>Cada figura tiene debajo el enlace <span class="ui">Edit figure — titles, colours, fonts, sizes</span>, que abre un editor de dos pestañas, y la barra de exportación. Los cambios se ven al instante. El editor ya se presentó en el capítulo 4 (figura 4.16) con la pestaña de contenido; aquí se muestra la de estilo, común a todas las figuras.</p>
+
+  <figure>
+    <div class="marco" style="position:relative">
+      <img src="../img/b6-estilo.png" alt="La pestaña de estilo y tipografía">
+      <span class="marca" style="left:15.3%;top:65.5%">1</span>
+      <span class="marca" style="left:13%;top:71.5%">2</span>
+      <span class="marca" style="left:27.8%;top:71.5%">3</span>
+      <span class="marca" style="left:43%;top:71.5%">4</span>
+      <span class="marca" style="left:44%;top:79%">5</span>
+      <span class="marca" style="left:73.8%;top:79%">6</span>
+      <span class="marca" style="left:13%;top:91%">7</span>
+    </div>
+    <figcaption><b>Figura 7.16.</b> La pestaña <span class="ui">Style &amp; typography</span> de la figura de barras.</figcaption>
+  </figure>
+  <ul class="leyenda-marcas">
+    <li><span class="n">1</span>Las dos pestañas: <span class="ui">Content &amp; colours</span> y <span class="ui">Style &amp; typography</span>.</li>
+    <li><span class="n">2</span><span class="ui">Theme</span>: Light, Paper, Dark, Minimal o Journal.</li>
+    <li><span class="n">3</span><span class="ui">Font family</span>: Helvetica, Arial, Georgia, Times New Roman, Segoe UI, Calibri, Cambria o monoespaciada.</li>
+    <li><span class="n">4</span>Cuatro deslizadores de tamaño: todo, títulos, ejes y marcas, etiquetas y leyenda.</li>
+    <li><span class="n">5</span><span class="ui">Bold axis titles</span>, <span class="ui">Gridlines</span> y <span class="ui">Dashed gridlines</span>.</li>
+    <li><span class="n">6</span><span class="ui">Width (px)</span> y <span class="ui">Height (px)</span>: el tamaño base de la figura, de 400 a 2400 por 300 a 2000.</li>
+    <li><span class="n">7</span>La barra de exportación de esta figura (sección 7.5) y la casilla para añadirla a una figura multipanel.</li>
+  </ul>
+
+  <table class="compacta">
+    <caption><b>Tabla 7.4.</b> Opciones de la pestaña <span class="ui">Content &amp; colours</span> según la figura.</caption>
+    <thead><tr><th style="width:26%">Figura</th><th>Opciones propias</th></tr></thead>
+    <tbody>
+      <tr><td>Todas</td><td>Título, subtítulo, rótulos de los ejes.</td></tr>
+      <tr><td>Medias (barras y puntos)</td><td>Estilo (barras, puntos o paleta), barras de error (EE, DE, IC al 95&nbsp;%, ninguna), letras, valores impresos, ordenar por la media, eje desde cero, ancho de barra, tamaño de letra, color único o por nivel.</td></tr>
+      <tr><td>Caja y observaciones</td><td>Paleta o color único, observaciones, marcador de la media, letras, eje desde cero, ancho de caja o dispersión horizontal, tamaño de punto y de letra; en observaciones, la barra de media (EE, DE, IC o solo la media).</td></tr>
+      <tr><td>Diferencias</td><td>Color de las no significativas y de las significativas, ordenar por la diferencia, valores impresos.</td></tr>
+      <tr><td>Interacción</td><td>Paleta, color por serie, posición de la leyenda, grosor de línea, tamaño del marcador, tipos de línea distintos, barras de error, letras en cada punto, eje desde cero, tamaño de letra.</td></tr>
+      <tr><td>Mapa de calor y mapas de campo</td><td>Mapa de colores (13, incluidos Viridis y Cividis, seguro para daltonismo), valores y letras o etiquetas impresas, decimales; en los mapas de campo, centrar la escala en cero.</td></tr>
+      <tr><td>Partición de la varianza</td><td>Paleta, color por fuente, porcentajes impresos.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Nota · lo que se recuerda y lo que no</div>
+    <p>Las opciones marcadas como compartidas (tema, tipografía, tamaños de letra, rejilla) se guardan en el navegador y se aplican a las figuras que se dibujen después. Los títulos, rótulos, colores por nivel y dimensiones son de cada figura. Al reconstruir la galería (<span class="ui">Rebuild gallery</span> o un análisis nuevo) las ediciones individuales se pierden: termina el análisis antes de pulir las figuras.</p>
+  </div>
+
+  <!-- 7.4 -->
+  <h2 id="s7-4"><span class="num">7.4</span>Figuras multipanel</h2>
+  <p>Las revistas piden a menudo varias gráficas en una sola figura con paneles (a), (b), (c). Bajo cada figura de la galería hay una casilla <span class="ui">Add to multi-panel figure</span>; se marcan de dos a ocho y se pulsa <span class="ui">Build multi-panel figure</span> en los ajustes de la galería. El compositor acomoda los paneles en una o dos columnas (tres si son más de cuatro), los rotula y los muestra bajo los ajustes.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/b6-panel.png" alt="Figura multipanel de cuatro paneles"></div>
+    <figcaption><b>Figura 7.17.</b> Una figura de cuatro paneles con el maíz: (a) medias en barras, (b) todas las parcelas, (c) diferencias con intervalos y (d) curva de respuesta. Los paneles comparten el estilo y se exportan como una sola imagen.</figcaption>
+  </figure>
+
+  <table class="compacta">
+    <caption><b>Tabla 7.5.</b> Opciones del editor de la figura multipanel.</caption>
+    <thead><tr><th style="width:30%">Opción</th><th>Qué hace</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Columns</span></td><td>Número de columnas de la rejilla, de 1 a 4.</td></tr>
+      <tr><td><span class="ui">Panel labels</span></td><td>(a) (b) (c), A B C, a b c o sin rótulos.</td></tr>
+      <tr><td><span class="ui">Label size</span></td><td>Tamaño de los rótulos de panel.</td></tr>
+      <tr><td><span class="ui">Gap between panels</span></td><td>Espacio entre paneles.</td></tr>
+      <tr><td><span class="ui">Keep panel titles</span></td><td>Conserva o quita el título de cada panel; en un artículo se suelen quitar y describir en el pie.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja importante">
+    <div class="caja-t"><span class="ico">!</span>Importante · paneles que se comparan</div>
+    <p>Si dos paneles muestran la misma variable para comparar tratamientos o años, deben tener la misma escala en el eje Y; de lo contrario el lector compara alturas que no son comparables. Ajusta <span class="ui">Y axis from zero</span> o las dimensiones de cada figura antes de marcarla, y edita cada panel en la galería: el compositor toma las figuras tal como están en ese momento.</p>
+  </div>
+
+  <!-- 7.5 -->
+  <h2 id="s7-5"><span class="num">7.5</span>Exportar a la resolución de la revista</h2>
+  <p>Cada figura se descarga sola con su barra de exportación, y todas juntas con <span class="ui">Download all figures (ZIP)</span>.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/b6-exportar.png" alt="La barra de exportación de una figura"></div>
+    <figcaption><b>Figura 7.18.</b> La barra de exportación con TIFF elegido: formato, resolución, fondo, botón de descarga y el tamaño resultante, 3480 × 2120 píxeles, que a 300 dpi ocupan 29.5 × 17.9 cm.</figcaption>
+  </figure>
+
+  <table>
+    <caption><b>Tabla 7.6.</b> Formatos de exportación.</caption>
+    <thead><tr><th style="width:24%">Formato</th><th>Cuándo usarlo</th></tr></thead>
+    <tbody>
+      <tr><td><b>TIFF</b></td><td>El que piden muchas revistas para el envío. Sin compresión y con la resolución grabada en el archivo.</td></tr>
+      <tr><td><b>PNG</b></td><td>Documentos, tesis y la mayoría de las revistas; sin pérdida, archivo pequeño, con la resolución grabada. Admite fondo transparente.</td></tr>
+      <tr><td><b>SVG</b></td><td>Vectorial: se amplía sin perder nitidez y se edita en Inkscape, Illustrator o PowerPoint. Si la revista pide EPS o PDF, se convierte desde Inkscape.</td></tr>
+      <tr><td><b>JPG</b> · <b>WEBP</b></td><td>Solo para la web o fotografías; comprimen con pérdida y emborronan letras y líneas finas.</td></tr>
+    </tbody>
+  </table>
+
+  <table class="compacta">
+    <caption><b>Tabla 7.7.</b> Las resoluciones del menú. La exportación por lotes ofrece las mismas cinco y los formatos PNG, TIFF, SVG, JPG o PNG + SVG.</caption>
+    <thead><tr><th style="width:36%">Opción</th><th class="c">Multiplica el tamaño base</th><th class="c">dpi grabados</th><th>Uso</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Screen · 2× (150 dpi)</span></td><td class="c">×2</td><td class="c">150</td><td>Pantalla, borradores.</td></tr>
+      <tr><td><span class="ui">High · 4× (300 dpi)</span></td><td class="c">×4</td><td class="c">300</td><td>Figuras en color y medios tonos (predeterminada).</td></tr>
+      <tr><td><span class="ui">Very high · 6× (450 dpi)</span></td><td class="c">×6</td><td class="c">450</td><td>Figuras combinadas de línea y color.</td></tr>
+      <tr><td><span class="ui">Publication · 8× (600 dpi)</span></td><td class="c">×8</td><td class="c">600</td><td>Arte de línea: gráficas sin sombreados.</td></tr>
+      <tr><td><span class="ui">Maximum · 12× (900 dpi)</span></td><td class="c">×12</td><td class="c">900</td><td>Revistas con requisitos de 900 a 1000 dpi para línea.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>Teoría en breve · píxeles, dpi y centímetros</div>
+    <p>Lo que la revista revisa es cuántos píxeles tiene la figura <b>al ancho al que se va a imprimir</b>. Una columna mide cerca de 8.5 cm y una página completa, 17.5 cm; a 300 dpi eso son 1004 y 2067 píxeles de ancho. La app graba en el archivo los dpi de la opción elegida y muestra el tamaño físico que corresponde (29.5 cm para la figura de barras exportada a 4×, 3480 píxeles), pero la revista reducirá la figura a su columna: 3480 píxeles en 17.5 cm equivalen a 505 dpi, de sobra. Lo que sí hay que vigilar al reducir es el <b>tamaño de la letra</b>, que se encoge en la misma proporción.</p>
+  </div>
+
+  <table class="compacta">
+    <caption><b>Tabla 7.8.</b> Ajustes recomendados para que las letras midan de 8 a 12 puntos una vez impresas.</caption>
+    <thead><tr><th style="width:24%">Destino</th><th class="c">Ancho final</th><th class="c">Width (px)</th><th class="c">Font size: all</th><th class="c">Resolución</th><th>Resultado aproximado</th></tr></thead>
+    <tbody>
+      <tr><td>Doble columna</td><td class="c">17.5 cm</td><td class="c">860 (predeterminado)</td><td class="c">1.3</td><td class="c">4× o 8×</td><td>Marcas de 8 pt, rótulos de 10 pt; unos 3500 o 7000 px de ancho.</td></tr>
+      <tr><td>Una columna</td><td class="c">8.5 cm</td><td class="c">600</td><td class="c">1.8</td><td class="c">4×</td><td>Marcas de 8 pt, rótulos de 9 pt; 2400 px de ancho.</td></tr>
+      <tr><td>Diapositiva</td><td class="c">pantalla completa</td><td class="c">1200</td><td class="c">preset <span class="ui">Presentation</span></td><td class="c">2×</td><td>2400 px, letra legible desde el fondo de la sala.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja dato">
+    <div class="dato-cifra">8–12 pt</div>
+    <div class="dato-txt"><div class="caja-t">Tamaño de letra al tamaño final</div>La mayoría de las revistas agrícolas piden entre 8 y 12 puntos para el texto de las figuras, en Arial, Helvetica o Times. Con el tamaño predeterminado, una figura reducida a una columna queda con letras de 3 a 4 puntos, ilegibles. Antes de exportar, reduce el ancho y sube el tamaño de letra (tabla 7.8), o usa el estilo <span class="ui">Journal</span> como punto de partida.</div>
+  </div>
+
+  <h3>Exportación por lotes</h3>
+  <ol class="pasos">
+    <li>Aplica el estilo predefinido que quieras y edita las figuras que vas a usar.</li>
+    <li>En <span class="ui">Batch export</span> elige el formato (<span class="ui">PNG + SVG</span> guarda las dos versiones de cada figura) y la resolución.</li>
+    <li>Pulsa <span class="ui">Download all figures (ZIP)</span>. El botón dice <span class="ui">Preparing…</span> mientras genera las imágenes.</li>
+    <li>El ZIP, llamado por ejemplo <code>Yield_t_ha_figures_300dpi.zip</code>, contiene todas las figuras de la galería, la multipanel si la construiste, y un <code>README.txt</code> con la respuesta, el diseño, la prueba de medias, α y la resolución.</li>
+  </ol>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Nota · nombres de archivo</div>
+    <p>Cada figura se guarda con un nombre que describe su contenido: <code>Yield_t_ha_Nitrogen_kg_ha_bars.png</code>, <code>…_curve.tif</code>, <code>…_interaction.svg</code>, <code>…_field_residuals.png</code>. Así se ordenan solas en la carpeta del manuscrito.</p>
+  </div>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Paso a paso · la figura del maíz para un artículo</div>
+    <ol class="pasos" style="margin-bottom:0">
+      <li>Con el análisis del Bloque 5 hecho, abre el Bloque 6. La galería del maíz tiene 7 figuras.</li>
+      <li>En <span class="ui">Y axis label (units)</span> escribe «Rendimiento de grano (t ha⁻¹)» y pulsa <span class="ui">Rebuild gallery</span>.</li>
+      <li>Pulsa <span class="ui">Journal (black axes, no grid, Arial)</span>.</li>
+      <li>En la curva de respuesta abre <span class="ui">Edit figure</span>: cambia el rótulo del eje X a «Nitrógeno (kg ha⁻¹)», borra el título (irá en el pie) y, en <span class="ui">Style &amp; typography</span>, pon <span class="ui">Font size: all</span> en 1.3.</li>
+      <li>En su barra de exportación elige <span class="ui">TIFF</span> y <span class="ui">Publication · 8× (600 dpi)</span>, y pulsa <span class="ui">Download figure</span>.</li>
+      <li>Escribe el pie: «Respuesta del rendimiento de maíz a la dosis de nitrógeno. Medias de cuatro repeticiones; medias con la misma letra no difieren (Tukey, α = 0.05). Curva: ŷ = 4.207 + 0.03323x − 0.00009253x², R² = 0.946».</li>
+    </ol>
+  </div>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>Lo que aprendiste</div>
+    <p>Cada resultado tiene su figura: letras para factores cualitativos, curvas para cuantitativos, líneas o mapas de calor para interacciones y mapas de campo para revisar el terreno. El estilo se decide una vez para toda la galería; los rótulos y colores, figura por figura. Y la resolución se piensa al revés: primero el ancho y el tamaño de letra al que se imprimirá, después los píxeles.</p>
+  </div>
+
+  <p style="margin-top:0.25in">Con las figuras listas, falta reunirlo todo. El capítulo del Bloque 7 presenta el informe automático con métodos redactados, tablas y figuras tal como las editaste, su impresión a PDF y el paquete ZIP con datos, tablas y figuras.</p>
+</section>
+
+</body>
+</html>

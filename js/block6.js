@@ -6,7 +6,7 @@ let figs = [];          /* [{id, title, spec, api, host}] */
 let builtFor = null;
 
 const PRESETS = {
-  colour:  { label: 'Colour (screen)', style: { theme: 'light', font: 'sans', grid: true, gridDash: false, axisBold: false, fontScale: 1, fsTitle: 1, fsAxis: 1, fsLabel: 1 } },
+  colour:  { label: 'Colour (screen)', style: { theme: 'light', font: 'sans', grid: true, gridDash: false, axisBold: false, fontScale: 1, fsTitle: 1, fsAxis: 1, fsLabel: 1, palette: 'agri' } },   /* restores colour after "Greyscale print" */
   journal: { label: 'Journal (black axes, no grid, Arial)', style: { theme: 'journal', font: 'arial', grid: false, gridDash: false, axisBold: false, fontScale: 1.1, fsTitle: 1, fsAxis: 1, fsLabel: 1 } },
   serif:   { label: 'Journal serif (Times)', style: { theme: 'journal', font: 'times', grid: false, gridDash: false, axisBold: false, fontScale: 1.1, fsTitle: 1, fsAxis: 1, fsLabel: 1 } },
   grey:    { label: 'Greyscale print', style: { theme: 'journal', font: 'arial', grid: false, gridDash: false, axisBold: false, fontScale: 1.1, fsTitle: 1, fsAxis: 1, fsLabel: 1, palette: 'greys' } },
@@ -94,13 +94,15 @@ function build() {
     const plots = R.recs.map(r => ({ row: r.f[d.row], col: r.f[d.col], label: d.factors.map(f => r.f[f]).join(' '), value: r.y }));
     mount6('field_y', 'Field map of the response', P6.fieldMap(rowsL, colsL, plots, { title: `Field map: ${resp}`, fileName: slug(resp) + '_field_map' }), c3);
     const plotsR = R.recs.map((r, k) => ({ row: r.f[d.row], col: r.f[d.col], label: d.factors.map(f => r.f[f]).join(' '), value: R.fit.resid[k] }));
-    mount6('field_res', 'Field map of residuals', P6.fieldMap(rowsL, colsL, plotsR, { title: 'Field map: residuals', fileName: slug(resp) + '_field_residuals', defaults: { colormap: 'rdbu' } }), c3);
+    mount6('field_res', 'Field map of residuals', P6.fieldMap(rowsL, colsL, plotsR, { title: 'Field map: residuals', fileName: slug(resp) + '_field_residuals', defaults: { colormap: 'rdbu', centerZero: true } }), c3);
   }
   builtFor = sig();
   el('gfxCount').textContent = figs.length + ' figures';
   el('gfxPanelHost').innerHTML = '';
 }
-function sig() { const R = state.anova; return R ? [R.resp, R.design.id, R.method, R.alpha, R.recs.length, el('gfxYlab').value].join('|') : ''; }
+/* the gallery belongs to one run of Block 5: a new run (even with the same response, design and
+   number of plots but other data) rebuilds it */
+function sig() { const R = state.anova; return R ? [R.runId, R.resp, R.design.id, R.method, R.alpha, R.recs.length, el('gfxYlab').value].join('|') : ''; }
 
 /* ---------- presets ---------- */
 function applyPreset(key) {

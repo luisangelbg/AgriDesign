@@ -3,6 +3,7 @@
 (function () {
 let R = null;
 let designSig = null, chosenDesign = null;   /* data signature and the design the user picked for it */
+let dataDirty = true, runCount = 0;
 const SPLIT = new Set(['split_rcbd', 'split_crd', 'strip_rcbd', 'splitsplit_rcbd']);
 const fx3 = v => fmtFixed(v, 3);
 const isNumericLevels = lv => lv.length >= 3 && lv.every(l => /^[+-]?\d+(\.\d+)?$/.test(l));
@@ -53,7 +54,8 @@ function run() {
   if (!(res.anova.residual.df > 0)) { showMessage('anMessages', 'error', 'No residual degrees of freedom: the model is saturated. Check the design and the roles in Block 2 (usually a missing replication or an interaction that cannot be estimated).'); return; }
   res.alpha = alpha; res.method = method; res.control = el('anControl').value;
   res.transform = (state.transforms || {})[resp] || null;
-  R = res; state.anova = res;
+  res.runId = ++runCount;
+  R = res; state.anova = res; dataDirty = false;
   renderAnova(); renderInterpretation(); renderMeans();
   el('anResults').style.display = '';
   enableStep(6, true);
@@ -307,8 +309,10 @@ function init() {
   el('anDesign').addEventListener('change', () => { chosenDesign = el('anDesign').value; designChanged(); });
   el('anMethod').addEventListener('change', designChanged);
   el('anResponse').addEventListener('change', fillControls);
-  document.addEventListener('datachange', () => { if (state.ready) fillControls(); });
-  document.addEventListener('stepchange', e => { if (e.detail.step === 5 && state.ready) { fillControls(); if (!R || R.resp !== el('anResponse').value || R.recs.length !== state.rawRows.length) run(); } });
+  /* any change of data or roles makes the displayed analysis stale, even when the response name and
+     the number of rows happen to be the same (e.g. two example files with Yield_t_ha and 16 plots) */
+  document.addEventListener('datachange', () => { dataDirty = true; if (state.ready) fillControls(); });
+  document.addEventListener('stepchange', e => { if (e.detail.step === 5 && state.ready) { fillControls(); if (dataDirty || !R || R.resp !== el('anResponse').value) run(); } });
 }
 document.addEventListener('DOMContentLoaded', init);
 })();

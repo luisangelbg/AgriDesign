@@ -195,12 +195,16 @@ P6.ssPartition = (rows, o) => ({
 P6.fieldMap = (rows, cols, plots, o) => ({
   title: o.title, fileName: o.fileName || 'field_map', width: 820, height: 560,
   defaults: Object.assign({ title: o.title, xlab: o.xlab || 'Column', ylab: o.ylab || 'Row', colormap: 'ylgn', showLabels: true, showValues: true, cellGap: 4, digits: 2 }, o.defaults || {}),
-  controls: TX6.concat([{ key: 'colormap', label: 'Colour map', type: 'select', options: Object.entries(Fig.colormapNames) }, { key: 'showLabels', label: 'Treatment labels', type: 'checkbox' }, { key: 'showValues', label: 'Print values', type: 'checkbox' }, { key: 'digits', label: 'Decimals', type: 'number', min: 0, max: 4, step: 1 }]),
+  controls: TX6.concat([{ key: 'colormap', label: 'Colour map', type: 'select', options: Object.entries(Fig.colormapNames) }, { key: 'centerZero', label: 'Centre the colour scale at zero', type: 'checkbox' }, { key: 'showLabels', label: 'Treatment labels', type: 'checkbox' }, { key: 'showValues', label: 'Print values', type: 'checkbox' }, { key: 'digits', label: 'Decimals', type: 'number', min: 0, max: 4, step: 1 }]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
     const f = Fig.frame(svg, cfg, { margin: { left: 80, bottom: 70, right: 80 } });
     const cmap = Fig.colormaps[cfg.colormap];
-    const vals = plots.map(p => p.value).filter(v => isFinite(v)), mn = S.min(vals), mx = S.max(vals), span = (mx - mn) || 1;
+    const vals = plots.map(p => p.value).filter(v => isFinite(v));
+    let mn = S.min(vals), mx = S.max(vals);
+    /* residuals: a diverging map must put its neutral colour at 0, not at the midpoint of the range */
+    if (cfg.centerZero) { const m = Math.max(Math.abs(mn), Math.abs(mx)); mn = -m; mx = m; }
+    const span = (mx - mn) || 1;
     const cw = (f.x1 - f.x0) / cols.length, ch = (f.y1 - f.y0) / rows.length;
     plots.forEach(p => {
       const ri = rows.indexOf(p.row), ci = cols.indexOf(p.col); if (ri < 0 || ci < 0) return;

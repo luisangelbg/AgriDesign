@@ -491,6 +491,9 @@ function updateDesign() {
   state.ready = !!ok;
   enableStep(3, !!ok); enableStep(4, !!ok); enableStep(5, !!ok); enableStep(7, !!ok);
   el('nextBtn2').disabled = !ok;
+  /* results computed on the previous table or roles are no longer valid: Blocks 6 and 7 must not
+     show them, and Blocks 4 and 5 recompute when they are opened again */
+  state.anova = null; state.assumptions = null;
   document.dispatchEvent(new CustomEvent('datachange'));
 }
 

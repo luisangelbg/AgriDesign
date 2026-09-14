@@ -3,6 +3,7 @@
 (function () {
 const colBy = n => state.columns.find(c => c.name === n);
 let A = null;                 /* current analysis */
+let dataDirty = true;         /* data or roles changed since the last diagnostics */
 
 function modelOpts() {
   const d = state.design;
@@ -65,7 +66,7 @@ function run() {
   const dw = AS.durbinWatson(fit.resid);
   const gm = S.mean(y), cv = Math.sqrt(fit.mse) / gm * 100;
   A = { resp, alpha, o, terms, recs, levelsMap, M, fit, y, stud, sw, ad, jb, lev, levMean, bart, flig, fmax, tk, dw, cv, gb, gy };
-  state.assumptions = A;
+  state.assumptions = A; dataDirty = false;
   renderResults();
   renderTransforms();
   setupNonpar();
@@ -329,8 +330,8 @@ function init() {
   el('assInter').addEventListener('change', showFormula);
   el('npRun').addEventListener('click', runNonpar);
   el('npMethod').addEventListener('change', () => { el('npPostWrap').style.display = el('npMethod').value === 'friedman' ? '' : 'none'; });
-  document.addEventListener('datachange', () => { if (state.ready) fillControls(); });
-  document.addEventListener('stepchange', e => { if (e.detail.step === 4 && state.ready) { fillControls(); if (!A || A.resp !== el('assResponse').value || A.recs.length !== state.rawRows.length) run(); } });
+  document.addEventListener('datachange', () => { dataDirty = true; if (state.ready) fillControls(); });
+  document.addEventListener('stepchange', e => { if (e.detail.step === 4 && state.ready) { fillControls(); if (dataDirty || !A || A.resp !== el('assResponse').value) run(); } });
 }
 document.addEventListener('DOMContentLoaded', init);
 })();
