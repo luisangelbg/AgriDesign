@@ -98,6 +98,10 @@ Rules followed by every block:
 | `wide_format_example.csv` | Wide table to demonstrate the reshape tool |
 
 
+## User manual
+
+A complete user manual in Spanish (163 pages) is available as [`manual/AgriDesign User's Manual.pdf`](manual/AgriDesign%20User's%20Manual.pdf). Its HTML sources, one file per chapter, are in `manual/es/`; `manual/LEEME.md` explains how to rebuild the PDF.
+
 ## How to cite
 
 If you use AgriDesign in a publication, please cite the software:

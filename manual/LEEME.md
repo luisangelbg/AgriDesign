@@ -101,6 +101,8 @@ Los pasos de la receta van separados por `;`: `ex:N` (ejemplo N del Bloque 2, de
 
 ## Cómo obtener el PDF
 
+El PDF completo en español está en `manual/AgriDesign User's Manual.pdf` (163 hojas). Si se corrige una parte, se vuelve a generar con los pasos siguientes y se reemplaza ese archivo.
+
 **Manual completo**, con el servidor local en marcha:
 
 ```
