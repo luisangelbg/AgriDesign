@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>AgriDesign · Manual de usuario · Preliminares e introducción</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;1,500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../interior.css">
+<!-- reparte el contenido en hojas tamaño carta, con encabezados, números de página e índice -->
+<script src="../paginar.js"></script>
+<style>
+  /* tablas pequeñas de este capítulo */
+  .cap1-mapa text { font-family: Jost, sans-serif; }
+  figure.chica .marco { width: 70%; margin: 0 auto; }
+  figure.chica figcaption { margin-left: 15%; margin-right: 15%; }
+</style>
+</head>
+<body>
+
+<!-- ====================================================================== CRÉDITOS -->
+<section class="preliminares creditos" id="creditos">
+  <div class="cred-titulo">AgriDesign</div>
+  <div class="cred-sub">Manual de usuario · Diseño y análisis de experimentos agrícolas</div>
+
+  <dl>
+    <dt>Autor</dt><dd><b>Luis Ángel Barrera-Guzmán</b><br><span class="small">ORCID 0000-0001-8057-2583 · lbarrerag@chapingo.mx</span></dd>
+    <dt>Programa</dt><dd>AgriDesign, versión 1.0 (septiembre de 2026)</dd>
+    <dt>Manual</dt><dd>Primera edición en español, 2026. Describe la versión 1.0 del programa.</dd>
+    <dt>Licencia del programa</dt><dd>Licencia Pública General de GNU, versión 3 o posterior (GPL-3.0-or-later).</dd>
+    <dt>Derechos del manual</dt><dd>© 2026 Luis Ángel Barrera-Guzmán. Todos los derechos reservados.</dd>
+    <dt>Idioma de la interfaz</dt><dd>Inglés. En este manual los nombres de botones y menús se escriben tal como aparecen en pantalla, por ejemplo <span class="ui">Run the analysis</span>, seguidos de su traducción cuando hace falta.</dd>
+  </dl>
+
+  <h4>Cómo citar el programa</h4>
+  <div class="cita">Barrera-Guzmán, L. Á. (2026). <i>AgriDesign: a browser-based platform for the design and analysis of agricultural experiments</i> (versión 1.0) [Programa de cómputo]. Zenodo. https://doi.org/10.5281/zenodo.22683046</div>
+  <h4>Cómo citar este manual</h4>
+  <div class="cita">Barrera-Guzmán, L. Á. (2026). <i>AgriDesign. Manual de usuario</i> (1.ª ed.). Distribuido con AgriDesign, versión 1.0. Zenodo. https://doi.org/10.5281/zenodo.22683046</div>
+  <p class="small">El identificador de objeto digital (DOI) 10.5281/zenodo.22683046 lleva siempre a la versión más reciente del programa; cada versión tiene además el suyo en el registro del archivo (la 1.0, por ejemplo, 10.5281/zenodo.22683047). Código fuente: https://github.com/luisangelbg/AgriDesign · versión en línea: https://luisangelbg.github.io/AgriDesign/</p>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Privacidad</div>
+    <p>AgriDesign funciona por completo dentro de tu navegador. Los archivos que abres se leen en tu computadora y <b>nunca se envían a ningún servidor</b>. Puedes analizar ensayos inéditos, datos de tesis en curso o resultados sujetos a convenios con empresas sin riesgo de que salgan de tu equipo.</p>
+  </div>
+
+  <p class="small" style="margin-top:0.4in;color:#5d6472">Las ilustraciones, diagramas y capturas de pantalla de este manual son originales y se generaron con el propio programa o con código escrito para el manual. Los siete conjuntos de datos de ejemplo se describen en la sección 1.7; son ensayos didácticos con valores simulados a partir de rendimientos típicos, no resultados de experimentos reales.</p>
+</section>
+
+<!-- ====================================================================== ÍNDICE -->
+<section class="preliminares indice" id="indice" data-nueva-hoja>
+  <h1>Índice</h1>
+  <div class="indice-sub">Contenido general del manual</div>
+
+  <ol class="toc">
+    <li>
+      <div class="toc-cap"><span class="chip k0">P</span><a href="#como-leer">Cómo leer este manual</a><a class="pag" href="#como-leer"></a></div>
+    </li>
+    <li>
+      <div class="toc-cap"><span class="chip k0">1</span><a href="#cap-intro">Introducción a AgriDesign</a><a class="pag" href="#cap-intro"></a></div>
+      <ul>
+        <li><span class="n">1.1</span><a href="#s1-1"><span class="t">¿Qué es AgriDesign?</span></a></li>
+        <li><span class="n">1.2</span><a href="#s1-2"><span class="t">Preguntas que responde</span></a></li>
+        <li><span class="n">1.3</span><a href="#s1-3"><span class="t">Cinco ideas clave del diseño experimental</span></a></li>
+        <li><span class="n">1.4</span><a href="#s1-4"><span class="t">Tipos de experimentos y datos que acepta</span></a></li>
+        <li><span class="n">1.5</span><a href="#s1-5"><span class="t">Qué necesitas y cómo abrirlo</span></a></li>
+        <li><span class="n">1.6</span><a href="#s1-6"><span class="t">Recorrido por la interfaz</span></a></li>
+        <li><span class="n">1.7</span><a href="#s1-7"><span class="t">Los siete ejemplos incluidos</span></a></li>
+        <li><span class="n">1.8</span><a href="#s1-8"><span class="t">Flujo de trabajo recomendado</span></a></li>
+        <li><span class="n">1.9</span><a href="#s1-9"><span class="t">Cómo leer una tabla de ANOVA, un valor P y las letras</span></a></li>
+      </ul>
+    </li>
+    <li>
+      <div class="toc-cap"><span class="chip k1">2</span><a href="#cap-b1">Bloque 1 · Inicio, simulador y teoría</a><a class="pag" href="#cap-b1"></a></div>
+      <ul>
+        <li><span class="n">2.1</span><a href="#s2-1"><span class="t">La portada y la ruta de trabajo</span></a></li>
+        <li><span class="n">2.2</span><a href="#s2-2"><span class="t">El simulador: bloques contra azar completo</span></a></li>
+        <li><span class="n">2.3</span><a href="#s2-3"><span class="t">Tipos de experimento, diseños y métodos</span></a></li>
+        <li><span class="n">2.4</span><a href="#s2-4"><span class="t">La teoría en lenguaje llano</span></a></li>
+        <li><span class="n">2.5</span><a href="#s2-5"><span class="t">Cómo citar el programa</span></a></li>
+      </ul>
+    </li>
+    <li>
+      <div class="toc-cap"><span class="chip k2">3</span><a href="#cap-b2">Bloque 2 · Datos y roles de las variables</a><a class="pag" href="#cap-b2"></a></div>
+      <ul>
+        <li><span class="n">3.1</span><a href="#s3-1"><span class="t">Cómo debe verse una libreta de campo</span></a></li>
+        <li><span class="n">3.2</span><a href="#s3-2"><span class="t">Formatos de archivo y portapapeles</span></a></li>
+        <li><span class="n">3.3</span><a href="#s3-3"><span class="t">La revisión de la tabla ordenada</span></a></li>
+        <li><span class="n">3.4</span><a href="#s3-4"><span class="t">Roles: respuesta, factor, bloque, covariable</span></a></li>
+        <li><span class="n">3.5</span><a href="#s3-5"><span class="t">Estructura detectada y balance</span></a></li>
+        <li><span class="n">3.6</span><a href="#s3-6"><span class="t">Convertir una tabla ancha a formato largo</span></a></li>
+        <li><span class="n">3.7</span><a href="#s3-7"><span class="t">Ejemplo paso a paso</span></a></li>
+      </ul>
+    </li>
+    <li>
+      <div class="toc-cap"><span class="chip k3">4</span><a href="#cap-b3">Bloque 3 · Estadística descriptiva</a><a class="pag" href="#cap-b3"></a></div>
+      <ul>
+        <li><span class="n">4.1</span><a href="#s4-1"><span class="t">Mirar antes de probar</span></a></li>
+        <li><span class="n">4.2</span><a href="#s4-2"><span class="t">Estadísticos por tratamiento, bloque y combinación</span></a></li>
+        <li><span class="n">4.3</span><a href="#s4-3"><span class="t">El coeficiente de variación y sus referencias</span></a></li>
+        <li><span class="n">4.4</span><a href="#s4-4"><span class="t">Gráficos exploratorios</span></a></li>
+        <li><span class="n">4.5</span><a href="#s4-5"><span class="t">Ejemplo paso a paso</span></a></li>
+      </ul>
+    </li>
+    <li>
+      <div class="toc-cap"><span class="chip k4">5</span><a href="#cap-b4">Bloque 4 · Supuestos, transformaciones y no paramétricos</a><a class="pag" href="#cap-b4"></a></div>
+      <ul>
+        <li><span class="n">5.1</span><a href="#s5-1"><span class="t">Los supuestos se revisan en los residuales</span></a></li>
+        <li><span class="n">5.2</span><a href="#s5-2"><span class="t">Normalidad, homogeneidad de varianzas y aditividad</span></a></li>
+        <li><span class="n">5.3</span><a href="#s5-3"><span class="t">Gráficos de residuales</span></a></li>
+        <li><span class="n">5.4</span><a href="#s5-4"><span class="t">Transformaciones y el perfil de Box–Cox</span></a></li>
+        <li><span class="n">5.5</span><a href="#s5-5"><span class="t">La ruta no paramétrica</span></a></li>
+        <li><span class="n">5.6</span><a href="#s5-6"><span class="t">Ejemplo paso a paso</span></a></li>
+      </ul>
+    </li>
+    <li>
+      <div class="toc-cap"><span class="chip k5">6</span><a href="#cap-b5">Bloque 5 · Diseños, ANOVA y pruebas de medias</a><a class="pag" href="#cap-b5"></a></div>
+      <ul>
+        <li><span class="n">6.1</span><a href="#s6-1"><span class="t">El catálogo de diseños y sus errores</span></a></li>
+        <li><span class="n">6.2</span><a href="#s6-2"><span class="t">Opciones: sumas de cuadrados, α y prueba de medias</span></a></li>
+        <li><span class="n">6.3</span><a href="#s6-3"><span class="t">La tabla de ANOVA y su interpretación</span></a></li>
+        <li><span class="n">6.4</span><a href="#s6-4"><span class="t">Medias ajustadas y letras</span></a></li>
+        <li><span class="n">6.5</span><a href="#s6-5"><span class="t">Factoriales: interacción y efectos simples</span></a></li>
+        <li><span class="n">6.6</span><a href="#s6-6"><span class="t">Tendencias, curvas de respuesta y contrastes</span></a></li>
+        <li><span class="n">6.7</span><a href="#s6-7"><span class="t">Ejemplos paso a paso</span></a></li>
+      </ul>
+    </li>
+    <li>
+      <div class="toc-cap"><span class="chip k6">7</span><a href="#cap-b6">Bloque 6 · Gráficos de resultados</a><a class="pag" href="#cap-b6"></a></div>
+      <ul>
+        <li><span class="n">7.1</span><a href="#s7-1"><span class="t">Qué figura para qué resultado</span></a></li>
+        <li><span class="n">7.2</span><a href="#s7-2"><span class="t">La galería y los estilos predefinidos</span></a></li>
+        <li><span class="n">7.3</span><a href="#s7-3"><span class="t">Editar una figura</span></a></li>
+        <li><span class="n">7.4</span><a href="#s7-4"><span class="t">Figuras multipanel</span></a></li>
+        <li><span class="n">7.5</span><a href="#s7-5"><span class="t">Exportar a la resolución de la revista</span></a></li>
+      </ul>
+    </li>
+    <li>
+      <div class="toc-cap"><span class="chip k7">8</span><a href="#cap-b7">Bloque 7 · Informe y exportación</a><a class="pag" href="#cap-b7"></a></div>
+      <ul>
+        <li><span class="n">8.1</span><a href="#s8-1"><span class="t">Qué contiene el informe</span></a></li>
+        <li><span class="n">8.2</span><a href="#s8-2"><span class="t">Detalles, secciones y vista previa</span></a></li>
+        <li><span class="n">8.3</span><a href="#s8-3"><span class="t">Del informe al PDF y al manuscrito</span></a></li>
+        <li><span class="n">8.4</span><a href="#s8-4"><span class="t">El paquete ZIP</span></a></li>
+      </ul>
+    </li>
+    <li>
+      <div class="toc-cap"><span class="chip k8">9</span><a href="#cap-b8">Bloque 8 · Generador de diseños y potencia</a><a class="pag" href="#cap-b8"></a></div>
+      <ul>
+        <li><span class="n">9.1</span><a href="#s9-1"><span class="t">Planear antes de sembrar</span></a></li>
+        <li><span class="n">9.2</span><a href="#s9-2"><span class="t">Aleatorización con semilla</span></a></li>
+        <li><span class="n">9.3</span><a href="#s9-3"><span class="t">El croquis de campo</span></a></li>
+        <li><span class="n">9.4</span><a href="#s9-4"><span class="t">La libreta de campo</span></a></li>
+        <li><span class="n">9.5</span><a href="#s9-5"><span class="t">Cuántas repeticiones: potencia y diferencia detectable</span></a></li>
+      </ul>
+    </li>
+    <li>
+      <div class="toc-cap"><span class="chip kx">A</span><a href="#apendices">Apéndices</a><a class="pag" href="#apendices"></a></div>
+      <ul>
+        <li><span class="n">A</span><a href="#ap-a"><span class="t">Formatos de archivo y de tabla</span></a></li>
+        <li><span class="n">B</span><a href="#ap-b"><span class="t">Reglas de decisión reunidas</span></a></li>
+        <li><span class="n">C</span><a href="#ap-c"><span class="t">Glosario inglés–español</span></a></li>
+        <li><span class="n">D</span><a href="#ap-d"><span class="t">Solución de problemas</span></a></li>
+      </ul>
+    </li>
+  </ol>
+</section>
+
+<!-- ====================================================================== CÓMO LEER ESTE MANUAL -->
+<section class="preliminares" id="como-leer" data-nueva-hoja style="--acento: var(--b0)">
+  <h2 style="margin-top:0.2in">Cómo leer este manual</h2>
+  <p class="lead">El manual sigue el mismo orden que la app: ocho bloques numerados que se recorren de izquierda a derecha en la barra superior. Cada capítulo explica un bloque, empieza con un poco de teoría fácil de digerir, describe lo que calcula y termina con un ejemplo paso a paso con los datos que ya vienen dentro del programa.</p>
+
+  <h3>Un color para cada bloque</h3>
+  <p>El color del bloque aparece en la apertura de su capítulo, en los números de sección, en los recuadros de teoría y en el índice. Así sabes de un vistazo en qué parte de la app estás.</p>
+  <table class="compacta">
+    <thead><tr><th style="width:0.6in">Bloque</th><th>Nombre en la app</th><th>Qué hace</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip k1">1</span></td><td><span class="ui">Home</span></td><td>Portada, simulador de bloques, teoría esencial y cómo citar</td></tr>
+      <tr><td><span class="chip k2">2</span></td><td><span class="ui">Data</span></td><td>Carga de la libreta de campo, revisión de la tabla y roles de las variables</td></tr>
+      <tr><td><span class="chip k3">3</span></td><td><span class="ui">Descriptive</span></td><td>Estadística descriptiva y gráficos exploratorios por tratamiento y bloque</td></tr>
+      <tr><td><span class="chip k4">4</span></td><td><span class="ui">Assumptions</span></td><td>Supuestos del ANOVA, transformaciones y alternativas no paramétricas</td></tr>
+      <tr><td><span class="chip k5">5</span></td><td><span class="ui">Designs &amp; ANOVA</span></td><td>Diseño experimental, análisis de varianza, pruebas de medias, tendencias y contrastes</td></tr>
+      <tr><td><span class="chip k6">6</span></td><td><span class="ui">Means &amp; graphics</span></td><td>Galería de figuras editables para publicar</td></tr>
+      <tr><td><span class="chip k7">7</span></td><td><span class="ui">Report</span></td><td>Informe automático, PDF y paquete con tablas y figuras</td></tr>
+      <tr><td><span class="chip k8">8</span></td><td><span class="ui">Design generator</span></td><td>Aleatorización, croquis, libreta de campo y número de repeticiones</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Tipos de recuadros</h3>
+  <div class="dos">
+    <div class="caja nota" style="margin:0"><div class="caja-t"><span class="ico">i</span>Nota</div><p>Aclaraciones y consejos prácticos que ahorran tiempo.</p></div>
+    <div class="caja importante" style="margin:0"><div class="caja-t"><span class="ico">!</span>Importante</div><p>Lo que puede cambiar tus conclusiones si se pasa por alto.</p></div>
+    <div class="caja teoria" style="margin:0"><div class="caja-t"><span class="ico">θ</span>Teoría en breve</div><p>La idea detrás de un análisis, sin fórmulas innecesarias.</p></div>
+    <div class="caja ejemplo" style="margin:0"><div class="caja-t"><span class="ico">▸</span>Ejemplo</div><p>Un caso completo con los datos incluidos en el programa.</p></div>
+  </div>
+  <div class="caja regla" style="margin-top:0.18in">
+    <div class="caja-t"><span class="ico">✓</span>Regla de decisión</div>
+    <table class="compacta"><tbody>
+      <tr><td style="width:40%"><b>Si</b> el valor cae en este intervalo…</td><td><b>entonces</b> esta es la lectura recomendada.</td></tr>
+    </tbody></table>
+    <p class="regla-pie">Son guías para interpretar, no leyes: el cultivo, el sitio y el objetivo del ensayo siempre mandan.</p>
+  </div>
+  <div class="caja dato">
+    <div class="dato-cifra">900 dpi</div>
+    <div class="dato-txt"><div class="caja-t">Dato clave</div>Una cifra o hecho que conviene recordar; por ejemplo, la resolución máxima a la que exporta las figuras.</div>
+  </div>
+
+  <h3>Convenciones de escritura</h3>
+  <table class="compacta">
+    <thead><tr><th style="width:38%">Así se escribe</th><th>Significa</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Run the analysis</span></td><td>Un botón, casilla o menú de la app, con su texto en inglés tal como aparece en pantalla.</td></tr>
+      <tr><td><span class="ruta">Edit figure<span class="sep">›</span>Style &amp; typography</span></td><td>Una ruta: abre el primer elemento y luego el segundo.</td></tr>
+      <tr><td><code>rcbd_maize_nitrogen.csv</code></td><td>Un nombre de archivo, columna o valor que se escribe tal cual.</td></tr>
+      <tr><td>F, P, CV, η²<sub>p</sub></td><td>Estadísticos; su significado se explica la primera vez que aparecen.</td></tr>
+      <tr><td><span class="si">●</span> <span class="parcial">◐</span> <span class="no">—</span></td><td>Disponible · disponible en parte o con condiciones · no aplica.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ====================================================================== CAPÍTULO 1 -->
+<section class="capitulo" id="cap-intro" data-pestana="1" data-orden="1" style="--acento: var(--b0)">
+  <div class="cap-apertura">
+    <div class="cap-num">1</div>
+    <div class="cap-etiqueta">Capítulo uno</div>
+    <h1>Introducción a AgriDesign</h1>
+    <div class="cap-regla"></div>
+    <p class="cap-resumen">Qué es el programa, qué preguntas responde, qué experimentos y datos acepta y cómo se recorre de principio a fin. Incluye las ideas básicas del diseño experimental que necesitas para aprovechar el resto del manual.</p>
+    <div class="cap-franja"><span class="k1"></span><span class="k2"></span><span class="k3"></span><span class="k4"></span><span class="k5"></span><span class="k6"></span><span class="k7"></span><span class="k8"></span></div>
+    <ul class="cap-contenido">
+      <li><b>1.1</b>¿Qué es AgriDesign?</li>
+      <li><b>1.2</b>Preguntas que responde</li>
+      <li><b>1.3</b>Cinco ideas clave</li>
+      <li><b>1.4</b>Experimentos y datos que acepta</li>
+      <li><b>1.5</b>Qué necesitas y cómo abrirlo</li>
+      <li><b>1.6</b>Recorrido por la interfaz</li>
+      <li><b>1.7</b>Los siete ejemplos incluidos</li>
+      <li><b>1.8</b>Flujo de trabajo recomendado</li>
+      <li><b>1.9</b>ANOVA, valores P y letras</li>
+    </ul>
+  </div>
+
+  <!-- 1.1 -->
+  <h2 id="s1-1"><span class="num">1.1</span>¿Qué es AgriDesign?</h2>
+  <p class="lead">AgriDesign es una plataforma para diseñar y analizar experimentos agrícolas <b>de la libreta de campo al artículo</b>: recibe la tabla con los datos del ensayo, la revisa, ajusta el análisis de varianza con los términos de error correctos para el diseño, separa las medias con letras, ajusta curvas de respuesta y entrega figuras e informes listos para publicar. También hace el camino inverso: a partir de un diseño genera la aleatorización, el croquis y la libreta del siguiente ensayo.</p>
+  <p>Todo ocurre dentro del navegador de internet. No hay que instalar nada, no se necesita saber programar y los datos no salen de la computadora. Los mismos pasos sirven para parcelas de maíz, trigo o frijol, macetas de jitomate o chile, cafetos, corrales con vacas, borregos o cabras, cajas de germinación y escalas de severidad de enfermedades: la ruta es la misma porque la lógica del diseño experimental es la misma.</p>
+
+  <figure>
+    <div class="marco" style="position:relative">
+      <img src="../img/app-inicio.png" alt="Portada de la aplicación AgriDesign">
+      <span class="marca" style="left:22.6%;top:4.6%">1</span>
+      <span class="marca" style="left:40.5%;top:4.6%">2</span>
+      <span class="marca" style="left:10.4%;top:73.6%">3</span>
+      <span class="marca" style="left:27.4%;top:73.6%">4</span>
+      <span class="marca" style="left:10.4%;top:81.4%">5</span>
+      <span class="marca" style="left:10.4%;top:88.6%">6</span>
+    </div>
+    <figcaption><b>Figura 1.1.</b> Portada de la app (Bloque 1).</figcaption>
+  </figure>
+  <ul class="leyenda-marcas">
+    <li><span class="n">1</span>Barra de los ocho bloques. El bloque activo aparece resaltado.</li>
+    <li><span class="n">2</span>Los bloques en gris se activan cuando cargas datos; el Bloque 8 siempre está disponible porque no necesita datos.</li>
+    <li><span class="n">3</span><span class="ui">Start with my data</span> lleva al Bloque 2 para cargar tu libreta de campo.</li>
+    <li><span class="n">4</span><span class="ui">Try the simulator</span> abre el simulador que compara bloques al azar contra azar completo.</li>
+    <li><span class="n">5</span>Teoría esencial (<span class="ui">Read the theory</span>) y forma de citar el programa (<span class="ui">How to cite</span>).</li>
+    <li><span class="n">6</span>Garantías: todo corre en tu equipo, catorce diseños, once pruebas de medias, figuras hasta 900 dpi.</li>
+  </ul>
+
+  <div class="dos">
+    <div class="caja dato" style="margin:0">
+      <div class="dato-cifra">0</div>
+      <div class="dato-txt"><div class="caja-t">Instalaciones</div>Se abre con doble clic en <code style="background:#1f4d33;color:#fff">index.html</code>. No requiere permisos de administrador ni conexión a internet.</div>
+    </div>
+    <div class="caja dato" style="margin:0">
+      <div class="dato-cifra">8</div>
+      <div class="dato-txt"><div class="caja-t">Bloques</div>De la libreta de campo al informe final, y de vuelta al campo con el croquis del siguiente ensayo.</div>
+    </div>
+  </div>
+
+  <h3>Qué hace, en una tabla</h3>
+  <table>
+    <thead><tr><th style="width:24%">Etapa</th><th>Lo que obtienes</th><th class="c" style="width:12%">Bloque</th></tr></thead>
+    <tbody>
+      <tr><td><b>Entrada de datos</b></td><td>Lectura de hojas de cálculo (.xlsx, .xls, .ods, .csv, .tsv, .txt) y del portapapeles; revisión de que la tabla esté en formato largo; conversión de tablas anchas.</td><td class="c"><span class="chip k2">2</span></td></tr>
+      <tr><td><b>Roles y estructura</b></td><td>Cada columna recibe un papel (respuesta, factor, bloque, fila, columna, covariable, identificador) y la app deduce el diseño: bloques completos, balance, número de repeticiones.</td><td class="c"><span class="chip k2">2</span></td></tr>
+      <tr><td><b>Descripción</b></td><td>Medias, desviaciones, coeficiente de variación, asimetría y valores atípicos por tratamiento, bloque o combinación; histogramas, cajas, violines, perfiles por bloque e interacciones.</td><td class="c"><span class="chip k3">3</span></td></tr>
+      <tr><td><b>Supuestos</b></td><td>Normalidad, homogeneidad de varianzas, aditividad e independencia sobre los residuales del modelo; transformaciones con perfil de Box–Cox; ruta no paramétrica con letras.</td><td class="c"><span class="chip k4">4</span></td></tr>
+      <tr><td><b>Diseño y ANOVA</b></td><td>Catálogo de diseños con sus estratos de error, sumas de cuadrados tipo I y III, η² parcial, CV, medias ajustadas por mínimos cuadrados con su error estándar.</td><td class="c"><span class="chip k5">5</span></td></tr>
+      <tr><td><b>Medias y tendencias</b></td><td>Once pruebas de separación de medias con letras, efectos simples en factoriales, polinomios ortogonales con la curva ajustada y su óptimo, contrastes a la medida.</td><td class="c"><span class="chip k5">5</span></td></tr>
+      <tr><td><b>Figuras</b></td><td>Galería editable: medias con letras, diferencias con intervalos, curvas de respuesta, interacciones, partición de la varianza, mapas de campo; composiciones multipanel; estilos de revista.</td><td class="c"><span class="chip k6">6</span></td></tr>
+      <tr><td><b>Publicación</b></td><td>Informe completo con métodos redactados, tablas, figuras tal como las editaste y apéndices; PDF; paquete ZIP con datos, tablas CSV y figuras a la resolución elegida.</td><td class="c"><span class="chip k7">7</span></td></tr>
+      <tr><td><b>Planeación</b></td><td>Aleatorización reproducible con semilla, croquis de campo exportable, libreta de campo con columnas vacías y calculadora de repeticiones y potencia.</td><td class="c"><span class="chip k8">8</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>¿Para quién es?</h3>
+  <p>Para quien conduce ensayos con cultivos o animales y quiere resultados sólidos sin pelear con formatos ni líneas de comando: estudiantes de licenciatura y posgrado que analizan su primer experimento, investigadores y técnicos de estaciones experimentales, mejoradores que evalúan variedades, asesores que comparan fertilizantes o dietas, y docentes que necesitan mostrar en clase por qué se aleatoriza, por qué se bloquea y cómo se lee una tabla de ANOVA. Cada resultado viene acompañado de un párrafo que lo interpreta en lenguaje llano, lo que convierte a la app también en una herramienta de enseñanza.</p>
+
+  <!-- 1.2 -->
+  <h2 id="s1-2"><span class="num">1.2</span>Preguntas que responde</h2>
+  <p>Un buen análisis empieza con una pregunta agronómica. La tabla siguiente traduce las preguntas más frecuentes de un ensayo al análisis que las responde y al bloque donde se encuentra.</p>
+  <table>
+    <caption><b>Tabla 1.1.</b> De la pregunta al análisis.</caption>
+    <thead><tr><th style="width:38%">Pregunta</th><th>Análisis que la responde</th><th class="c" style="width:11%">Bloque</th></tr></thead>
+    <tbody>
+      <tr><td>¿Mi libreta de campo está bien armada para analizarla?</td><td>Revisión de la tabla larga: una fila por unidad experimental, una columna por variable; detección de celdas vacías, duplicados y balance.</td><td class="c"><span class="chip k2">2</span></td></tr>
+      <tr><td>¿Cuánto varían los rendimientos dentro de cada tratamiento? ¿Hay parcelas raras?</td><td>Estadística descriptiva por tratamiento y bloque, coeficiente de variación, valores atípicos, gráficos de caja y perfiles por bloque.</td><td class="c"><span class="chip k3">3</span></td></tr>
+      <tr><td>¿Puedo usar un ANOVA con estos datos o debo transformarlos?</td><td>Pruebas de normalidad y homogeneidad de varianzas sobre los residuales, gráficos de residuales, comparación de transformaciones y perfil de Box–Cox.</td><td class="c"><span class="chip k4">4</span></td></tr>
+      <tr><td>Mis datos son calificaciones del 1 al 9. ¿Qué hago?</td><td>Ruta no paramétrica: Kruskal–Wallis, Friedman, Scheirer–Ray–Hare o ANOVA de rangos alineados, con sus comparaciones y letras.</td><td class="c"><span class="chip k4">4</span></td></tr>
+      <tr><td>¿Los tratamientos difieren? ¿Sirvió bloquear?</td><td>Tabla de ANOVA del diseño con sus estratos de error, valor F y P de cada fuente, η² parcial y CV.</td><td class="c"><span class="chip k5">5</span></td></tr>
+      <tr><td>¿Qué tratamientos difieren entre sí?</td><td>Medias ajustadas y prueba de separación de medias (Tukey, LSD, Duncan, Dunnett…) con letras compactas.</td><td class="c"><span class="chip k5">5</span></td></tr>
+      <tr><td>¿La mejor variedad depende de la dosis de fertilizante?</td><td>Interacción en el factorial, efectos simples por rebanadas y comparaciones dentro de cada nivel.</td><td class="c"><span class="chip k5">5</span></td></tr>
+      <tr><td>¿Cuál es la dosis óptima de nitrógeno?</td><td>Polinomios ortogonales, curva de respuesta ajustada y punto óptimo.</td><td class="c"><span class="chip k5">5</span></td></tr>
+      <tr><td>¿El peso inicial de los animales influye en la comparación de dietas?</td><td>Análisis de covarianza: la covariable entra al modelo y las medias se ajustan a su promedio.</td><td class="c"><span class="chip k5">5</span></td></tr>
+      <tr><td>¿Cómo presento los resultados en el artículo?</td><td>Figuras editables a resolución de revista, párrafo de métodos redactado e informe completo.</td><td class="c"><span class="chip k6">6</span> <span class="chip k7">7</span></td></tr>
+      <tr><td>¿Cuántas repeticiones necesito y cómo acomodo las parcelas?</td><td>Calculadora de potencia, aleatorización con semilla, croquis y libreta de campo.</td><td class="c"><span class="chip k8">8</span></td></tr>
+    </tbody>
+  </table>
+
+  <!-- 1.3 -->
+  <h2 id="s1-3"><span class="num">1.3</span>Cinco ideas clave del diseño experimental</h2>
+  <p>Toda la app descansa en cinco ideas. Si las tienes claras, cada bloque se explica solo.</p>
+
+  <figure>
+    <svg viewBox="0 0 700 235" xmlns="http://www.w3.org/2000/svg" font-family="Jost, sans-serif" role="img" aria-label="Un mismo ensayo bajo azar completo y bajo bloques al azar sobre un gradiente de fertilidad">
+      <defs>
+        <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e8d9c3"/><stop offset="1" stop-color="#8a5a2b"/></linearGradient>
+      </defs>
+      <!-- gradiente de fertilidad -->
+      <rect x="20" y="22" width="660" height="12" fill="url(#grad1)" rx="3"/>
+      <text x="20" y="16" font-size="10.5" fill="#5d6472">suelo pobre</text>
+      <text x="680" y="16" font-size="10.5" fill="#5d6472" text-anchor="end">suelo fértil</text>
+      <text x="350" y="16" font-size="10.5" fill="#1f4d33" text-anchor="middle" font-weight="500">gradiente de fertilidad del terreno →</text>
+      <!-- CRD -->
+      <text x="20" y="60" font-size="12" fill="#111" font-weight="600">Azar completo</text>
+      <text x="20" y="74" font-size="10" fill="#5d6472">las 16 parcelas se sortean sin restricción: A cayó en la zona pobre y D en la fértil</text>
+      <g font-size="11" font-weight="600" text-anchor="middle" fill="#fff">
+        <rect x="20"  y="82" width="38" height="28" fill="#2f7d4f"/><text x="39"  y="101">A</text>
+        <rect x="61"  y="82" width="38" height="28" fill="#2f7d4f"/><text x="80"  y="101">A</text>
+        <rect x="102" y="82" width="38" height="28" fill="#b7791f"/><text x="121" y="101">B</text>
+        <rect x="143" y="82" width="38" height="28" fill="#2f7d4f"/><text x="162" y="101">A</text>
+        <rect x="184" y="82" width="38" height="28" fill="#2b7bb9"/><text x="203" y="101">C</text>
+        <rect x="225" y="82" width="38" height="28" fill="#b7791f"/><text x="244" y="101">B</text>
+        <rect x="266" y="82" width="38" height="28" fill="#2f7d4f"/><text x="285" y="101">A</text>
+        <rect x="307" y="82" width="38" height="28" fill="#b7791f"/><text x="326" y="101">B</text>
+        <rect x="348" y="82" width="38" height="28" fill="#2b7bb9"/><text x="367" y="101">C</text>
+        <rect x="389" y="82" width="38" height="28" fill="#c2410c"/><text x="408" y="101">D</text>
+        <rect x="430" y="82" width="38" height="28" fill="#b7791f"/><text x="449" y="101">B</text>
+        <rect x="471" y="82" width="38" height="28" fill="#2b7bb9"/><text x="490" y="101">C</text>
+        <rect x="512" y="82" width="38" height="28" fill="#c2410c"/><text x="531" y="101">D</text>
+        <rect x="553" y="82" width="38" height="28" fill="#2b7bb9"/><text x="572" y="101">C</text>
+        <rect x="594" y="82" width="38" height="28" fill="#c2410c"/><text x="613" y="101">D</text>
+        <rect x="635" y="82" width="38" height="28" fill="#c2410c"/><text x="654" y="101">D</text>
+      </g>
+      <!-- RCBD -->
+      <text x="20" y="140" font-size="12" fill="#111" font-weight="600">Bloques completos al azar</text>
+      <text x="20" y="154" font-size="10" fill="#5d6472">cada bloque agrupa parcelas parecidas y contiene los cuatro tratamientos; el sorteo es dentro del bloque</text>
+      <g font-size="11" font-weight="600" text-anchor="middle" fill="#fff">
+        <rect x="20"  y="162" width="38" height="28" fill="#b7791f"/><text x="39"  y="181">B</text>
+        <rect x="61"  y="162" width="38" height="28" fill="#c2410c"/><text x="80"  y="181">D</text>
+        <rect x="102" y="162" width="38" height="28" fill="#2f7d4f"/><text x="121" y="181">A</text>
+        <rect x="143" y="162" width="38" height="28" fill="#2b7bb9"/><text x="162" y="181">C</text>
+        <rect x="184" y="162" width="38" height="28" fill="#2b7bb9"/><text x="203" y="181">C</text>
+        <rect x="225" y="162" width="38" height="28" fill="#2f7d4f"/><text x="244" y="181">A</text>
+        <rect x="266" y="162" width="38" height="28" fill="#c2410c"/><text x="285" y="181">D</text>
+        <rect x="307" y="162" width="38" height="28" fill="#b7791f"/><text x="326" y="181">B</text>
+        <rect x="348" y="162" width="38" height="28" fill="#2f7d4f"/><text x="367" y="181">A</text>
+        <rect x="389" y="162" width="38" height="28" fill="#b7791f"/><text x="408" y="181">B</text>
+        <rect x="430" y="162" width="38" height="28" fill="#2b7bb9"/><text x="449" y="181">C</text>
+        <rect x="471" y="162" width="38" height="28" fill="#c2410c"/><text x="490" y="181">D</text>
+        <rect x="512" y="162" width="38" height="28" fill="#c2410c"/><text x="531" y="181">D</text>
+        <rect x="553" y="162" width="38" height="28" fill="#2b7bb9"/><text x="572" y="181">C</text>
+        <rect x="594" y="162" width="38" height="28" fill="#b7791f"/><text x="613" y="181">B</text>
+        <rect x="635" y="162" width="38" height="28" fill="#2f7d4f"/><text x="654" y="181">A</text>
+      </g>
+      <g stroke="#111" stroke-width="1.4" fill="none">
+        <rect x="18" y="160" width="167" height="32"/><rect x="182" y="160" width="167" height="32"/><rect x="346" y="160" width="167" height="32"/><rect x="510" y="160" width="165" height="32"/>
+      </g>
+      <g font-size="10" fill="#111" text-anchor="middle">
+        <text x="101" y="206">Bloque 1</text><text x="265" y="206">Bloque 2</text><text x="429" y="206">Bloque 3</text><text x="592" y="206">Bloque 4</text>
+      </g>
+      <text x="350" y="228" font-size="10.5" fill="#1f4d33" text-anchor="middle">Con bloques, la diferencia entre zonas del terreno sale del error experimental y las comparaciones entre A, B, C y D son más precisas.</text>
+    </svg>
+    <figcaption><b>Figura 1.2.</b> El mismo ensayo de cuatro tratamientos y cuatro repeticiones bajo azar completo y bajo bloques completos al azar, sobre un terreno con gradiente de fertilidad. El simulador del Bloque 1 repite este experimento cientos de veces y muestra cuánto gana la potencia al bloquear.</figcaption>
+  </figure>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">1</span>La unidad experimental decide todo</div>
+    <p>Es la porción de material a la que se le asigna, por sorteo, un tratamiento: la parcela, la maceta, el corral, el animal o la caja de germinación. Las <b>repeticiones se cuentan en unidades experimentales</b>, no en plantas medidas. Si un corral con 20 borregos recibe una dieta, el corral es la repetición y los 20 pesos son submuestras; promediarlos y analizar un solo valor por corral es lo correcto. Contar cada borrego como repetición infla artificialmente los grados de libertad y produce diferencias «significativas» que no existen. El Bloque 2 te pide precisamente que identifiques esa unidad.</p>
+  </div>
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">2</span>Repetición</div>
+    <p>Cada tratamiento se aplica a varias unidades experimentales. Sin repetición no hay manera de estimar el error experimental, es decir, cuánto varían dos parcelas que recibieron el mismo tratamiento, y sin esa estimación ninguna diferencia entre tratamientos puede juzgarse. Tres repeticiones es el mínimo habitual en campo; cuatro o más dan al análisis la sensibilidad que un ensayo caro merece. El Bloque 8 calcula cuántas necesitas para detectar la diferencia que te importa.</p>
+  </div>
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">3</span>Aleatorización</div>
+    <p>Los tratamientos se reparten entre las unidades por sorteo, no por comodidad ni por criterio del investigador. Es lo que garantiza que ninguna causa desconocida (una franja húmeda, el orden de siembra, la hora de la medición) favorezca sistemáticamente a un tratamiento, y lo que hace válidos los valores P. El Bloque 8 hace el sorteo con una semilla que puedes anotar para reproducirlo.</p>
+  </div>
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">4</span>Control local: los bloques</div>
+    <p>Cuando el material no es homogéneo (un terreno con pendiente, animales de distinta edad, varios días de trabajo), se agrupan las unidades parecidas en bloques y cada bloque recibe todos los tratamientos. La variación entre bloques se separa en el ANOVA y ya no estorba a las comparaciones. El bloque es el diseño más usado en agricultura por una razón: casi nunca el terreno es uniforme. Los cuadros latinos bloquean en dos direcciones; los diseños de parcelas divididas y en franjas acomodan factores que no se pueden aleatorizar en parcelas pequeñas, como el riego o la labranza.</p>
+  </div>
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">5</span>El error experimental y el modelo</div>
+    <p>Cada observación se descompone en una media general, el efecto del tratamiento, el efecto del bloque (si lo hay) y un residuo: <i>y</i> = μ + tratamiento + bloque + ε. El residuo ε es el error experimental, y el ANOVA compara la variación debida a los tratamientos con esa variación de fondo mediante el cociente F. En los diseños con parcelas divididas hay más de un error, uno por tamaño de parcela, y cada factor debe compararse con el suyo: eso es lo que la app llama «estratos de error» y lo que resuelve automáticamente en el Bloque 5.</p>
+  </div>
+
+  <div class="caja importante">
+    <div class="caja-t"><span class="ico">!</span>Importante · el diseño se decide en el campo, no en la computadora</div>
+    <p>El análisis debe reflejar cómo se acomodaron y sortearon las parcelas. Si sembraste en bloques, analiza en bloques; si el riego se aplicó a franjas grandes y las variedades a parcelas pequeñas dentro de ellas, es un diseño de parcelas divididas aunque la tabla se vea como un factorial. AgriDesign sugiere el diseño a partir de la estructura de la tabla, pero tú confirmas cuál fue el que se sembró.</p>
+  </div>
+
+  <!-- 1.4 -->
+  <h2 id="s1-4"><span class="num">1.4</span>Tipos de experimentos y datos que acepta</h2>
+  <p>La app está pensada para los ensayos habituales de la investigación agropecuaria. La tabla siguiente muestra las familias de experimentos y los diseños y métodos que suelen corresponderles.</p>
+  <table>
+    <caption><b>Tabla 1.2.</b> Familias de experimentos que cubre AgriDesign.</caption>
+    <thead><tr><th style="width:22%">Tipo de ensayo</th><th>Ejemplos</th><th style="width:30%">Diseños y métodos habituales</th></tr></thead>
+    <tbody>
+      <tr><td><b>Cultivos de campo</b></td><td>Maíz, trigo, frijol, sorgo: parcelas en bloques a lo largo del gradiente de fertilidad; rendimiento en t ha⁻¹, altura, días a floración.</td><td>Bloques al azar, cuadro latino, látices</td></tr>
+      <tr><td><b>Horticultura e invernadero</b></td><td>Jitomate, chile, pepino, ornamentales: macetas o camas, variedades × nutrición, curvas dosis–respuesta y dosis óptimas.</td><td>Azar completo, factoriales, tendencias polinómicas</td></tr>
+      <tr><td><b>Cultivos perennes</b></td><td>Café, cacao, frutales: el árbol o la hilera es la parcela; varias cosechas de las mismas plantas se vuelven medidas repetidas.</td><td>Parcelas divididas en el tiempo, covariables</td></tr>
+      <tr><td><b>Ganadería</b></td><td>Vacas, borregos, cabras: el animal o el corral es la unidad experimental; peso inicial como covariable; dietas, razas y periodos.</td><td>Covarianza, cuadro latino, anidados</td></tr>
+      <tr><td><b>Germinación y laboratorio</b></td><td>Cajas Petri, charolas y frascos: porcentajes y conteos que piden una transformación (arcoseno, raíz cuadrada, logit) o una prueba de rangos.</td><td>Azar completo, transformaciones</td></tr>
+      <tr><td><b>Calificaciones y escalas</b></td><td>Severidad de enfermedad 1–9, vigor 1–5, paneles sensoriales: respuestas ordinales.</td><td>Friedman, Kruskal–Wallis, rangos alineados</td></tr>
+    </tbody>
+  </table>
+
+  <h3>La tabla larga: una fila por unidad experimental</h3>
+  <p>Todos los análisis parten de una tabla en <b>formato largo</b>: una fila por unidad experimental (parcela, maceta, animal) y una columna por variable, con los factores y bloques como columnas de texto o códigos y las respuestas como columnas numéricas. Es la forma natural de una libreta de campo bien llevada. Las tablas «anchas», con un tratamiento por columna, son cómodas para verlas pero no para analizarlas; el Bloque 2 tiene un convertidor que las reacomoda.</p>
+
+  <figure>
+    <svg viewBox="0 0 700 190" xmlns="http://www.w3.org/2000/svg" font-family="Jost, sans-serif" role="img" aria-label="Tabla ancha convertida en tabla larga">
+      <!-- ancha -->
+      <text x="20" y="16" font-size="11.5" font-weight="600" fill="#111">Tabla ancha (como se ve en la hoja de cálculo)</text>
+      <g font-size="10.5" fill="#111">
+        <rect x="20" y="24" width="250" height="20" fill="#e9efe9"/>
+        <text x="30" y="38" font-weight="600">Block</text><text x="90" y="38" font-weight="600">N0</text><text x="140" y="38" font-weight="600">N60</text><text x="190" y="38" font-weight="600">N120</text><text x="235" y="38" font-weight="600">N180</text>
+        <rect x="20" y="44" width="250" height="20" fill="#fff" stroke="#e0e5e0"/>
+        <text x="30" y="58">1</text><text x="90" y="58">4.62</text><text x="140" y="58">6.21</text><text x="190" y="58">7.34</text><text x="235" y="58">7.48</text>
+        <rect x="20" y="64" width="250" height="20" fill="#fff" stroke="#e0e5e0"/>
+        <text x="30" y="78">2</text><text x="90" y="78">3.91</text><text x="140" y="78">5.52</text><text x="190" y="78">6.63</text><text x="235" y="78">6.79</text>
+        <rect x="20" y="84" width="250" height="20" fill="#fff" stroke="#e0e5e0"/>
+        <text x="30" y="98">3</text><text x="90" y="98">4.28</text><text x="140" y="98">5.94</text><text x="190" y="98">7.02</text><text x="235" y="98">7.15</text>
+        <rect x="20" y="104" width="250" height="20" fill="#fff" stroke="#e0e5e0"/>
+        <text x="30" y="118">4</text><text x="90" y="118">4.05</text><text x="140" y="118">5.71</text><text x="190" y="118">6.55</text><text x="235" y="118">7.31</text>
+      </g>
+      <text x="20" y="146" font-size="10" fill="#c2410c">✗ el tratamiento está en los encabezados, no en una columna</text>
+      <!-- flecha -->
+      <path d="M290 80 L340 80" stroke="#1f4d33" stroke-width="2" fill="none" marker-end="url(#fl)"/>
+      <defs><marker id="fl" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#1f4d33"/></marker></defs>
+      <text x="315" y="70" font-size="9.5" fill="#1f4d33" text-anchor="middle">Bloque 2</text>
+      <!-- larga -->
+      <text x="360" y="16" font-size="11.5" font-weight="600" fill="#111">Tabla larga (como la analiza la app)</text>
+      <g font-size="10.5" fill="#111">
+        <rect x="360" y="24" width="320" height="20" fill="#e9efe9"/>
+        <text x="370" y="38" font-weight="600">Block</text><text x="440" y="38" font-weight="600">Nitrogen_kg_ha</text><text x="580" y="38" font-weight="600">Yield_t_ha</text>
+        <rect x="360" y="44" width="320" height="20" fill="#fff" stroke="#e0e5e0"/><text x="370" y="58">1</text><text x="440" y="58">0</text><text x="580" y="58">4.62</text>
+        <rect x="360" y="64" width="320" height="20" fill="#fff" stroke="#e0e5e0"/><text x="370" y="78">1</text><text x="440" y="78">60</text><text x="580" y="78">6.21</text>
+        <rect x="360" y="84" width="320" height="20" fill="#fff" stroke="#e0e5e0"/><text x="370" y="98">1</text><text x="440" y="98">120</text><text x="580" y="98">7.34</text>
+        <rect x="360" y="104" width="320" height="20" fill="#fff" stroke="#e0e5e0"/><text x="370" y="118">1</text><text x="440" y="118">180</text><text x="580" y="118">7.48</text>
+        <rect x="360" y="124" width="320" height="20" fill="#fff" stroke="#e0e5e0"/><text x="370" y="138">2</text><text x="440" y="138">0</text><text x="580" y="138">3.91</text>
+        <rect x="360" y="144" width="320" height="20" fill="#fff" stroke="#e0e5e0"/><text x="370" y="158">…</text><text x="440" y="158">…</text><text x="580" y="158">…</text>
+      </g>
+      <text x="360" y="182" font-size="10" fill="#2f7d4f">✓ una fila por parcela: bloque, tratamiento y respuesta en columnas</text>
+    </svg>
+    <figcaption><b>Figura 1.3.</b> La misma libreta de campo en formato ancho y en formato largo. Los valores son los del ejemplo <code>rcbd_maize_nitrogen.csv</code>.</figcaption>
+  </figure>
+
+  <h3>Formatos de archivo</h3>
+  <div class="dos">
+    <div>
+      <ul>
+        <li><b>Excel:</b> .xlsx, .xls, .xlsm, .xlsb; se elige la hoja después de cargar.</li>
+        <li><b>Formatos abiertos:</b> .ods, .csv, .tsv, .txt, .dat, .prn con cualquier separador (coma, punto y coma, tabulador, barra vertical), y .json.</li>
+        <li><b>Portapapeles:</b> copia un rango en la hoja de cálculo y pégalo en el cuadro del Bloque 2.</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li>La coma decimal se reconoce automáticamente.</li>
+        <li>Las celdas vacías o con <code>NA</code>, <code>-</code> o <code>.</code> se tratan como datos faltantes; el diseño deja de estar balanceado y la app lo indica.</li>
+        <li>Una tabla puede tener varias respuestas (rendimiento y altura, por ejemplo); se analizan una por una en el Bloque 5.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 1.5 -->
+  <h2 id="s1-5"><span class="num">1.5</span>Qué necesitas y cómo abrir el programa</h2>
+  <div class="dos">
+    <div>
+      <h4>Requisitos</h4>
+      <ul>
+        <li>Una computadora de escritorio o portátil con un <b>navegador de internet moderno y actualizado</b>.</li>
+        <li>Pantalla de al menos 1280 píxeles de ancho; la app se adapta a pantallas menores, pero las tablas y figuras se aprovechan mejor en una grande.</li>
+        <li>Cualquier equipo de los últimos años tiene memoria de sobra: los ensayos agrícolas rara vez pasan de unos cientos de filas.</li>
+        <li><b>No</b> se necesita conexión a internet, instalación ni permisos de administrador.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contenido de la carpeta</h4>
+      <table class="compacta" style="margin-top:0.04in">
+        <tbody>
+          <tr><td><code>index.html</code></td><td>La app. Ábrela con doble clic.</td></tr>
+          <tr><td><code>Open AgriDesign.bat</code></td><td>Arranque opcional con servidor local.</td></tr>
+          <tr><td><code>js/</code>, <code>css/</code></td><td>El código del programa.</td></tr>
+          <tr><td><code>data/</code></td><td>Los siete archivos de ejemplo.</td></tr>
+          <tr><td><code>vendor/</code></td><td>El lector de hojas de cálculo y su licencia.</td></tr>
+          <tr><td><code>manual/</code></td><td>Este manual.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <h3>Abrir AgriDesign en tres pasos</h3>
+  <ol class="pasos">
+    <li><b>Copia la carpeta</b> <code>AgriDesign</code> completa a tu computadora, por ejemplo a Documentos. No separes <code>index.html</code> del resto de las carpetas.</li>
+    <li><b>Haz doble clic en</b> <code>index.html</code>. Se abrirá en tu navegador predeterminado con la portada del Bloque 1.</li>
+    <li><b>Pulsa</b> <span class="ui">Start with my data</span> para cargar un archivo, o ve directamente al Bloque 2 y elige uno de los ejemplos.</li>
+  </ol>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Nota · abrir con servidor local</div>
+    <p>Con doble clic todo funciona. Si prefieres abrir la app desde una dirección, usa <code>Open AgriDesign.bat</code>: inicia un pequeño servidor en tu propia computadora (dirección <code>http://localhost:8800</code>) y abre la app desde ahí. Sigue sin enviarse nada a internet. La misma app está disponible en línea en https://luisangelbg.github.io/AgriDesign/, también sin que los datos salgan de tu equipo.</p>
+  </div>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Nota · tu trabajo se recuerda</div>
+    <p>La app guarda en tu navegador las preferencias de estilo de las figuras. Si cambias de navegador o borras los datos de navegación, esas preferencias se pierden, pero tus archivos originales no se modifican nunca. Los resultados de un análisis viven en la página mientras esté abierta: descarga el informe o el paquete ZIP del Bloque 7 antes de cerrarla.</p>
+  </div>
+
+  <!-- 1.6 -->
+  <h2 id="s1-6"><span class="num">1.6</span>Recorrido por la interfaz</h2>
+  <p>Todos los bloques de análisis comparten la misma organización, así que basta aprenderla una vez. De arriba abajo, cada bloque tiene tres partes:</p>
+  <table>
+    <thead><tr><th style="width:26%">Parte</th><th>Qué contiene</th><th style="width:30%">Cómo aparece en pantalla</th></tr></thead>
+    <tbody>
+      <tr><td><b>0 · Lo que hay que saber</b></td><td>Una tarjeta plegable con la teoría del bloque en lenguaje llano: qué calcula, cómo leerlo y cuándo desconfiar.</td><td>Tarjeta con título en cursiva al inicio del bloque</td></tr>
+      <tr><td><b>1 · Opciones</b></td><td>Menús con valores predeterminados que siguen las convenciones más comunes en agronomía, y un botón para calcular.</td><td><span class="ui">1 · Design and options</span> · <span class="ui">Run the analysis</span></td></tr>
+      <tr><td><b>2 · Resultados</b></td><td>Tarjetas con los valores principales, tablas descargables, un párrafo de interpretación y figuras editables con controles de estilo y exportación.</td><td><span class="ui">Interpretation</span> · <span class="ui">Edit figure</span> · <span class="ui">Download figure</span></td></tr>
+    </tbody>
+  </table>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/app-datos.png" alt="Tarjeta de roles y estructura del diseño del Bloque 2"></div>
+    <figcaption><b>Figura 1.4.</b> Al cargar una tabla, el Bloque 2 propone un papel para cada columna (<span class="ui">Variable roles and design structure</span>) y describe la estructura que encontró: aquí, con el ejemplo de maíz y nitrógeno, 16 parcelas, un factor de 4 niveles, 4 bloques completos y 4 repeticiones por tratamiento, es decir, un diseño de bloques completos al azar balanceado.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="marco" style="position:relative">
+      <img src="../img/app-figura.png" alt="Figura editable del Bloque 5 con su panel de edición abierto">
+      <span class="marca" style="left:41%;top:5%">1</span>
+      <span class="marca" style="left:10.4%;top:60%">2</span>
+      <span class="marca" style="left:20.4%;top:64.6%">3</span>
+      <span class="marca" style="left:71.6%;top:78%">4</span>
+      <span class="marca" style="left:19%;top:84.6%">5</span>
+      <span class="marca" style="left:56%;top:93.6%">6</span>
+    </div>
+    <figcaption><b>Figura 1.5.</b> Una figura del Bloque 5 (rendimiento de maíz por dosis de nitrógeno, medias con letras de Tukey) con su panel de edición abierto.</figcaption>
+  </figure>
+  <ul class="leyenda-marcas">
+    <li><span class="n">1</span>La figura se redibuja al instante con cada cambio.</li>
+    <li><span class="n">2</span><span class="ui">Edit figure</span> abre y cierra el panel de edición.</li>
+    <li><span class="n">3</span>Dos pestañas: contenido y colores, estilo y tipografía.</li>
+    <li><span class="n">4</span>Un color por nivel o un solo color; paleta, barras de error y estilo de barras o puntos.</li>
+    <li><span class="n">5</span>Letras, medias impresas, orden por magnitud y eje Y desde cero.</li>
+    <li><span class="n">6</span>Formato, resolución, fondo y descarga, con el tamaño resultante en píxeles y centímetros.</li>
+  </ul>
+
+  <h3>Términos de la interfaz</h3>
+  <p>La app está en inglés, el idioma de las revistas científicas. Esta tabla reúne los términos que verás en todos los bloques.</p>
+  <table class="compacta">
+    <caption><b>Tabla 1.3.</b> Vocabulario básico de la interfaz.</caption>
+    <thead><tr><th>En la app</th><th>En español</th><th>En la app</th><th>En español</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Response (Y)</span></td><td>Variable de respuesta</td><td><span class="ui">Run the analysis</span></td><td>Ejecutar el análisis</td></tr>
+      <tr><td><span class="ui">Treatment factor</span></td><td>Factor de tratamiento</td><td><span class="ui">Edit figure</span></td><td>Editar figura</td></tr>
+      <tr><td><span class="ui">Block / replicate</span></td><td>Bloque o repetición</td><td><span class="ui">Content &amp; colours</span></td><td>Contenido y colores</td></tr>
+      <tr><td><span class="ui">Covariate</span></td><td>Covariable</td><td><span class="ui">Style &amp; typography</span></td><td>Estilo y tipografía</td></tr>
+      <tr><td><span class="ui">Plot</span> · <span class="ui">Pen</span></td><td>Parcela · corral</td><td><span class="ui">Palette</span></td><td>Paleta de colores</td></tr>
+      <tr><td><span class="ui">Design</span></td><td>Diseño experimental</td><td><span class="ui">Error bars</span></td><td>Barras de error</td></tr>
+      <tr><td><span class="ui">Mean-separation test</span></td><td>Prueba de separación de medias</td><td><span class="ui">Resolution</span></td><td>Resolución</td></tr>
+      <tr><td><span class="ui">Letters</span></td><td>Letras de significancia</td><td><span class="ui">Download</span></td><td>Descargar</td></tr>
+      <tr><td><span class="ui">Random seed</span></td><td>Semilla aleatoria</td><td><span class="ui">Report</span></td><td>Informe</td></tr>
+      <tr><td><span class="ui">Continue to …</span></td><td>Continuar a…</td><td><span class="ui">How to cite</span></td><td>Cómo citar</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Nota · la semilla aleatoria</div>
+    <p>La aleatorización del Bloque 8 y el simulador del Bloque 1 dependen del azar. La <span class="ui">Random seed</span> fija ese azar: con la misma semilla y el mismo diseño obtendrás exactamente el mismo croquis. Anota la semilla en el protocolo del ensayo para que la distribución de las parcelas pueda reproducirse; la libreta de campo que genera la app la incluye.</p>
+  </div>
+
+  <!-- 1.7 -->
+  <h2 id="s1-7"><span class="num">1.7</span>Los siete conjuntos de datos de ejemplo</h2>
+  <p>El programa incluye siete conjuntos de datos listos para usar. Están en la carpeta <code>data/</code> y se cargan con un clic desde el Bloque 2; cada uno está pensado para practicar un diseño distinto. Los capítulos de cada bloque los usan en sus ejemplos paso a paso.</p>
+
+  <table>
+    <caption><b>Tabla 1.4.</b> Ejemplos incluidos. Se cargan en el Bloque 2, bajo <span class="ui">Or try an example</span>.</caption>
+    <thead><tr><th style="width:25%">Botón en la app</th><th style="width:17%">Diseño</th><th>Contenido</th><th style="width:20%">Bloques para practicar</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">RCBD · maize × nitrogen</span></td><td>Bloques completos al azar</td><td>Cuatro dosis de nitrógeno (0, 60, 120 y 180 kg ha⁻¹) en cuatro bloques; rendimiento de maíz en t ha⁻¹. El ejemplo guía de este manual: 16 parcelas, un factor cuantitativo, curva de respuesta y dosis óptima.</td><td><span class="chip k2">2</span> <span class="chip k3">3</span> <span class="chip k4">4</span> <span class="chip k5">5</span> <span class="chip k6">6</span> <span class="chip k7">7</span></td></tr>
+      <tr><td><span class="ui">CRD · bean varieties</span></td><td>Azar completo</td><td>Cinco variedades de frijol con cuatro repeticiones sin bloques; rendimiento en kg por parcela. Para comparar variedades con una prueba de medias.</td><td><span class="chip k3">3</span> <span class="chip k5">5</span></td></tr>
+      <tr><td><span class="ui">Latin square · wheat</span></td><td>Cuadro latino</td><td>Cuatro tratamientos en un cuadro de 4 filas × 4 columnas; rendimiento de trigo. Bloqueo en dos direcciones.</td><td><span class="chip k2">2</span> <span class="chip k5">5</span></td></tr>
+      <tr><td><span class="ui">Factorial 3×3 in RCBD · tomato</span></td><td>Factorial en bloques</td><td>Tres variedades de jitomate × tres niveles de fertilización en tres bloques, con dos respuestas: rendimiento por planta y altura. Interacción y efectos simples.</td><td><span class="chip k3">3</span> <span class="chip k5">5</span> <span class="chip k6">6</span></td></tr>
+      <tr><td><span class="ui">Split-plot · irrigation × variety</span></td><td>Parcelas divididas</td><td>Dos sistemas de riego en parcelas grandes y cuatro variedades en subparcelas, tres bloques. Dos estratos de error.</td><td><span class="chip k5">5</span> <span class="chip k6">6</span></td></tr>
+      <tr><td><span class="ui">Ordinal scores · fungicides</span></td><td>Bloques al azar, respuesta ordinal</td><td>Cuatro fungicidas en cinco bloques; severidad de enfermedad en escala 1–9. Ruta no paramétrica con Friedman y letras.</td><td><span class="chip k4">4</span></td></tr>
+      <tr><td><span class="ui">Wide table (needs reshaping)</span></td><td>Tabla ancha</td><td>El ensayo de maíz y nitrógeno con una dosis por columna. Para practicar el convertidor de tablas anchas a largas.</td><td><span class="chip k2">2</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>El ejemplo guía</div>
+    <p>El ensayo de maíz y nitrógeno acompaña todo el manual. Con él verás, en los capítulos que siguen, que la variación entre bloques fue considerable, que el rendimiento respondió al nitrógeno con una curva que se aplana en las dosis altas y que las cuatro dosis difieren entre sí según Tukey. La figura 1.5 y la figura 1.7 son suyas.</p>
+  </div>
+
+  <!-- 1.8 -->
+  <h2 id="s1-8"><span class="num">1.8</span>Flujo de trabajo recomendado</h2>
+  <p>La barra de bloques marca el orden natural. El diagrama resume el recorrido y sus dos desvíos: el que toma la ruta no paramétrica cuando los supuestos no se cumplen, y el que empieza por el Bloque 8 cuando el ensayo todavía no se ha sembrado.</p>
+
+  <figure>
+    <svg class="cap1-mapa" viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa del flujo de trabajo por bloques">
+      <defs><marker id="fl2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#5d6472"/></marker></defs>
+      <!-- fila principal -->
+      <g font-size="10.5" text-anchor="middle">
+        <rect x="16" y="40" width="96" height="54" rx="6" fill="#0f766e"/><text x="64" y="61" fill="#fff" font-weight="600">2 · Datos</text><text x="64" y="76" fill="#fff" font-size="9.5">tabla larga y roles</text>
+        <rect x="140" y="40" width="96" height="54" rx="6" fill="#2b7bb9"/><text x="188" y="61" fill="#fff" font-weight="600">3 · Descriptiva</text><text x="188" y="76" fill="#fff" font-size="9.5">mirar antes de probar</text>
+        <rect x="264" y="40" width="96" height="54" rx="6" fill="#b7791f"/><text x="312" y="61" fill="#fff" font-weight="600">4 · Supuestos</text><text x="312" y="76" fill="#fff" font-size="9.5">residuales del modelo</text>
+        <rect x="388" y="40" width="96" height="54" rx="6" fill="#c2410c"/><text x="436" y="61" fill="#fff" font-weight="600">5 · ANOVA</text><text x="436" y="76" fill="#fff" font-size="9.5">diseño, medias, letras</text>
+        <rect x="512" y="40" width="80" height="54" rx="6" fill="#b4234a"/><text x="552" y="61" fill="#fff" font-weight="600">6 · Figuras</text><text x="552" y="76" fill="#fff" font-size="9.5">editar, exportar</text>
+        <rect x="612" y="40" width="72" height="54" rx="6" fill="#334155"/><text x="648" y="61" fill="#fff" font-weight="600">7 · Informe</text><text x="648" y="76" fill="#fff" font-size="9.5">PDF y ZIP</text>
+      </g>
+      <g stroke="#5d6472" stroke-width="1.6" fill="none" marker-end="url(#fl2)">
+        <path d="M112 67 L136 67"/><path d="M236 67 L260 67"/><path d="M360 67 L384 67"/><path d="M484 67 L508 67"/><path d="M592 67 L608 67"/>
+      </g>
+      <!-- desvío no paramétrico -->
+      <path d="M312 94 L312 128" stroke="#b7791f" stroke-width="1.6" fill="none" marker-end="url(#fl2)"/>
+      <text x="322" y="116" font-size="9.5" fill="#b7791f">si los supuestos fallan</text>
+      <g font-size="10" text-anchor="middle">
+        <rect x="200" y="132" width="236" height="46" rx="6" fill="#fff" stroke="#b7791f" stroke-width="1.6"/>
+        <text x="318" y="151" fill="#111" font-weight="600">transformar y volver a probar</text>
+        <text x="318" y="166" fill="#5d6472" font-size="9.5">o análisis de rangos con letras (Bloque 4)</text>
+      </g>
+      <path d="M436 155 C 476 155, 472 100, 440 96" stroke="#b7791f" stroke-width="1.6" fill="none" marker-end="url(#fl2)"/>
+      <text x="482" y="140" font-size="9.5" fill="#b7791f">con la variable</text><text x="482" y="151" font-size="9.5" fill="#b7791f">transformada</text>
+      <!-- antes del ensayo -->
+      <g font-size="10.5" text-anchor="middle">
+        <rect x="16" y="214" width="150" height="54" rx="6" fill="#8a5a2b"/><text x="91" y="235" fill="#fff" font-weight="600">8 · Generador</text><text x="91" y="250" fill="#fff" font-size="9.5">repeticiones, croquis, libreta</text>
+      </g>
+      <path d="M91 214 L91 120 C 91 104, 64 112, 64 98" stroke="#8a5a2b" stroke-width="1.6" fill="none" marker-end="url(#fl2)"/>
+      <text x="97" y="150" font-size="9.5" fill="#8a5a2b">antes de sembrar:</text><text x="97" y="161" font-size="9.5" fill="#8a5a2b">la libreta vacía es</text><text x="97" y="172" font-size="9.5" fill="#8a5a2b">plantilla del Bloque 2</text>
+      <!-- de vuelta al campo -->
+      <path d="M648 94 L648 241 L172 241" stroke="#334155" stroke-width="1.6" fill="none" marker-end="url(#fl2)"/>
+      <text x="410" y="236" font-size="9.5" fill="#334155" text-anchor="middle">con la varianza del ensayo terminado se calculan las repeticiones del siguiente</text>
+      <text x="350" y="290" font-size="10" fill="#1f4d33" text-anchor="middle">Bloque 1: portada, simulador y teoría; se puede volver a él en cualquier momento.</text>
+    </svg>
+    <figcaption><b>Figura 1.6.</b> Recorrido por la app. La línea superior es el análisis de un ensayo terminado; el desvío del Bloque 4 atiende los datos que no cumplen los supuestos; el Bloque 8 se usa antes de sembrar y también después, para planear el siguiente ensayo con la varianza que ya conoces.</figcaption>
+  </figure>
+
+  <ol class="pasos">
+    <li><b>Carga y revisa la tabla</b> en el Bloque 2. Confirma los roles: cuál es la respuesta, cuál el factor, cuál el bloque. Lee la estructura detectada; si dice que el diseño no está balanceado o faltan celdas, averigua por qué antes de seguir.</li>
+    <li><b>Mira los datos</b> en el Bloque 3. Un coeficiente de variación disparado o una parcela muy alejada de las demás suelen ser errores de captura que conviene corregir en la libreta, no en el análisis.</li>
+    <li><b>Revisa los supuestos</b> en el Bloque 4 sobre los residuales del diseño que vas a usar. Si fallan, prueba la transformación que la app sugiere o pasa a la ruta no paramétrica.</li>
+    <li><b>Ajusta el ANOVA</b> en el Bloque 5 con el diseño que se sembró. Lee la tabla, la interpretación y las medias con letras; si el factor es cuantitativo, mira la curva de respuesta.</li>
+    <li><b>Prepara las figuras</b> en el Bloque 6 y <b>el informe</b> en el Bloque 7. Descarga el ZIP: contiene todo lo que necesitas para el manuscrito o la tesis.</li>
+    <li><b>Planea el siguiente ensayo</b> en el Bloque 8 con la varianza que acabas de estimar.</li>
+  </ol>
+
+  <!-- 1.9 -->
+  <h2 id="s1-9"><span class="num">1.9</span>Cómo leer una tabla de ANOVA, un valor P y las letras</h2>
+  <p>Casi todo lo que produce la app se resume en tres cosas: una tabla de análisis de varianza, valores P y letras junto a las medias. Entenderlas bien evita las equivocaciones más comunes: creer que un resultado no significativo prueba que no hay efecto, creer que uno significativo es necesariamente importante y leer las letras al revés.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/app-anova.png" alt="Tabla de ANOVA del ejemplo de maíz y nitrógeno en el Bloque 5"></div>
+    <figcaption><b>Figura 1.7.</b> Tabla de ANOVA del ejemplo de maíz y nitrógeno (Bloque 5). Encima, las tarjetas con la media general, el CV, R², el error estándar de una media y de una diferencia, y los grados de libertad del error; debajo, el estrato de error y el inicio de la interpretación automática.</figcaption>
+  </figure>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">F</span>La tabla de ANOVA, fila por fila</div>
+    <p>Cada fila es una fuente de variación. <b>df</b> son los grados de libertad (niveles menos uno para un factor; lo que sobra para el error). <b>SS</b> es la suma de cuadrados, la cantidad de variación atribuida a esa fuente, y <b>MS</b> la misma cantidad por grado de libertad. <b>F</b> es el cociente entre el MS de la fuente y el MS del error contra el que se prueba (la columna <span class="ui">Tested against</span>): un F cercano a 1 dice que los tratamientos varían tanto como las parcelas que recibieron el mismo tratamiento; un F grande, que varían mucho más. El <b>valor P</b> traduce ese F a una probabilidad y el <b>η² parcial</b> dice qué fracción de la variación explica la fuente. En el ejemplo, el nitrógeno tiene F(3, 9) = 437.27 y P &lt; 0.0001: la dosis explica casi toda la variación del rendimiento. Los bloques también difieren (F = 21.69, P = 0.0002): bloquear valió la pena.</p>
+  </div>
+
+  <div class="dos">
+    <div class="caja teoria" style="margin:0">
+      <div class="caja-t"><span class="ico">P</span>El valor P</div>
+      <p>Es la probabilidad de observar un F tan grande como el tuyo <b>si en realidad todos los tratamientos tuvieran la misma media</b>. Un P = 0.003 dice que un resultado así ocurriría 3 veces de cada 1000 por puro azar. No es la probabilidad de que la hipótesis sea cierta ni mide el tamaño del efecto.</p>
+    </div>
+    <div class="caja teoria" style="margin:0">
+      <div class="caja-t"><span class="ico">CV</span>El coeficiente de variación</div>
+      <p>Es la raíz del cuadrado medio del error dividida entre la media general, en porcentaje. Mide la precisión del ensayo: qué tan parecidas fueron las parcelas con el mismo tratamiento. En el ejemplo es de 2.1&nbsp;%, muy bajo; en rendimiento de campo, valores de 10 a 20&nbsp;% son normales y más de 30&nbsp;% indican un ensayo poco preciso.</p>
+    </div>
+  </div>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Regla de decisión · lectura de un valor P</div>
+    <table class="compacta">
+      <thead><tr><th style="width:24%">Valor P</th><th style="width:28%">Evidencia contra la igualdad de medias</th><th>Cómo redactarlo</th></tr></thead>
+      <tbody>
+        <tr><td><b>P &lt; 0.001</b></td><td>Muy fuerte</td><td>“El efecto del tratamiento fue altamente significativo”.</td></tr>
+        <tr><td><b>0.001 ≤ P &lt; 0.01</b></td><td>Fuerte</td><td>“El efecto fue significativo”.</td></tr>
+        <tr><td><b>0.01 ≤ P &lt; 0.05</b></td><td>Moderada</td><td>“Hubo evidencia de diferencias”; conviene confirmarlo en otro ciclo o localidad.</td></tr>
+        <tr><td><b>P ≥ 0.05</b></td><td>Insuficiente</td><td>“No se detectaron diferencias”. No afirmes que los tratamientos <i>son iguales</i>: quizá faltaron repeticiones.</td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">Reporta siempre el valor exacto de P, el F con sus grados de libertad y el tamaño del efecto (las medias con su error estándar, o η²), no solo si es significativo.</p>
+  </div>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">ab</span>Las letras junto a las medias</div>
+    <p>Después de un F significativo, la prueba de separación de medias compara los tratamientos por pares y resume el resultado con letras: <b>dos medias que comparten al menos una letra no difieren</b> al nivel elegido; dos que no comparten ninguna sí difieren. La letra <i>a</i> va a la media mayor. Así, en «7.18 a, 6.89 b, 5.85 c, 4.22 d» las cuatro dosis difieren entre sí; en «7.18 a, 6.89 ab, 5.85 b» la primera y la tercera difieren, pero la de en medio no se distingue de ninguna de las dos. Las letras no ordenan por «calidad»: solo dicen qué diferencias superó la prueba.</p>
+  </div>
+
+  <div class="caja dato">
+    <div class="dato-cifra">1 de 20</div>
+    <div class="dato-txt"><div class="caja-t">Por qué no basta con comparar pares con una prueba t</div>Con un nivel de 0.05, <b>una de cada veinte comparaciones sale significativa por puro azar</b>. Con 6 tratamientos hay 15 pares; comparados uno a uno con pruebas t, es casi seguro encontrar al menos una diferencia falsa. Las pruebas de separación de medias del Bloque 5 (Tukey, Bonferroni, Scheffé, entre otras) controlan ese riesgo para el conjunto de comparaciones; la LSD de Fisher no lo hace y por eso se reserva para pocos tratamientos y comparaciones planeadas.</div>
+  </div>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Nota · significancia agronómica</div>
+    <p>Con un ensayo muy preciso, diferencias diminutas resultan significativas. Que la dosis de 180 supere a la de 120 con P &lt; 0.05 no significa que convenga aplicarla: 0.30 t ha⁻¹ más de rendimiento pueden no pagar los 60 kg de nitrógeno adicionales. Pregúntate siempre si la magnitud importa para el productor y el objetivo del ensayo, no solo si el valor P es pequeño. La curva de respuesta y su óptimo, en el Bloque 5, están pensados justamente para esa pregunta.</p>
+  </div>
+
+  <p style="margin-top:0.3in">Con estas bases estás listo para recorrer los bloques. El siguiente capítulo presenta la portada de la app, su teoría integrada y el simulador, una forma rápida de ver en movimiento por qué bloquear mejora un ensayo, la idea de la figura 1.2.</p>
+</section>
+
+</body>
+</html>

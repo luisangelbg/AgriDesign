@@ -16,7 +16,11 @@ manual/
                        perspectiva, rodeado de maíz, chile, jitomate y café, y de una vaca, un borrego y una cabra;
                        abajo, medias con letras, un cuadro latino y una curva de respuesta (todo dibujado con
                        gráficos vectoriales originales; sin hélice de ADN)
-    01-introduccion.html  (pendiente) créditos, índice general, cómo leer el manual y capítulo 1
+    01-introduccion.html  créditos, cómo citar, índice general, cómo leer el manual y capítulo 1:
+                       qué es AgriDesign, preguntas que responde, cinco ideas clave, experimentos y datos
+                       que acepta, cómo abrirlo, recorrido por la interfaz, los siete ejemplos, flujo de
+                       trabajo y cómo leer ANOVA, valores P y letras (capturas app-inicio, app-datos,
+                       app-figura y app-anova en img/)
     02-bloque1.html    (pendiente) capítulo 2 · Bloque 1: portada de la app, simulador, teoría y cómo citar
     03-bloque2.html    (pendiente) capítulo 3 · Bloque 2: formatos, tabla ordenada, roles, estructura del diseño
     04-bloque3.html    (pendiente) capítulo 4 · Bloque 3: estadística descriptiva y gráficos exploratorios
