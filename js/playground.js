@@ -81,7 +81,7 @@
       s += `<text x="${x0 - 8}" y="${y0 + i * 34 + 19}" text-anchor="end" font-size="9" fill="var(--text-muted)" font-family="Segoe UI, Helvetica, Arial, sans-serif">${id.endsWith('RCBD') ? 'Block ' + (i + 1) : 'row ' + (i + 1)}</text>`;
     }
     plots.forEach(q => { s += `<rect x="${x0 + q.col * cw + 2}" y="${y0 + q.row * 34 + 2}" width="${cw - 4}" height="${chh - 4}" rx="4" fill="${['#2f7d4f', '#c8842a', '#2b7bb9', '#b5432f'][q.t]}"/><text x="${x0 + q.col * cw + cw / 2}" y="${y0 + q.row * 34 + 13}" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" font-family="Segoe UI, Helvetica, Arial, sans-serif">${TRT[q.t]}</text><text x="${x0 + q.col * cw + cw / 2}" y="${y0 + q.row * 34 + 24}" text-anchor="middle" font-size="8.5" fill="#fff" opacity=".9" font-family="Segoe UI, Helvetica, Arial, sans-serif">${q.y.toFixed(1)}</text>`; });
-    s += `<text x="${x0 + T * cw + 6}" y="${y0 + 10}" font-size="8" fill="var(--text-muted)" font-family="Segoe UI, Helvetica, Arial, sans-serif" transform="rotate(90 ${x0 + T * cw + 6} ${y0 + 10})">fertile → poor</text>`;
+    s += `<text x="${x0 + T * cw + 6}" y="${y0 + 10}" font-size="8" fill="var(--text-muted)" font-family="Segoe UI, Helvetica, Arial, sans-serif" transform="rotate(90 ${x0 + T * cw + 6} ${y0 + 10})">poor → fertile</text>`;
     svg.innerHTML = s;
   }
   function init() {

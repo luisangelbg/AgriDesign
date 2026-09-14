@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Home simulator: the vertical label of the field now reads "poor → fertile" (the fertility gradient runs from the top row to the bottom row, as the values show).
+- Spanish user manual in progress under manual/ (cover, introduction and Block 1 chapter).
+
 ## 1.0 — 2026-09-10 · DOI 10.5281/zenodo.22683047
 
 First public release.

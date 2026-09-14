@@ -21,7 +21,10 @@ manual/
                        que acepta, cómo abrirlo, recorrido por la interfaz, los siete ejemplos, flujo de
                        trabajo y cómo leer ANOVA, valores P y letras (capturas app-inicio, app-datos,
                        app-figura y app-anova en img/)
-    02-bloque1.html    (pendiente) capítulo 2 · Bloque 1: portada de la app, simulador, teoría y cómo citar
+    02-bloque1.html    capítulo 2 · Bloque 1: la portada y la ruta, el simulador de bloques contra azar completo
+                       (controles, tarjetas, cuatro prácticas con potencias calculadas por la app), galerías de
+                       bloques, tipos de ensayo, diseños y métodos, los siete temas de teoría y cómo citar
+                       (capturas b1-*.png en img/)
     03-bloque2.html    (pendiente) capítulo 3 · Bloque 2: formatos, tabla ordenada, roles, estructura del diseño
     04-bloque3.html    (pendiente) capítulo 4 · Bloque 3: estadística descriptiva y gráficos exploratorios
     05-bloque4.html    (pendiente) capítulo 5 · Bloque 4: supuestos, transformaciones, no paramétricos
