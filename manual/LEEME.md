@@ -29,7 +29,10 @@ manual/
                        la revisión de la rejilla (con una tabla con errores a propósito), los ocho roles y cómo
                        los propone la app, la estructura detectada y sus comprobaciones, el convertidor de
                        tablas anchas y el ejemplo paso a paso (capturas b2-*.png en img/)
-    04-bloque3.html    (pendiente) capítulo 4 · Bloque 3: estadística descriptiva y gráficos exploratorios
+    04-bloque3.html    capítulo 4 · Bloque 3: mirar antes de probar (DE, EE, IC), estadísticos por tratamiento,
+                       bloque y combinación con la tabla de dos vías, el CV y sus referencias, la interpretación
+                       automática, las nueve figuras exploratorias y el editor, ejemplos de maíz y de jitomate
+                       (capturas b3-*.png en img/)
     05-bloque4.html    (pendiente) capítulo 5 · Bloque 4: supuestos, transformaciones, no paramétricos
     06-bloque5.html    (pendiente) capítulo 6 · Bloque 5: diseños, ANOVA, pruebas de medias, contrastes
     07-bloque6.html    (pendiente) capítulo 7 · Bloque 6: galería de figuras, presets, multipanel, exportación
