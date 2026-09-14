@@ -330,7 +330,13 @@ function init() {
   el('assInter').addEventListener('change', showFormula);
   el('npRun').addEventListener('click', runNonpar);
   el('npMethod').addEventListener('change', () => { el('npPostWrap').style.display = el('npMethod').value === 'friedman' ? '' : 'none'; });
-  document.addEventListener('datachange', () => { dataDirty = true; if (state.ready) fillControls(); });
+  document.addEventListener('datachange', () => {
+    dataDirty = true; A = null;
+    /* hide and clear the diagnostics of the previous table (the report collects every figure on the page) */
+    el('assResults').style.display = 'none'; el('transCard').style.display = 'none'; el('npCard').style.display = 'none';
+    el('assFigs').innerHTML = ''; el('boxcoxHost').innerHTML = ''; el('npResults').innerHTML = '';
+    if (state.ready) fillControls();
+  });
   document.addEventListener('stepchange', e => { if (e.detail.step === 4 && state.ready) { fillControls(); if (dataDirty || !A || A.resp !== el('assResponse').value) run(); } });
 }
 document.addEventListener('DOMContentLoaded', init);

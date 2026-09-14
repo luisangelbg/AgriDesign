@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>AgriDesign · Manual de usuario · Bloque 7: informe y exportación</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;1,500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../interior.css">
+<!-- reparte el contenido en hojas tamaño carta, con encabezados y números de página -->
+<script src="../paginar.js"></script>
+<style>
+  figure.chica .marco { width: 70%; margin: 0 auto; }
+  figure.chica figcaption { margin-left: 15%; margin-right: 15%; }
+  .arbol { font-family: Consolas, "Courier New", monospace; font-size: 9pt; line-height: 1.45; background: #f4f6f3; border-radius: 6px; padding: 0.1in 0.16in; margin: 0.08in 0 0.16in; white-space: pre; }
+</style>
+</head>
+<body>
+
+<section class="capitulo" id="cap-b7" data-pestana="B7" data-orden="8" style="--acento: var(--b7)">
+  <div class="cap-apertura">
+    <div class="cap-num">B7</div>
+    <div class="cap-etiqueta">Capítulo ocho · Bloque 7 · Report</div>
+    <h1 data-corto="Bloque 7 · Informe y exportación">Informe y exportación</h1>
+    <div class="cap-regla"></div>
+    <p class="cap-resumen">El último paso del análisis reúne todo en un documento. El Bloque 7 redacta un informe autocontenido con título, objetivo, materiales y métodos, datos, supuestos, tabla de ANOVA, medias con letras, contrastes, figuras tal como las editaste, apéndices y la cita del programa. Se descarga como HTML, se imprime a PDF y se empaqueta en un ZIP con los datos, las tablas en CSV y las figuras a la resolución elegida: material suplementario listo para la revista o para el comité de tesis.</p>
+    <div class="cap-franja"><span class="k7"></span><span class="k7" style="opacity:.75"></span><span class="k7" style="opacity:.5"></span><span class="k7" style="opacity:.3"></span></div>
+    <ul class="cap-contenido">
+      <li><b>8.1</b>Qué contiene el informe</li>
+      <li><b>8.2</b>Detalles, secciones y vista previa</li>
+      <li><b>8.3</b>Del informe al PDF y al manuscrito</li>
+      <li><b>8.4</b>El paquete ZIP</li>
+    </ul>
+  </div>
+
+  <!-- 8.1 -->
+  <h2 id="s8-1"><span class="num">8.1</span>Qué contiene el informe</h2>
+  <p class="lead">El informe se construye con el análisis que está en pantalla en el Bloque 5 y, si se corrieron, con los supuestos del Bloque 4 y las figuras de los Bloques 3 a 6. No repite cálculos: toma los resultados tal como quedaron. Por eso el orden natural es terminar el análisis, pulir las figuras y solo entonces abrir el Bloque 7.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/b7-teoria.png" alt="La tarjeta de teoría del Bloque 7"></div>
+    <figcaption><b>Figura 8.1.</b> La tarjeta <span class="ui">What goes into a good results report</span>: métodos, resultados, figuras, reproducibilidad y cómo obtener el PDF.</figcaption>
+  </figure>
+
+  <table>
+    <caption><b>Tabla 8.1.</b> Las partes del informe, en el orden en que aparecen. Las marcadas como opcionales se activan en la lista <span class="ui">Sections</span>.</caption>
+    <thead><tr><th style="width:26%">Parte</th><th>Qué contiene</th><th style="width:16%">Origen</th></tr></thead>
+    <tbody>
+      <tr><td><b>Encabezado</b></td><td>Título, autores, afiliación, ensayo, fecha de generación y nombre del archivo de datos.</td><td>Detalles del informe</td></tr>
+      <tr><td><b>Objective</b></td><td>El objetivo, si se escribió.</td><td>Detalles del informe</td></tr>
+      <tr><td><b>Materials and methods</b></td><td>Un párrafo redactado: diseño y repeticiones, factores con sus niveles, respuesta y unidades, covariables, transformación, revisión de supuestos, modelo, estratos de error, tipo de sumas de cuadrados, prueba de medias y α, contrastes polinomiales y la versión y el DOI del programa.</td><td>Bloques 2, 4 y 5</td></tr>
+      <tr><td><b>Data</b> (opcional)</td><td>Tamaño de la tabla, observaciones analizadas y estadísticos por tratamiento.</td><td>Bloque 2</td></tr>
+      <tr><td><b>Assumptions</b> (opcional)</td><td>La calificación, el modelo y la tabla de pruebas de supuestos. Solo aparece si el Bloque 4 se corrió con la misma respuesta.</td><td>Bloque 4</td></tr>
+      <tr><td><b>Results</b></td><td>Tabla de ANOVA con su pie, el borrador de resultados del Bloque 5, medias con letras y la diferencia mínima, contrastes polinomiales y tablas de celdas de las interacciones.</td><td>Bloque 5</td></tr>
+      <tr><td><b>Figures</b> (opcional)</td><td>Las figuras de los bloques elegidos, numeradas, agrupadas por bloque y embebidas como gráficos vectoriales.</td><td>Bloques 3 a 6</td></tr>
+      <tr><td><b>Appendix A</b> (opcional)</td><td>Comparaciones por pares de cada factor, con diferencia, error estándar, estadístico y P ajustado.</td><td>Bloque 5</td></tr>
+      <tr><td><b>Appendix B</b> (opcional)</td><td>La tabla de datos completa tal como se cargó.</td><td>Bloque 2</td></tr>
+      <tr><td><b>How to cite</b> (opcional)</td><td>La cita del programa en formato APA, el DOI, el repositorio y la entrada BibTeX.</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Nota · el informe está en inglés</div>
+    <p>Como la interfaz, el informe se redacta en inglés, el idioma de la mayoría de las revistas. El HTML descargado se abre y edita en cualquier procesador de texto (Word, LibreOffice) para traducirlo o adaptarlo; las tablas y figuras se conservan.</p>
+  </div>
+
+  <!-- 8.2 -->
+  <h2 id="s8-2"><span class="num">8.2</span>Detalles, secciones y vista previa</h2>
+  <p>Al abrir el Bloque 7 con un análisis hecho, la app propone un título, construye la vista previa y muestra la tarjeta <span class="ui">1 · Report details</span>. Si no hay análisis, aparece el aviso <span class="ui">No analysis yet. Run Block 5 first</span>.</p>
+
+  <figure>
+    <div class="marco" style="position:relative">
+      <img src="../img/b7-detalles.png" alt="La tarjeta de detalles del informe">
+      <span class="marca" style="left:9.3%;top:12%">1</span>
+      <span class="marca" style="left:9.3%;top:25%">2</span>
+      <span class="marca" style="left:9.3%;top:35%">3</span>
+      <span class="marca" style="left:9.3%;top:55%">4</span>
+      <span class="marca" style="left:9.3%;top:78%">5</span>
+      <span class="marca" style="left:25.5%;top:95%">6</span>
+    </div>
+    <figcaption><b>Figura 8.2.</b> Los detalles del informe llenados para el ejemplo de maíz.</figcaption>
+  </figure>
+  <ul class="leyenda-marcas">
+    <li><span class="n">1</span><span class="ui">Title</span>, <span class="ui">Authors</span>, <span class="ui">Affiliation</span> y <span class="ui">Trial (site, season)</span>: el encabezado del informe. El título propuesto («Effect of … on …») cambia con el análisis mientras no lo edites; uno escrito por ti se respeta.</li>
+    <li><span class="n">2</span><span class="ui">Response units</span>: las unidades, que el párrafo de métodos escribe junto a la respuesta.</li>
+    <li><span class="n">3</span><span class="ui">Objective (optional)</span>: el objetivo, en una sección propia.</li>
+    <li><span class="n">4</span><span class="ui">Sections</span>: qué partes opcionales incluir (tabla 8.1).</li>
+    <li><span class="n">5</span><span class="ui">Figures to include</span> y <span class="ui">Build / refresh preview</span>: qué bloques aportan figuras, y el botón que reconstruye la vista previa con los cambios.</li>
+    <li><span class="n">6</span><span class="ui">Copy methods paragraph</span> copia al portapapeles el párrafo de métodos; a su lado, el tamaño del informe y cuántas tablas y figuras tiene.</li>
+  </ul>
+
+  <div class="caja importante">
+    <div class="caja-t"><span class="ico">!</span>Importante · solo entran las figuras que están dibujadas</div>
+    <p>El informe toma las figuras que existen en la página en ese momento, con sus ediciones. Las del Bloque 3 se dibujan al abrir ese bloque; las del Bloque 4, al correr los diagnósticos; las del Bloque 6, al abrir la galería. Si una casilla de <span class="ui">Figures to include</span> no aporta nada, abre primero ese bloque y vuelve a pulsar <span class="ui">Build / refresh preview</span>. Al cargar otra tabla o cambiar los roles, las figuras y resultados anteriores se descartan y el informe vuelve a pedir el análisis del Bloque 5.</p>
+  </div>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Nota · figuras repetidas</div>
+    <p>La figura de medias con letras se dibuja en el Bloque 5 y otra vez en la galería del Bloque 6. Con las casillas predeterminadas (Bloques 5 y 6) aparece dos veces en el informe. Para un informe más breve, deja solo <span class="ui">Block 6 · result graphics</span>, que contiene las cuatro presentaciones de las medias, la curva y la partición de la varianza.</p>
+  </div>
+
+  <figure>
+    <div class="marco"><img src="../img/b7-vista.png" alt="La tarjeta de vista previa y exportación"></div>
+    <figcaption><b>Figura 8.3.</b> <span class="ui">2 · Preview and export</span>: los botones de descarga e impresión, las opciones del paquete y, debajo, la vista previa del informe tal como se descargará. El maíz, con las secciones predeterminadas, da un informe de 77 KB con 5 tablas y 9 figuras.</figcaption>
+  </figure>
+
+  <h3>Un recorrido por el informe del maíz</h3>
+
+  <figure>
+    <div class="marco"><img src="../img/b7-inf-portada.png" alt="Encabezado, objetivo, métodos y datos del informe"></div>
+    <figcaption><b>Figura 8.4.</b> El comienzo del informe: encabezado, objetivo, el párrafo de materiales y métodos y la sección de datos con la tabla 1.</figcaption>
+  </figure>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>El párrafo de métodos del maíz, traducido</div>
+    <p>«El experimento se estableció en un <b>diseño de bloques completos al azar</b> con 4 bloques. El factor de tratamiento fue Nitrogen_kg_ha (4 niveles: 0, 60, 120, 180). La variable de respuesta fue <b>Yield_t_ha</b> (t ha⁻¹). Se revisó la normalidad (Shapiro–Wilk), la homogeneidad de varianzas (prueba de Levene) y la aditividad (prueba de un grado de libertad de Tukey) de los residuales. Los datos se analizaron por análisis de varianza según el modelo y = μ + β + τ + ε, con un solo término de error y sumas de cuadrados tipo III. Las medias de tratamiento se compararon con la prueba de Tukey a α = 0.05, y las tendencias sobre factores cuantitativos se examinaron con contrastes polinomiales ortogonales. Todos los cálculos se hicieron con AgriDesign versión 1.0 (Barrera-Guzmán, 2026; https://doi.org/10.5281/zenodo.22683046).»</p>
+  </div>
+
+  <table class="compacta">
+    <caption><b>Tabla 8.2.</b> Lo que el párrafo de métodos escribe según el análisis.</caption>
+    <thead><tr><th style="width:36%">Si el análisis tiene…</th><th>el párrafo añade…</th></tr></thead>
+    <tbody>
+      <tr><td>bloques · fila y columna · ninguno</td><td>«with 4 blocks» · «with 4 rows × 4 columns» · «with 4 replicates per treatment».</td></tr>
+      <tr><td>unidades escritas en <span class="ui">Response units</span></td><td>Las unidades entre paréntesis tras la respuesta.</td></tr>
+      <tr><td>covariables</td><td>«… was included as covariate (ANCOVA)».</td></tr>
+      <tr><td>una respuesta transformada en el Bloque 4</td><td>La transformación, y que las medias se reportan destransformadas; el nombre de la respuesta sin el sufijo (<code>_ln</code>, <code>_sqrt</code>…).</td></tr>
+      <tr><td>diagnósticos del Bloque 4 con la misma respuesta</td><td>La revisión de normalidad, homogeneidad y, si hubo bloques, aditividad. Si el Bloque 4 no se corrió, la frase se omite: el informe no afirma revisiones que no se hicieron.</td></tr>
+      <tr><td>estratos de error (parcelas divididas, franjas)</td><td>«with the appropriate error strata» en lugar de «a single error term».</td></tr>
+      <tr><td>un factor cuantitativo con 3 o más niveles</td><td>La mención de los contrastes polinomiales ortogonales.</td></tr>
+    </tbody>
+  </table>
+
+  <figure>
+    <div class="marco"><img src="../img/b7-inf-resultados.png" alt="Resultados del informe"></div>
+    <figcaption><b>Figura 8.5.</b> La sección de resultados: tabla de ANOVA con CV, R², media general y la clave de asteriscos en el pie; el párrafo de resultados con F<sub>3,9</sub> en subíndice; las medias con letras y la diferencia honestamente significativa en el pie; y los contrastes polinomiales.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="marco"><img src="../img/b7-inf-figuras.png" alt="Figuras del informe"></div>
+    <figcaption><b>Figura 8.6.</b> Las figuras, agrupadas por bloque de origen y numeradas. Se embeben como gráficos vectoriales: se ven nítidas a cualquier aumento y en el PDF.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="marco"><img src="../img/b7-inf-cita.png" alt="Cita del programa en el informe"></div>
+    <figcaption><b>Figura 8.7.</b> El final del informe: la cita del programa, el DOI de concepto, el código fuente, la versión en línea y la entrada BibTeX.</figcaption>
+  </figure>
+
+  <!-- 8.3 -->
+  <h2 id="s8-3"><span class="num">8.3</span>Del informe al PDF y al manuscrito</h2>
+  <p>La tarjeta de vista previa ofrece dos salidas directas y el Bloque 7 una tercera, pensada para el manuscrito.</p>
+
+  <table>
+    <caption><b>Tabla 8.3.</b> Las formas de sacar el informe de la app.</caption>
+    <thead><tr><th style="width:28%">Botón</th><th>Qué hace</th><th style="width:28%">Para…</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Download report (HTML)</span></td><td>Guarda un archivo HTML autocontenido con las tablas y las figuras dentro. Se abre sin internet en cualquier navegador.</td><td>Archivar el análisis, enviarlo, editarlo en un procesador de texto.</td></tr>
+      <tr><td><span class="ui">Print / save as PDF</span></td><td>Abre el informe en una ventana nueva y lanza el diálogo de impresión del navegador. Si el navegador bloquea ventanas emergentes, la app avisa: <span class="ui">Allow pop-ups to print</span>.</td><td>Un PDF para el asesor, el comité o el expediente.</td></tr>
+      <tr><td><span class="ui">Copy methods paragraph</span></td><td>Copia el párrafo de métodos, como texto, al portapapeles, y lo confirma con un mensaje verde.</td><td>Pegarlo en el manuscrito o la tesis.</td></tr>
+    </tbody>
+  </table>
+
+  <ol class="pasos">
+    <li>Pulsa <span class="ui">Print / save as PDF</span>. Se abre una pestaña con el informe y el diálogo de impresión.</li>
+    <li>En <b>Destino</b> elige <b>Guardar como PDF</b>.</li>
+    <li>Deja los márgenes predeterminados: el informe ya trae márgenes de 18 mm para papel A4. Si imprimes en tamaño carta, cámbialo en <b>Tamaño de papel</b>.</li>
+    <li>Activa <b>Gráficos de fondo</b> para conservar el color de los encabezados de tabla y de los recuadros.</li>
+    <li>Pulsa <b>Guardar</b>.</li>
+  </ol>
+
+  <div class="caja dato">
+    <div class="dato-cifra">8 hojas</div>
+    <div class="dato-txt"><div class="caja-t">El informe del maíz impreso</div>Con las secciones predeterminadas, el informe del ejemplo de maíz ocupa 8 hojas A4: dos de texto y tablas y seis de figuras, casi siempre dos por hoja. Las figuras no se parten entre hojas y cada título de sección queda en la misma hoja que su primera figura.</div>
+  </div>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Regla de decisión · qué llevar del informe a un artículo</div>
+    <table class="compacta">
+      <thead><tr><th style="width:36%">Del informe…</th><th>al manuscrito…</th></tr></thead>
+      <tbody>
+        <tr><td>Párrafo de métodos</td><td>A la sección de materiales y métodos, tras añadir lo que la app no sabe: localidad, suelo, manejo agronómico, tamaño de parcela y fechas.</td></tr>
+        <tr><td>Tabla de ANOVA</td><td>Resumida: F con sus grados de libertad y P de cada fuente, y el CV. La tabla completa, al material suplementario.</td></tr>
+        <tr><td>Medias con letras</td><td>A una tabla del artículo, con el pie que ya trae el informe (prueba, α, diferencia mínima).</td></tr>
+        <tr><td>Borrador de resultados</td><td>Como punto de partida; los nombres de columna se sustituyen por nombres legibles y se añade la interpretación agronómica.</td></tr>
+        <tr><td>Figuras</td><td>Desde el ZIP o la galería del Bloque 6, a la resolución de la revista (capítulo 7), no desde el PDF.</td></tr>
+        <tr><td>Apéndices y datos</td><td>Al material suplementario.</td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">Los pies de figura del informe repiten el título de cada figura; en el artículo se reescriben con la información de la tabla 7.1.</p>
+  </div>
+
+  <!-- 8.4 -->
+  <h2 id="s8-4"><span class="num">8.4</span>El paquete ZIP</h2>
+  <p><span class="ui">Download full package (ZIP)</span> reúne en un solo archivo todo lo necesario para reproducir y publicar el análisis. Antes de pulsarlo se elige cómo empaquetar las figuras: <span class="ui">PNG + SVG</span> (predeterminado), <span class="ui">TIFF + SVG</span>, <span class="ui">JPG + SVG</span> o <span class="ui">SVG only</span>, a 300, 600 o 900 dpi. Mientras se prepara, el botón dice <span class="ui">Packing…</span>.</p>
+
+  <div class="arbol">Nitrogen_response_of_maize…_package.zip
+├── report.html                          el informe completo
+├── README.txt                           qué hay en cada carpeta
+├── data/
+│   └── rcbd_maize_nitrogen.csv          los datos tal como se cargaron
+├── tables/
+│   ├── anova.csv                        la tabla de ANOVA
+│   ├── means_Nitrogen_kg_ha.csv         medias, EE y letras
+│   └── pairwise_Nitrogen_kg_ha.csv      comparaciones por pares
+└── figures/
+    ├── svg/                             cada figura en vectorial
+    └── png/                             cada figura a la resolución elegida</div>
+
+  <table class="compacta">
+    <caption><b>Tabla 8.4.</b> El paquete del ejemplo de maíz con las figuras de los Bloques 3 a 6, en PNG + SVG a 300 dpi.</caption>
+    <thead><tr><th style="width:34%">Contenido</th><th class="c">Archivos</th><th>Nota</th></tr></thead>
+    <tbody>
+      <tr><td>Informe y README</td><td class="c">2</td><td>El informe ocupa unos 190 KB con todas las figuras.</td></tr>
+      <tr><td>Datos</td><td class="c">1</td><td>CSV con separador de coma y punto decimal.</td></tr>
+      <tr><td>Tablas</td><td class="c">3</td><td>ANOVA, y medias y comparaciones por cada factor de tratamiento.</td></tr>
+      <tr><td>Figuras</td><td class="c">42</td><td>21 figuras, cada una en SVG y en PNG.</td></tr>
+      <tr><td><b>Total</b></td><td class="c"><b>48</b></td><td>5.8 MB. Tardó unos 23 segundos en generarse en un equipo de escritorio.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Nota · el paquete como material suplementario</div>
+    <p>Muchas revistas y repositorios de datos piden que el análisis se pueda reproducir. El ZIP ya lo permite: los datos originales, las tablas en un formato abierto, las figuras en vectorial y un informe que declara la versión y el DOI del programa. Súbelo tal cual como material suplementario, o a un repositorio como Zenodo junto con el artículo.</p>
+  </div>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Paso a paso · el informe del maíz</div>
+    <ol class="pasos" style="margin-bottom:0">
+      <li>Recorre los Bloques 3, 4, 5 y 6 con el ejemplo de maíz para que sus figuras queden dibujadas.</li>
+      <li>Abre el Bloque 7. En los detalles escribe el título, los autores, la afiliación, el ensayo, <code>t ha⁻¹</code> en <span class="ui">Response units</span> y el objetivo.</li>
+      <li>En <span class="ui">Sections</span> activa <span class="ui">Appendix: pairwise comparisons</span>. En <span class="ui">Figures to include</span> desmarca <span class="ui">Block 5</span> para no repetir figuras.</li>
+      <li>Pulsa <span class="ui">Build / refresh preview</span> y revisa el informe en la vista previa.</li>
+      <li>Pulsa <span class="ui">Copy methods paragraph</span> y pégalo en tu borrador.</li>
+      <li>Pulsa <span class="ui">Print / save as PDF</span> y guarda el PDF.</li>
+      <li>Elige <span class="ui">TIFF + SVG</span> y <span class="ui">600 dpi</span>, y pulsa <span class="ui">Download full package (ZIP)</span>.</li>
+    </ol>
+  </div>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>Lo que aprendiste</div>
+    <p>El informe es un reflejo fiel de lo que hiciste en los bloques anteriores: si falta un análisis, falta en el informe; si editaste una figura, entra editada. El párrafo de métodos describe solo lo que realmente se hizo y cita la versión del programa. El PDF sirve para leer y archivar; el ZIP, para publicar y reproducir.</p>
+  </div>
+
+  <p style="margin-top:0.25in">Con el análisis publicado, el ciclo se cierra planeando el siguiente ensayo. El capítulo del Bloque 8 presenta el generador de diseños: la aleatorización con semilla, el croquis de campo, la libreta para capturar datos y el cálculo del número de repeticiones.</p>
+</section>
+
+</body>
+</html>

@@ -214,7 +214,8 @@ function init() {
   if (!el('descResponse')) return;
   ['descResponse', 'descGroup', 'descDigits'].forEach(id => el(id).addEventListener('change', () => render()));
   el('descRefresh').addEventListener('click', () => render(true));
-  document.addEventListener('datachange', () => { rendered = null; if (state.ready) fillControls(); });
+  /* figures of the previous table must disappear at once: the report (Block 7) collects every figure on the page */
+  document.addEventListener('datachange', () => { rendered = null; el('descFigs').innerHTML = ''; if (state.ready) fillControls(); });
   document.addEventListener('stepchange', e => { if (e.detail.step === 3 && state.ready) { fillControls(); render(); } });
 }
 document.addEventListener('DOMContentLoaded', init);

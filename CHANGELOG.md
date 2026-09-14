@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Block 7: the report no longer mixes datasets. Figures from Blocks 3, 4 and 6 of a previous table stayed on the page and were embedded in the report of the new one; loading data or changing roles now clears them in every block.
+- Block 7: the methods paragraph only states that residuals were checked when Block 4 was run on the same response, and the assumptions section is omitted otherwise (before, the sentence was always written).
+- Block 7: the suggested title follows the current analysis until the user types one; the results paragraph keeps the subscript degrees of freedom (F<sub>3,9</sub>); section headings stay on the same printed page as their first figure.
 - Blocks 4 to 7: loading another table or changing roles now discards the previous analysis. Before, Block 6 kept showing the gallery of the former dataset (the Latin square figures stayed on screen after loading the maize trial), Block 7 could report it, and Blocks 4 and 5 only recomputed when the response name or the number of rows changed, so two files with the same column name and size shared stale results.
 - Block 6: the residual field map centres its diverging colour scale at zero (new option "Centre the colour scale at zero"); before, the neutral colour sat at the midpoint of the range and small negative residuals were drawn as positive.
 - Block 6: the "Colour (screen)" preset restores the colour palette after "Greyscale print"; batch export offers the 450 dpi resolution available in each figure.
@@ -12,7 +15,7 @@
 - Theory cards: tables inside the collapsible sections wrap their text instead of overflowing the card.
 - Block 2: the "local control" illustration of the theory card did not render (its gradient shared a fixed id with the copy on the home page); each copy now gets its own id.
 - Home simulator: the vertical label of the field now reads "poor → fertile" (the fertility gradient runs from the top row to the bottom row, as the values show).
-- Spanish user manual in progress under manual/ (cover, introduction and chapters for Blocks 1 to 6).
+- Spanish user manual in progress under manual/ (cover, introduction and chapters for Blocks 1 to 7).
 
 ## 1.0 — 2026-09-10 · DOI 10.5281/zenodo.22683047
 

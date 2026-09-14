@@ -50,7 +50,8 @@ function methodsText(R, A, o) {
   const facs = d.factors.map(f => `${f} (${R.levelsMap[f].length} levels: ${R.levelsMap[f].join(', ')})`).join('; ');
   const reps = d.blocks.length ? `${R.levelsMap[d.blocks[0]].length} blocks` : (d.row ? `${R.levelsMap[d.row].length} rows × ${R.levelsMap[d.col].length} columns` : `${Math.round(R.recs.length / d.factors.reduce((p, f) => p * R.levelsMap[f].length, 1))} replicates per treatment`);
   const trans = R.transform ? ` The response was ${R.transform.label} transformed before analysis to meet the assumptions; means are reported back-transformed.` : '';
-  const assum = A && (A.resp === R.resp || (R.transform && A.resp === R.resp)) ? ` Residuals were checked for normality (Shapiro–Wilk), homogeneity of variances (Levene's test${A.tk ? ') and additivity (Tukey\'s one-degree-of-freedom test' : ''}).` : ' Residuals were checked for normality (Shapiro–Wilk) and homogeneity of variances (Levene\'s test).';
+  /* only state that assumptions were checked when Block 4 was actually run on this response */
+  const assum = A && A.resp === R.resp ? ` Residuals were checked for normality (Shapiro–Wilk), homogeneity of variances (Levene's test${A.tk ? ') and additivity (Tukey\'s one-degree-of-freedom test' : ''}).` : '';
   const cov = d.covariates.length ? ` ${d.covariates.join(', ')} ${d.covariates.length > 1 ? 'were' : 'was'} included as covariate${d.covariates.length > 1 ? 's' : ''} (ANCOVA).` : '';
   return `<p>The experiment was laid out as a <b>${lc(c.name)}</b> with ${reps}. Treatment factor${d.factors.length > 1 ? 's were' : ' was'} ${facs}. The response variable was <b>${esc(R.resp.replace(/_(ln|log10|sqrt|sqrt05|asin|logit|inv|ln1)$/, ''))}</b>${o.units ? ' (' + esc(o.units) + ')' : ''}.${cov}${trans}${assum} Data were analysed by analysis of variance according to the model <code>${esc(c.model)}</code> with ${R.terms.some(t => t.isError) ? 'the appropriate error strata' : 'a single error term'} and Type ${+el('anSS').value === 1 ? 'I' : 'III'} sums of squares. Treatment means were compared with ${PH.methods[R.method].name} at α = ${R.alpha}${d.factors.some(f => R.levelsMap[f].length >= 3 && R.levelsMap[f].every(l => /^[+-]?\d+(\.\d+)?$/.test(l))) ? ', and trends over quantitative factors were examined with orthogonal polynomial contrasts' : ''}. All computations were performed with AgriDesign version ${Report.CITE.version} (${Report.CITE.author.replace(/,.*/, '')}, ${Report.CITE.year}; ${Report.CITE.url}), a browser-based platform for the design and analysis of agricultural experiments.</p>`;
 }
@@ -80,8 +81,12 @@ function anovaSection(R) {
   rows.push({ src: 'Residual error', df: a.residual.df, ss: a.residual.ss, ms: a.residual.ms, F: NaN, p: NaN, sig: '', err: '', _class: 'dim' }, { src: 'Total', df: a.total.df, ss: a.total.ss, ms: NaN, F: NaN, p: NaN, sig: '', err: '', _class: 'total' });
   const t = htmlTable([{ key: 'src', label: 'Source' }, { key: 'df', label: 'df', num: true }, { key: 'ss', label: 'SS', num: true, fmt: v => fx(v, 4) }, { key: 'ms', label: 'MS', num: true, fmt: v => fx(v, 4) }, { key: 'F', label: 'F', num: true, fmt: fx }, { key: 'p', label: 'p', num: true, fmt: fmtP }, { key: 'sig', label: '' }, { key: 'err', label: 'Tested against' }], rows,
     `Analysis of variance of ${esc(R.resp)} (${esc(R.design.name)}). CV = ${fx(R.cv, 1)} %, R² = ${fx(R.r2)}, grand mean = ${fx(R.grandMean)}. Significance: *** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05, ns not significant.`);
-  const nar = el('anNarrative') ? el('anNarrative').innerText.replace(/^Draft for the results section\s*/, '') : '';
-  return t + (nar ? `<p>${esc(nar)}</p>` : '');
+  /* the draft paragraph of Block 5 is app-generated HTML (names already escaped); keep its subscripts
+     (F<sub>3,9</sub>) instead of flattening it to "F3,9" */
+  const box = el('anNarrative') && el('anNarrative').querySelector('.callout');
+  let nar = '';
+  if (box) { const c = box.cloneNode(true); const b = c.querySelector('b'); if (b) b.remove(); nar = c.innerHTML.trim(); }
+  return t + (nar ? `<p>${nar}</p>` : '');
 }
 function meansSection(R) {
   let out = '';
@@ -120,15 +125,18 @@ function pairwiseAppendix(R) {
 }
 function figuresSection(o) {
   const groups = [[3, 'Exploratory figures (Block 3)', /^fig3_/], [4, 'Residual diagnostics (Block 4)', /^fig4_/], [5, 'Means and trends (Block 5)', /^fig5_/], [6, 'Result graphics (Block 6)', /^fig6_/]];
-  let out = '';
+  let out = '', first = true;
   const mounted = Fig.mounted();
   groups.forEach(([n, title, rx]) => {
     if (!o.figBlocks.includes(n)) return;
     const list = mounted.filter(a => rx.test(a.hostId));
     if (!list.length) return;
-    out += `<h3>${title}</h3>` + list.map(a => figure(a.svg, esc(a.title.replace(/_/g, ' ')))).join('');
+    const figs = list.map(a => figure(a.svg, esc(a.title.replace(/_/g, ' '))));
+    /* keep each heading on the same printed page as its first figure (the section heading too) */
+    out += `<div class="nobreak">${first ? '<h2>Figures</h2>' : ''}<h3>${title}</h3>${figs[0]}</div>` + figs.slice(1).join('');
+    first = false;
   });
-  return out || '<p class="small">No figures were included.</p>';
+  return out || '<h2>Figures</h2><p class="small">No figures were included.</p>';
 }
 
 /* ---------- assemble ---------- */
@@ -140,9 +148,9 @@ Report.build = o => {
   if (o.objective) body += `<h2>Objective</h2><p>${esc(o.objective)}</p>`;
   body += `<h2>Materials and methods</h2>${methodsText(R, A, o)}`;
   if (o.secData) body += `<h2>Data</h2>${dataSection(R)}`;
-  if (o.secAssump && A) body += `<h2>Assumptions of the analysis of variance</h2>${assumptionsSection(A)}`;
+  if (o.secAssump && A && A.resp === R.resp) body += `<h2>Assumptions of the analysis of variance</h2>${assumptionsSection(A)}`;
   body += `<h2>Results</h2><h3>Analysis of variance</h3>${anovaSection(R)}<h3>Treatment means</h3>${meansSection(R)}`;
-  if (o.secFigs) body += `<h2>Figures</h2>${figuresSection(o)}`;
+  if (o.secFigs) body += figuresSection(o);
   if (o.secPairs) body += `<h2>Appendix A · Pairwise comparisons</h2>${pairwiseAppendix(R)}`;
   if (o.secRaw) body += `<h2>Appendix B · Data</h2>` + htmlTable(state.rawHeader.map((h, j) => ({ key: j, label: esc(h), get: r => r[j] })), state.rawRows, 'Data as loaded.');
   if (o.secCite !== false) body += Report.citeSection();
@@ -197,11 +205,16 @@ function init() {
   el('rpZip').addEventListener('click', async () => { if (!lastHtml) preview(); const b = el('rpZip'); b.disabled = true; b.textContent = 'Packing…'; try { download(await Report.zip(opts(), lastHtml), slug(opts().title) + '_package.zip'); } catch (e) { alert('Could not build the package: ' + e.message); } b.disabled = false; b.textContent = '⬇ Download full package (ZIP)'; });
   el('rpMethods').addEventListener('click', () => { const t = document.createElement('div'); t.innerHTML = methodsText(state.anova, state.assumptions, opts()); navigator.clipboard.writeText(t.innerText).then(() => showMessage('rpMessages', 'success', 'Methods paragraph copied to the clipboard.')); });
   el('rpGo5').addEventListener('click', () => goStep(5));
+  let autoTitle = '';
   document.addEventListener('stepchange', e => {
     if (e.detail.step !== 7) return;
     const has = !!state.anova;
     el('rpNoResults').style.display = has ? 'none' : ''; el('rpMain').style.display = has ? '' : 'none';
-    if (has && !el('rpTitle').value) el('rpTitle').value = `Effect of ${state.anova.d.factors.join(' and ')} on ${state.anova.resp}`;
+    /* the suggested title follows the analysis; a title typed by the user is never replaced */
+    if (has) {
+      const t = `Effect of ${state.anova.d.factors.join(' and ')} on ${state.anova.resp}`;
+      if (!el('rpTitle').value || el('rpTitle').value === autoTitle) { el('rpTitle').value = t; autoTitle = t; }
+    }
     if (has) preview();
   });
 }

@@ -44,7 +44,9 @@ manual/
     07-bloque6.html    capítulo 7 · Bloque 6: qué figura para qué resultado, la galería (11 tipos de figura,
                        mapas de campo de respuesta y residuales), estilos predefinidos, editor de estilo,
                        multipanel, formatos, resoluciones y tamaño de letra al ancho final (capturas b6-*.png)
-    08-bloque7.html    (pendiente) capítulo 8 · Bloque 7: informe, PDF y paquete ZIP
+    08-bloque7.html    capítulo 8 · Bloque 7: partes del informe, detalles y secciones, recorrido por el informe
+                       del maíz, párrafo de métodos, PDF y paso al manuscrito, contenido del paquete ZIP
+                       (capturas b7-*.png)
     09-bloque8.html    (pendiente) capítulo 9 · Bloque 8: aleatorización, croquis, libreta de campo, potencia
     10-apendices.html  (pendiente) apéndices: formatos, reglas de decisión, glosario, solución de problemas
   en/                  versión en inglés (pendiente)

@@ -311,7 +311,7 @@ function init() {
   el('anResponse').addEventListener('change', fillControls);
   /* any change of data or roles makes the displayed analysis stale, even when the response name and
      the number of rows happen to be the same (e.g. two example files with Yield_t_ha and 16 plots) */
-  document.addEventListener('datachange', () => { dataDirty = true; if (state.ready) fillControls(); });
+  document.addEventListener('datachange', () => { dataDirty = true; R = null; el('anResults').style.display = 'none'; el('anMeans').innerHTML = ''; if (state.ready) fillControls(); });
   document.addEventListener('stepchange', e => { if (e.detail.step === 5 && state.ready) { fillControls(); if (dataDirty || !R || R.resp !== el('anResponse').value) run(); } });
 }
 document.addEventListener('DOMContentLoaded', init);

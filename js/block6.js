@@ -153,6 +153,7 @@ function init() {
   el('gfxPanelBtn').addEventListener('click', buildPanel);
   el('gfxRebuild').addEventListener('click', build);
   el('gfxGo5').addEventListener('click', () => goStep(5));
+  document.addEventListener('datachange', () => { el('gfxFigs').innerHTML = ''; el('gfxPanelHost').innerHTML = ''; figs = []; builtFor = null; });
   document.addEventListener('stepchange', e => {
     if (e.detail.step !== 6) return;
     const has = !!state.anova;
