@@ -63,19 +63,20 @@ DS.byId = id => DS.catalog.find(c => c.id === id);
 /* which designs fit the current roles; returns [{design, ok, why}] and a suggestion */
 DS.applicable = (d, recs) => {
   const nf = d.factors.length, nb = d.blocks.length;
+  const cnt = {};
+  if (recs && nf && nb) recs.forEach(r => { const k = r.f[d.blocks[0]] + '|' + d.factors.map(f => r.f[f]).join('|'); cnt[k] = (cnt[k] || 0) + 1; });
+  const multi = Object.values(cnt).some(v => v > 1);
   const out = DS.catalog.map(c => {
     let ok = true, why = [];
     if (nf < c.factors[0] || nf > c.factors[1]) { ok = false; why.push(`needs ${c.factors[0] === c.factors[1] ? c.factors[0] : c.factors[0] + '–' + c.factors[1]} treatment factor${c.factors[1] > 1 ? 's' : ''}`); }
     if (nb < c.blocks[0]) { ok = false; why.push(`needs ${c.blocks[0]} block column${c.blocks[0] > 1 ? 's' : ''}`); }
     if (c.needRowCol && !(d.row && d.col)) { ok = false; why.push('needs row and column roles'); }
+    if (c.needReps && nb >= c.blocks[0] && !multi) { ok = false; why.push('needs several plots per block × treatment'); }
     if (!c.needRowCol && d.row && d.col && c.id !== 'latin') why.push('row/column roles ignored');
     return { design: c, ok, why: why.join('; ') };
   });
   /* suggestion */
   let sug = null;
-  const cnt = {};
-  if (recs && nf && nb) recs.forEach(r => { const k = r.f[d.blocks[0]] + '|' + d.factors.map(f => r.f[f]).join('|'); cnt[k] = (cnt[k] || 0) + 1; });
-  const multi = Object.values(cnt).some(v => v > 1);
   if (d.row && d.col && nf === 1) sug = 'latin';
   else if (nf === 1) sug = nb === 0 ? 'crd' : nb >= 2 ? 'ibd' : multi ? 'grcbd' : 'rcbd';
   else if (nf === 2) sug = nb ? 'fact_rcbd' : 'fact_crd';

@@ -2,6 +2,7 @@
 
 (function () {
 let R = null;
+let designSig = null, chosenDesign = null;   /* data signature and the design the user picked for it */
 const SPLIT = new Set(['split_rcbd', 'split_crd', 'strip_rcbd', 'splitsplit_rcbd']);
 const fx3 = v => fmtFixed(v, 3);
 const isNumericLevels = lv => lv.length >= 3 && lv.every(l => /^[+-]?\d+(\.\d+)?$/.test(l));
@@ -14,9 +15,15 @@ function fillControls() {
   const d = state.design;
   const recs = LM.records(rs.value, d).recs;
   const ap = DS.applicable(d, recs);
-  const ds = el('anDesign'); const prevD = ds.value; ds.innerHTML = '';
+  const ds = el('anDesign'); ds.innerHTML = '';
+  /* keep the user's design only while the data and roles are the same; a new table or new roles
+     start again from the suggested design (a CRD chosen for one file must not carry over to a Latin square) */
+  const sig = [state.fileName, state.rawRows.length, d.factors.join(), d.blocks.join(), d.row, d.col].join('|');
+  const prevD = sig === designSig ? chosenDesign : null;
+  designSig = sig;
   ap.list.forEach(a => { const op = mk('option', { value: a.design.id }, esc(a.design.name) + (a.ok ? (a.design.id === ap.suggested ? '  ★ suggested' : '') : '  — ' + a.why)); if (!a.ok) op.disabled = true; ds.appendChild(op); });
   if (prevD && [...ds.options].some(o => o.value === prevD && !o.disabled)) ds.value = prevD; else ds.value = ap.suggested || ap.list.find(a => a.ok).design.id;
+  chosenDesign = ds.value;
   designChanged();
 }
 function designChanged() {
@@ -38,6 +45,8 @@ function run() {
   if (!state.ready) return;
   const resp = el('anResponse').value, alpha = +el('anAlpha').value, method = el('anMethod').value;
   clearMessages('anMessages');
+  /* never leave the results of a previous analysis (or dataset) on screen when this one fails */
+  el('anResults').style.display = 'none';
   let res;
   try { res = DS.analyze(el('anDesign').value, resp, state.design, { ssType: +el('anSS').value, designOpts: designOpts() }); }
   catch (e) { showMessage('anMessages', 'error', 'The analysis failed: ' + esc(e.message)); console.error(e); return; }
@@ -295,7 +304,7 @@ function renderUserContrast(host) {
 function init() {
   if (!el('anResponse')) return;
   el('anRun').addEventListener('click', run);
-  el('anDesign').addEventListener('change', designChanged);
+  el('anDesign').addEventListener('change', () => { chosenDesign = el('anDesign').value; designChanged(); });
   el('anMethod').addEventListener('change', designChanged);
   el('anResponse').addEventListener('change', fillControls);
   document.addEventListener('datachange', () => { if (state.ready) fillControls(); });

@@ -37,7 +37,10 @@ manual/
                        parcelas sospechosas, seis gráficos de residuales, transformaciones y Box–Cox (caso del
                        jitomate con aditividad fallida y Use), ruta no paramétrica con Friedman, ejemplos
                        (capturas b4-*.png en img/)
-    06-bloque5.html    (pendiente) capítulo 6 · Bloque 5: diseños, ANOVA, pruebas de medias, contrastes
+    06-bloque5.html    capítulo 6 · Bloque 5: los trece diseños y sus estratos de error, opciones (SS, α, once
+                       pruebas con las letras del frijol), tabla de ANOVA e interpretación, medias ajustadas y
+                       Dunnett, factorial de jitomate y parcela dividida con efectos simples, tendencia
+                       polinomial, curva y óptimo, contrastes, respuestas transformadas (capturas b5-*.png)
     07-bloque6.html    (pendiente) capítulo 7 · Bloque 6: galería de figuras, presets, multipanel, exportación
     08-bloque7.html    (pendiente) capítulo 8 · Bloque 7: informe, PDF y paquete ZIP
     09-bloque8.html    (pendiente) capítulo 9 · Bloque 8: aleatorización, croquis, libreta de campo, potencia
