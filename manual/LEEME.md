@@ -33,7 +33,10 @@ manual/
                        bloque y combinación con la tabla de dos vías, el CV y sus referencias, la interpretación
                        automática, las nueve figuras exploratorias y el editor, ejemplos de maíz y de jitomate
                        (capturas b3-*.png en img/)
-    05-bloque4.html    (pendiente) capítulo 5 · Bloque 4: supuestos, transformaciones, no paramétricos
+    05-bloque4.html    capítulo 5 · Bloque 4: supuestos en los residuales, calificación A–D, las diez pruebas,
+                       parcelas sospechosas, seis gráficos de residuales, transformaciones y Box–Cox (caso del
+                       jitomate con aditividad fallida y Use), ruta no paramétrica con Friedman, ejemplos
+                       (capturas b4-*.png en img/)
     06-bloque5.html    (pendiente) capítulo 6 · Bloque 5: diseños, ANOVA, pruebas de medias, contrastes
     07-bloque6.html    (pendiente) capítulo 7 · Bloque 6: galería de figuras, presets, multipanel, exportación
     08-bloque7.html    (pendiente) capítulo 8 · Bloque 7: informe, PDF y paquete ZIP
@@ -82,7 +85,7 @@ Con el servidor local de la app en el puerto 8800 (`server.ps1`):
 msedge --headless=new --hide-scrollbars --window-size=1400,900 --force-device-scale-factor=2 --virtual-time-budget=30000 --screenshot=img/nombre.png "http://localhost:8800/manual/herramientas/captura.html?w=1400&h=900&do=ex:0;step:5;run:anRun;scroll:%23anTable,24"
 ```
 
-Los pasos de la receta van separados por `;`: `ex:N` (ejemplo N del Bloque 2, desde 0), `step:N`, `run:idBoton`, `wait:ms`, `scroll:selector,desfase`, `click:selector`, `open:selector`, `select:selector=valor`, `set:selector=valor`, `check:selector=true|false`, `cfg:figura.clave=valor`, `hide:selector`, `frame:selector`, `scrollin:iframe|elemento,desfase`, `top` y `report` (al final; la página se vuelve el informe del Bloque 7 para imprimirlo con `--print-to-pdf`). En la dirección, `#` se escribe `%23`, la coma dentro de un valor `%2C` y los espacios `%20`.
+Los pasos de la receta van separados por `;`: `ex:N` (ejemplo N del Bloque 2, desde 0), `step:N`, `run:idBoton`, `wait:ms`, `scroll:selector,desfase`, `click:selector`, `open:selector`, `select:selector=valor`, `set:selector=valor`, `check:selector=true|false`, `cfg:figura.clave=valor`, `hide:selector`, `style:selector=css` (estilo en línea, p. ej. `style:%23transTable%20table=font-size:12px`), `frame:selector`, `scrollin:iframe|elemento,desfase`, `top` y `report` (al final; la página se vuelve el informe del Bloque 7 para imprimirlo con `--print-to-pdf`). En la dirección, `#` se escribe `%23`, la coma dentro de un valor `%2C` y los espacios `%20`.
 
 ## Cómo obtener el PDF
 

@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>AgriDesign · Manual de usuario · Bloque 4: supuestos, transformaciones y no paramétricos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;1,500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../interior.css">
+<!-- reparte el contenido en hojas tamaño carta, con encabezados y números de página -->
+<script src="../paginar.js"></script>
+<style>
+  figure.chica .marco { width: 70%; margin: 0 auto; }
+  figure.chica figcaption { margin-left: 15%; margin-right: 15%; }
+  figure.mini .marco { width: 56%; margin: 0 auto; }
+  figure.mini figcaption { margin-left: 22%; margin-right: 22%; }
+</style>
+</head>
+<body>
+
+<section class="capitulo" id="cap-b4" data-pestana="B4" data-orden="5" style="--acento: var(--b4)">
+  <div class="cap-apertura">
+    <div class="cap-num">B4</div>
+    <div class="cap-etiqueta">Capítulo cinco · Bloque 4 · Assumptions</div>
+    <h1 data-corto="Bloque 4 · Supuestos y alternativas">Supuestos, transformaciones y no paramétricos</h1>
+    <div class="cap-regla"></div>
+    <p class="cap-resumen">La prueba F del análisis de varianza descansa en cuatro supuestos sobre el error experimental. El Bloque 4 ajusta el modelo del diseño, revisa esos supuestos en los residuales, resume el diagnóstico en una calificación de A a D, compara nueve transformaciones con el perfil de Box–Cox y, cuando nada funciona o la respuesta es una calificación, ofrece los análisis de rangos que corresponden al diseño.</p>
+    <div class="cap-franja"><span class="k4"></span><span class="k4" style="opacity:.75"></span><span class="k4" style="opacity:.5"></span><span class="k4" style="opacity:.3"></span></div>
+    <ul class="cap-contenido">
+      <li><b>5.1</b>Los supuestos se revisan en los residuales</li>
+      <li><b>5.2</b>Normalidad, homogeneidad de varianzas y aditividad</li>
+      <li><b>5.3</b>Gráficos de residuales</li>
+      <li><b>5.4</b>Transformaciones y el perfil de Box–Cox</li>
+      <li><b>5.5</b>La ruta no paramétrica</li>
+      <li><b>5.6</b>Ejemplo paso a paso</li>
+    </ul>
+  </div>
+
+  <!-- 5.1 -->
+  <h2 id="s5-1"><span class="num">5.1</span>Los supuestos se revisan en los residuales</h2>
+  <p class="lead">El modelo de un ensayo en bloques es <i>y</i> = μ + tratamiento + bloque + ε. Los supuestos del ANOVA no hablan del rendimiento, hablan de ε, el error experimental. Por eso se revisan en los <b>residuales</b> del modelo ajustado, lo que queda de cada parcela después de quitarle la media de su tratamiento y el efecto de su bloque, y nunca en la respuesta cruda.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/b4-teoria.png" alt="La tarjeta de teoría del Bloque 4"></div>
+    <figcaption><b>Figura 5.1.</b> La tarjeta <span class="ui">The assumptions behind the F-test, in plain language</span>, con el primer tema abierto: los cuatro supuestos, cómo los revisa la app y qué hacer si fallan. Los otros tres temas explican los gráficos de residuales, las transformaciones y los análisis no paramétricos.</figcaption>
+  </figure>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>Teoría en breve · por qué no se revisa la respuesta cruda</div>
+    <p>En el ejemplo de maíz, el rendimiento de las 16 parcelas tiene dos jorobas (figura 4.8): una para el testigo y otra para las dosis altas. Una prueba de normalidad aplicada a esos datos crudos podría rechazar la normalidad, y sin embargo no hay ningún problema: las jorobas son el efecto del nitrógeno, que es justo lo que se quiere estudiar. Los residuales quitan ese efecto y el de los bloques; lo que queda es la variación entre parcelas tratadas igual, y esa sí debe parecerse a una campana, tener la misma dispersión en todos los tratamientos y no depender del bloque. El Bloque 4 ajusta el modelo del diseño antes de probar nada.</p>
+  </div>
+
+  <table>
+    <caption><b>Tabla 5.1.</b> Los cuatro supuestos y lo que pasa cuando fallan.</caption>
+    <thead><tr><th style="width:17%">Supuesto</th><th style="width:22%">Significa</th><th style="width:31%">Cómo lo revisa la app</th><th>Si falla</th></tr></thead>
+    <tbody>
+      <tr><td><b>Independencia</b></td><td>El error de una parcela no dice nada del de su vecina.</td><td>Lo garantiza la aleatorización. Durbin–Watson y el gráfico de residuales en orden solo revelan patrones gruesos.</td><td>Nada lo arregla después: bloquear bien en el siguiente ensayo, o modelos espaciales.</td></tr>
+      <tr><td><b>Normalidad</b> del error</td><td>Los residuales siguen una campana.</td><td>Shapiro–Wilk (la mejor con menos de 50 datos), Anderson–Darling y Jarque–Bera; gráfico Q–Q.</td><td>La F es robusta con diseños balanceados. Transformar, o usar pruebas de rangos.</td></tr>
+      <tr><td><b>Homogeneidad de varianzas</b></td><td>Todos los tratamientos tienen la misma varianza del error.</td><td>Levene centrada en la mediana (robusta), Bartlett (sensible a la no normalidad), Fligner–Killeen y Fmax; residuales contra valores ajustados.</td><td>Es lo que más daña las comparaciones de medias. Transformar (logaritmo si la DE crece con la media), Welch o rangos.</td></tr>
+      <tr><td><b>Aditividad</b></td><td>Los efectos de bloque y tratamiento se suman; no hay interacción bloque × tratamiento.</td><td>Prueba de un grado de libertad de Tukey; perfiles por bloque del Bloque 3.</td><td>Logaritmo, si los efectos son multiplicativos.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja dato">
+    <div class="dato-cifra">3 a 6</div>
+    <div class="dato-txt"><div class="caja-t">Tratamientos: la F es robusta</div>Con repeticiones iguales y de 3 a 6 tratamientos, la F conserva bien su nivel α aun con una no normalidad moderada. Las varianzas desiguales importan más, sobre todo si el tratamiento con más varianza es también el que tiene menos repeticiones. Y un solo dato equivocado puede hacer fallar todas las pruebas a la vez: mira primero la tabla de observaciones sospechosas.</div>
+  </div>
+
+  <!-- 5.2 -->
+  <h2 id="s5-2"><span class="num">5.2</span>Normalidad, homogeneidad de varianzas y aditividad</h2>
+  <p>La tarjeta <span class="ui">1 · Model and residual diagnostics</span> se calcula sola al abrir el bloque y se repite con <span class="ui">Run diagnostics</span> al cambiar la respuesta, el nivel de significancia o las interacciones. Arriba de los resultados, la app muestra el modelo exacto que ajustó.</p>
+
+  <figure>
+    <div class="marco" style="position:relative">
+      <img src="../img/b4-veredicto.png" alt="Controles, calificación y tarjetas del diagnóstico">
+      <span class="marca" style="left:9.3%;top:20%">1</span>
+      <span class="marca" style="left:29%;top:20%">2</span>
+      <span class="marca" style="left:48.6%;top:20%">3</span>
+      <span class="marca" style="left:9.3%;top:35%">4</span>
+      <span class="marca" style="left:9.3%;top:48%">5</span>
+      <span class="marca" style="left:9.3%;top:69%">6</span>
+    </div>
+    <figcaption><b>Figura 5.2.</b> Diagnóstico del ejemplo de maíz y nitrógeno.</figcaption>
+  </figure>
+  <ul class="leyenda-marcas">
+    <li><span class="n">1</span><span class="ui">Response variable</span>: la respuesta. Las columnas transformadas que crees en la sección 5.4 aparecen aquí.</li>
+    <li><span class="n">2</span><span class="ui">Significance level α</span>: 0.05, 0.01 o 0.10. Decide los colores de las tarjetas y de la tabla.</li>
+    <li><span class="n">3</span><span class="ui">include all factor interactions</span>: solo se activa con dos o más factores; déjala marcada para que los residuales no absorban la interacción. <span class="ui">Run diagnostics</span> recalcula.</li>
+    <li><span class="n">4</span>El modelo con que se obtuvieron los residuales: aquí <code>Yield_t_ha ~ Block + Nitrogen_kg_ha</code>, el diseño de bloques completos al azar.</li>
+    <li><span class="n">5</span>La calificación del diagnóstico, de A a D, con una frase que dice qué hacer (tabla 5.2).</li>
+    <li><span class="n">6</span>Ocho tarjetas: observaciones y grados de libertad del error, raíz del cuadrado medio del error, CV del ANOVA, Shapiro–Wilk, Levene, aditividad de Tukey, Durbin–Watson y cuántos residuales estudentizados pasan de 2.5.</li>
+  </ul>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Regla de decisión · la calificación del diagnóstico</div>
+    <table class="compacta">
+      <thead><tr><th style="width:9%">Grado</th><th style="width:33%">Cuándo</th><th>Qué hacer</th></tr></thead>
+      <tbody>
+        <tr><td><b>A</b></td><td>Todas las comprobaciones en verde.</td><td>Pasar al Bloque 5 con la escala original.</td></tr>
+        <tr><td><b>B</b></td><td>Un aviso ámbar.</td><td>El ANOVA es aceptable. Menciona la revisión en los métodos; si el aviso es de varianzas, cuidado con las comparaciones de medias.</td></tr>
+        <tr><td><b>C</b></td><td>Una comprobación en rojo, o dos avisos ámbar.</td><td>Compara las transformaciones o usa la ruta no paramétrica, y reporta cuál elegiste y por qué.</td></tr>
+        <tr><td><b>D</b></td><td>Dos o más comprobaciones en rojo.</td><td>Una transformación difícilmente lo arregla todo: los procedimientos de rangos son la opción segura, o un modelo lineal generalizado para conteos y proporciones.</td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">Cada prueba se colorea según su valor P: verde si P ≥ α, ámbar si α/5 ≤ P &lt; α (entre 0.01 y 0.05 con α = 0.05) y rojo si P &lt; α/5.</p>
+  </div>
+
+  <figure>
+    <div class="marco"><img src="../img/b4-checks.png" alt="Las comprobaciones del diagnóstico"></div>
+    <figcaption><b>Figura 5.3.</b> Las cinco comprobaciones del maíz, todas en verde: residuales normales (Shapiro–Wilk W = 0.930, P = 0.2477), varianzas homogéneas (Levene F = 0.535, P = 0.6672; Fmax = 1.55), bloques y tratamientos aditivos (Tukey F = 0.055, P = 0.8208), ningún residual más allá de ±3 y Durbin–Watson de 2.45.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="marco"><img src="../img/b4-tabla.png" alt="Tabla de todas las pruebas"></div>
+    <figcaption><b>Figura 5.4.</b> <span class="ui">All tests</span>: las diez pruebas con su hipótesis nula, estadístico, grados de libertad, valor P y decisión.</figcaption>
+  </figure>
+
+  <table>
+    <caption><b>Tabla 5.2.</b> Las pruebas de la tabla y para qué sirve cada una.</caption>
+    <thead><tr><th style="width:30%">Prueba</th><th>Qué prueba y cuándo confiar en ella</th></tr></thead>
+    <tbody>
+      <tr><td>Shapiro–Wilk</td><td>Normalidad de los residuales. La más potente con muestras pequeñas; es la que decide la comprobación.</td></tr>
+      <tr><td>Anderson–Darling</td><td>Normalidad, con más peso en las colas.</td></tr>
+      <tr><td>Jarque–Bera</td><td>Normalidad a partir de la asimetría y la curtosis. Poco potente con menos de 30 datos.</td></tr>
+      <tr><td>Levene centrada en la mediana</td><td>Igualdad de varianzas entre tratamientos. Robusta a la no normalidad; es la que decide la comprobación.</td></tr>
+      <tr><td>Levene centrada en la media</td><td>La versión clásica. Con pocas repeticiones por tratamiento es demasiado sensible y rechaza con facilidad.</td></tr>
+      <tr><td>Bartlett</td><td>Igualdad de varianzas, muy potente si los datos son normales y engañosa si no lo son.</td></tr>
+      <tr><td>Fligner–Killeen</td><td>Igualdad de varianzas con rangos; la más robusta.</td></tr>
+      <tr><td>Fmax de Hartley</td><td>Cociente entre la mayor y la menor varianza de los tratamientos. Descriptiva: por encima de 10 hay un problema serio.</td></tr>
+      <tr><td>No aditividad de Tukey</td><td>Interacción bloque × tratamiento de tipo multiplicativo, con un grado de libertad. Solo aparece si hay bloques o filas y columnas.</td></tr>
+      <tr><td>Durbin–Watson</td><td>Correlación entre residuales consecutivos en el orden del archivo. Cerca de 2, sin patrón; solo tiene sentido si las filas siguen el acomodo del campo.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Nota · cuando dos pruebas no coinciden</div>
+    <p>En el maíz, la Levene centrada en la media rechaza la igualdad de varianzas (F = 4.270, P = 0.0287) mientras la centrada en la mediana, Bartlett y Fligner–Killeen no lo hacen, y el Fmax es apenas 1.55. Con cuatro parcelas por dosis, la media de cada grupo se mueve mucho con un solo valor y la versión clásica se vuelve nerviosa. La app decide con la versión robusta; la tabla muestra las demás para que el lector de tu artículo no tenga que preguntar. Cuando las pruebas discrepan, el gráfico de residuales contra ajustados y el Fmax desempatan.</p>
+  </div>
+
+  <h3>Observaciones sospechosas</h3>
+  <p>La tabla <span class="ui">Suspicious observations</span> lista las parcelas con residual estudentizado mayor que 2.5 en valor absoluto: el número de fila en el archivo (contando el encabezado), su tratamiento y bloque, el valor observado, el ajustado, el residual, el residual estudentizado y el apalancamiento.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/b4-atipicos.png" alt="Observaciones sospechosas del maíz"></div>
+    <figcaption><b>Figura 5.5.</b> Una sola parcela sospechosa en el maíz: la fila 17 del archivo, dosis 180 del bloque 4, con 7.310 t/ha observadas frente a 7.056 esperadas. Es la línea del bloque 4 que en los perfiles del Bloque 3 (figura 4.13) sube de más en la última dosis. Un residual estudentizado de 2.65 en 16 parcelas no es alarmante; basta con confirmar el dato en la libreta.</figcaption>
+  </figure>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Regla de decisión · qué hacer con una parcela sospechosa</div>
+    <table class="compacta">
+      <thead><tr><th style="width:40%">Si en la libreta encuentras…</th><th>entonces…</th></tr></thead>
+      <tbody>
+        <tr><td>un error de captura (un punto decimal corrido, dos dígitos invertidos)</td><td>Corrige el dato en el archivo y vuelve a cargar.</td></tr>
+        <tr><td>una parcela dañada por animales, inundación o falla de riego, documentada</td><td>Declárala faltante (celda vacía) y dilo en los métodos.</td></tr>
+        <tr><td>nada anormal</td><td>El dato se queda. Si influye mucho, analiza con y sin él y reporta ambos.</td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">Nunca se borra un valor solo porque estorba. Un residual grande sin explicación es información sobre el ensayo, no un error.</p>
+  </div>
+
+  <!-- 5.3 -->
+  <h2 id="s5-3"><span class="num">5.3</span>Gráficos de residuales</h2>
+  <p>Las pruebas dan un sí o un no; los gráficos dicen por qué. La app dibuja seis, en dos columnas, todos editables y descargables. Los puntos más alejados llevan el número de fila del archivo.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/b4-figuras.png" alt="Los seis gráficos de residuales del maíz"></div>
+    <figcaption><b>Figura 5.6.</b> Los seis gráficos de residuales del ejemplo de maíz. De izquierda a derecha y de arriba abajo: Q–Q normal, histograma de residuales, residuales contra ajustados, escala–localización, residuales por tratamiento y residuales en el orden del archivo.</figcaption>
+  </figure>
+
+  <table>
+    <caption><b>Tabla 5.3.</b> Cómo leer cada gráfico de residuales.</caption>
+    <thead><tr><th style="width:22%">Gráfico</th><th style="width:34%">Lo normal</th><th>Señales de alarma</th></tr></thead>
+    <tbody>
+      <tr><td><b>Q–Q normal</b></td><td>Los puntos siguen la recta y quedan dentro de la banda sombreada (envolvente al 95&nbsp;%).</td><td>Forma de S: colas pesadas o ligeras. Curva: asimetría. Uno o dos puntos lejos: valores atípicos. Algunos puntos fuera de la banda son esperables.</td></tr>
+      <tr><td><b>Histograma</b></td><td>Una campana centrada en cero.</td><td>Cola larga hacia un lado; dos jorobas en los residuales (a diferencia de los datos crudos, aquí sí es problema).</td></tr>
+      <tr><td><b>Residuales contra ajustados</b></td><td>Una nube sin forma alrededor de cero, casi toda entre −2 y 2.</td><td>Embudo que se abre hacia la derecha: la varianza crece con la media, pide logaritmo o raíz. Curva: falta un término (un efecto cuadrático de la dosis) o no aditividad.</td></tr>
+      <tr><td><b>Escala–localización</b></td><td>La línea suavizada casi horizontal.</td><td>Una tendencia creciente confirma la heterogeneidad de varianzas.</td></tr>
+      <tr><td><b>Residuales por tratamiento</b></td><td>Cajas de altura parecida.</td><td>Cajas de altura muy distinta: varianzas desiguales entre tratamientos.</td></tr>
+      <tr><td><b>Residuales en orden</b></td><td>Subidas y bajadas sin patrón.</td><td>Rachas de positivos y luego de negativos: una tendencia a lo largo del campo, si las filas del archivo siguen el orden de siembra.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Lectura · los residuales del maíz</div>
+    <p>Los puntos del Q–Q siguen la recta, con las filas 16 y 17 en los extremos pero dentro de la banda. En residuales contra ajustados la nube es plana y solo la fila 17 pasa de 2. La escala–localización sube un poco en las dosis altas, pero con 16 parcelas y un Levene de P = 0.67 no hay nada que corregir. Las cajas por tratamiento tienen alturas parecidas. Un ensayo limpio.</p>
+  </div>
+
+  <!-- 5.4 -->
+  <h2 id="s5-4"><span class="num">5.4</span>Transformaciones y el perfil de Box–Cox</h2>
+  <p>La tarjeta <span class="ui">2 · Would a transformation help?</span> aplica cada transformación posible a la respuesta, vuelve a ajustar el mismo modelo y repite las pruebas. Una recomendación en la parte superior resume el resultado. El botón <span class="ui">Use</span> de cada fila crea una columna nueva con la respuesta transformada, sin tocar la original, y repite el diagnóstico sobre ella.</p>
+
+  <table>
+    <caption><b>Tabla 5.4.</b> Las transformaciones que prueba la app y cuándo se usa cada una. Solo aparecen las que admiten los datos: el logaritmo exige valores positivos y el arcoseno, valores entre 0 y 100.</caption>
+    <thead><tr><th style="width:26%">Transformación</th><th>Situación típica</th><th style="width:30%">Notas</th></tr></thead>
+    <tbody>
+      <tr><td>ln(y), log₁₀(y)</td><td>La DE crece en proporción a la media; efectos multiplicativos; CV constante entre tratamientos.</td><td>Las medias destransformadas son medias geométricas.</td></tr>
+      <tr><td>ln(y + 1)</td><td>Conteos con ceros.</td><td>Solo tiene sentido si hay ceros.</td></tr>
+      <tr><td>√y, √(y + 0.5)</td><td>Conteos (insectos, malezas, colonias): varianza parecida a la media. La segunda, con conteos pequeños y ceros.</td><td>Un modelo lineal generalizado de Poisson es la alternativa moderna.</td></tr>
+      <tr><td>Arcoseno √(y/100)</td><td>Porcentajes que vienen de conteos: germinación, incidencia, mortalidad.</td><td>Solo hace falta con valores por debajo de 20&nbsp;% o por encima de 80&nbsp;%. No para porcentajes de cantidades continuas, como la humedad.</td></tr>
+      <tr><td>Logit</td><td>Proporciones lejos de 0 y de 1.</td><td>O un modelo binomial.</td></tr>
+      <tr><td>1/y</td><td>Tasas y tiempos hasta un evento; la DE crece con el cuadrado de la media.</td><td>Rara vez hace falta en agronomía.</td></tr>
+    </tbody>
+  </table>
+
+  <figure>
+    <div class="marco"><img src="../img/b4-trans.png" alt="Tabla de transformaciones del maíz"></div>
+    <figcaption><b>Figura 5.7.</b> Transformaciones para el maíz: <span class="ui">No transformation needed</span>. La escala original ya cumple los supuestos y cualquier transformación solo complicaría la interpretación. Nótese que el recíproco empeora las cosas: la aditividad cae a P = 0.0005 y el Fmax sube a 8.64.</figcaption>
+  </figure>
+
+  <h3>Cuando los supuestos fallan: el jitomate</h3>
+  <p>El ejemplo de jitomate (tres variedades × tres niveles de fertilización en bloques) es el caso contrario. Los residuales son normales y las varianzas homogéneas, pero la prueba de aditividad de Tukey rechaza con fuerza: F = 54.251, P &lt; 0.0001. La calificación es C.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/b4-tomate-veredicto.png" alt="Diagnóstico del jitomate con calificación C"></div>
+    <figcaption><b>Figura 5.8.</b> Diagnóstico del jitomate: modelo con bloque, variedad, fertilización e interacción; calificación C; tarjeta de aditividad en rojo. La comprobación explica que hay una interacción bloque × tratamiento de tipo multiplicativo y que un logaritmo suele eliminarla.</figcaption>
+  </figure>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>Teoría en breve · efectos que se multiplican</div>
+    <p>En un modelo aditivo, un bloque fértil suma lo mismo a todas las variedades: 0.3 kg más por planta a Cherry y 0.3 kg más a Saladette. En muchos cultivos no ocurre así: el bloque fértil rinde un 10&nbsp;% más, lo que son 0.2 kg en Cherry y 0.4 kg en Saladette. El efecto es multiplicativo y aparece como interacción bloque × tratamiento. El logaritmo convierte los productos en sumas, ln(a · b) = ln a + ln b, y devuelve el modelo aditivo.</p>
+  </div>
+
+  <figure>
+    <div class="marco"><img src="../img/b4-tomate-trans.png" alt="Tabla de transformaciones del jitomate con la sugerencia"></div>
+    <figcaption><b>Figura 5.9.</b> Transformaciones para el jitomate. La recomendación es el logaritmo natural (★): es la potencia más cercana a la estimación de Box–Cox y con ella las tres pruebas pasan (aditividad P = 0.2204, normalidad P = 0.3379, Levene P = 0.9447). La raíz cuadrada y el arcoseno no bastan: la aditividad sigue por debajo de 0.05.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="marco"><img src="../img/b4-tomate-boxcox.png" alt="Perfil de Box–Cox del jitomate"></div>
+    <figcaption><b>Figura 5.10.</b> Perfil de verosimilitud de Box–Cox para el jitomate: λ̂ = 0.20 con intervalo al 95&nbsp;% de 0.1 a 0.4. El intervalo no incluye 1 (dejar la escala) y la potencia convencional más cercana es λ = 0, el logaritmo. Arriba del eje se marcan las potencias con nombre: 1/y, 1/√y, ln y, √y, y, y².</figcaption>
+  </figure>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">λ</span>La familia de Box–Cox</div>
+    <p>Box–Cox reúne las transformaciones de potencia en una sola fórmula, y<sup>(λ)</sup> = (y<sup>λ</sup> − 1)/λ, donde λ = 1 deja los datos como están, λ = 0.5 es la raíz cuadrada, λ = 0 el logaritmo y λ = −1 el recíproco. La app calcula, para cada λ entre −2 y 2, qué tan verosímil es el modelo del diseño con la respuesta transformada, y marca con una línea punteada el intervalo al 95&nbsp;%. Cualquier λ dentro del intervalo es compatible con los datos, así que se elige la potencia convencional más sencilla que caiga dentro: nadie reporta «λ = 0.2», se reporta «logaritmo».</p>
+  </div>
+
+  <ol class="pasos">
+    <li>Lee la recomendación. Si dice <span class="ui">No transformation needed</span>, no transformes. Si dice <span class="ui">Suggested</span>, la fila marcada con ★ es la candidata.</li>
+    <li>Confirma en el perfil de Box–Cox que esa potencia está dentro del intervalo, o cerca.</li>
+    <li>Pulsa <span class="ui">Use</span> en esa fila. La app añade la columna (aquí <code>Yield_kg_plant_ln</code>), la elige como respuesta y repite el diagnóstico.</li>
+    <li>Comprueba que la calificación mejoró y pasa al Bloque 5 con la columna transformada.</li>
+  </ol>
+
+  <figure>
+    <div class="marco"><img src="../img/b4-tomate-use.png" alt="Diagnóstico del jitomate transformado"></div>
+    <figcaption><b>Figura 5.11.</b> Después de <span class="ui">Use</span>: la nueva columna <code>Yield_kg_plant_ln</code> aparece como respuesta, el mensaje verde confirma que la original no se tocó y la calificación sube a A. La app avisa que en el Bloque 5 las medias se reportarán destransformadas.</figcaption>
+  </figure>
+
+  <div class="caja importante">
+    <div class="caja-t"><span class="ico">!</span>Importante · las reglas de una transformación</div>
+    <ul style="margin:0.04in 0 0">
+      <li><b>Todo el análisis va en la escala transformada:</b> ANOVA, pruebas de medias y letras. Las letras no se recalculan sobre las medias destransformadas.</li>
+      <li><b>Se reportan las medias destransformadas</b> para que se lean en kg o t/ha, diciéndolo en el pie de la tabla o de la figura. El Bloque 5 las añade como columna.</li>
+      <li><b>Se declara en los métodos</b> qué transformación se usó y por qué; el informe del Bloque 7 lo redacta.</li>
+      <li><b>Nunca se transforma para «conseguir» significancia.</b> La decisión se toma con los supuestos, antes de ver la tabla de ANOVA.</li>
+      <li><b>Las calificaciones ordinales no se arreglan transformando.</b> Van por la ruta de rangos.</li>
+    </ul>
+  </div>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Nota · cómo elige la app la sugerencia</div>
+    <p>Para cada transformación, la app toma el menor de los tres valores P (normalidad, Levene y aditividad). Si la potencia convencional más cercana a Box–Cox ya tiene ese mínimo por encima de α, la sugiere. Si no, sugiere la transformación con el mínimo más alto. Solo hay sugerencia cuando la escala original falla y la candidata pasa; si ninguna pasa, la tarjeta lo dice y remite a la ruta no paramétrica. En el jitomate, ln(y + 1) tiene valores P aún mayores que ln(y), pero sumar 1 a rendimientos sin ceros no tiene justificación: se prefiere el logaritmo que respalda Box–Cox.</p>
+  </div>
+
+  <!-- 5.5 -->
+  <h2 id="s5-5"><span class="num">5.5</span>La ruta no paramétrica</h2>
+  <p>Los procedimientos de rangos sustituyen cada observación por su posición en la muestra ordenada y ya no necesitan normalidad. Son la elección natural para calificaciones ordinales, muestras pequeñas con valores atípicos y mediciones muy asimétricas que ninguna transformación endereza. La tarjeta <span class="ui">3 · Non-parametric analysis</span> muestra solo los procedimientos que corresponden a la estructura del diseño.</p>
+
+  <table>
+    <caption><b>Tabla 5.5.</b> Los procedimientos no paramétricos y cuándo los ofrece la app.</caption>
+    <thead><tr><th style="width:28%">Procedimiento</th><th style="width:24%">Aparece con…</th><th style="width:18%">Análogo paramétrico</th><th>Comparaciones y letras</th></tr></thead>
+    <tbody>
+      <tr><td><b>Kruskal–Wallis</b></td><td>Un factor, sin bloques</td><td>ANOVA de azar completo</td><td>Dunn (z sobre rangos medios), o Mann–Whitney por pares en una segunda variante.</td></tr>
+      <tr><td><b>Welch</b></td><td>Un factor, sin bloques</td><td>ANOVA de un factor</td><td>Games–Howell. Para datos normales con varianzas desiguales.</td></tr>
+      <tr><td><b>Friedman</b></td><td>Un factor en bloques completos, una parcela por bloque y tratamiento</td><td>Bloques completos al azar</td><td>Conover (t sobre sumas de rangos) o Nemenyi (rango estudentizado).</td></tr>
+      <tr><td><b>Scheirer–Ray–Hare</b></td><td>Dos factores, sin bloques</td><td>ANOVA de dos vías</td><td>Sin comparaciones por pares.</td></tr>
+      <tr><td><b>Transformación de rangos alineados (ART)</b></td><td>Siempre: cualquier diseño factorial o con bloques</td><td>ANOVA factorial completo</td><td>Tukey sobre los rangos alineados del primer factor, si su efecto es significativo.</td></tr>
+    </tbody>
+  </table>
+
+  <table class="compacta">
+    <caption><b>Tabla 5.6.</b> Qué procedimientos ofrece la app con cada ejemplo.</caption>
+    <thead><tr><th style="width:34%">Ejemplo</th><th>Procedimientos disponibles</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">CRD · bean varieties</span></td><td>Kruskal–Wallis, Welch, ART, Kruskal–Wallis con Mann–Whitney</td></tr>
+      <tr><td><span class="ui">RCBD · maize × nitrogen</span> y <span class="ui">Ordinal scores · fungicides</span></td><td>Friedman, ART</td></tr>
+      <tr><td><span class="ui">Latin square · wheat</span>, <span class="ui">Factorial 3×3 in RCBD · tomato</span>, <span class="ui">Split-plot · irrigation × variety</span></td><td>ART</td></tr>
+    </tbody>
+  </table>
+
+  <p>Además del procedimiento, se elige el ajuste de los valores P para las comparaciones múltiples: Holm (predeterminado), Bonferroni, Benjamini–Hochberg, Hochberg o ninguno; y, con Friedman, entre Conover y Nemenyi. <span class="ui">Run</span> produce tres tablas (la prueba, las comparaciones por pares y los grupos con letras) y una figura de medianas con letras.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/b4-np-controles.png" alt="Controles del análisis no paramétrico"></div>
+    <figcaption><b>Figura 5.12.</b> Controles de la ruta no paramétrica para el ejemplo de fungicidas: Friedman, porque es un factor en bloques completos con una parcela por bloque y fungicida, y el ajuste de Holm.</figcaption>
+  </figure>
+
+  <h3>Calificaciones de severidad: Friedman</h3>
+  <p>El ejemplo de fungicidas mide la severidad de una enfermedad en una escala de 1 a 9, en cuatro tratamientos y cinco bloques. Curiosamente, sus residuales pasan las pruebas paramétricas (calificación A, Shapiro–Wilk P = 0.0552). Eso no cambia la naturaleza de los datos: una escala ordinal no tiene distancias iguales entre sus categorías (pasar de 2 a 3 no es lo mismo que pasar de 8 a 9), y la media de calificaciones es una cifra de interpretación dudosa. La ruta de rangos es la correcta.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/b4-friedman.png" alt="Resultados de la prueba de Friedman"></div>
+    <figcaption><b>Figura 5.13.</b> Friedman para la severidad por fungicida con bloques: χ² = 14.040 con 3 grados de libertad, P = 0.0029. La F de Iman–Davenport, más potente con pocos bloques, es 58.500 (P &lt; 0.0001), y la W de Kendall, 0.936: los cinco bloques ordenan los fungicidas casi igual. Con el ajuste de Holm, los seis pares difieren y cada fungicida recibe su propia letra.</figcaption>
+  </figure>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/b4-friedman-fig.png" alt="Medianas de severidad con letras"></div>
+    <figcaption><b>Figura 5.14.</b> Medianas de severidad con los grupos de Conover. El testigo tiene la severidad más alta (mediana 8, a), seguido del cobre (6, b), el mancozeb (5, c) y la azoxistrobina (3, d), que es el mejor fungicida.</figcaption>
+  </figure>
+
+  <table class="compacta">
+    <caption><b>Tabla 5.7.</b> Cómo leer los resultados de Friedman.</caption>
+    <thead><tr><th style="width:32%">Cantidad</th><th>Lectura</th></tr></thead>
+    <tbody>
+      <tr><td>χ² de Friedman</td><td>La prueba global, con corrección por empates. Sus grados de libertad son tratamientos − 1.</td></tr>
+      <tr><td>F de Iman–Davenport</td><td>Una versión de la misma prueba que se aproxima mejor con pocos bloques. Si ambas discrepan, cree en esta.</td></tr>
+      <tr><td>W de Kendall</td><td>De 0 a 1: el acuerdo de los bloques en el orden de los tratamientos. Es el tamaño del efecto.</td></tr>
+      <tr><td>Rango medio</td><td>El puesto promedio de cada tratamiento dentro de los bloques: 4 es el más alto en todos, 1 el más bajo en todos.</td></tr>
+      <tr><td>Letras</td><td>Se leen como las de las pruebas de medias: dos tratamientos que comparten letra no difieren.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Nota · los otros procedimientos con los ejemplos</div>
+    <p>Con el frijol en azar completo, Kruskal–Wallis da H = 17.629 con 4 grados de libertad (P = 0.0015) y un ε² de 0.909; Dunn con Holm separa, por ejemplo, Negro Jamapa de Azufrado. Con el jitomate, el ART confirma los efectos de bloque, variedad, fertilización y su interacción (todos P &lt; 0.0001), y Tukey sobre los rangos alineados ordena las variedades: Saladette (a), Rio Grande (b) y Cherry (c). En el ART, la columna <span class="ui">aligned sum</span> debe valer cero en todas las filas; es un control interno de que la alineación se hizo bien.</p>
+  </div>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Regla de decisión · ANOVA, transformación o rangos</div>
+    <table class="compacta">
+      <thead><tr><th style="width:44%">Si…</th><th>entonces…</th></tr></thead>
+      <tbody>
+        <tr><td>la calificación es A o B y la respuesta es continua</td><td>ANOVA en la escala original (Bloque 5).</td></tr>
+        <tr><td>la calificación es C o D y una transformación convencional sube a A o B</td><td>ANOVA con la respuesta transformada y medias destransformadas.</td></tr>
+        <tr><td>ninguna transformación basta</td><td>Ruta no paramétrica del diseño, o un modelo lineal generalizado para conteos y proporciones.</td></tr>
+        <tr><td>la respuesta es una calificación ordinal (1 a 5, 1 a 9)</td><td>Ruta no paramétrica, pase lo que pase con los supuestos.</td></tr>
+        <tr><td>los datos son normales pero las varianzas muy desiguales, en un solo factor sin bloques</td><td>Welch con Games–Howell.</td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">Las pruebas de rangos pierden poca potencia cuando los datos son normales (cerca del 5&nbsp;% para Kruskal–Wallis frente a la F) y pueden ganar mucha cuando no lo son.</p>
+  </div>
+
+  <!-- 5.6 -->
+  <h2 id="s5-6"><span class="num">5.6</span>Ejemplo paso a paso</h2>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Paso a paso · maíz × nitrógeno</div>
+    <ol class="pasos" style="margin-bottom:0">
+      <li>Con el ejemplo cargado, pulsa el número <span class="ui">4</span> de la barra. El diagnóstico se calcula solo con el modelo <code>Yield_t_ha ~ Block + Nitrogen_kg_ha</code>.</li>
+      <li>La calificación es A (figura 5.2). Las tarjetas dan un CV del ANOVA de 2.1&nbsp;%, la raíz del cuadrado medio del error de 0.128 t/ha y nueve grados de libertad para el error.</li>
+      <li>Lee las comprobaciones (figura 5.3) y la tabla de pruebas (figura 5.4). Solo la Levene clásica rechaza; la robusta no.</li>
+      <li>Revisa la parcela sospechosa (figura 5.5): la fila 17, bloque 4 con 180 kg. Confírmala en la libreta.</li>
+      <li>Mira los gráficos (figura 5.6) y la tarjeta de transformaciones (figura 5.7): no hace falta transformar.</li>
+      <li>Pasa al Bloque 5 con la escala original.</li>
+    </ol>
+  </div>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Paso a paso · jitomate, cuando falla la aditividad</div>
+    <ol class="pasos" style="margin-bottom:0">
+      <li>Carga <span class="ui">Factorial 3×3 in RCBD · tomato</span> en el Bloque 2 y abre el Bloque 4. Deja marcada <span class="ui">include all factor interactions</span>.</li>
+      <li>La calificación es C por la aditividad de Tukey (figura 5.8).</li>
+      <li>En la tarjeta de transformaciones, la sugerida es ln(y) (figura 5.9) y Box–Cox la respalda (figura 5.10).</li>
+      <li>Pulsa <span class="ui">Use</span> en la fila del logaritmo natural. La calificación sube a A con <code>Yield_kg_plant_ln</code> (figura 5.11).</li>
+      <li>En el Bloque 5 elige <code>Yield_kg_plant_ln</code> como respuesta; las medias saldrán también destransformadas.</li>
+    </ol>
+  </div>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Paso a paso · fungicidas, una escala ordinal</div>
+    <ol class="pasos" style="margin-bottom:0">
+      <li>Carga <span class="ui">Ordinal scores · fungicides</span> y abre el Bloque 4. Aunque la calificación sea A, la respuesta es una escala de 1 a 9.</li>
+      <li>Baja a <span class="ui">3 · Non-parametric analysis</span>, deja <span class="ui">Friedman</span>, <span class="ui">Holm</span> y el post hoc de Conover, y pulsa <span class="ui">Run</span>.</li>
+      <li>Lee la prueba (figura 5.13): P = 0.0029 y W de Kendall de 0.936.</li>
+      <li>Reporta las medianas con sus letras (figura 5.14). La figura se edita y descarga como cualquier otra.</li>
+    </ol>
+  </div>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>Lo que aprendiste</div>
+    <p>Los supuestos se juzgan con varias piezas a la vez: las pruebas, los gráficos y lo que sabes de la variable. Una prueba en rojo pide mirar el gráfico que le corresponde antes de decidir. Una transformación se elige por lo que dicen los residuales y Box–Cox, no por el resultado del ANOVA, y se reporta. Y cuando la respuesta es ordinal, el análisis de rangos es el correcto aunque los supuestos parezcan cumplirse.</p>
+  </div>
+
+  <p style="margin-top:0.25in">Con los supuestos resueltos, el siguiente paso es el análisis de varianza. El capítulo del Bloque 5 presenta el catálogo de diseños y sus estratos de error, las opciones de sumas de cuadrados y pruebas de medias, la lectura de la tabla de ANOVA, las medias ajustadas con letras, los efectos simples en factoriales y las curvas de respuesta.</p>
+</section>
+
+</body>
+</html>

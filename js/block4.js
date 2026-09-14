@@ -33,6 +33,7 @@ function level(p, a) { return !isFinite(p) ? 'info' : p >= a ? 'ok' : p >= a / 5
 /* ================= diagnostics ================= */
 function run() {
   if (!state.ready) return;
+  showFormula();
   const resp = el('assResponse').value, alpha = +el('assAlpha').value;
   const o = modelOpts();
   const terms = LM.termsFromDesign(o);
@@ -112,7 +113,8 @@ function renderResults() {
   checks.forEach(c => host.appendChild(mk('div', { class: 'check-item ' + c.lv }, `<div class="ck-icon">${c.lv === 'ok' ? '✅' : c.lv === 'bad' ? '⛔' : c.lv === 'warn' ? '⚠️' : 'ℹ️'}</div><div class="ck-body"><div class="ck-title">${c.title}</div><div class="ck-text">${c.text}</div></div>`)));
   const nBad = checks.filter(c => c.lv === 'bad').length, nWarn = checks.filter(c => c.lv === 'warn').length;
   const grade = nBad >= 2 ? 'D' : nBad === 1 || nWarn >= 2 ? 'C' : nWarn === 1 ? 'B' : 'A';
-  const vt = { A: 'The data meet the ANOVA assumptions. Proceed to Block 5 with the original scale.', B: 'Minor deviations. ANOVA is acceptable; mention the check in the methods and, if the deviation is in the variances, be careful with the mean comparisons.', C: 'Clear deviation from at least one assumption. Compare the transformations below or use the non-parametric route; report which one you chose and why.', D: 'Several assumptions fail. A transformation is unlikely to fix everything; the rank-based procedures below are the safer choice, or a generalised linear model for counts and proportions.' }[grade];
+  const tr = state.transforms && state.transforms[a.resp];
+  const vt = { A: (tr ? `The data meet the ANOVA assumptions on the ${esc(tr.label)} scale. Proceed to Block 5 with ${esc(a.resp)}; means are reported back-transformed.` : 'The data meet the ANOVA assumptions. Proceed to Block 5 with the original scale.'), B: 'Minor deviations. ANOVA is acceptable; mention the check in the methods and, if the deviation is in the variances, be careful with the mean comparisons.', C: 'Clear deviation from at least one assumption. Compare the transformations below or use the non-parametric route; report which one you chose and why.', D: 'Several assumptions fail. A transformation is unlikely to fix everything; the rank-based procedures below are the safer choice, or a generalised linear model for counts and proportions.' }[grade];
   el('assVerdict').innerHTML = `<div class="grade g-${grade.toLowerCase()}">${grade}<small>grade</small></div><div class="v-text"><b>${{ A: 'Assumptions satisfied', B: 'Acceptable', C: 'Problematic', D: 'Assumptions fail' }[grade]}.</b> ${vt}</div>`;
   A.grade = grade;
 
@@ -176,11 +178,16 @@ function renderTransforms() {
     const score = Math.min(sw.p, lev ? lev.p : 1, tk ? tk.p : 1);
     return { t, sw, lev, fm, tk, skew: S.skewness(fit.resid), score, cv: Math.sqrt(fit.mse) / Math.abs(S.mean(yt)) * 100 };
   }).filter(Boolean);
-  const best = rows.reduce((p, r) => r.score > p.score ? r : p, rows[0]);
   const none = rows[0];
+  const bc = AS.boxcox(a.M, a.recs);
+  /* prefer the conventional power suggested by Box–Cox when it already satisfies the tests;
+     otherwise take the candidate with the least evidence against the assumptions */
+  const bcId = bc ? { '-1': 'inv', '0': 'log', '0.5': 'sqrt' }[String(bc.rounded)] : null;
+  const bcRow = rows.find(r => r.t.id === bcId);
+  const best = bcRow && bcRow.score >= al ? bcRow : rows.reduce((p, r) => r.score > p.score ? r : p, rows[0]);
   const worth = best !== none && best.score >= al && none.score < al;
   el('transVerdict').innerHTML = worth
-    ? `<div class="callout"><b>Suggested: ${esc(best.t.label)}</b> It is the transformation with the least evidence against the assumptions (smallest p = ${fmtP(best.score)} vs ${fmtP(none.score)} on the original scale). ${best.t.when ? 'Typical use: ' + best.t.when + '.' : ''} Remember: means and letters are compared on the transformed scale; report back-transformed means (Block 5 does it) and state the transformation in the methods.</div>`
+    ? `<div class="callout"><b>Suggested: ${esc(best.t.label)}</b> ${best === bcRow ? `It is the power closest to the Box–Cox estimate and it satisfies the tests (smallest p = ${fmtP(best.score)} vs ${fmtP(none.score)} on the original scale).` : `It is the transformation with the least evidence against the assumptions (smallest p = ${fmtP(best.score)} vs ${fmtP(none.score)} on the original scale).`} ${best.t.when ? 'Typical use: ' + best.t.when + '.' : ''} Remember: means and letters are compared on the transformed scale; report back-transformed means (Block 5 does it) and state the transformation in the methods.</div>`
     : none.score >= al ? '<div class="callout"><b>No transformation needed.</b> The original scale already satisfies the assumptions; transforming would only make the results harder to interpret.</div>'
     : `<div class="callout warn"><b>No transformation fixes all the problems.</b> The best candidate is ${esc(best.t.label)} (smallest p = ${fmtP(best.score)}). Consider the non-parametric route below, or a generalised linear model if the response is a count or a proportion.</div>`;
   buildTable('transTable', [
@@ -196,7 +203,6 @@ function renderTransforms() {
   els('#transTable button[data-trans]').forEach(b => b.addEventListener('click', () => applyTransform(list.find(t => t.id === b.dataset.trans))));
   /* Box–Cox */
   const bh = el('boxcoxHost'); bh.innerHTML = '';
-  const bc = AS.boxcox(a.M, a.recs);
   if (bc) {
     Fig.mount(bh, P4.boxcox(bc, {}));
     const lab = { '-1': 'reciprocal (1/y)', '-0.5': 'reciprocal square root', '0': 'logarithm', '0.5': 'square root', '1': 'none (λ = 1 is inside the interval)', '2': 'square' }[String(bc.rounded)];

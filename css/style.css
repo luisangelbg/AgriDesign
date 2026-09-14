@@ -300,6 +300,7 @@ tr.dim td { color: var(--text-muted); }
 
 /* ---------- Variable configurator ---------- */
 .var-table td { white-space: nowrap; }
+.acc-body tbody td, .acc-body thead th { white-space: normal; }   /* theory tables wrap instead of overflowing the card */
 .var-table select { padding: 5px 8px; font-size: 0.82rem; border-radius: 6px; }
 .var-name { font-weight: 600; }
 .pill { display: inline-block; font-size: 0.7rem; padding: 2px 8px; border-radius: 999px; background: var(--bg-soft); border: 1px solid var(--border); color: var(--text-muted); }
