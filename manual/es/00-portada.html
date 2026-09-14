@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>AgriDesign · Manual de usuario · Portada</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../manual.css">
+<style>
+  .cover { background: #ffffff; }
+  .cover text { font-kerning: normal; }
+</style>
+</head>
+<body>
+
+<section class="page cover" aria-label="Portada">
+  <svg id="cover" viewBox="0 0 850 1100" xmlns="http://www.w3.org/2000/svg" role="img"
+       aria-label="Portada del manual de AgriDesign: un ensayo de campo en bloques al azar visto en perspectiva, con cuatro tratamientos en cuatro bloques, rodeado de plantas de maíz, chile, jitomate y café y de una vaca, un borrego y una cabra; abajo, un gráfico de medias con letras de Tukey, un cuadro latino y una curva de respuesta con su óptimo."></svg>
+</section>
+
+<script>
+/* La portada se dibuja una sola vez, de forma determinista (semilla fija), como gráficos
+   vectoriales: imprime nítida a cualquier tamaño y todas las ilustraciones son originales. */
+(function () {
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.getElementById('cover');
+  const el = (tag, attrs, parent, text) => {
+    const n = document.createElementNS(NS, tag);
+    for (const k in attrs) if (attrs[k] != null) n.setAttribute(k, attrs[k]);
+    if (text != null) n.textContent = text;
+    (parent || svg).appendChild(n);
+    return n;
+  };
+  const rng = (seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; })(20260914);
+
+  const W = 850, H = 1100;
+  const INK = '#1b2a22', GRIS = '#5b6474', BLANCO = '#ffffff', VERDE = '#2f7d4f';
+  const f1 = v => (+v).toFixed(2);
+  const hex = c => [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16));
+  const mix = (a, b, t) => { const A = hex(a), B = hex(b); return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
+  const poly = pts => 'M' + pts.map(([x, y]) => f1(x) + ' ' + f1(y)).join('L');
+  const SERIF = 'Cormorant, serif', SANS = 'Jost, sans-serif';
+
+  /* gradients only as fills of shapes with area */
+  const defs = el('defs');
+  function grad(kind, id, stops, attrs) {
+    const g = el(kind, Object.assign({ id }, attrs), defs);
+    stops.forEach(([off, c, op]) => el('stop', { offset: off, 'stop-color': c, 'stop-opacity': op }, g));
+    return `url(#${id})`;
+  }
+  const radial = (id, stops, a) => grad('radialGradient', id, stops, Object.assign({ cx: '50%', cy: '50%', r: '55%', fx: '34%', fy: '30%' }, a));
+  const linear = (id, stops, a) => grad('linearGradient', id, stops, Object.assign({ x1: 0, y1: 0, x2: 0, y2: 1 }, a));
+  const esfera = {};
+  const sphere = c => esfera[c] || (esfera[c] = radial('sp' + c.slice(1), [['0%', mix(c, BLANCO, 0.8)], ['30%', mix(c, BLANCO, 0.25)], ['70%', c], ['100%', mix(c, INK, 0.45)]]));
+  const G = {
+    hoja: linear('gHoja', [['0%', '#a5d97a'], ['55%', '#4f9d3f'], ['100%', '#2f7433']]),
+    hojaO: linear('gHojaO', [['0%', '#7cc262'], ['100%', '#2c6e33']]),
+    grano: radial('gGrano', [['0%', '#fff4b8'], ['40%', '#f7c63d'], ['100%', '#cf8a06']]),
+    suelo: linear('gSuelo', [['0%', '#b9895f'], ['100%', '#6e4a32']]),
+    pasto: linear('gPasto', [['0%', '#b5df8f'], ['100%', '#6aa95a']]),
+    cielo: linear('gCielo', [['0%', '#e8f2fb'], ['100%', '#ffffff']]),
+    sombra: radial('gSombra', [['0%', INK, 0.22], ['100%', INK, 0]], { r: '50%', fx: '50%', fy: '50%' }),
+    lana: radial('gLana', [['0%', '#ffffff'], ['70%', '#f3f0e6'], ['100%', '#d9d3c2']], { fx: '40%', fy: '35%' }),
+    pelaje: linear('gPelaje', [['0%', '#c48d5c'], ['100%', '#8a5a33']]),
+    vaca: linear('gVaca', [['0%', '#ffffff'], ['100%', '#e6e1d2']]),
+  };
+  const TR = ['#2f7d4f', '#c8842a', '#2b7bb9', '#b5432f'];
+  const TRG = TR.map((c, i) => linear('gT' + i, [['0%', mix(c, BLANCO, 0.25)], ['100%', mix(c, INK, 0.2)]]));
+
+  el('rect', { x: 0, y: 0, width: W, height: H, fill: BLANCO });
+
+  /* ---------------------------------------------------------------- the colours of the parts */
+  const BLOQUES = ['#1f4d33', '#2f7d4f', '#0f766e', '#2b7bb9', '#b7791f', '#c2410c', '#b4234a', '#334155', '#8a5a2b', '#111111'];
+  BLOQUES.forEach((c, i) => {
+    el('rect', { x: f1(i * W / 10), y: 0, width: f1(W / 10 + 0.5), height: 9, fill: c });
+    el('rect', { x: f1(i * W / 10), y: H - 5, width: f1(W / 10 + 0.5), height: 5, fill: c });
+  });
+
+  /* ---------------------------------------------------------------- title */
+  const tb = el('g', { 'text-anchor': 'middle' });
+  const t1 = el('text', { x: W / 2, y: 128, fill: INK, 'font-family': SERIF, 'font-size': 96, 'font-weight': 700, 'letter-spacing': 0.4 }, tb);
+  el('tspan', {}, t1, 'Agri');
+  el('tspan', { fill: VERDE, 'font-style': 'italic', 'font-weight': 600 }, t1, 'Design');
+  el('text', { x: W / 2, y: 208, fill: INK, 'font-family': SERIF, 'font-size': 50, 'font-weight': 600, 'letter-spacing': 0.8 }, tb, 'Manual de usuario');
+  el('text', { x: W / 2, y: 252, fill: VERDE, 'font-family': SERIF, 'font-size': 46, 'font-style': 'italic', 'font-weight': 500, 'letter-spacing': 0.6 }, tb, 'User Manual');
+  const oy = 275;
+  el('rect', { x: W / 2 - 170, y: oy - 0.5, width: 132, height: 1, fill: INK });
+  el('rect', { x: W / 2 + 38, y: oy - 0.5, width: 132, height: 1, fill: INK });
+  TR.forEach((c, i) => el('rect', { x: W / 2 - 26 + i * 14, y: oy - 5, width: 10, height: 10, rx: 1.5, fill: TRG[i] }));
+  el('text', { x: W / 2, y: 301, fill: GRIS, 'font-family': SANS, 'font-size': 11.5, 'font-weight': 400, 'letter-spacing': 3.6 }, tb, 'DISEÑO DE EXPERIMENTOS AGRÍCOLAS · AGRICULTURAL EXPERIMENTAL DESIGN');
+
+  /* ---------------------------------------------------------------- helpers for the drawings */
+  const g = (attrs, parent) => el('g', attrs, parent);
+  const leaf = (p, x, y, w, h, rot, fill, vein) => {
+    const gg = g({ transform: `rotate(${rot} ${x} ${y})` }, p);
+    el('path', { d: `M${x} ${y} C ${x + w * 0.5} ${y - h}, ${x + w} ${y - h * 0.4}, ${x + w} ${y} C ${x + w} ${y + h * 0.4}, ${x + w * 0.5} ${y + h}, ${x} ${y} Z`, fill: fill || G.hoja }, gg);
+    el('path', { d: `M${x} ${y} Q ${x + w * 0.5} ${y - h * 0.08} ${x + w} ${y}`, stroke: vein || '#2c6e33', 'stroke-width': 0.9, fill: 'none', opacity: 0.55 }, gg);
+    return gg;
+  };
+  const flower = (p, cx, cy, r, petal, centre, n) => {
+    const k = n || 5;
+    for (let i = 0; i < k; i++) el('ellipse', { cx, cy: cy - r * 0.62, rx: r * 0.34, ry: r * 0.62, fill: petal, transform: `rotate(${(360 / k) * i} ${cx} ${cy})`, stroke: mix(petal, INK, 0.12), 'stroke-width': 0.4 }, p);
+    el('circle', { cx, cy, r: r * 0.3, fill: sphere(centre) }, p);
+  };
+  const label = (x, y, txt) => el('text', { x, y, fill: INK, 'font-family': SERIF, 'font-size': 14, 'font-style': 'italic', 'font-weight': 500, 'text-anchor': 'middle' }, null, txt);
+  const shadow = (cx, cy, rx, ry) => el('ellipse', { cx, cy, rx, ry, fill: G.sombra });
+
+  /* ---------------------------------------------------------------- crops */
+  function maize(x, y, s) {
+    const p = g({ transform: `translate(${x} ${y}) scale(${s})` });
+    shadow(50, 98, 26, 4) && p.appendChild(svg.lastChild);
+    el('path', { d: 'M50 96 L50 22', stroke: linear('gTallo', [['0%', '#6aa84f'], ['100%', '#3c7a33']]), 'stroke-width': 4.5, 'stroke-linecap': 'round' }, p);
+    el('path', { d: 'M50 70 C 30 66, 18 56, 14 42 C 30 46, 42 56, 50 66 Z', fill: G.hoja }, p);
+    el('path', { d: 'M50 58 C 68 54, 82 44, 86 30 C 70 34, 58 44, 50 54 Z', fill: G.hojaO }, p);
+    el('path', { d: 'M50 44 C 34 40, 26 30, 24 18 C 38 22, 46 32, 50 40 Z', fill: G.hoja }, p);
+    el('path', { d: 'M50 84 C 66 82, 78 74, 82 62 C 66 66, 56 74, 50 80 Z', fill: G.hojaO }, p);
+    const tas = g({ stroke: '#e6b422', 'stroke-width': 2.2, 'stroke-linecap': 'round', fill: 'none' }, p);
+    ['M50 22 L50 4', 'M50 20 L39 7', 'M50 20 L61 7', 'M50 18 L33 13', 'M50 18 L67 13'].forEach(d => el('path', { d }, tas));
+    const ear = g({ transform: 'translate(61 50) rotate(22)' }, p);
+    el('path', { d: 'M0 0 C 9 -2, 13 8, 11 26 C 9 34, 2 36, 0 36 C -2 36, -9 34, -11 26 C -13 8, -9 -2, 0 0 Z', fill: G.grano }, ear);
+    for (let r = 0; r < 6; r++) for (let c = -2; c <= 2; c++) el('circle', { cx: c * 3.6, cy: 5 + r * 5, r: 1.6, fill: '#e9b923', stroke: '#b97f0a', 'stroke-width': 0.35 }, ear);
+    el('path', { d: 'M-11 22 C -18 12, -16 0, -7 -5 C -5 6, -5 14, -7 26 Z', fill: G.hojaO }, ear);
+    el('path', { d: 'M11 22 C 18 12, 16 0, 7 -5 C 5 6, 5 14, 7 26 Z', fill: G.hoja }, ear);
+    return p;
+  }
+  function chile(x, y, s) {
+    const p = g({ transform: `translate(${x} ${y}) scale(${s})` });
+    el('path', { d: 'M50 92 C 50 70, 48 55, 50 34', stroke: '#4d7c3a', 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, p);
+    el('path', { d: 'M50 60 C 40 56, 32 50, 28 42', stroke: '#4d7c3a', 'stroke-width': 2.2, fill: 'none' }, p);
+    el('path', { d: 'M50 52 C 60 48, 68 44, 72 36', stroke: '#4d7c3a', 'stroke-width': 2.2, fill: 'none' }, p);
+    leaf(p, 28, 42, 20, 7, -40); leaf(p, 72, 36, 20, 7, 210, G.hojaO); leaf(p, 50, 34, 18, 6, -70); leaf(p, 50, 34, 18, 6, 250); leaf(p, 44, 72, 16, 6, 200, G.hojaO); leaf(p, 56, 78, 16, 6, -20);
+    const rojo = linear('gChileR', [['0%', '#f26b5b'], ['45%', '#d63b2f'], ['100%', '#8e1f16']], { x1: 0, y1: 0, x2: 1, y2: 0 });
+    const verde = linear('gChileV', [['0%', '#8bcf6a'], ['45%', '#4b9d3e'], ['100%', '#2c6e33']], { x1: 0, y1: 0, x2: 1, y2: 0 });
+    el('path', { d: 'M34 44 C 28 56, 30 70, 38 78 C 44 70, 42 56, 36 46 Z', fill: rojo }, p);
+    el('path', { d: 'M31 43 l6 0 l-2 -5 z', fill: '#4d7c3a' }, p);
+    el('path', { d: 'M66 40 C 74 50, 72 64, 64 72 C 60 62, 58 50, 62 42 Z', fill: verde }, p);
+    el('path', { d: 'M69 39 l-6 1 l2 -5 z', fill: '#4d7c3a' }, p);
+    flower(p, 50, 24, 9, '#fbfbf6', '#f2c14e');
+    return p;
+  }
+  function tomato(x, y, s) {
+    const p = g({ transform: `translate(${x} ${y}) scale(${s})` });
+    el('path', { d: 'M46 94 C 44 72, 42 56, 46 30', stroke: '#4d7c3a', 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, p);
+    el('path', { d: 'M45 62 C 36 58, 30 52, 26 46', stroke: '#4d7c3a', 'stroke-width': 2, fill: 'none' }, p);
+    el('path', { d: 'M45 44 C 54 40, 62 36, 70 30', stroke: '#4d7c3a', 'stroke-width': 2, fill: 'none' }, p);
+    leaf(p, 26, 46, 14, 5, -30); leaf(p, 26, 46, 12, 5, 200, G.hojaO); leaf(p, 70, 30, 14, 5, 200, G.hojaO); leaf(p, 70, 30, 12, 5, -15); leaf(p, 46, 30, 14, 5, -60);
+    const jit = radial('gJit', [['0%', '#ff9d85'], ['35%', '#ec3b2c'], ['80%', '#b3161b'], ['100%', '#7d0d12']], { r: '58%' });
+    el('circle', { cx: 62, cy: 72, r: 17, fill: jit }, p);
+    el('circle', { cx: 46, cy: 86, r: 11, fill: jit }, p);
+    el('path', { d: 'M62 56 l-8 -4 l6 6 l-9 1 l9 3 l-6 6 l8 -4 l8 4 l-6 -6 l9 -3 l-9 -1 l6 -6 z', fill: '#2c6e33' }, p);
+    el('path', { d: 'M62 52 l0 -6', stroke: '#4d7c3a', 'stroke-width': 2 }, p);
+    flower(p, 30, 24, 8, '#f6d24e', '#b8860b', 6);
+    return p;
+  }
+  function coffee(x, y, s) {
+    const p = g({ transform: `translate(${x} ${y}) scale(${s})` });
+    el('path', { d: 'M8 62 C 30 58, 60 50, 94 40', stroke: '#6b4a2b', 'stroke-width': 3.4, fill: 'none', 'stroke-linecap': 'round' }, p);
+    [[22, 58], [50, 51], [78, 44]].forEach(([x, y]) => { leaf(p, x, y, 24, 8, -35, G.hojaO); leaf(p, x, y, 22, 8, 150, G.hoja); });
+    [[36, 55], [40, 52], [33, 59], [64, 47], [68, 44], [61, 51]].forEach(([x, y]) => flower(p, x, y, 5, '#fbfbf6', '#f2c14e'));
+    const cereza = radial('gCereza', [['0%', '#ff8a7a'], ['40%', '#d8262a'], ['100%', '#7a0b12']]);
+    const verdeC = radial('gCerezaV', [['0%', '#c6ea9a'], ['50%', '#63aa48'], ['100%', '#2c6e33']]);
+    [[44, 60], [48, 66], [41, 67], [70, 52], [75, 57], [66, 58]].forEach(([x, y], i) => el('circle', { cx: x, cy: y, r: 4.4, fill: i % 3 === 2 ? verdeC : cereza }, p));
+    return p;
+  }
+  /* ---------------------------------------------------------------- animals */
+  function cow(x, y, s) {
+    const p = g({ transform: `translate(${x} ${y}) scale(${s})`, stroke: '#3a3a3a', 'stroke-width': 1 });
+    [[36, 64], [52, 66], [74, 64], [90, 66]].forEach(([lx, ly]) => el('rect', { x: lx, y: ly, width: 7, height: 24, rx: 3, fill: G.vaca }, p));
+    el('path', { d: 'M30 40 C 30 26, 46 22, 66 24 L 96 24 C 108 24, 110 34, 108 48 L 106 64 C 104 70, 96 70, 88 68 L 42 68 C 32 68, 28 60, 30 40 Z', fill: G.vaca }, p);
+    el('path', { d: 'M44 30 C 52 26, 62 30, 60 42 C 58 52, 44 52, 40 44 C 36 38, 38 32, 44 30 Z', fill: '#3a3a3a', stroke: 'none' }, p);
+    el('path', { d: 'M78 44 C 90 40, 100 46, 98 56 C 96 64, 82 64, 78 58 C 74 52, 72 46, 78 44 Z', fill: '#3a3a3a', stroke: 'none' }, p);
+    el('path', { d: 'M100 26 C 112 20, 120 30, 118 44 C 116 52, 108 54, 104 52 L 100 46 Z', fill: G.vaca }, p);
+    el('ellipse', { cx: 114, cy: 48, rx: 7, ry: 5, fill: '#e9a1b0', stroke: 'none' }, p);
+    el('circle', { cx: 108, cy: 36, r: 1.8, fill: '#3a3a3a', stroke: 'none' }, p);
+    el('path', { d: 'M104 26 C 100 18, 104 14, 108 20', fill: 'none' }, p); el('path', { d: 'M114 24 C 118 16, 124 18, 120 26', fill: 'none' }, p);
+    el('path', { d: 'M98 30 C 92 30, 90 34, 94 36', fill: G.vaca }, p);
+    el('path', { d: 'M30 42 C 22 44, 22 56, 26 62', fill: 'none' }, p); el('path', { d: 'M26 62 l-3 5', 'stroke-width': 2.5 }, p);
+    el('path', { d: 'M60 68 C 60 74, 72 76, 74 68', fill: '#e9a1b0' }, p);
+    return p;
+  }
+  function sheep(x, y, s) {
+    const p = g({ transform: `translate(${x} ${y}) scale(${s})` });
+    [[34, 66], [50, 68], [72, 66], [88, 68]].forEach(([lx, ly]) => el('rect', { x: lx, y: ly, width: 6, height: 22, rx: 3, fill: '#3a3a3a' }, p));
+    [[40, 44, 14], [54, 36, 15], [70, 36, 15], [86, 42, 13], [44, 58, 13], [60, 62, 14], [78, 60, 14], [92, 56, 12], [66, 48, 16]].forEach(([cx, cy, r]) => el('circle', { cx, cy, r, fill: G.lana, stroke: '#d4cfbf', 'stroke-width': 0.8 }, p));
+    el('path', { d: 'M92 40 C 104 34, 114 42, 112 54 C 110 62, 100 64, 96 60 C 92 56, 90 48, 92 40 Z', fill: '#3a3a3a' }, p);
+    el('circle', { cx: 106, cy: 48, r: 1.8, fill: '#fff' }, p);
+    el('ellipse', { cx: 94, cy: 40, rx: 6, ry: 3, fill: '#3a3a3a', transform: 'rotate(-30 94 40)' }, p);
+    el('ellipse', { cx: 108, cy: 38, rx: 6, ry: 3, fill: '#3a3a3a', transform: 'rotate(20 108 38)' }, p);
+    [[98, 34, 7], [106, 32, 7]].forEach(([cx, cy, r]) => el('circle', { cx, cy, r, fill: G.lana, stroke: '#d4cfbf', 'stroke-width': 0.8 }, p));
+    return p;
+  }
+  function goat(x, y, s) {
+    const p = g({ transform: `translate(${x} ${y}) scale(${s})` });
+    [[36, 62], [50, 64], [74, 62], [88, 64]].forEach(([lx, ly]) => el('rect', { x: lx, y: ly, width: 6, height: 26, rx: 3, fill: '#8a5a33' }, p));
+    el('path', { d: 'M32 44 C 34 30, 50 28, 70 30 L 94 30 C 104 30, 106 40, 104 50 L 102 62 C 100 68, 92 68, 84 66 L 44 66 C 34 66, 30 56, 32 44 Z', fill: G.pelaje }, p);
+    el('path', { d: 'M96 32 C 108 26, 118 34, 116 46 C 114 54, 106 56, 102 52 L 98 44 Z', fill: G.pelaje }, p);
+    el('circle', { cx: 108, cy: 40, r: 1.8, fill: '#2b2b2b' }, p);
+    el('path', { d: 'M104 30 C 100 18, 92 14, 88 22', stroke: '#8a5a33', 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, p);
+    el('path', { d: 'M110 28 C 108 16, 100 12, 96 20', stroke: '#8a5a33', 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, p);
+    el('path', { d: 'M114 52 l2 10 l4 -8', fill: '#8a5a33' }, p);
+    el('path', { d: 'M96 36 C 90 34, 86 38, 90 42', fill: G.pelaje, stroke: '#8a5a33', 'stroke-width': 1 }, p);
+    el('path', { d: 'M34 42 C 30 34, 34 30, 38 36', stroke: '#8a5a33', 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, p);
+    return p;
+  }
+
+  /* ---------------------------------------------------------------- the field trial in perspective */
+  (function field() {
+    const cx = 425, top = 470, bot = 720, wTop = 250, wBot = 420;
+    const R = 4, C = 4;
+    const at = (r, c) => {       /* corner (r in 0..R, c in 0..C) in perspective */
+      const t = r / R, y = top + (bot - top) * (t * t * 0.35 + t * 0.65);
+      const w = wTop + (wBot - wTop) * t;
+      return [cx - w / 2 + (c / C) * w, y];
+    };
+    /* soil apron and the paddock strip behind */
+    el('path', { d: 'M0 520 C 200 500, 650 500, 850 520 L 850 470 C 650 440, 200 440, 0 470 Z', fill: G.pasto, opacity: 0.55 });
+    const apron = [at(0, 0), at(0, C), at(R, C), at(R, 0)];
+    el('path', { d: poly([[apron[0][0] - 22, apron[0][1] - 10], [apron[1][0] + 22, apron[1][1] - 10], [apron[2][0] + 34, apron[2][1] + 16], [apron[3][0] - 34, apron[3][1] + 16]]) + 'Z', fill: G.suelo });
+    /* randomisation, seeded */
+    const shuffled = a => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
+    const layout = [];
+    for (let r = 0; r < R; r++) layout.push(shuffled([0, 1, 2, 3]));
+    for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+      const [x1, y1] = at(r, c), [x2, y2] = at(r, c + 1), [x3, y3] = at(r + 1, c + 1), [x4, y4] = at(r + 1, c);
+      const ins = 2.2;
+      const t = layout[r][c];
+      el('path', { d: poly([[x1 + ins, y1 + ins], [x2 - ins, y2 + ins], [x3 - ins, y3 - ins], [x4 + ins, y4 - ins]]) + 'Z', fill: TRG[t], stroke: mix(TR[t], INK, 0.35), 'stroke-width': 0.8 });
+      /* plant rows inside the plot */
+      const rows = 3;
+      for (let k = 0; k < rows; k++) {
+        const u = (k + 0.5) / rows;
+        const ax = x1 + (x2 - x1) * u, ay = y1 + (y2 - y1) * u, bx = x4 + (x3 - x4) * u, by = y4 + (y3 - y4) * u;
+        el('path', { d: `M${f1(ax)} ${f1(ay + 4)} L${f1(bx)} ${f1(by - 4)}`, stroke: mix(TR[t], BLANCO, 0.45), 'stroke-width': 1.4 + r * 0.4, 'stroke-dasharray': `${2 + r} ${3 + r}`, 'stroke-linecap': 'round' });
+      }
+      const mx = (x1 + x2 + x3 + x4) / 4, my = (y1 + y2 + y3 + y4) / 4;
+      el('text', { x: f1(mx), y: f1(my + 3.5 + r * 0.6), fill: BLANCO, 'font-family': SANS, 'font-size': 9.5 + r * 1.2, 'font-weight': 600, 'text-anchor': 'middle', 'letter-spacing': 0.5 }, null, 'T' + (t + 1));
+    }
+    /* block labels on the left edge */
+    for (let r = 0; r < R; r++) {
+      const [x1, y1] = at(r, 0), [x4, y4] = at(r + 1, 0);
+      /* the digit goes in Jost: Cormorant's old-style "1" looks like a dot */
+      const bl = el('text', { x: f1(x1 - 44 - r * 9), y: f1((y1 + y4) / 2 + 4), fill: GRIS, 'font-family': SERIF, 'font-size': 13, 'font-style': 'italic', 'text-anchor': 'end' });
+      el('tspan', {}, bl, 'Bloque ');
+      el('tspan', { 'font-family': SANS, 'font-style': 'normal', 'font-size': 10.5 }, bl, String(r + 1));
+    }
+    /* north arrow */
+    const nx = 610, ny = 468;
+    el('path', { d: `M${nx} ${ny + 22} L${nx - 6} ${ny + 22} L${nx} ${ny} L${nx + 6} ${ny + 22} Z`, fill: INK });
+    el('text', { x: nx, y: ny + 36, fill: INK, 'font-family': SANS, 'font-size': 10, 'font-weight': 500, 'text-anchor': 'middle' }, null, 'N');
+    /* caption under the field */
+    el('text', { x: cx, y: 752, fill: GRIS, 'font-family': SANS, 'font-size': 9, 'letter-spacing': 3, 'text-anchor': 'middle' }, null, 'BLOQUES COMPLETOS AL AZAR · 4 TRATAMIENTOS × 4 BLOQUES');
+  })();
+
+  /* ---------------------------------------------------------------- crops and animals around the field */
+  maize(24, 420, 1.55); label(106, 600, 'Zea mays');
+  chile(160, 330, 1.08); label(215, 450, 'Capsicum annuum');
+  tomato(560, 320, 1.08); label(630, 445, 'Solanum lycopersicum');
+  coffee(690, 420, 1.05); label(760, 540, 'Coffea arabica');
+  /* the paddock: a strip of pasture with the herd, to the right of the trial */
+  el('path', { d: 'M688 560 C 740 552, 800 556, 846 550 L 846 680 C 800 686, 740 682, 688 690 Z', fill: G.pasto, opacity: 0.9 });
+  [[696, 586], [696, 622], [696, 658]].forEach(([x, y]) => el('path', { d: `M${x} ${y} L 842 ${y - 8}`, stroke: '#7a5a3a', 'stroke-width': 1.5 }));
+  [[700, 565], [770, 560], [838, 553]].forEach(([x, y]) => el('path', { d: `M${x} ${y} L${x} ${y + 110}`, stroke: '#7a5a3a', 'stroke-width': 1.7 }));
+  cow(690, 556, 0.7); goat(776, 566, 0.5); sheep(730, 620, 0.55);
+  label(734, 706, 'Bos taurus'); label(806, 706, 'Capra hircus'); label(770, 722, 'Ovis aries');
+  /* a seed bag at the left, to balance the composition */
+  (function tools() {
+    const p = g({ transform: 'translate(22 648)' });
+    el('rect', { x: 0, y: 0, width: 62, height: 78, rx: 6, fill: linear('gSaco', [['0%', '#e9dcc2'], ['100%', '#c8b58f']]), stroke: '#a08a5c', 'stroke-width': 1 }, p);
+    el('path', { d: 'M0 14 C 20 4, 42 4, 62 14', stroke: '#a08a5c', 'stroke-width': 1.2, fill: 'none' }, p);
+    el('rect', { x: 8, y: 26, width: 46, height: 30, rx: 3, fill: BLANCO, stroke: '#a08a5c', 'stroke-width': 0.8 }, p);
+    el('text', { x: 31, y: 40, fill: INK, 'font-family': SANS, 'font-size': 8, 'font-weight': 600, 'text-anchor': 'middle', 'letter-spacing': 1 }, p, 'SEMILLA');
+    el('text', { x: 31, y: 51, fill: GRIS, 'font-family': SANS, 'font-size': 7, 'text-anchor': 'middle' }, p, 'T1 · T2 · T3 · T4');
+    for (let i = 0; i < 12; i++) el('ellipse', { cx: 10 + (i % 6) * 8.5, cy: 64 + Math.floor(i / 6) * 6, rx: 2.4, ry: 1.6, fill: sphere('#e2b04a'), transform: `rotate(${(i * 37) % 60 - 30} ${10 + (i % 6) * 8.5} ${64 + Math.floor(i / 6) * 6})` }, p);
+  })();
+
+  /* ---------------------------------------------------------------- bottom row: three results */
+  /* means with letters */
+  (function means() {
+    const p = g({ transform: 'translate(70 800)' });
+    const w = 220, h = 150;
+    const means = [4.2, 7.2, 6.9, 5.8], se = [0.28, 0.24, 0.3, 0.26], let_ = ['c', 'a', 'a', 'b'];
+    const ys = v => h - 12 - (v / 8) * (h - 40);
+    el('line', { x1: 0, y1: h - 12, x2: w, y2: h - 12, stroke: INK, 'stroke-width': 1 }, p);
+    el('line', { x1: 0, y1: 10, x2: 0, y2: h - 12, stroke: INK, 'stroke-width': 1 }, p);
+    [0, 2, 4, 6, 8].forEach(v => { el('line', { x1: -4, y1: ys(v), x2: 0, y2: ys(v), stroke: INK, 'stroke-width': 1 }, p); el('text', { x: -7, y: ys(v) + 3, fill: GRIS, 'font-family': SANS, 'font-size': 7.5, 'text-anchor': 'end' }, p, v); });
+    means.forEach((m, i) => {
+      const x = 22 + i * 50, bw = 32;
+      el('rect', { x, y: ys(m), width: bw, height: ys(0) - ys(m), rx: 2, fill: TRG[i] }, p);
+      el('line', { x1: x + bw / 2, y1: ys(m - se[i]), x2: x + bw / 2, y2: ys(m + se[i]), stroke: INK, 'stroke-width': 1.1 }, p);
+      el('line', { x1: x + bw / 2 - 5, y1: ys(m + se[i]), x2: x + bw / 2 + 5, y2: ys(m + se[i]), stroke: INK, 'stroke-width': 1.1 }, p);
+      el('line', { x1: x + bw / 2 - 5, y1: ys(m - se[i]), x2: x + bw / 2 + 5, y2: ys(m - se[i]), stroke: INK, 'stroke-width': 1.1 }, p);
+      el('text', { x: x + bw / 2, y: ys(m + se[i]) - 6, fill: INK, 'font-family': SANS, 'font-size': 10, 'font-weight': 600, 'text-anchor': 'middle' }, p, let_[i]);
+      el('text', { x: x + bw / 2, y: h + 2, fill: GRIS, 'font-family': SANS, 'font-size': 8, 'text-anchor': 'middle' }, p, 'T' + (i + 1));
+    });
+    el('text', { x: -22, y: (h - 12) / 2, fill: GRIS, 'font-family': SANS, 'font-size': 7.5, 'text-anchor': 'middle', transform: `rotate(-90 -22 ${(h - 12) / 2})` }, p, 'RENDIMIENTO (t ha⁻¹)');
+    el('text', { x: w / 2, y: h + 18, fill: GRIS, 'font-family': SANS, 'font-size': 7.5, 'letter-spacing': 2, 'text-anchor': 'middle' }, p, 'MEDIAS · TUKEY α = 0.05');
+  })();
+  /* a Latin square */
+  (function latin() {
+    const p = g({ transform: 'translate(346 806)' });
+    const cell = 36, L = [[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]];
+    const rp = [2, 0, 3, 1], cp = [1, 3, 0, 2];
+    for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) {
+      const t = L[rp[i]][cp[j]];
+      el('rect', { x: j * cell + 1, y: i * cell + 1, width: cell - 2, height: cell - 2, rx: 4, fill: TRG[t], stroke: mix(TR[t], INK, 0.35), 'stroke-width': 0.8 }, p);
+      el('text', { x: j * cell + cell / 2, y: i * cell + cell / 2 + 5, fill: BLANCO, 'font-family': SERIF, 'font-size': 17, 'font-weight': 600, 'text-anchor': 'middle' }, p, 'ABCD'[t]);
+    }
+    for (let i = 0; i < 4; i++) { el('text', { x: -8, y: i * cell + cell / 2 + 3, fill: GRIS, 'font-family': SANS, 'font-size': 7.5, 'text-anchor': 'end' }, p, 'F' + (i + 1)); el('text', { x: i * cell + cell / 2, y: -6, fill: GRIS, 'font-family': SANS, 'font-size': 7.5, 'text-anchor': 'middle' }, p, 'C' + (i + 1)); }
+    el('text', { x: 72, y: 4 * cell + 22, fill: GRIS, 'font-family': SANS, 'font-size': 7.5, 'letter-spacing': 2, 'text-anchor': 'middle' }, p, 'CUADRO LATINO 4 × 4');
+  })();
+  /* dose–response curve with its optimum */
+  (function curve() {
+    const p = g({ transform: 'translate(560 800)' });
+    const w = 220, h = 150;
+    const xs = v => (v / 200) * (w - 10) + 5, ys = v => h - 12 - ((v - 3) / 5) * (h - 40);
+    const f = x => 4.2 + 0.0332 * x - 0.0000925 * x * x;
+    el('line', { x1: 0, y1: h - 12, x2: w, y2: h - 12, stroke: INK, 'stroke-width': 1 }, p);
+    el('line', { x1: 0, y1: 10, x2: 0, y2: h - 12, stroke: INK, 'stroke-width': 1 }, p);
+    let d = ''; for (let x = 0; x <= 200; x += 4) d += (x ? 'L' : 'M') + f1(xs(x)) + ' ' + f1(ys(f(x)));
+    el('path', { d, fill: 'none', stroke: '#c8842a', 'stroke-width': 2.6, 'stroke-linecap': 'round' }, p);
+    const xo = 0.0332 / (2 * 0.0000925);
+    el('line', { x1: xs(xo), y1: ys(f(xo)), x2: xs(xo), y2: h - 12, stroke: GRIS, 'stroke-width': 1, 'stroke-dasharray': '3 3' }, p);
+    [0, 60, 120, 180].forEach((x, i) => { const m = f(x) + [0.05, -0.12, 0.1, -0.05][i]; el('line', { x1: xs(x), y1: ys(m - 0.25), x2: xs(x), y2: ys(m + 0.25), stroke: INK, 'stroke-width': 1 }, p); el('circle', { cx: xs(x), cy: ys(m), r: 4.2, fill: sphere(TR[i]), stroke: BLANCO, 'stroke-width': 1 }, p); el('text', { x: xs(x), y: h + 2, fill: GRIS, 'font-family': SANS, 'font-size': 8, 'text-anchor': 'middle' }, p, x); });
+    el('text', { x: xs(xo) + 4, y: ys(f(xo)) - 10, fill: INK, 'font-family': SANS, 'font-size': 8, 'font-weight': 500 }, p, 'óptimo ≈ 180');
+    el('text', { x: w / 2, y: h + 18, fill: GRIS, 'font-family': SANS, 'font-size': 7.5, 'letter-spacing': 2, 'text-anchor': 'middle' }, p, 'CURVA DE RESPUESTA · kg N ha⁻¹');
+  })();
+
+  /* ---------------------------------------------------------------- author */
+  const au = el('g', { 'text-anchor': 'middle' });
+  el('text', { x: W / 2, y: 1040, fill: INK, 'font-family': SERIF, 'font-size': 33, 'font-weight': 600, 'letter-spacing': 1.4 }, au, 'Luis Ángel Barrera-Guzmán');
+  el('text', { x: W / 2, y: 1068, fill: GRIS, 'font-family': SANS, 'font-size': 10.5, 'font-weight': 400, 'letter-spacing': 4 }, au, 'VERSIÓN 1.0 · VERSION 1.0 · 2026');
+})();
+</script>
+</body>
+</html>

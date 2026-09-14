@@ -206,5 +206,7 @@ function init() {
   });
 }
 document.addEventListener('DOMContentLoaded', init);
+/* used by the manual's screenshot tool to print the report without a window */
+window.B7 = { opts, preview };
 window.Report = Report;
 })();
