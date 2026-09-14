@@ -208,7 +208,7 @@
       <div class="acc-body">
         <p>The replicates needed to detect a difference <i>d</i> (as % of the mean) with a known CV follow from
           <code>r ≥ 2 (t<sub>α/2</sub> + t<sub>β</sub>)² (CV / d)²</code>, solved iteratively. With a CV of 15 % and a 15 % difference, an RCBD
-          needs about 17 replicates; with a CV of 8 %, five are enough. Reducing the CV — uniform units, border rows, blocking along the
+          needs about 17 replicates; with a CV of 8 %, six are enough (four treatments, power 0.80). Reducing the CV — uniform units, border rows, blocking along the
           gradient, the pen as the unit — is usually cheaper than adding replicates. Aim for at least 10–12 error degrees of freedom.</p>
       </div>
     </details>
@@ -941,7 +941,7 @@
           also answers the inverse question: with the replicates I can afford, how small a difference can I detect?</p>
         <ul>
           <li>Aim for at least <b>10–12 error degrees of freedom</b>; with fewer, F-tests and mean comparisons are weak.</li>
-          <li>A difference of 10–15 % of the mean with a CV of 10–15 % typically needs 4–6 replicates in an RCBD.</li>
+          <li>With four treatments in an RCBD (α = 0.05, power 0.80), a difference of 15 % of the mean needs about 8 replicates when the CV is 10 %, and about 17 when the CV is 15 %; detecting 10 % with a CV of 10 % also needs about 17.</li>
           <li>Power calculations use the CV; the biggest lever is reducing the CV through plot technique and blocking, not adding replicates.</li>
         </ul>
       </div>

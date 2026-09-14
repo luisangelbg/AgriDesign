@@ -27,10 +27,15 @@ P8.layout = (L, o) => {
       if (cfg.title) g.appendChild(Fig.text(cfg.width / 2, 28, cfg.title, { size: 17, weight: 'bold', anchor: 'middle', fill: t.fg, font, role: 'title' }));
       if (cfg.subtitle) g.appendChild(Fig.text(cfg.width / 2, 46, cfg.subtitle, { size: 12, anchor: 'middle', fill: t.muted, font, role: 'subtitle' }));
       const cx = c => x0 + c * cellW, cy = r => y0 + r * cellH, gap = +cfg.cellGap;
-      const col = tr => (cfg.colors && cfg.colors[trts.indexOf(tr)]) || Fig.color(cfg.palette, trts.indexOf(tr));
+      /* augmented designs: the checks get the palette colours and all unreplicated entries share one neutral
+         colour (with many entries the palette repeats and an entry would look like a check) */
+      const isEntry = new Set(L.plots.filter(p => p.check === false).map(p => p.trt));
+      const ENTRY = '#dfe3e8';
+      const checkList = trts.filter(tr => !isEntry.has(tr));
+      const col = tr => (cfg.colors && cfg.colors[trts.indexOf(tr)]) || (isEntry.has(tr) ? ENTRY : Fig.color(cfg.palette, checkList.indexOf(tr)));
       L.plots.forEach(p => {
         const c = col(p.trt), x = cx(p.col) + gap / 2, y = cy(p.row) + gap / 2, w = cellW - gap, h = cellH - gap;
-        g.appendChild(Fig.el('rect', { x, y, width: w, height: h, fill: p.check === false ? Fig.alpha(c, 0.45) : c, stroke: Fig.darken(c, 0.25), 'stroke-width': 1, rx: 3 }));
+        g.appendChild(Fig.el('rect', { x, y, width: w, height: h, fill: c, stroke: Fig.darken(c, 0.25), 'stroke-width': 1, rx: 3 }));
         const fg = Fig.onColor(c);
         if (cfg.showNumbers) g.appendChild(Fig.text(x + 4, y + 11 * Fig.fs('label'), String(p.plot), { size: 9, fill: fg, font, role: 'label', opacity: 0.85 }));
         if (cfg.labelMode !== 'none') { const txt = cfg.labelMode === 'full' ? p.trt : p.label; const size = Math.min(12, Math.max(7, (w - 6) / (String(txt).length * 0.62))); g.appendChild(Fig.text(x + w / 2, y + h / 2 + 4, String(txt), { size, weight: 'bold', anchor: 'middle', fill: fg, font, role: 'label' })); }
@@ -39,11 +44,16 @@ P8.layout = (L, o) => {
       if (cfg.showBlocks) L.boxes.filter(b => b.kind === 'block').forEach(b => { g.appendChild(Fig.el('rect', { x: cx(b.c0) - 3, y: cy(b.r0) - 3, width: (b.c1 - b.c0 + 1) * cellW + 6, height: (b.r1 - b.r0 + 1) * cellH + 6, fill: 'none', stroke: t.fg, 'stroke-width': 2.2, rx: 6 })); g.appendChild(Fig.text(cx(b.c0) - 8, cy(b.r0) + ((b.r1 - b.r0 + 1) * cellH) / 2 + 4, b.name, { size: 11, anchor: 'end', fill: t.fg, font, role: 'axis', weight: 'bold', rotate: -90 })); });
       /* column / row indices */
       for (let c = 0; c < L.nCols; c++) g.appendChild(Fig.text(cx(c) + cellW / 2, cy(L.nRows) + 16, String(c + 1), { size: 10, anchor: 'middle', fill: t.muted, font, role: 'tick' }));
-      if (cfg.showDims && o.plotW && o.plotL) g.appendChild(Fig.text(x0, cy(L.nRows) + 36, `Plot ${o.plotW} m wide × ${o.plotL} m long · field ≈ ${(L.nCols * o.plotW).toFixed(1)} × ${(L.nRows * o.plotL).toFixed(1)} m (without alleys)`, { size: 11, fill: t.muted, font, role: 'label' }));
+      if (cfg.showDims && o.plotW && o.plotL) {
+        /* empty rows or columns in the grid are alleys: say whether the field size includes them */
+        const alleys = new Set(L.plots.map(p => p.col)).size < L.nCols || new Set(L.plots.map(p => p.row)).size < L.nRows;
+        g.appendChild(Fig.text(x0, cy(L.nRows) + 36, `Plot ${o.plotW} m wide × ${o.plotL} m long · field ≈ ${(L.nCols * o.plotW).toFixed(1)} × ${(L.nRows * o.plotL).toFixed(1)} m (${alleys ? 'alleys one plot wide included' : 'without alleys or borders'})`, { size: 11, fill: t.muted, font, role: 'label' }));
+      }
       if (cfg.north) { const nx = cfg.width - 30, ny = y0 + 10; g.appendChild(Fig.el('path', { d: `M${nx} ${ny + 26} L${nx - 7} ${ny + 26} L${nx} ${ny} L${nx + 7} ${ny + 26} Z`, fill: t.fg })); g.appendChild(Fig.text(nx, ny + 40, 'N', { size: 11, anchor: 'middle', fill: t.fg, font, role: 'label', weight: 'bold' })); }
       if (cfg.showLegend) {
         const lx = x0 + L.nCols * cellW + 20; let ly = y0 + 8;
-        trts.forEach(tr => { g.appendChild(Fig.el('rect', { x: lx, y: ly - 9, width: 12, height: 12, fill: col(tr), rx: 2 })); g.appendChild(Fig.text(lx + 17, ly + 1, tr, { size: 10.5, fill: t.fg, font, role: 'legend' })); ly += 16 * Fig.fs('legend'); if (ly > cfg.height - 20) return; });
+        const legendItems = isEntry.size ? checkList.concat(['__entries__']) : trts;
+        legendItems.forEach(tr => { if (tr === '__entries__') { g.appendChild(Fig.el('rect', { x: lx, y: ly - 9, width: 12, height: 12, fill: ENTRY, stroke: Fig.darken(ENTRY, 0.25), rx: 2 })); g.appendChild(Fig.text(lx + 17, ly + 1, `New entries (${isEntry.size}, unreplicated)`, { size: 10.5, fill: t.fg, font, role: 'legend' })); ly += 16 * Fig.fs('legend'); return; } g.appendChild(Fig.el('rect', { x: lx, y: ly - 9, width: 12, height: 12, fill: col(tr), rx: 2 })); g.appendChild(Fig.text(lx + 17, ly + 1, tr, { size: 10.5, fill: t.fg, font, role: 'legend' })); ly += 16 * Fig.fs('legend'); if (ly > cfg.height - 20) return; });
       }
       return svg;
     },

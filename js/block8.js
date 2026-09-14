@@ -29,6 +29,8 @@ function showNeeds() {
 }
 function generate() {
   clearMessages('gnMessages');
+  /* a failed generation must not leave the previous layout and field book on screen */
+  el('gnResults').style.display = 'none';
   const d = DESIGNS.find(x => x.id === el('gnDesign').value);
   const seed = +el('gnSeed').value || 1;
   const o = { seed, reps: Math.max(1, +el('gnReps').value || 3), cols: +el('gnCols').value || 0, arrangement: el('gnArr').value, blocksPerRow: +el('gnBpr').value || 2, gap: el('gnGap').checked, k: +el('gnK').value || 2 };
@@ -53,12 +55,14 @@ function generate() {
   const nPlots = L.plots.length, pw = +el('gnPW').value || 0, pl = +el('gnPL').value || 0;
   const dfo = { t: t.length, r: o.reps, a: A.length, b: B.length, c: C.length || 0, k: o.k, nc: (o.checks || []).length };
   const dfs = d.df(dfo);
-  statTiles('gnTiles', [['Plots', nPlots, `${L.nRows} rows × ${L.nCols} columns`], ['Treatments', t.length, d.id === 'augmented' ? `${o.checks.length} checks + ${o.entries.length} entries` : ''], ['Replicates / blocks', o.reps, ''], ['Field area', pw && pl ? (nPlots * pw * pl / 10000).toFixed(3) + ' ha' : '—', pw && pl ? `${(L.nCols * pw).toFixed(1)} × ${(L.nRows * pl).toFixed(1)} m` : 'enter plot size'], ['Error df', (dfs.find(x => /^Error/.test(x[0]) || /error/i.test(x[0])) || [])[1], (dfs.find(x => /^Error/.test(x[0]) || /error/i.test(x[0])) || [0, 0])[1] < 10 ? 'fewer than 10–12: consider more replicates' : 'adequate', (dfs.find(x => /^Error/.test(x[0]) || /error/i.test(x[0])) || [0, 0])[1] < 10 ? 'warn' : 'ok'], ['Seed', seed, 'reproducible randomisation']]);
+  /* a Latin square has as many replicates (rows = columns) as treatments; the replicates box is hidden for it */
+  const nRep = d.id === 'latin' ? t.length : o.reps;
+  statTiles('gnTiles', [['Plots', nPlots, `${L.nRows} rows × ${L.nCols} columns`], ['Treatments', t.length, d.id === 'augmented' ? `${o.checks.length} checks + ${o.entries.length} entries` : ''], ['Replicates / blocks', nRep, d.id === 'latin' ? 'rows = columns = treatments' : ''], ['Field area', pw && pl ? (nPlots * pw * pl / 10000).toFixed(3) + ' ha' : '—', pw && pl ? `${(L.nCols * pw).toFixed(1)} × ${(L.nRows * pl).toFixed(1)} m` : 'enter plot size'], ['Error df', (dfs.find(x => /^Error/.test(x[0]) || /error/i.test(x[0])) || [])[1], (dfs.find(x => /^Error/.test(x[0]) || /error/i.test(x[0])) || [0, 0])[1] < 10 ? 'fewer than 10–12: consider more replicates' : 'adequate', (dfs.find(x => /^Error/.test(x[0]) || /error/i.test(x[0])) || [0, 0])[1] < 10 ? 'warn' : 'ok'], ['Seed', seed, 'reproducible randomisation']]);
   buildTable('gnDf', [{ key: 0, label: 'Source', get: r => r[0] }, { key: 1, label: 'df', num: true, get: r => r[1] }], dfs.map(x => x[0] === 'Total' ? Object.assign(x, { _class: 'total' }) : x), { caption: 'Skeleton ANOVA (degrees of freedom) for this layout' });
   /* figure */
   const host = el('gnLayout'); host.innerHTML = '';
   const div = mk('div', { id: 'fig8_layout' }); host.appendChild(div);
-  Fig.mount(div, P8.layout(L, { trts: t, plotW: pw, plotL: pl, title: `${d.name.replace(/\s*\(.*?\)\s*$/, '')} — ${o.reps} ${d.id === 'latin' ? 'rows/columns' : 'replicates'}, seed ${seed}`, fileName: 'field_layout_' + d.id + '_seed' + seed, defaults: { subtitle: `${nPlots} plots · ${t.length} treatments` } }));
+  Fig.mount(div, P8.layout(L, { trts: t, plotW: pw, plotL: pl, title: `${d.name.replace(/\s*\(.*?\)\s*$/, '')} — ${nRep} ${d.id === 'latin' ? 'rows/columns' : 'replicates'}, seed ${seed}`, fileName: 'field_layout_' + d.id + '_seed' + seed, defaults: { subtitle: `${nPlots} plots · ${t.length} treatments` } }));
   /* field book */
   const fb = GEN.fieldBook(L, { repName: el('gnRepName').value.trim() || 'Block', aName: el('gnAName').value.trim() || 'A', bName: el('gnBName').value.trim() || 'B', cName: el('gnCName').value.trim() || 'C', trtName: el('gnTrtName').value.trim() || 'Treatment', responses: parseList(el('gnResp').value) });
   lastOpts.fb = fb;
