@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- server.ps1: when the port is busy, the message now suggests `.server.ps1 -Port 8801` (it named a non-existent `servidor.ps1`).
+- server.ps1: when the port is busy, the message now suggests `server.ps1 -Port 8801` (it named a non-existent `servidor.ps1`).
 - Block 8: augmented layouts draw the checks in palette colours and every unreplicated entry in one neutral colour, with a single legend entry; before, the palette repeated and entries looked like checks.
 - Block 8: the Latin square reports its real number of replicates (rows = columns = treatments) instead of the hidden replicates box; a failed generation hides the previous layout; the field-size note says whether alleys are included.
 - Theory texts (Home, Block 8): replicate numbers corrected to what the calculator gives (CV 8 %, 15 % difference: 6 replicates, not 5; CV 10–15 % and a 10–15 % difference: 8 to 17, not 4–6).
