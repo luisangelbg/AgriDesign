@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- server.ps1: when the port is busy, the message now suggests `.server.ps1 -Port 8801` (it named a non-existent `servidor.ps1`).
 - Block 8: augmented layouts draw the checks in palette colours and every unreplicated entry in one neutral colour, with a single legend entry; before, the palette repeated and entries looked like checks.
 - Block 8: the Latin square reports its real number of replicates (rows = columns = treatments) instead of the hidden replicates box; a failed generation hides the previous layout; the field-size note says whether alleys are included.
 - Theory texts (Home, Block 8): replicate numbers corrected to what the calculator gives (CV 8 %, 15 % difference: 6 replicates, not 5; CV 10–15 % and a 10–15 % difference: 8 to 17, not 4–6).
@@ -18,7 +19,7 @@
 - Theory cards: tables inside the collapsible sections wrap their text instead of overflowing the card.
 - Block 2: the "local control" illustration of the theory card did not render (its gradient shared a fixed id with the copy on the home page); each copy now gets its own id.
 - Home simulator: the vertical label of the field now reads "poor → fertile" (the fertility gradient runs from the top row to the bottom row, as the values show).
-- Spanish user manual in progress under manual/ (cover, introduction and chapters for Blocks 1 to 8).
+- Spanish user manual complete under manual/: cover, introduction, chapters for Blocks 1 to 8 and appendices A–D (163 pages when printed).
 
 ## 1.0 — 2026-09-10 · DOI 10.5281/zenodo.22683047
 

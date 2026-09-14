@@ -1,6 +1,6 @@
 # Servidor web local minimo para AgriDesign.
 # Uso:  clic derecho > "Ejecutar con PowerShell"
-#       (o:  powershell -ExecutionPolicy Bypass -File servidor.ps1)
+#       (o:  powershell -ExecutionPolicy Bypass -File server.ps1)
 # Luego abre  http://localhost:8800  en Chrome o Edge.
 #
 # AgriDesign calcula todo en JavaScript, asi que el doble clic en index.html tambien
@@ -41,7 +41,7 @@ if (-not $lan) {
   try {
     if (-not $listener.IsListening) { $listener.Start() }
   } catch {
-    Write-Host "No se pudo iniciar en el puerto $Port. Prueba otro:  .\servidor.ps1 -Port 9000" -ForegroundColor Red
+    Write-Host "No se pudo iniciar en el puerto $Port. Prueba otro:  .\server.ps1 -Port 8801" -ForegroundColor Red
     exit 1
   }
 }

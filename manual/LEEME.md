@@ -11,6 +11,7 @@ manual/
   herramientas/
     captura.html       abre la app, ejecuta una receta de pasos y deja la vista lista para la captura
     unir-manual.pl     une portada y partes en es/manual-completo.html para imprimir el manual completo
+    reunir-reglas.pl   copia las reglas de decisión de los capítulos al apéndice B (perl herramientas/reunir-reglas.pl es)
   es/
     00-portada.html    portada blanca: título en español e inglés; un ensayo de campo en bloques al azar visto en
                        perspectiva, rodeado de maíz, chile, jitomate y café, y de una vaca, un borrego y una cabra;
@@ -50,7 +51,9 @@ manual/
     09-bloque8.html    capítulo 9 · Bloque 8: planear antes de sembrar, los diez diseños del generador y la
                        semilla, opciones de acomodo, croquis y esqueleto del ANOVA, libreta de campo como
                        plantilla del Bloque 2, repeticiones y potencia (capturas b8-*.png)
-    10-apendices.html  (pendiente) apéndices: formatos, reglas de decisión, glosario, solución de problemas
+    10-apendices.html  apéndices: A formatos de archivo y acomodo por diseño, B reglas de decisión reunidas
+                       (las escribe herramientas/reunir-reglas.pl), C glosario inglés–español, D solución
+                       de problemas con los mensajes de la app
   en/                  versión en inglés (pendiente)
 ```
 
