@@ -25,7 +25,10 @@ manual/
                        (controles, tarjetas, cuatro prácticas con potencias calculadas por la app), galerías de
                        bloques, tipos de ensayo, diseños y métodos, los siete temas de teoría y cómo citar
                        (capturas b1-*.png en img/)
-    03-bloque2.html    (pendiente) capítulo 3 · Bloque 2: formatos, tabla ordenada, roles, estructura del diseño
+    03-bloque2.html    capítulo 3 · Bloque 2: la tarjeta de teoría y la tabla larga, formatos y portapapeles,
+                       la revisión de la rejilla (con una tabla con errores a propósito), los ocho roles y cómo
+                       los propone la app, la estructura detectada y sus comprobaciones, el convertidor de
+                       tablas anchas y el ejemplo paso a paso (capturas b2-*.png en img/)
     04-bloque3.html    (pendiente) capítulo 4 · Bloque 3: estadística descriptiva y gráficos exploratorios
     05-bloque4.html    (pendiente) capítulo 5 · Bloque 4: supuestos, transformaciones, no paramétricos
     06-bloque5.html    (pendiente) capítulo 6 · Bloque 5: diseños, ANOVA, pruebas de medias, contrastes

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Block 2: the "local control" illustration of the theory card did not render (its gradient shared a fixed id with the copy on the home page); each copy now gets its own id.
 - Home simulator: the vertical label of the field now reads "poor → fertile" (the fertility gradient runs from the top row to the bottom row, as the values show).
 - Spanish user manual in progress under manual/ (cover, introduction and Block 1 chapter).
 
