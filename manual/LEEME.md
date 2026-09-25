@@ -85,19 +85,39 @@ Son las franjas de la portada, en este orden, y el acento de cada capítulo (var
 - **Evitar `columns:`.** Las listas en dos columnas se hacen con rejilla (`display: grid`).
 - **Capturas a menor ancho.** `<figure class="media">` va al 84 %; un capítulo puede definir `figure.chica` (70 %) y `figure.mini` (50 %) en su propio `<style>`.
 - **Capturas sin controles.** Recorta la altura de la ventana para que la captura termine antes de la fila de exportación de la figura, o oculta los controles con `hide:.fig-editor;hide:.fig-tools`.
+- **La app es bilingüe.** El manual en español describe la interfaz en español; las menciones de la interfaz van en `<span class="ui">` con el texto tal como aparece en pantalla. Las dos tablas de equivalencias inglés–español (la del capítulo 1 y el apéndice C) están marcadas con `<!-- ui:literal -->` para que no se traduzcan por error.
 - **Validar los números.** Los valores que se citan como resultados de la app se comprueban antes de escribirlos.
 - **Sin referencias bibliográficas** en el texto (decisión del autor para esta app): se nombran los métodos (Tukey, Levene, Shapiro–Wilk…), no los autores ni los años.
 - **Espacio fijo antes de %.** Se escribe `95&nbsp;%`.
 
 ## Capturas de pantalla
 
-Con el servidor local de la app en el puerto 8800 (`server.ps1`):
+Las **recetas de todas las capturas están en `herramientas/capturas.txt`** (una línea por imagen:
+`nombre | ancho | alto | receta`) y se toman con `herramientas/capturas.ps1`, con el servidor local
+de la app en el puerto 8800 (`server.ps1`):
+
+```
+powershell -ExecutionPolicy Bypass -File herramientas/capturas.ps1                 # todas
+powershell -ExecutionPolicy Bypass -File herramientas/capturas.ps1 -Solo b5-anova  # una
+powershell -ExecutionPolicy Bypass -File herramientas/capturas.ps1 -Solo "b6-*"    # un capítulo
+```
+
+`captura.html` fija el idioma y el tema antes de abrir la app: **español y modo claro**. Con
+`-Idioma en -Destino ..\img-en` se toma el mismo juego con la interfaz en inglés, para el manual
+en inglés. Cada imagen se escribe primero en `C:\Temp\agricap` (Edge no guarda el archivo si la
+ruta tiene espacios) y de ahí se copia. Si una receta deja la página a medias, el guion mata el
+navegador a los 90 segundos y sigue con la siguiente.
+
+Una captura suelta, a mano:
 
 ```
 msedge --headless=new --hide-scrollbars --window-size=1400,900 --force-device-scale-factor=2 --virtual-time-budget=30000 --screenshot=img/nombre.png "http://localhost:8800/manual/herramientas/captura.html?w=1400&h=900&do=ex:0;step:5;run:anRun;scroll:%23anTable,24"
 ```
 
 Los pasos de la receta van separados por `;`: `ex:N` (ejemplo N del Bloque 2, desde 0), `step:N`, `run:idBoton`, `wait:ms`, `scroll:selector,desfase`, `click:selector`, `open:selector`, `select:selector=valor`, `set:selector=valor`, `check:selector=true|false`, `cfg:figura.clave=valor`, `hide:selector`, `style:selector=css` (estilo en línea, p. ej. `style:%23transTable%20table=font-size:12px`), `frame:selector`, `scrollin:iframe|elemento,desfase`, `top` y `report` (al final; la página se vuelve el informe del Bloque 7 para imprimirlo con `--print-to-pdf`). En la dirección, `#` se escribe `%23`, la coma dentro de un valor `%2C` y los espacios `%20`.
+Dentro de un selector de `set:`, `select:`, `check:`, `cfg:` o `style:`, el signo `=` se escribe
+`%3D` y el `+` (hermano adyacente) `%2B`: esos pasos parten el argumento en el primer `=`.
+Un `click:` sobre un botón de descarga deja al navegador esperando: hay que apuntar al botón exacto.
 
 ## Cómo obtener el PDF
 

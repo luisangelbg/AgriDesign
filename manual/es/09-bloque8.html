@@ -40,7 +40,7 @@
 
   <figure>
     <div class="marco"><img src="../img/b8-teoria.png" alt="La tarjeta de teoría del Bloque 8"></div>
-    <figcaption><b>Figura 9.1.</b> La tarjeta <span class="ui">Planning a field experiment</span>, con tres temas: aleatorizar bien, tamaño y forma de parcela y bloques, y cuántas repeticiones.</figcaption>
+    <figcaption><b>Figura 9.1.</b> La tarjeta <span class="ui">Planear un experimento de campo</span>, con tres temas: aleatorizar bien, tamaño y forma de parcela y bloques, y cuántas repeticiones.</figcaption>
   </figure>
 
   <div class="caja teoria">
@@ -61,7 +61,7 @@
 
   <!-- 9.2 -->
   <h2 id="s9-2"><span class="num">9.2</span>Aleatorización con semilla</h2>
-  <p>La tarjeta <span class="ui">1 · Generate a randomised layout</span> pide el diseño, la semilla y lo que ese diseño necesita: tratamientos, niveles de factores, repeticiones o testigos. Los campos que no aplican al diseño elegido se ocultan solos.</p>
+  <p>La tarjeta <span class="ui">1 · Generar un acomodo aleatorizado</span> pide el diseño, la semilla y lo que ese diseño necesita: tratamientos, niveles de factores, repeticiones o testigos. Los campos que no aplican al diseño elegido se ocultan solos.</p>
 
   <figure>
     <div class="marco" style="position:relative">
@@ -76,27 +76,27 @@
     <figcaption><b>Figura 9.2.</b> El generador preparado para un ensayo de cuatro dosis de nitrógeno en bloques completos al azar.</figcaption>
   </figure>
   <ul class="leyenda-marcas">
-    <li><span class="n">1</span><span class="ui">Design</span>: los diez diseños de la tabla 9.2.</li>
-    <li><span class="n">2</span><span class="ui">Seed</span>: la semilla del sorteo (2026 por omisión).</li>
-    <li><span class="n">3</span><span class="ui">new seed</span> pone una semilla al azar entre 1000 y 91 000.</li>
-    <li><span class="n">4</span><span class="ui">Replicates / blocks</span>: repeticiones, hasta 50.</li>
-    <li><span class="n">5</span><span class="ui">Treatments</span>: un tratamiento por renglón, o <span class="ui">…or number of treatments</span> para usar T1, T2… En los diseños factoriales, en su lugar aparecen los niveles de los factores A, B y C; en el aumentado, testigos y entradas nuevas.</li>
-    <li><span class="n">6</span><span class="ui">Layout, numbering and field-book options</span> y el botón <span class="ui">Generate layout and field book</span>.</li>
+    <li><span class="n">1</span><span class="ui">Diseño</span>: los diez diseños de la tabla 9.2.</li>
+    <li><span class="n">2</span><span class="ui">Semilla</span>: la semilla del sorteo (2026 por omisión).</li>
+    <li><span class="n">3</span><span class="ui">semilla nueva</span> pone una semilla al azar entre 1000 y 91 000.</li>
+    <li><span class="n">4</span><span class="ui">Repeticiones / bloques</span>: repeticiones, hasta 50.</li>
+    <li><span class="n">5</span><span class="ui">Tratamientos</span>: un tratamiento por renglón, o <span class="ui">…o el número de tratamientos</span> para usar T1, T2… En los diseños factoriales, en su lugar aparecen los niveles de los factores A, B y C; en el aumentado, testigos y entradas nuevas.</li>
+    <li><span class="n">6</span><span class="ui">Opciones de acomodo, numeración y libreta de campo</span> y el botón <span class="ui">Generar el acomodo y la libreta de campo</span>.</li>
   </ul>
 
   <table>
     <caption><b>Tabla 9.2.</b> Los diez diseños del generador y cómo sortea cada uno.</caption>
     <thead><tr><th style="width:30%">Diseño en la app</th><th style="width:22%">Datos que pide</th><th>Cómo se sortea</th></tr></thead>
     <tbody>
-      <tr><td><span class="ui">Completely randomised design</span></td><td>Tratamientos, repeticiones</td><td>Todas las parcelas se barajan juntas y se acomodan en un rectángulo.</td></tr>
-      <tr><td><span class="ui">Randomised complete block design</span></td><td>Tratamientos, bloques</td><td>Un sorteo independiente dentro de cada bloque.</td></tr>
-      <tr><td><span class="ui">Latin square</span></td><td>Tratamientos</td><td>Se construye un cuadrado cíclico y se barajan filas, columnas y la asignación de letras. Las repeticiones son tantas como tratamientos.</td></tr>
-      <tr><td><span class="ui">Factorial (A × B [× C]) in CRD</span> · <span class="ui">in RCBD</span></td><td>Niveles de A, B y, opcionalmente, C; repeticiones</td><td>Las combinaciones se tratan como tratamientos y se sortean como en azar completo o en bloques.</td></tr>
-      <tr><td><span class="ui">Split-plot in RCBD</span></td><td>Niveles de A (parcela grande) y B (subparcela), bloques</td><td>Se sortea A dentro de cada bloque y B dentro de cada parcela grande, cada vez con un sorteo nuevo.</td></tr>
-      <tr><td><span class="ui">Strip-plot in RCBD</span></td><td>Niveles de A y B, bloques</td><td>A en franjas horizontales y B en franjas verticales, con un sorteo por bloque para cada dirección.</td></tr>
-      <tr><td><span class="ui">Split-split-plot in RCBD</span></td><td>Niveles de A, B y C, bloques</td><td>A en parcelas grandes, B en subparcelas y C en sub-subparcelas, cada nivel sorteado dentro del anterior.</td></tr>
-      <tr><td><span class="ui">Resolvable incomplete blocks</span></td><td>Tratamientos, repeticiones, tamaño de bloque k</td><td>Cada repetición se baraja y se corta en bloques de k parcelas. El número de tratamientos debe ser múltiplo de k.</td></tr>
-      <tr><td><span class="ui">Augmented design</span></td><td>Testigos, entradas nuevas, bloques</td><td>Las entradas se reparten entre los bloques; cada bloque recibe todos los testigos y se baraja.</td></tr>
+      <tr><td><span class="ui">Diseño completamente al azar</span></td><td>Tratamientos, repeticiones</td><td>Todas las parcelas se barajan juntas y se acomodan en un rectángulo.</td></tr>
+      <tr><td><span class="ui">DISEÑO DE BLOQUES COMPLETOS AL AZAR</span></td><td>Tratamientos, bloques</td><td>Un sorteo independiente dentro de cada bloque.</td></tr>
+      <tr><td><span class="ui">Cuadro latino</span></td><td>Tratamientos</td><td>Se construye un cuadrado cíclico y se barajan filas, columnas y la asignación de letras. Las repeticiones son tantas como tratamientos.</td></tr>
+      <tr><td><span class="ui">Factorial (A × B [× C]) completamente al azar</span> · <span class="ui">en bloques al azar</span></td><td>Niveles de A, B y, opcionalmente, C; repeticiones</td><td>Las combinaciones se tratan como tratamientos y se sortean como en azar completo o en bloques.</td></tr>
+      <tr><td><span class="ui">Parcelas divididas en bloques al azar</span></td><td>Niveles de A (parcela grande) y B (subparcela), bloques</td><td>Se sortea A dentro de cada bloque y B dentro de cada parcela grande, cada vez con un sorteo nuevo.</td></tr>
+      <tr><td><span class="ui">Franjas divididas en bloques al azar</span></td><td>Niveles de A y B, bloques</td><td>A en franjas horizontales y B en franjas verticales, con un sorteo por bloque para cada dirección.</td></tr>
+      <tr><td><span class="ui">Parcelas subdivididas en bloques al azar</span></td><td>Niveles de A, B y C, bloques</td><td>A en parcelas grandes, B en subparcelas y C en sub-subparcelas, cada nivel sorteado dentro del anterior.</td></tr>
+      <tr><td><span class="ui">Bloques incompletos resolubles</span></td><td>Tratamientos, repeticiones, tamaño de bloque k</td><td>Cada repetición se baraja y se corta en bloques de k parcelas. El número de tratamientos debe ser múltiplo de k.</td></tr>
+      <tr><td><span class="ui">Diseño aumentado</span></td><td>Testigos, entradas nuevas, bloques</td><td>Las entradas se reparten entre los bloques; cada bloque recibe todos los testigos y se baraja.</td></tr>
     </tbody>
   </table>
 
@@ -119,7 +119,7 @@
   </div>
 
   <h3>Acomodo, numeración y libreta</h3>
-  <p>El desplegable <span class="ui">Layout, numbering and field-book options</span> controla la geometría del croquis, la forma de numerar las parcelas y los nombres de las columnas de la libreta.</p>
+  <p>El desplegable <span class="ui">Opciones de acomodo, numeración y libreta de campo</span> controla la geometría del croquis, la forma de numerar las parcelas y los nombres de las columnas de la libreta.</p>
 
   <figure>
     <div class="marco"><img src="../img/b8-opciones-mas.png" alt="Opciones de acomodo, numeración y libreta"></div>
@@ -130,14 +130,14 @@
     <caption><b>Tabla 9.3.</b> Las opciones de acomodo, numeración y libreta.</caption>
     <thead><tr><th style="width:36%">Opción</th><th>Qué hace</th></tr></thead>
     <tbody>
-      <tr><td><span class="ui">Plots per row within a block</span></td><td>Parte cada bloque en renglones de ese número de parcelas; 0 pone todo el bloque en un renglón.</td></tr>
-      <tr><td><span class="ui">Block arrangement</span> · <span class="ui">Blocks per row</span></td><td>Bloques uno debajo del otro, o lado a lado con cierto número de bloques por renglón.</td></tr>
-      <tr><td><span class="ui">Alley between blocks</span></td><td>Deja un renglón o columna vacía entre bloques, que representa una calle.</td></tr>
-      <tr><td><span class="ui">Plot numbering</span></td><td>Consecutiva (1, 2, 3…) o por bloque (101, 102… 201, 202…).</td></tr>
-      <tr><td><span class="ui">Serpentine</span></td><td>Numera en zigzag: de izquierda a derecha en un renglón y de derecha a izquierda en el siguiente. Ahorra caminar al capturar y cosechar.</td></tr>
-      <tr><td><span class="ui">Plot width</span> · <span class="ui">Plot length</span></td><td>Dimensiones de la parcela en metros, para calcular el área del ensayo.</td></tr>
-      <tr><td><span class="ui">Column name: …</span></td><td>Los nombres de las columnas de bloque, factores y tratamiento en la libreta.</td></tr>
-      <tr><td><span class="ui">Response columns to add</span></td><td>Las columnas vacías de respuesta, separadas por comas: <code>Yield_t_ha, Height_cm</code>.</td></tr>
+      <tr><td><span class="ui">Parcelas por renglón dentro de un bloque</span></td><td>Parte cada bloque en renglones de ese número de parcelas; 0 pone todo el bloque en un renglón.</td></tr>
+      <tr><td><span class="ui">Acomodo de los bloques</span> · <span class="ui">Bloques por renglón</span></td><td>Bloques uno debajo del otro, o lado a lado con cierto número de bloques por renglón.</td></tr>
+      <tr><td><span class="ui">Pasillo entre bloques</span></td><td>Deja un renglón o columna vacía entre bloques, que representa una calle.</td></tr>
+      <tr><td><span class="ui">Numeración de las parcelas</span></td><td>Consecutiva (1, 2, 3…) o por bloque (101, 102… 201, 202…).</td></tr>
+      <tr><td><span class="ui">Serpentina</span></td><td>Numera en zigzag: de izquierda a derecha en un renglón y de derecha a izquierda en el siguiente. Ahorra caminar al capturar y cosechar.</td></tr>
+      <tr><td><span class="ui">Ancho de la parcela</span> · <span class="ui">Largo de la parcela</span></td><td>Dimensiones de la parcela en metros, para calcular el área del ensayo.</td></tr>
+      <tr><td><span class="ui">Nombre de la columna:…</span></td><td>Los nombres de las columnas de bloque, factores y tratamiento en la libreta.</td></tr>
+      <tr><td><span class="ui">Columnas de respuesta que se agregan</span></td><td>Las columnas vacías de respuesta, separadas por comas: <code>Yield_t_ha, Height_cm</code>.</td></tr>
     </tbody>
   </table>
 
@@ -148,7 +148,7 @@
 
   <!-- 9.3 -->
   <h2 id="s9-3"><span class="num">9.3</span>El croquis de campo</h2>
-  <p>Al pulsar <span class="ui">Generate layout and field book</span> aparece la tarjeta <span class="ui">2 · Layout</span> con seis tarjetas de resumen, el croquis y el esqueleto del ANOVA.</p>
+  <p>Al pulsar <span class="ui">Generar el acomodo y la libreta de campo</span> aparece la tarjeta <span class="ui">2 · Acomodo</span> con seis tarjetas de resumen, el croquis y el esqueleto del ANOVA.</p>
 
   <figure>
     <div class="marco"><img src="../img/b8-rcbd.png" alt="Croquis de bloques completos al azar"></div>
@@ -159,12 +159,12 @@
     <caption><b>Tabla 9.4.</b> Las tarjetas de resumen del croquis.</caption>
     <thead><tr><th style="width:26%">Tarjeta</th><th>Qué dice</th></tr></thead>
     <tbody>
-      <tr><td><span class="ui">Plots</span></td><td>Número de parcelas y tamaño de la rejilla.</td></tr>
-      <tr><td><span class="ui">Treatments</span></td><td>Número de tratamientos (en el aumentado, testigos más entradas).</td></tr>
-      <tr><td><span class="ui">Replicates / blocks</span></td><td>Repeticiones; en el cuadro latino, igual al número de tratamientos.</td></tr>
-      <tr><td><span class="ui">Field area</span></td><td>Superficie de las parcelas en hectáreas y dimensiones del rectángulo, sin bordes.</td></tr>
-      <tr><td><span class="ui">Error df</span></td><td>Grados de libertad del primer error del diseño; en ámbar si son menos de 10.</td></tr>
-      <tr><td><span class="ui">Seed</span></td><td>La semilla usada, para anotarla.</td></tr>
+      <tr><td><span class="ui">Parcelas</span></td><td>Número de parcelas y tamaño de la rejilla.</td></tr>
+      <tr><td><span class="ui">Tratamientos</span></td><td>Número de tratamientos (en el aumentado, testigos más entradas).</td></tr>
+      <tr><td><span class="ui">Repeticiones / bloques</span></td><td>Repeticiones; en el cuadro latino, igual al número de tratamientos.</td></tr>
+      <tr><td><span class="ui">Superficie</span></td><td>Superficie de las parcelas en hectáreas y dimensiones del rectángulo, sin bordes.</td></tr>
+      <tr><td><span class="ui">g.l. del error</span></td><td>Grados de libertad del primer error del diseño; en ámbar si son menos de 10.</td></tr>
+      <tr><td><span class="ui">Semilla</span></td><td>La semilla usada, para anotarla.</td></tr>
     </tbody>
   </table>
 
@@ -182,7 +182,7 @@
 
   <div class="caja importante">
     <div class="caja-t"><span class="ico">!</span>Importante · el esqueleto se lee antes de sembrar</div>
-    <p>El esqueleto del ANOVA dice, antes de gastar una semilla, si el ensayo tendrá con qué juzgar las diferencias. Un bloques completos de 4 × 4 deja 9 grados de libertad al error, por debajo de los 10 a 12 recomendados. En la parcela dividida de 2 riegos × 4 variedades con 3 bloques, el riego se probará con apenas 2 grados de libertad (error a), aunque las variedades tengan 12: con 2 riegos, conviene más repeticiones o aceptar que la comparación de riegos será poco sensible. La tarjeta <span class="ui">Error df</span> marca en ámbar ese primer error.</p>
+    <p>El esqueleto del ANOVA dice, antes de gastar una semilla, si el ensayo tendrá con qué juzgar las diferencias. Un bloques completos de 4 × 4 deja 9 grados de libertad al error, por debajo de los 10 a 12 recomendados. En la parcela dividida de 2 riegos × 4 variedades con 3 bloques, el riego se probará con apenas 2 grados de libertad (error a), aunque las variedades tengan 12: con 2 riegos, conviene más repeticiones o aceptar que la comparación de riegos será poco sensible. La tarjeta <span class="ui">g.l. del error</span> marca en ámbar ese primer error.</p>
   </div>
 
   <figure>
@@ -207,7 +207,7 @@
 
   <!-- 9.4 -->
   <h2 id="s9-4"><span class="num">9.4</span>La libreta de campo</h2>
-  <p>La tarjeta <span class="ui">3 · Field book</span> contiene una fila por parcela, en orden de número, con las columnas de respuesta vacías. Es exactamente la tabla larga que el Bloque 2 lee, así que la captura de campo va directo al análisis.</p>
+  <p>La tarjeta <span class="ui">3 · Libreta de campo</span> contiene una fila por parcela, en orden de número, con las columnas de respuesta vacías. Es exactamente la tabla larga que el Bloque 2 lee, así que la captura de campo va directo al análisis.</p>
 
   <figure>
     <div class="marco"><img src="../img/b8-libreta.png" alt="La libreta de campo generada"></div>
@@ -226,7 +226,7 @@
       <tr><td><code>A</code> · <code>B</code> · <code>C</code></td><td>Factoriales, parcelas divididas y franjas.</td></tr>
       <tr><td><code>Treatment</code></td><td>Todos: el tratamiento o la combinación.</td></tr>
       <tr><td><code>Type</code></td><td>Aumentado: <code>check</code> o <code>entry</code>.</td></tr>
-      <tr><td>Respuestas</td><td>Las columnas escritas en <span class="ui">Response columns to add</span>, vacías.</td></tr>
+      <tr><td>Respuestas</td><td>Las columnas escritas en <span class="ui">Columnas de respuesta que se agregan</span>, vacías.</td></tr>
     </tbody>
   </table>
 
@@ -234,9 +234,9 @@
     <caption><b>Tabla 9.7.</b> Los tres botones de la libreta.</caption>
     <thead><tr><th style="width:36%">Botón</th><th>Qué hace</th></tr></thead>
     <tbody>
-      <tr><td><span class="ui">Field book (CSV)</span></td><td>Descarga la libreta en texto separado por comas.</td></tr>
-      <tr><td><span class="ui">Field book (Excel)</span></td><td>Descarga un libro con dos hojas: la libreta y <code>Info</code>, con el diseño, la semilla, las repeticiones y la fecha.</td></tr>
-      <tr><td><span class="ui">Open as data template in Block 2</span></td><td>Carga la libreta en el Bloque 2 sin descargarla, para comprobar que su estructura es la que se analizará.</td></tr>
+      <tr><td><span class="ui">Libreta de campo (CSV)</span></td><td>Descarga la libreta en texto separado por comas.</td></tr>
+      <tr><td><span class="ui">Libreta de campo (Excel)</span></td><td>Descarga un libro con dos hojas: la libreta y <code>Info</code>, con el diseño, la semilla, las repeticiones y la fecha.</td></tr>
+      <tr><td><span class="ui">Abrir como plantilla de datos en el Bloque 2</span></td><td>Carga la libreta en el Bloque 2 sin descargarla, para comprobar que su estructura es la que se analizará.</td></tr>
     </tbody>
   </table>
 
@@ -247,15 +247,15 @@
 
   <ol class="pasos">
     <li>Genera el croquis y la libreta, y anota la semilla en el protocolo.</li>
-    <li>Pulsa <span class="ui">Open as data template in Block 2</span> y confirma que la estructura detectada es la del diseño que vas a sembrar.</li>
+    <li>Pulsa <span class="ui">Abrir como plantilla de datos en el Bloque 2</span> y confirma que la estructura detectada es la del diseño que vas a sembrar.</li>
     <li>Descarga la libreta en Excel e imprime el croquis.</li>
     <li>Captura las mediciones en la columna vacía, sin cambiar el orden ni los nombres de las columnas.</li>
-    <li>Carga el archivo lleno en el Bloque 2. El aviso <span class="ui">Yield_t_ha is empty</span> desaparece y el botón para continuar se habilita.</li>
+    <li>Carga el archivo lleno en el Bloque 2. El aviso <span class="ui">Yield_t_ha está vacía</span> desaparece y el botón para continuar se habilita.</li>
   </ol>
 
   <!-- 9.5 -->
   <h2 id="s9-5"><span class="num">9.5</span>Cuántas repeticiones: potencia y diferencia detectable</h2>
-  <p>La tarjeta <span class="ui">4 · Replicates and power</span> responde dos preguntas complementarias: cuántas repeticiones hacen falta para detectar una diferencia dada, y qué diferencia se puede detectar con las repeticiones que se pueden pagar. Se recalcula al cambiar cualquier dato.</p>
+  <p>La tarjeta <span class="ui">4 · Repeticiones y potencia</span> responde dos preguntas complementarias: cuántas repeticiones hacen falta para detectar una diferencia dada, y qué diferencia se puede detectar con las repeticiones que se pueden pagar. Se recalcula al cambiar cualquier dato.</p>
 
   <div class="caja teoria">
     <div class="caja-t"><span class="ico">θ</span>Teoría en breve · potencia, CV y diferencia</div>
@@ -271,11 +271,11 @@
     <caption><b>Tabla 9.8.</b> Los datos de la calculadora.</caption>
     <thead><tr><th style="width:32%">Campo</th><th>Qué poner</th></tr></thead>
     <tbody>
-      <tr><td><span class="ui">Expected CV (%)</span></td><td>El CV del ANOVA de ensayos anteriores en el mismo sitio y cultivo; el Bloque 5 lo reporta.</td></tr>
-      <tr><td><span class="ui">Difference to detect (% of mean)</span></td><td>La diferencia más pequeña que tendría importancia agronómica o económica.</td></tr>
-      <tr><td><span class="ui">α</span> · <span class="ui">Target power</span></td><td>Nivel de significancia (0.05) y potencia buscada (0.80 es lo habitual; 0.90 para ensayos caros o decisiones importantes).</td></tr>
-      <tr><td><span class="ui">Number of treatments</span> · <span class="ui">Design</span></td><td>Determinan los grados de libertad del error: (t − 1)(r − 1) en bloques, t(r − 1) en azar completo.</td></tr>
-      <tr><td><span class="ui">Replicates you can afford</span></td><td>Las repeticiones que el presupuesto o el terreno permiten, para ver su potencia y su diferencia detectable.</td></tr>
+      <tr><td><span class="ui">CV esperado (%)</span></td><td>El CV del ANOVA de ensayos anteriores en el mismo sitio y cultivo; el Bloque 5 lo reporta.</td></tr>
+      <tr><td><span class="ui">Diferencia que se quiere detectar (% de la media)</span></td><td>La diferencia más pequeña que tendría importancia agronómica o económica.</td></tr>
+      <tr><td><span class="ui">α</span> · <span class="ui">Potencia buscada</span></td><td>Nivel de significancia (0.05) y potencia buscada (0.80 es lo habitual; 0.90 para ensayos caros o decisiones importantes).</td></tr>
+      <tr><td><span class="ui">Número de tratamientos</span> · <span class="ui">Diseño</span></td><td>Determinan los grados de libertad del error: (t − 1)(r − 1) en bloques, t(r − 1) en azar completo.</td></tr>
+      <tr><td><span class="ui">Repeticiones que puedes costear</span></td><td>Las repeticiones que el presupuesto o el terreno permiten, para ver su potencia y su diferencia detectable.</td></tr>
     </tbody>
   </table>
 
@@ -324,10 +324,10 @@
     <div class="caja-t"><span class="ico">▸</span>Paso a paso · planear el siguiente ensayo de nitrógeno</div>
     <ol class="pasos" style="margin-bottom:0">
       <li>En el Bloque 5 del ensayo anterior, anota el CV: 2.1&nbsp;% en el ejemplo de maíz, un valor inusualmente bajo; en un ensayo real de rendimiento sería de 10 a 15&nbsp;%.</li>
-      <li>En <span class="ui">4 · Replicates and power</span> escribe el CV, la diferencia que importa (por ejemplo 10&nbsp;%), 5 tratamientos si agregarás una dosis y <span class="ui">RCBD</span>.</li>
+      <li>En <span class="ui">4 · Repeticiones y potencia</span> escribe el CV, la diferencia que importa (por ejemplo 10&nbsp;%), 5 tratamientos si agregarás una dosis y <span class="ui">En bloques</span>.</li>
       <li>Lee cuántas repeticiones hacen falta y compáralas con las que puedes pagar.</li>
-      <li>En <span class="ui">1 · Generate a randomised layout</span> elige <span class="ui">Randomised complete block design</span>, escribe las dosis, las repeticiones y una semilla nueva, y en las opciones pon el tamaño de parcela y <code>Yield_t_ha</code> como respuesta.</li>
-      <li>Pulsa <span class="ui">Generate layout and field book</span>, revisa el esqueleto del ANOVA y la tarjeta <span class="ui">Error df</span>.</li>
+      <li>En <span class="ui">1 · Generar un acomodo aleatorizado</span> elige <span class="ui">DISEÑO DE BLOQUES COMPLETOS AL AZAR</span>, escribe las dosis, las repeticiones y una semilla nueva, y en las opciones pon el tamaño de parcela y <code>Yield_t_ha</code> como respuesta.</li>
+      <li>Pulsa <span class="ui">Generar el acomodo y la libreta de campo</span>, revisa el esqueleto del ANOVA y la tarjeta <span class="ui">g.l. del error</span>.</li>
       <li>Abre la libreta como plantilla en el Bloque 2 para comprobarla, y descárgala en Excel junto con el croquis.</li>
     </ol>
   </div>

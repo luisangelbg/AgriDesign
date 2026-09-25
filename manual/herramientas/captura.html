@@ -20,11 +20,19 @@
 <style>html,body{margin:0;overflow:hidden;background:#fff}iframe{border:0;display:block;position:absolute;left:0;top:0}</style>
 </head>
 <body>
-<iframe id="app" src="../../index.html"></iframe>
+<iframe id="app"></iframe>
 <script>
 (async function () {
   const p = new URLSearchParams(location.search);
   const f = document.getElementById('app');
+  /* The tool and the app share the origin, so the language and the theme are fixed here,
+     before the app boots: Spanish and light theme unless the address says otherwise
+     (?lang=en, ?theme=dark). Without this, a headless browser would open it in English. */
+  try {
+    localStorage.setItem('agridesign:lang', p.get('lang') || 'es');
+    localStorage.setItem('agridesign:theme', p.get('theme') || 'light');
+  } catch (e) { /* private browsing */ }
+  f.src = '../../index.html';
   f.style.width = (p.get('w') || 1400) + 'px';
   f.style.height = (p.get('h') || 860) + 'px';
   await new Promise(r => f.addEventListener('load', r, { once: true }));

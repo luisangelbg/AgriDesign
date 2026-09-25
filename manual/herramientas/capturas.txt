@@ -1,0 +1,142 @@
+# Recetas de las capturas del manual  ·  una línea por imagen
+#
+#   nombre | ancho | alto | receta
+#
+# La receta son los pasos de captura.html separados por ";". En los valores,
+# "#" se escribe %23, la coma %2C, el espacio %20 y el salto de línea %0A.
+# Todas se toman con la interfaz en español y el tema claro (captura.html lo fija).
+# Para correrlas todas:  powershell -ExecutionPolicy Bypass -File herramientas/capturas.ps1
+# Para una sola:         ... -File herramientas/capturas.ps1 -Solo b5-anova
+
+# ---------- capítulo 1 · introducción ----------
+app-inicio|1400|900|step:1
+app-datos|1400|900|ex:0;step:2;scroll:%23varCard,16
+app-figura|1200|700|ex:0;step:5;hide:.fig-editor;hide:.fig-tools;scroll:%23fig5_Nitrogen_kg_ha,16
+app-anova|1400|860|ex:0;step:5;scroll:%23anTiles,16
+app-bloques|1400|150|step:1;top
+
+# ---------- capítulo 2 · Bloque 1 ----------
+b1-flujo|1400|560|step:1;scroll:.workflow,86
+b1-simulador|1400|900|step:1;scroll:%23simulator,20
+b1-potencia|1400|620|step:1;run:pgBatch;scroll:%23pgPower,16
+b1-sin-gradiente|1400|620|step:1;set:%23pgGrad=0;run:pgBatch;scroll:%23pgPower,16
+b1-bloques|1400|900|step:1;scroll:%23featureGrid,116
+b1-tipos|1400|760|step:1;scroll:%23kindGrid,116
+b1-disenos|1400|860|step:1;scroll:%23designGallery,116
+b1-metodos|1400|700|step:1;scroll:%23methodGallery,116
+b1-teoria|1400|900|step:1;scroll:%23theory,20
+b1-cita|1400|620|step:1;scroll:%23cite,20
+
+# ---------- capítulo 3 · Bloque 2 ----------
+b2-teoria|1400|900|step:2;scroll:%23panel-2%20.theory-card,16
+b2-carga|1400|820|step:2;scroll:%23dropZone,86
+b2-avisos|1400|620|step:2;set:%23pasteArea=Ensayo%20maiz%202026%0ABlock%2CTreatment%2CYield%2C%0A1%2CControl%2C4.6%2Cnota%20al%20margen%0A1%2Ccontrol%2C6.2%2C%0A2%2CControl%20%2C3.9%2C%0A2%2Ccontrol%2C5.5%2C%0A3%2CControl%2C4.3%2C%0A3%2Ccontrol%2C5.9%2C%0ATotal%2C%2C30.4%2C;click:%23pasteBtn;scroll:%23dataMessages,16
+b2-avisos-roles|1400|700|step:2;set:%23pasteArea=Ensayo%20maiz%202026%0ABlock%2CTreatment%2CYield%2C%0A1%2CControl%2C4.6%2Cnota%20al%20margen%0A1%2Ccontrol%2C6.2%2C%0A2%2CControl%20%2C3.9%2C%0A2%2Ccontrol%2C5.5%2C%0A3%2CControl%2C4.3%2C%0A3%2Ccontrol%2C5.9%2C%0ATotal%2C%2C30.4%2C;click:%23pasteBtn;scroll:%23varTable,16
+b2-roles|1400|560|ex:0;step:2;scroll:%23varTable,16
+b2-estructura|1400|620|ex:0;step:2;scroll:%23designSummary,16
+b2-latino|1400|620|ex:2;step:2;scroll:%23designSummary,16
+b2-ordinal|1400|660|ex:5;step:2;scroll:%23designSummary,16
+b2-dividida|1400|660|ex:4;step:2;scroll:%23designSummary,16
+b2-ancha|1400|520|ex:6;step:2;scroll:%23varTable,16
+b2-ancha-avisos|1400|520|ex:6;step:2;scroll:%23designChecks,16
+b2-convertidor|1400|620|ex:6;step:2;scroll:%23reshapeCard,16
+b2-convertida|1400|620|ex:6;step:2;click:%23reshapeBtn;scroll:%23varTable,16
+b2-vista-previa|1400|620|ex:0;step:2;scroll:%23previewCard,16
+
+# ---------- capítulo 4 · Bloque 3 ----------
+b3-teoria|1400|860|ex:0;step:3;scroll:%23panel-3%20.theory-card,16
+b3-controles|1400|560|ex:0;step:3;scroll:%23panel-3%20.card:nth-of-type(2),16
+b3-tabla|1400|560|ex:0;step:3;scroll:%23descTable,16
+b3-bloque|1400|520|ex:0;step:3;select:%23descGroup=Block;scroll:%23descTable,16
+b3-tomate-tabla|1400|620|ex:3;step:3;scroll:%23descTable,16
+b3-tomate-dosvias|1400|460|ex:3;step:3;scroll:%23descTwoWay,16
+b3-interp|1400|700|ex:0;step:3;scroll:%23descInterp,16
+b3-hist|1000|620|ex:0;step:3;hide:.fig-editor;hide:.fig-tools;scroll:%23fig3_hist,10
+b3-box|1000|620|ex:0;step:3;hide:.fig-editor;hide:.fig-tools;scroll:%23fig3_box,10
+b3-violin|1000|620|ex:0;step:3;hide:.fig-editor;hide:.fig-tools;scroll:%23fig3_violin,10
+b3-medias|1000|620|ex:0;step:3;hide:.fig-editor;hide:.fig-tools;scroll:%23fig3_means,10
+b3-strip|1000|620|ex:0;step:3;hide:.fig-editor;hide:.fig-tools;scroll:%23fig3_strip,10
+b3-perfiles|1000|620|ex:0;step:3;hide:.fig-editor;hide:.fig-tools;scroll:%23fig3_profiles,10
+b3-interaccion|1000|620|ex:3;step:3;hide:.fig-editor;hide:.fig-tools;scroll:%23fig3_interaction,10
+b3-correl|1000|660|ex:3;step:3;hide:.fig-editor;hide:.fig-tools;scroll:%23fig3_corr,10
+b3-editor|1100|820|ex:0;step:3;open:%23fig3_box%20details.fig-editor;hide:.fig-tools;scroll:%23fig3_box,10
+
+# ---------- capítulo 5 · Bloque 4 ----------
+b4-teoria|1400|860|ex:0;step:4;scroll:%23panel-4%20.theory-card,16
+b4-veredicto|1400|620|ex:0;step:4;scroll:%23assVerdict,16
+b4-checks|1400|760|ex:0;step:4;scroll:%23assChecks,16
+b4-tabla|1400|620|ex:0;step:4;scroll:%23assTable,16
+b4-atipicos|1400|360|ex:0;step:4;scroll:%23assOutliers,16
+b4-figuras|1400|900|ex:0;step:4;hide:.fig-editor;hide:.fig-tools;scroll:%23assFigs,16
+b4-trans|1400|620|ex:0;step:4;scroll:%23transVerdict,16
+b4-tomate-veredicto|1400|620|ex:3;step:4;scroll:%23assVerdict,16
+b4-tomate-trans|1400|660|ex:3;step:4;style:%23transTable%20table=font-size:12px;scroll:%23transVerdict,16
+b4-tomate-boxcox|1200|560|ex:3;step:4;hide:.fig-editor;hide:.fig-tools;scroll:%23boxcoxHost,10
+b4-tomate-use|1400|620|ex:3;step:4;click:%23transTable%20button%5Bdata-trans=log%5D;scroll:%23assVerdict,16
+b4-np-controles|1400|420|ex:5;step:4;scroll:%23npCard,16
+b4-friedman|1400|520|ex:5;step:4;select:%23npMethod=friedman;click:%23npRun;scroll:%23npResults,16
+b4-friedman-fig|1000|620|ex:5;step:4;select:%23npMethod=friedman;click:%23npRun;hide:.fig-editor;hide:.fig-tools;scroll:%23fig4_np,10
+
+# ---------- capítulo 6 · Bloque 5 ----------
+b5-teoria|1400|860|ex:0;step:5;scroll:%23panel-5%20.theory-card,16
+b5-opciones|1400|700|ex:0;step:5;scroll:%23panel-5%20.card:nth-of-type(2),16
+b5-anova|1400|660|ex:0;step:5;scroll:%23anTable,16
+b5-interp|1400|760|ex:0;step:5;scroll:%23anInterp,16
+b5-medias|1400|700|ex:0;step:5;open:%23anMeans%20details.acc;scroll:%23anMeans,16
+b5-medias-fig|1000|620|ex:0;step:5;hide:.fig-editor;hide:.fig-tools;scroll:%23fig5_Nitrogen_kg_ha,10
+b5-dunnett|1400|620|ex:1;step:5;select:%23anMethod=dunnett;select:%23anControl=Negro%20Jamapa;click:%23anRun;scroll:%23anMeans,16
+b5-tomate-anova|1400|620|ex:3;step:5;scroll:%23anTable,16
+b5-tomate-simples|1400|760|ex:3;step:5;scroll:%23anMeans%20.card:nth-of-type(3),16
+b5-tomate-fig|1100|620|ex:3;step:5;hide:.fig-editor;hide:.fig-tools;scroll:%23fig5_int_Variety_Fertilizer,10
+b5-split-anova|1400|660|ex:4;step:5;select:%23anDesign=split_rcbd;click:%23anRun;scroll:%23anTable,16
+b5-split-simples|1400|700|ex:4;step:5;select:%23anDesign=split_rcbd;click:%23anRun;scroll:%23anMeans%20.card:nth-of-type(3),16
+b5-tendencia|1400|560|ex:0;step:5;scroll:%23anMeans%20h3,16
+b5-curva|1000|620|ex:0;step:5;hide:.fig-editor;hide:.fig-tools;scroll:%23fig5_trend_Nitrogen_kg_ha,10
+b5-contraste|1400|440|ex:0;step:5;set:%23anMeans%20.card:last-of-type%20.btn-row%20input=3%2C%20-1%2C%20-1%2C%20-1;click:%23anMeans%20.card:last-of-type%20.btn-row%20button;scroll:%23anMeans%20.card:last-of-type,16;set:%23anMeans%20.card:last-of-type%20.btn-row%20input=0%2C%200%2C%20-1%2C%201;click:%23anMeans%20.card:last-of-type%20.btn-row%20button;scroll:%23anMeans%20.card:last-of-type,16
+b5-tomate-ln|1400|620|ex:3;step:4;click:%23transTable%20button%5Bdata-trans=log%5D;step:5;select:%23anResponse=Yield_kg_plant_ln;run:anRun;scroll:%23anMeans,16
+b5-latino|1400|620|ex:2;step:5;scroll:%23anTable,16
+
+# ---------- capítulo 7 · Bloque 6 ----------
+b6-teoria|1400|860|ex:0;step:5;step:6;scroll:%23panel-6%20.theory-card,16
+b6-ajustes|1400|760|ex:0;step:5;step:6;scroll:%23gfxMain,16
+b6-bars|1000|620|ex:0;step:5;step:6;hide:.fig-editor;hide:.fig-tools;hide:.fig6-pick;scroll:%23fig6_bars_Nitrogen_kg_ha,10
+b6-points|1000|620|ex:0;step:5;step:6;hide:.fig-editor;hide:.fig-tools;hide:.fig6-pick;scroll:%23fig6_points_Nitrogen_kg_ha,10
+b6-box|1000|620|ex:0;step:5;step:6;hide:.fig-editor;hide:.fig-tools;hide:.fig6-pick;scroll:%23fig6_box_Nitrogen_kg_ha,10
+b6-strip|1000|620|ex:0;step:5;step:6;hide:.fig-editor;hide:.fig-tools;hide:.fig6-pick;scroll:%23fig6_strip_Nitrogen_kg_ha,10
+b6-diff|1000|620|ex:0;step:5;step:6;hide:.fig-editor;hide:.fig-tools;hide:.fig6-pick;scroll:%23fig6_diff_Nitrogen_kg_ha,10
+b6-trend|1000|620|ex:0;step:5;step:6;hide:.fig-editor;hide:.fig-tools;hide:.fig6-pick;scroll:%23fig6_trend_Nitrogen_kg_ha,10
+b6-ss|1000|560|ex:0;step:5;step:6;hide:.fig-editor;hide:.fig-tools;hide:.fig6-pick;scroll:%23fig6_ss,10
+b6-tom-int|1100|620|ex:3;step:5;step:6;hide:.fig-editor;hide:.fig-tools;hide:.fig6-pick;scroll:%23fig6_int_Variety_Fertilizer,10
+b6-tom-int2|1100|620|ex:3;step:5;step:6;hide:.fig-editor;hide:.fig-tools;hide:.fig6-pick;scroll:%23fig6_int2_Variety_Fertilizer,10
+b6-tom-grp|1100|620|ex:3;step:5;step:6;hide:.fig-editor;hide:.fig-tools;hide:.fig6-pick;scroll:%23fig6_grp_Variety_Fertilizer,10
+b6-tom-heat|1000|660|ex:3;step:5;step:6;hide:.fig-editor;hide:.fig-tools;hide:.fig6-pick;scroll:%23fig6_heat_Variety_Fertilizer,10
+b6-campo|1000|700|ex:2;step:5;step:6;hide:.fig-editor;hide:.fig-tools;hide:.fig6-pick;scroll:%23fig6_field_y,10
+b6-residuos|1000|700|ex:2;step:5;step:6;hide:.fig-editor;hide:.fig-tools;hide:.fig6-pick;scroll:%23fig6_field_res,10
+b6-revista|1000|620|ex:0;step:5;step:6;click:.preset-btn:nth-of-type(2);hide:.fig-editor;hide:.fig-tools;hide:.fig6-pick;scroll:%23fig6_bars_Nitrogen_kg_ha,10
+b6-grises|1000|620|ex:3;step:5;step:6;click:.preset-btn:nth-of-type(4);hide:.fig-editor;hide:.fig-tools;hide:.fig6-pick;scroll:%23fig6_int_Variety_Fertilizer,10
+b6-oscuro|1000|620|ex:0;step:5;step:6;click:.preset-btn:nth-of-type(6);hide:.fig-editor;hide:.fig-tools;hide:.fig6-pick;scroll:%23fig6_bars_Nitrogen_kg_ha,10
+b6-estilo|1100|860|ex:0;step:5;step:6;open:%23fig6_bars_Nitrogen_kg_ha%20details.fig-editor;click:%23fig6_bars_Nitrogen_kg_ha%20.fig-tab:nth-of-type(2);hide:.fig-tools;hide:.fig6-pick;scroll:%23fig6_bars_Nitrogen_kg_ha,10
+b6-panel|1300|860|ex:0;step:5;step:6;check:%23fig6_bars_Nitrogen_kg_ha%20%2B%20.fig6-pick%20input=true;check:%23fig6_strip_Nitrogen_kg_ha%20%2B%20.fig6-pick%20input=true;check:%23fig6_trend_Nitrogen_kg_ha%20%2B%20.fig6-pick%20input=true;check:%23fig6_ss%20%2B%20.fig6-pick%20input=true;click:%23gfxPanelBtn;hide:.fig-editor;hide:.fig-tools;scroll:%23gfxPanelHost,10
+b6-exportar|1200|240|ex:0;step:5;step:6;select:%23fig6_bars_Nitrogen_kg_ha%20.fig-tools%20select=tiff;scroll:%23fig6_bars_Nitrogen_kg_ha%20.fig-tools,12
+
+# ---------- capítulo 8 · Bloque 7 ----------
+b7-teoria|1400|560|ex:0;step:5;step:7;open:%23panel-7%20details.acc;scroll:%23panel-7%20.theory-card,16
+b7-detalles|1400|900|ex:0;step:5;step:7;set:%23rpAuthors=Barrera-Guzman%2C%20L.%20A.;set:%23rpAffil=Departamento%20de%20Fitotecnia;set:%23rpTrial=Campo%20experimental%2C%20primavera-verano%202026;set:%23rpUnits=t%20ha%E2%81%BB%C2%B9;set:%23rpObjective=Evaluar%20el%20efecto%20de%20la%20dosis%20de%20nitrogeno%20sobre%20el%20rendimiento%20de%20maiz;scroll:%23rpMain,16
+b7-vista|1400|420|ex:0;step:5;step:7;scroll:%23rpPreviewCard,16
+b7-inf-portada|1100|860|ex:0;step:5;step:7;set:%23rpAuthors=Barrera-Guzman%2C%20L.%20A.;set:%23rpAffil=Departamento%20de%20Fitotecnia;set:%23rpTrial=Campo%20experimental%2C%20primavera-verano%202026;set:%23rpUnits=t%20ha%E2%81%BB%C2%B9;set:%23rpObjective=Evaluar%20el%20efecto%20de%20la%20dosis%20de%20nitrogeno%20sobre%20el%20rendimiento%20de%20maiz;click:%23rpPreview;frame:%23rpFrame;scrollin:%23rpFrame%7Ch1,24
+b7-inf-resultados|1100|860|ex:0;step:5;step:7;set:%23rpAuthors=Barrera-Guzman%2C%20L.%20A.;set:%23rpAffil=Departamento%20de%20Fitotecnia;set:%23rpTrial=Campo%20experimental%2C%20primavera-verano%202026;set:%23rpUnits=t%20ha%E2%81%BB%C2%B9;set:%23rpObjective=Evaluar%20el%20efecto%20de%20la%20dosis%20de%20nitrogeno%20sobre%20el%20rendimiento%20de%20maiz;click:%23rpPreview;frame:%23rpFrame;scrollin:%23rpFrame%7Ch2:nth-of-type(3),24
+b7-inf-figuras|1100|860|ex:0;step:5;step:7;set:%23rpAuthors=Barrera-Guzman%2C%20L.%20A.;set:%23rpAffil=Departamento%20de%20Fitotecnia;set:%23rpTrial=Campo%20experimental%2C%20primavera-verano%202026;set:%23rpUnits=t%20ha%E2%81%BB%C2%B9;set:%23rpObjective=Evaluar%20el%20efecto%20de%20la%20dosis%20de%20nitrogeno%20sobre%20el%20rendimiento%20de%20maiz;click:%23rpPreview;frame:%23rpFrame;scrollin:%23rpFrame%7Cfigure,64
+b7-inf-cita|1100|700|ex:0;step:5;step:7;set:%23rpAuthors=Barrera-Guzman%2C%20L.%20A.;set:%23rpAffil=Departamento%20de%20Fitotecnia;set:%23rpTrial=Campo%20experimental%2C%20primavera-verano%202026;set:%23rpUnits=t%20ha%E2%81%BB%C2%B9;set:%23rpObjective=Evaluar%20el%20efecto%20de%20la%20dosis%20de%20nitrogeno%20sobre%20el%20rendimiento%20de%20maiz;click:%23rpPreview;frame:%23rpFrame;scrollin:%23rpFrame%7Cpre,80
+
+# ---------- capítulo 9 · Bloque 8 ----------
+b8-teoria|1400|820|step:8;scroll:%23panel-8%20.theory-card,16
+b8-opciones|1400|700|step:8;set:%23gnTrts=N0%0AN60%0AN120%0AN180;scroll:%23panel-8%20.card:nth-of-type(2),16
+b8-opciones-mas|1400|760|step:8;open:%23panel-8%20details.acc;scroll:%23panel-8%20details.acc,16
+b8-rcbd|1200|760|step:8;set:%23gnTrts=N0%0AN60%0AN120%0AN180;run:gnRun;hide:.fig-editor;hide:.fig-tools;scroll:%23gnLayout,10
+b8-split|1200|760|step:8;select:%23gnDesign=split_rcbd;run:gnRun;hide:.fig-editor;hide:.fig-tools;scroll:%23gnLayout,10
+b8-latino|1200|760|step:8;select:%23gnDesign=latin;set:%23gnNTrts=5;run:gnRun;hide:.fig-editor;hide:.fig-tools;scroll:%23gnLayout,10
+b8-aumentado|1200|820|step:8;select:%23gnDesign=augmented;run:gnRun;hide:.fig-editor;hide:.fig-tools;scroll:%23gnLayout,10
+b8-libreta|1400|700|step:8;set:%23gnTrts=N0%0AN60%0AN120%0AN180;run:gnRun;scroll:%23gnBook,60
+b8-plantilla|1400|660|step:8;set:%23gnTrts=N0%0AN60%0AN120%0AN180;run:gnRun;click:%23gnTemplate;scroll:%23varTable,16
+b8-potencia|1400|620|step:8;click:%23pwRun;scroll:%23pwTiles,16
+b8-curvas|1400|560|step:8;click:%23pwRun;hide:.fig-editor;hide:.fig-tools;scroll:%23pwFig1,10

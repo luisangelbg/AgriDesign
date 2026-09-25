@@ -43,7 +43,7 @@
 
   <figure>
     <div class="marco"><img src="../img/b4-teoria.png" alt="La tarjeta de teoría del Bloque 4"></div>
-    <figcaption><b>Figura 5.1.</b> La tarjeta <span class="ui">The assumptions behind the F-test, in plain language</span>, con el primer tema abierto: los cuatro supuestos, cómo los revisa la app y qué hacer si fallan. Los otros tres temas explican los gráficos de residuales, las transformaciones y los análisis no paramétricos.</figcaption>
+    <figcaption><b>Figura 5.1.</b> La tarjeta <span class="ui">Los supuestos detrás de la prueba de F, en palabras llanas</span>, con el primer tema abierto: los cuatro supuestos, cómo los revisa la app y qué hacer si fallan. Los otros tres temas explican los gráficos de residuales, las transformaciones y los análisis no paramétricos.</figcaption>
   </figure>
 
   <div class="caja teoria">
@@ -69,7 +69,7 @@
 
   <!-- 5.2 -->
   <h2 id="s5-2"><span class="num">5.2</span>Normalidad, homogeneidad de varianzas y aditividad</h2>
-  <p>La tarjeta <span class="ui">1 · Model and residual diagnostics</span> se calcula sola al abrir el bloque y se repite con <span class="ui">Run diagnostics</span> al cambiar la respuesta, el nivel de significancia o las interacciones. Arriba de los resultados, la app muestra el modelo exacto que ajustó.</p>
+  <p>La tarjeta <span class="ui">1 · Modelo y diagnóstico de los residuales</span> se calcula sola al abrir el bloque y se repite con <span class="ui">Correr el diagnóstico</span> al cambiar la respuesta, el nivel de significancia o las interacciones. Arriba de los resultados, la app muestra el modelo exacto que ajustó.</p>
 
   <figure>
     <div class="marco" style="position:relative">
@@ -84,9 +84,9 @@
     <figcaption><b>Figura 5.2.</b> Diagnóstico del ejemplo de maíz y nitrógeno.</figcaption>
   </figure>
   <ul class="leyenda-marcas">
-    <li><span class="n">1</span><span class="ui">Response variable</span>: la respuesta. Las columnas transformadas que crees en la sección 5.4 aparecen aquí.</li>
-    <li><span class="n">2</span><span class="ui">Significance level α</span>: 0.05, 0.01 o 0.10. Decide los colores de las tarjetas y de la tabla.</li>
-    <li><span class="n">3</span><span class="ui">include all factor interactions</span>: solo se activa con dos o más factores; déjala marcada para que los residuales no absorban la interacción. <span class="ui">Run diagnostics</span> recalcula.</li>
+    <li><span class="n">1</span><span class="ui">Variable de respuesta</span>: la respuesta. Las columnas transformadas que crees en la sección 5.4 aparecen aquí.</li>
+    <li><span class="n">2</span><span class="ui">Nivel de significancia α</span>: 0.05, 0.01 o 0.10. Decide los colores de las tarjetas y de la tabla.</li>
+    <li><span class="n">3</span><span class="ui">incluir todas las interacciones entre factores</span>: solo se activa con dos o más factores; déjala marcada para que los residuales no absorban la interacción. <span class="ui">Correr el diagnóstico</span> recalcula.</li>
     <li><span class="n">4</span>El modelo con que se obtuvieron los residuales: aquí <code>Yield_t_ha ~ Block + Nitrogen_kg_ha</code>, el diseño de bloques completos al azar.</li>
     <li><span class="n">5</span>La calificación del diagnóstico, de A a D, con una frase que dice qué hacer (tabla 5.2).</li>
     <li><span class="n">6</span>Ocho tarjetas: observaciones y grados de libertad del error, raíz del cuadrado medio del error, CV del ANOVA, Shapiro–Wilk, Levene, aditividad de Tukey, Durbin–Watson y cuántos residuales estudentizados pasan de 2.5.</li>
@@ -113,7 +113,7 @@
 
   <figure>
     <div class="marco"><img src="../img/b4-tabla.png" alt="Tabla de todas las pruebas"></div>
-    <figcaption><b>Figura 5.4.</b> <span class="ui">All tests</span>: las diez pruebas con su hipótesis nula, estadístico, grados de libertad, valor P y decisión.</figcaption>
+    <figcaption><b>Figura 5.4.</b> <span class="ui">Todas las pruebas</span>: las diez pruebas con su hipótesis nula, estadístico, grados de libertad, valor P y decisión.</figcaption>
   </figure>
 
   <table>
@@ -139,7 +139,7 @@
   </div>
 
   <h3>Observaciones sospechosas</h3>
-  <p>La tabla <span class="ui">Suspicious observations</span> lista las parcelas con residual estudentizado mayor que 2.5 en valor absoluto: el número de fila en el archivo (contando el encabezado), su tratamiento y bloque, el valor observado, el ajustado, el residual, el residual estudentizado y el apalancamiento.</p>
+  <p>La tabla <span class="ui">Observaciones sospechosas</span> lista las parcelas con residual estudentizado mayor que 2.5 en valor absoluto: el número de fila en el archivo (contando el encabezado), su tratamiento y bloque, el valor observado, el ajustado, el residual, el residual estudentizado y el apalancamiento.</p>
 
   <figure>
     <div class="marco"><img src="../img/b4-atipicos.png" alt="Observaciones sospechosas del maíz"></div>
@@ -188,7 +188,7 @@
 
   <!-- 5.4 -->
   <h2 id="s5-4"><span class="num">5.4</span>Transformaciones y el perfil de Box–Cox</h2>
-  <p>La tarjeta <span class="ui">2 · Would a transformation help?</span> aplica cada transformación posible a la respuesta, vuelve a ajustar el mismo modelo y repite las pruebas. Una recomendación en la parte superior resume el resultado. El botón <span class="ui">Use</span> de cada fila crea una columna nueva con la respuesta transformada, sin tocar la original, y repite el diagnóstico sobre ella.</p>
+  <p>La tarjeta <span class="ui">2 · ¿Ayudaría una transformación?</span> aplica cada transformación posible a la respuesta, vuelve a ajustar el mismo modelo y repite las pruebas. Una recomendación en la parte superior resume el resultado. El botón <span class="ui">Usar</span> de cada fila crea una columna nueva con la respuesta transformada, sin tocar la original, y repite el diagnóstico sobre ella.</p>
 
   <table>
     <caption><b>Tabla 5.4.</b> Las transformaciones que prueba la app y cuándo se usa cada una. Solo aparecen las que admiten los datos: el logaritmo exige valores positivos y el arcoseno, valores entre 0 y 100.</caption>
@@ -205,7 +205,7 @@
 
   <figure>
     <div class="marco"><img src="../img/b4-trans.png" alt="Tabla de transformaciones del maíz"></div>
-    <figcaption><b>Figura 5.7.</b> Transformaciones para el maíz: <span class="ui">No transformation needed</span>. La escala original ya cumple los supuestos y cualquier transformación solo complicaría la interpretación. Nótese que el recíproco empeora las cosas: la aditividad cae a P = 0.0005 y el Fmax sube a 8.64.</figcaption>
+    <figcaption><b>Figura 5.7.</b> Transformaciones para el maíz: <span class="ui">No hace falta transformar</span>. La escala original ya cumple los supuestos y cualquier transformación solo complicaría la interpretación. Nótese que el recíproco empeora las cosas: la aditividad cae a P = 0.0005 y el Fmax sube a 8.64.</figcaption>
   </figure>
 
   <h3>Cuando los supuestos fallan: el jitomate</h3>
@@ -237,15 +237,15 @@
   </div>
 
   <ol class="pasos">
-    <li>Lee la recomendación. Si dice <span class="ui">No transformation needed</span>, no transformes. Si dice <span class="ui">Suggested</span>, la fila marcada con ★ es la candidata.</li>
+    <li>Lee la recomendación. Si dice <span class="ui">No hace falta transformar</span>, no transformes. Si dice <span class="ui">Sugerido</span>, la fila marcada con ★ es la candidata.</li>
     <li>Confirma en el perfil de Box–Cox que esa potencia está dentro del intervalo, o cerca.</li>
-    <li>Pulsa <span class="ui">Use</span> en esa fila. La app añade la columna (aquí <code>Yield_kg_plant_ln</code>), la elige como respuesta y repite el diagnóstico.</li>
+    <li>Pulsa <span class="ui">Usar</span> en esa fila. La app añade la columna (aquí <code>Yield_kg_plant_ln</code>), la elige como respuesta y repite el diagnóstico.</li>
     <li>Comprueba que la calificación mejoró y pasa al Bloque 5 con la columna transformada.</li>
   </ol>
 
   <figure>
     <div class="marco"><img src="../img/b4-tomate-use.png" alt="Diagnóstico del jitomate transformado"></div>
-    <figcaption><b>Figura 5.11.</b> Después de <span class="ui">Use</span>: la nueva columna <code>Yield_kg_plant_ln</code> aparece como respuesta, el mensaje verde confirma que la original no se tocó y la calificación sube a A. La app avisa que en el Bloque 5 las medias se reportarán destransformadas.</figcaption>
+    <figcaption><b>Figura 5.11.</b> Después de <span class="ui">Usar</span>: la nueva columna <code>Yield_kg_plant_ln</code> aparece como respuesta, el mensaje verde confirma que la original no se tocó y la calificación sube a A. La app avisa que en el Bloque 5 las medias se reportarán destransformadas.</figcaption>
   </figure>
 
   <div class="caja importante">
@@ -266,7 +266,7 @@
 
   <!-- 5.5 -->
   <h2 id="s5-5"><span class="num">5.5</span>La ruta no paramétrica</h2>
-  <p>Los procedimientos de rangos sustituyen cada observación por su posición en la muestra ordenada y ya no necesitan normalidad. Son la elección natural para calificaciones ordinales, muestras pequeñas con valores atípicos y mediciones muy asimétricas que ninguna transformación endereza. La tarjeta <span class="ui">3 · Non-parametric analysis</span> muestra solo los procedimientos que corresponden a la estructura del diseño.</p>
+  <p>Los procedimientos de rangos sustituyen cada observación por su posición en la muestra ordenada y ya no necesitan normalidad. Son la elección natural para calificaciones ordinales, muestras pequeñas con valores atípicos y mediciones muy asimétricas que ninguna transformación endereza. La tarjeta <span class="ui">3 · Análisis no paramétrico</span> muestra solo los procedimientos que corresponden a la estructura del diseño.</p>
 
   <table>
     <caption><b>Tabla 5.5.</b> Los procedimientos no paramétricos y cuándo los ofrece la app.</caption>
@@ -284,13 +284,13 @@
     <caption><b>Tabla 5.6.</b> Qué procedimientos ofrece la app con cada ejemplo.</caption>
     <thead><tr><th style="width:34%">Ejemplo</th><th>Procedimientos disponibles</th></tr></thead>
     <tbody>
-      <tr><td><span class="ui">CRD · bean varieties</span></td><td>Kruskal–Wallis, Welch, ART, Kruskal–Wallis con Mann–Whitney</td></tr>
-      <tr><td><span class="ui">RCBD · maize × nitrogen</span> y <span class="ui">Ordinal scores · fungicides</span></td><td>Friedman, ART</td></tr>
-      <tr><td><span class="ui">Latin square · wheat</span>, <span class="ui">Factorial 3×3 in RCBD · tomato</span>, <span class="ui">Split-plot · irrigation × variety</span></td><td>ART</td></tr>
+      <tr><td><span class="ui">DCA · variedades de frijol5 variedades, 4 repeticiones, rendimiento kg/parcela</span></td><td>Kruskal–Wallis, Welch, ART, Kruskal–Wallis con Mann–Whitney</td></tr>
+      <tr><td><span class="ui">DBCA · maíz × nitrógeno4 dosis de N, 4 bloques, rendimiento t/ha</span> y <span class="ui">Escala ordinal · fungicidasescala de severidad 1–9, 5 bloques (no paramétrico)</span></td><td>Friedman, ART</td></tr>
+      <tr><td><span class="ui">Cuadro latino · trigo4 tratamientos, 4 hileras × 4 columnas</span>, <span class="ui">Factorial 3×3 en DBCA · jitomatevariedad × fertilizante, 3 bloques, 2 respuestas</span>, <span class="ui">Parcelas divididas · riego × variedad2 parcelas grandes, 4 subparcelas, 3 bloques</span></td><td>ART</td></tr>
     </tbody>
   </table>
 
-  <p>Además del procedimiento, se elige el ajuste de los valores P para las comparaciones múltiples: Holm (predeterminado), Bonferroni, Benjamini–Hochberg, Hochberg o ninguno; y, con Friedman, entre Conover y Nemenyi. <span class="ui">Run</span> produce tres tablas (la prueba, las comparaciones por pares y los grupos con letras) y una figura de medianas con letras.</p>
+  <p>Además del procedimiento, se elige el ajuste de los valores P para las comparaciones múltiples: Holm (predeterminado), Bonferroni, Benjamini–Hochberg, Hochberg o ninguno; y, con Friedman, entre Conover y Nemenyi. <span class="ui">Correr</span> produce tres tablas (la prueba, las comparaciones por pares y los grupos con letras) y una figura de medianas con letras.</p>
 
   <figure>
     <div class="marco"><img src="../img/b4-np-controles.png" alt="Controles del análisis no paramétrico"></div>
@@ -324,7 +324,7 @@
 
   <div class="caja nota">
     <div class="caja-t"><span class="ico">i</span>Nota · los otros procedimientos con los ejemplos</div>
-    <p>Con el frijol en azar completo, Kruskal–Wallis da H = 17.629 con 4 grados de libertad (P = 0.0015) y un ε² de 0.909; Dunn con Holm separa, por ejemplo, Negro Jamapa de Azufrado. Con el jitomate, el ART confirma los efectos de bloque, variedad, fertilización y su interacción (todos P &lt; 0.0001), y Tukey sobre los rangos alineados ordena las variedades: Saladette (a), Rio Grande (b) y Cherry (c). En el ART, la columna <span class="ui">aligned sum</span> debe valer cero en todas las filas; es un control interno de que la alineación se hizo bien.</p>
+    <p>Con el frijol en azar completo, Kruskal–Wallis da H = 17.629 con 4 grados de libertad (P = 0.0015) y un ε² de 0.909; Dunn con Holm separa, por ejemplo, Negro Jamapa de Azufrado. Con el jitomate, el ART confirma los efectos de bloque, variedad, fertilización y su interacción (todos P &lt; 0.0001), y Tukey sobre los rangos alineados ordena las variedades: Saladette (a), Rio Grande (b) y Cherry (c). En el ART, la columna <span class="ui">suma alineada</span> debe valer cero en todas las filas; es un control interno de que la alineación se hizo bien.</p>
   </div>
 
   <div class="caja regla">
@@ -360,10 +360,10 @@
   <div class="caja ejemplo">
     <div class="caja-t"><span class="ico">▸</span>Paso a paso · jitomate, cuando falla la aditividad</div>
     <ol class="pasos" style="margin-bottom:0">
-      <li>Carga <span class="ui">Factorial 3×3 in RCBD · tomato</span> en el Bloque 2 y abre el Bloque 4. Deja marcada <span class="ui">include all factor interactions</span>.</li>
+      <li>Carga <span class="ui">Factorial 3×3 en DBCA · jitomatevariedad × fertilizante, 3 bloques, 2 respuestas</span> en el Bloque 2 y abre el Bloque 4. Deja marcada <span class="ui">incluir todas las interacciones entre factores</span>.</li>
       <li>La calificación es C por la aditividad de Tukey (figura 5.8).</li>
       <li>En la tarjeta de transformaciones, la sugerida es ln(y) (figura 5.9) y Box–Cox la respalda (figura 5.10).</li>
-      <li>Pulsa <span class="ui">Use</span> en la fila del logaritmo natural. La calificación sube a A con <code>Yield_kg_plant_ln</code> (figura 5.11).</li>
+      <li>Pulsa <span class="ui">Usar</span> en la fila del logaritmo natural. La calificación sube a A con <code>Yield_kg_plant_ln</code> (figura 5.11).</li>
       <li>En el Bloque 5 elige <code>Yield_kg_plant_ln</code> como respuesta; las medias saldrán también destransformadas.</li>
     </ol>
   </div>
@@ -371,8 +371,8 @@
   <div class="caja ejemplo">
     <div class="caja-t"><span class="ico">▸</span>Paso a paso · fungicidas, una escala ordinal</div>
     <ol class="pasos" style="margin-bottom:0">
-      <li>Carga <span class="ui">Ordinal scores · fungicides</span> y abre el Bloque 4. Aunque la calificación sea A, la respuesta es una escala de 1 a 9.</li>
-      <li>Baja a <span class="ui">3 · Non-parametric analysis</span>, deja <span class="ui">Friedman</span>, <span class="ui">Holm</span> y el post hoc de Conover, y pulsa <span class="ui">Run</span>.</li>
+      <li>Carga <span class="ui">Escala ordinal · fungicidasescala de severidad 1–9, 5 bloques (no paramétrico)</span> y abre el Bloque 4. Aunque la calificación sea A, la respuesta es una escala de 1 a 9.</li>
+      <li>Baja a <span class="ui">3 · Análisis no paramétrico</span>, deja <span class="ui">Friedman</span>, <span class="ui">Holm</span> y el post hoc de Conover, y pulsa <span class="ui">Correr</span>.</li>
       <li>Lee la prueba (figura 5.13): P = 0.0029 y W de Kendall de 0.936.</li>
       <li>Reporta las medianas con sus letras (figura 5.14). La figura se edita y descarga como cualquier otra.</li>
     </ol>

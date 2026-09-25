@@ -42,7 +42,7 @@
 
   <figure>
     <div class="marco"><img src="../img/b3-teoria.png" alt="La tarjeta de teoría del Bloque 3"></div>
-    <figcaption><b>Figura 4.1.</b> La tarjeta <span class="ui">Reading the numbers and the plots</span> abre el Bloque 3 con cuatro temas: por qué explorar primero, cuál de DE, EE e IC va en el artículo, cómo leer cada gráfico y qué hacer con los valores atípicos.</figcaption>
+    <figcaption><b>Figura 4.1.</b> La tarjeta <span class="ui">Leer los números y las gráficas</span> abre el Bloque 3 con cuatro temas: por qué explorar primero, cuál de DE, EE e IC va en el artículo, cómo leer cada gráfico y qué hacer con los valores atípicos.</figcaption>
   </figure>
 
   <div class="caja teoria">
@@ -68,7 +68,7 @@
 
   <!-- 4.2 -->
   <h2 id="s4-2"><span class="num">4.2</span>Estadísticos por tratamiento, bloque y combinación</h2>
-  <p>La tarjeta <span class="ui">Choose what to describe</span> tiene tres controles: la respuesta, la variable de agrupación y el número de decimales. Todo lo demás del bloque, tarjetas, tabla, interpretación y figuras, se recalcula al cambiar cualquiera de ellos.</p>
+  <p>La tarjeta <span class="ui">Elige qué describir</span> tiene tres controles: la respuesta, la variable de agrupación y el número de decimales. Todo lo demás del bloque, tarjetas, tabla, interpretación y figuras, se recalcula al cambiar cualquiera de ellos.</p>
 
   <figure>
     <div class="marco" style="position:relative">
@@ -82,16 +82,16 @@
     <figcaption><b>Figura 4.2.</b> Controles y tarjetas de resumen para el ejemplo de maíz y nitrógeno.</figcaption>
   </figure>
   <ul class="leyenda-marcas">
-    <li><span class="n">1</span><span class="ui">Response variable</span>: la respuesta que se describe. Si la tabla tiene varias, se eligen una por una.</li>
-    <li><span class="n">2</span><span class="ui">Group by</span>: ninguna (todas las observaciones), un factor, todas las combinaciones de tratamiento (cuando hay dos o más factores), el bloque, la fila o la columna.</li>
-    <li><span class="n">3</span><span class="ui">Decimals</span>: decimales de la tabla y de las tarjetas. <span class="ui">Recalculate</span> fuerza el recálculo.</li>
+    <li><span class="n">1</span><span class="ui">Variable de respuesta</span>: la respuesta que se describe. Si la tabla tiene varias, se eligen una por una.</li>
+    <li><span class="n">2</span><span class="ui">Agrupar por</span>: ninguna (todas las observaciones), un factor, todas las combinaciones de tratamiento (cuando hay dos o más factores), el bloque, la fila o la columna.</li>
+    <li><span class="n">3</span><span class="ui">Decimales</span>: decimales de la tabla y de las tarjetas. <span class="ui">Recalcular</span> fuerza el recálculo.</li>
     <li><span class="n">4</span>Ocho tarjetas con el resumen de toda la respuesta: observaciones, media con su error estándar, mediana con el rango intercuartílico, desviación estándar, CV, rango, asimetría y curtosis.</li>
     <li><span class="n">5</span>El borde de color de una tarjeta es una lectura: verde, sin novedad; ámbar, atención (aquí el CV de 20.4&nbsp;% y la asimetría moderada); rojo, problema.</li>
   </ul>
 
   <figure>
     <div class="marco"><img src="../img/b3-tabla.png" alt="Tabla de estadísticos por dosis de nitrógeno"></div>
-    <figcaption><b>Figura 4.3.</b> La tabla de estadísticos por grupo, con la fila <span class="ui">Overall</span> al final y el botón <span class="ui">Download table (CSV)</span>. Con cuatro parcelas por dosis, los CV dentro de cada dosis van de 4.1 a 7.4&nbsp;%, mucho menores que el CV global de 20.4&nbsp;%, porque este incluye el efecto de la dosis.</figcaption>
+    <figcaption><b>Figura 4.3.</b> La tabla de estadísticos por grupo, con la fila <span class="ui">General</span> al final y el botón <span class="ui">Descargar el cuadro (CSV)</span>. Con cuatro parcelas por dosis, los CV dentro de cada dosis van de 4.1 a 7.4&nbsp;%, mucho menores que el CV global de 20.4&nbsp;%, porque este incluye el efecto de la dosis.</figcaption>
   </figure>
 
   <table class="compacta">
@@ -99,22 +99,22 @@
     <thead><tr><th style="width:26%">Columna</th><th>Qué es</th></tr></thead>
     <tbody>
       <tr><td><span class="ui">n</span></td><td>Observaciones con valor en el grupo.</td></tr>
-      <tr><td><span class="ui">Mean</span> · <span class="ui">SE</span> · <span class="ui">SD</span></td><td>Media, error estándar y desviación estándar del grupo.</td></tr>
-      <tr><td><span class="ui">CV %</span></td><td>Coeficiente de variación del grupo: SD / media × 100.</td></tr>
-      <tr><td><span class="ui">Min</span> · <span class="ui">Q1</span> · <span class="ui">Median</span> · <span class="ui">Q3</span> · <span class="ui">Max</span></td><td>Los cinco números del diagrama de caja: mínimo, primer cuartil, mediana, tercer cuartil y máximo.</td></tr>
-      <tr><td><span class="ui">Skew</span> · <span class="ui">Kurt</span></td><td>Asimetría y curtosis en exceso (0 para la normal). Con tres o cuatro observaciones son muy inestables; la curtosis se omite con n = 3.</td></tr>
-      <tr><td><span class="ui">95 % CI low</span> · <span class="ui">95 % CI high</span></td><td>Límites del intervalo de confianza al 95&nbsp;% de la media del grupo, con la t de Student de n − 1 grados de libertad.</td></tr>
-      <tr><td><span class="ui">Overall</span></td><td>La última fila: todos los datos juntos, sin agrupar.</td></tr>
+      <tr><td><span class="ui">Media</span> · <span class="ui">EE</span> · <span class="ui">DE</span></td><td>Media, error estándar y desviación estándar del grupo.</td></tr>
+      <tr><td><span class="ui">CV % = √CME / media general × 100: la precisión del ensayo, la cifra que buscan quienes revisan.</span></td><td>Coeficiente de variación del grupo: SD / media × 100.</td></tr>
+      <tr><td><span class="ui">Mín</span> · <span class="ui">Q1</span> · <span class="ui">Mediana</span> · <span class="ui">Q3</span> · <span class="ui">Máx</span></td><td>Los cinco números del diagrama de caja: mínimo, primer cuartil, mediana, tercer cuartil y máximo.</td></tr>
+      <tr><td><span class="ui">Sesgo</span> · <span class="ui">Curtosis</span></td><td>Asimetría y curtosis en exceso (0 para la normal). Con tres o cuatro observaciones son muy inestables; la curtosis se omite con n = 3.</td></tr>
+      <tr><td><span class="ui">IC 95 % inf</span> · <span class="ui">IC 95 % sup</span></td><td>Límites del intervalo de confianza al 95&nbsp;% de la media del grupo, con la t de Student de n − 1 grados de libertad.</td></tr>
+      <tr><td><span class="ui">General</span></td><td>La última fila: todos los datos juntos, sin agrupar.</td></tr>
     </tbody>
   </table>
 
   <figure>
     <div class="marco"><img src="../img/b3-bloque.png" alt="Estadísticos por bloque e interpretación"></div>
-    <figcaption><b>Figura 4.4.</b> Los mismos datos agrupados por bloque (<span class="ui">Group by: Block</span>). Las medias de los bloques van de 5.712 a 6.413 t/ha, una diferencia de 0.700 (12.3&nbsp;%): hay un efecto de bloque que el ANOVA del Bloque 5 confirmará. Los CV dentro de cada bloque (20.6 a 23.7&nbsp;%) son grandes porque cada bloque contiene las cuatro dosis.</figcaption>
+    <figcaption><b>Figura 4.4.</b> Los mismos datos agrupados por bloque (<span class="ui">Agrupar por: Block</span>). Las medias de los bloques van de 5.712 a 6.413 t/ha, una diferencia de 0.700 (12.3&nbsp;%): hay un efecto de bloque que el ANOVA del Bloque 5 confirmará. Los CV dentro de cada bloque (20.6 a 23.7&nbsp;%) son grandes porque cada bloque contiene las cuatro dosis.</figcaption>
   </figure>
 
   <h3>Con dos factores: combinaciones y tabla de dos vías</h3>
-  <p>Cuando la tabla tiene dos o más factores, el menú <span class="ui">Group by</span> ofrece además <span class="ui">All treatment combinations</span>, que describe cada celda del factorial, y el bloque añade una tabla de medias de dos vías con las medias marginales de cada factor.</p>
+  <p>Cuando la tabla tiene dos o más factores, el menú <span class="ui">Agrupar por</span> ofrece además <span class="ui">Todas las combinaciones de tratamiento</span>, que describe cada celda del factorial, y el bloque añade una tabla de medias de dos vías con las medias marginales de cada factor.</p>
 
   <figure>
     <div class="marco"><img src="../img/b3-tomate-tabla.png" alt="Estadísticos por combinación variedad por fertilizante"></div>
@@ -123,7 +123,7 @@
 
   <figure class="chica">
     <div class="marco"><img src="../img/b3-tomate-dosvias.png" alt="Tabla de medias de dos vías"></div>
-    <figcaption><b>Figura 4.6.</b> <span class="ui">Cell means</span>: la tabla de dos vías del mismo ejemplo. Las medias marginales (columna y fila <span class="ui">Mean</span>) resumen cada factor por separado; las celdas, su combinación. Saladette con F2 rinde 4.337 kg por planta y Cherry con F0, 1.947.</figcaption>
+    <figcaption><b>Figura 4.6.</b> <span class="ui">Medias de celda</span>: la tabla de dos vías del mismo ejemplo. Las medias marginales (columna y fila <span class="ui">Media</span>) resumen cada factor por separado; las celdas, su combinación. Saladette con F2 rinde 4.337 kg por planta y Cherry con F0, 1.947.</figcaption>
   </figure>
 
   <!-- 4.3 -->
@@ -150,30 +150,30 @@
   </div>
 
   <h3>La interpretación automática</h3>
-  <p>Bajo la tabla, <span class="ui">What the numbers say</span> convierte los estadísticos en frases. Cada frase tiene un nivel (verde, ámbar, rojo o informativo) y dice qué bloque resolverá lo que señala.</p>
+  <p>Bajo la tabla, <span class="ui">Qué dicen los números</span> convierte los estadísticos en frases. Cada frase tiene un nivel (verde, ámbar, rojo o informativo) y dice qué bloque resolverá lo que señala.</p>
 
   <figure>
     <div class="marco"><img src="../img/b3-interp.png" alt="La interpretación automática"></div>
-    <figcaption><b>Figura 4.7.</b> <span class="ui">What the numbers say</span> para el maíz por dosis: CV global alto pero explicado, distribución aproximadamente simétrica, la dosis más alta rinde 70.4&nbsp;% más que el testigo, y las desviaciones estándar de los grupos son parecidas (cociente 1.24).</figcaption>
+    <figcaption><b>Figura 4.7.</b> <span class="ui">Qué dicen los números</span> para el maíz por dosis: CV global alto pero explicado, distribución aproximadamente simétrica, la dosis más alta rinde 70.4&nbsp;% más que el testigo, y las desviaciones estándar de los grupos son parecidas (cociente 1.24).</figcaption>
   </figure>
 
   <table>
     <caption><b>Tabla 4.3.</b> Las frases de la interpretación y lo que las dispara.</caption>
     <thead><tr><th style="width:34%">Frase</th><th>Cuándo aparece y qué hacer</th></tr></thead>
     <tbody>
-      <tr><td><span class="ui">Overall CV of Y = x %</span></td><td>Siempre. Verde por debajo de 20&nbsp;%, ámbar hasta 30&nbsp;%, rojo por encima. Recuerda que es el CV descriptivo, no el del ANOVA.</td></tr>
-      <tr><td><span class="ui">Approximately symmetric distribution</span> · <span class="ui">Distribution is right/left-skewed</span></td><td>Según la asimetría sea menor o mayor que 1. Con asimetría positiva y valores positivos sugiere probar logaritmo o raíz cuadrada; el Bloque 4 lo decidirá sobre los residuales, que es lo que importa.</td></tr>
-      <tr><td><span class="ui">N potential outliers by Tukey's rule</span></td><td>Valores a más de 1.5 rangos intercuartílicos de los cuartiles, listados. Verifícalos en la libreta antes de decidir nada.</td></tr>
-      <tr><td><span class="ui">Highest mean: A; lowest: B</span></td><td>Con dos o más grupos: la diferencia entre el mejor y el peor, en unidades y en porcentaje del menor. Si es significativa se decide en el Bloque 5, no aquí.</td></tr>
-      <tr><td><span class="ui">Group standard deviations are of similar size</span> · <span class="ui">…differ x-fold</span></td><td>Cociente entre la mayor y la menor desviación estándar de los grupos. Por encima de 3 hay varianzas heterogéneas: el Bloque 4 lo probará con Levene o Bartlett y ofrecerá transformación, Welch o no paramétricos.</td></tr>
-      <tr><td><span class="ui">The spread grows with the mean</span></td><td>Con cuatro o más grupos, cuando la correlación entre medias y desviaciones estándar pasa de 0.7. Típico de conteos y de variables proporcionales; logaritmo o raíz cuadrada suelen estabilizar la varianza.</td></tr>
-      <tr><td><span class="ui">N groups with fewer than 3 observations</span></td><td>SD, CV e intervalos no son fiables en grupos tan pequeños.</td></tr>
+      <tr><td><span class="ui">CV general de Y = x %</span></td><td>Siempre. Verde por debajo de 20&nbsp;%, ámbar hasta 30&nbsp;%, rojo por encima. Recuerda que es el CV descriptivo, no el del ANOVA.</td></tr>
+      <tr><td><span class="ui">Distribución aproximadamente simétrica</span> · <span class="ui">La distribución está sesgada a la derecha o a la izquierda</span></td><td>Según la asimetría sea menor o mayor que 1. Con asimetría positiva y valores positivos sugiere probar logaritmo o raíz cuadrada; el Bloque 4 lo decidirá sobre los residuales, que es lo que importa.</td></tr>
+      <tr><td><span class="ui">N posibles valores atípicos según la regla de Tukey</span></td><td>Valores a más de 1.5 rangos intercuartílicos de los cuartiles, listados. Verifícalos en la libreta antes de decidir nada.</td></tr>
+      <tr><td><span class="ui">Media más alta: A; más baja: B</span></td><td>Con dos o más grupos: la diferencia entre el mejor y el peor, en unidades y en porcentaje del menor. Si es significativa se decide en el Bloque 5, no aquí.</td></tr>
+      <tr><td><span class="ui">Las desviaciones estándar de los grupos son parecidas</span> · <span class="ui">…difieren x veces</span></td><td>Cociente entre la mayor y la menor desviación estándar de los grupos. Por encima de 3 hay varianzas heterogéneas: el Bloque 4 lo probará con Levene o Bartlett y ofrecerá transformación, Welch o no paramétricos.</td></tr>
+      <tr><td><span class="ui">La dispersión crece con la media</span></td><td>Con cuatro o más grupos, cuando la correlación entre medias y desviaciones estándar pasa de 0.7. Típico de conteos y de variables proporcionales; logaritmo o raíz cuadrada suelen estabilizar la varianza.</td></tr>
+      <tr><td><span class="ui">N grupos con menos de 3 observaciones</span></td><td>SD, CV e intervalos no son fiables en grupos tan pequeños.</td></tr>
     </tbody>
   </table>
 
   <!-- 4.4 -->
   <h2 id="s4-4"><span class="num">4.4</span>Gráficos exploratorios</h2>
-  <p>La tarjeta <span class="ui">Exploratory figures</span> dibuja hasta nueve figuras según lo que tenga la tabla. Todas son editables (<span class="ui">Edit figure</span>) y se descargan a resolución de publicación; los ajustes de estilo que cambies se recuerdan para las figuras siguientes. El capítulo del Bloque 6 describe el editor a fondo; aquí interesa qué muestra cada figura y qué buscar en ella.</p>
+  <p>La tarjeta <span class="ui">Figuras de exploración</span> dibuja hasta nueve figuras según lo que tenga la tabla. Todas son editables (<span class="ui">Editar la figura</span>) y se descargan a resolución de publicación; los ajustes de estilo que cambies se recuerdan para las figuras siguientes. El capítulo del Bloque 6 describe el editor a fondo; aquí interesa qué muestra cada figura y qué buscar en ella.</p>
 
   <table>
     <caption><b>Tabla 4.4.</b> Las figuras del Bloque 3 y cuándo aparecen.</caption>
@@ -258,17 +258,17 @@
     <figcaption><b>Figura 4.16.</b> El diagrama de caja con su editor abierto.</figcaption>
   </figure>
   <ul class="leyenda-marcas">
-    <li><span class="n">1</span><span class="ui">Edit figure</span> abre y cierra el editor.</li>
-    <li><span class="n">2</span>Dos pestañas: <span class="ui">Content &amp; colours</span>, con las opciones propias de cada tipo de figura, y <span class="ui">Style &amp; typography</span>, con tema, tipografía, tamaño de letra, rejilla y dimensiones, comunes a todas.</li>
+    <li><span class="n">1</span><span class="ui">Editar la figura</span> abre y cierra el editor.</li>
+    <li><span class="n">2</span>Dos pestañas: <span class="ui">Contenido y colores</span>, con las opciones propias de cada tipo de figura, y <span class="ui">Estilo y tipografía</span>, con tema, tipografía, tamaño de letra, rejilla y dimensiones, comunes a todas.</li>
     <li><span class="n">3</span>Título, subtítulo, rótulos de los ejes y paleta; debajo, un color por grupo.</li>
     <li><span class="n">4</span>Las casillas de esta figura: observaciones, marcador de la media, valores atípicos, n por grupo.</li>
-    <li><span class="n">5</span><span class="ui">Y axis from zero</span> y los deslizadores de ancho, opacidad y tamaño de punto.</li>
+    <li><span class="n">5</span><span class="ui">Eje Y desde cero</span> y los deslizadores de ancho, opacidad y tamaño de punto.</li>
     <li><span class="n">6</span>Formato, resolución, fondo y descarga, con el tamaño resultante en píxeles y centímetros.</li>
   </ul>
 
   <div class="caja nota">
     <div class="caja-t"><span class="ico">i</span>Nota · el eje Y desde cero</div>
-    <p>Las figuras de medias con barras arrancan del cero porque una barra representa una cantidad; las cajas, violines y puntos no, porque lo que importa en ellas es la comparación entre grupos y un eje desde cero aplastaría las diferencias. La casilla <span class="ui">Y axis from zero</span> cambia esa decisión en cualquier figura. Para rendimientos de 4 a 7 t/ha, una figura de medias sin cero exagera visualmente la diferencia entre dosis; con cero, la muestra en proporción.</p>
+    <p>Las figuras de medias con barras arrancan del cero porque una barra representa una cantidad; las cajas, violines y puntos no, porque lo que importa en ellas es la comparación entre grupos y un eje desde cero aplastaría las diferencias. La casilla <span class="ui">Eje Y desde cero</span> cambia esa decisión en cualquier figura. Para rendimientos de 4 a 7 t/ha, una figura de medias sin cero exagera visualmente la diferencia entre dosis; con cero, la muestra en proporción.</p>
   </div>
 
   <!-- 4.5 -->
@@ -277,22 +277,22 @@
   <div class="caja ejemplo">
     <div class="caja-t"><span class="ico">▸</span>Paso a paso · maíz × nitrógeno</div>
     <ol class="pasos" style="margin-bottom:0">
-      <li>Con el ejemplo cargado en el Bloque 2, pulsa <span class="ui">Continue to descriptive statistics</span> o el número <span class="ui">3</span> de la barra. El bloque abre ya calculado, con <code>Yield_t_ha</code> como respuesta y <code>Nitrogen_kg_ha</code> como agrupación.</li>
+      <li>Con el ejemplo cargado en el Bloque 2, pulsa <span class="ui">Seguir a la estadística descriptiva</span> o el número <span class="ui">3</span> de la barra. El bloque abre ya calculado, con <code>Yield_t_ha</code> como respuesta y <code>Nitrogen_kg_ha</code> como agrupación.</li>
       <li>Lee las tarjetas (figura 4.2): 16 observaciones completas, media 6.032 ± 0.308, mediana 6.380, desviación estándar 1.232, CV 20.4&nbsp;%, rango de 3.910 a 7.480, asimetría −0.62 y curtosis −1.02.</li>
       <li>Baja a la tabla (figura 4.3). Las medias por dosis suben de 4.215 a 7.183 t/ha y los CV dentro de cada dosis son de 4 a 7&nbsp;%.</li>
       <li>Lee la interpretación (figura 4.7): la diferencia entre la dosis más alta y el testigo es de 2.967 t/ha (70.4&nbsp;%) y las desviaciones estándar son parecidas (cociente 1.24). Nada que corregir.</li>
-      <li>Cambia <span class="ui">Group by</span> a <span class="ui">Block (block)</span> (figura 4.4): las medias de los bloques difieren en 0.700 t/ha. Vuelve a poner el factor.</li>
+      <li>Cambia <span class="ui">Agrupar por</span> a <span class="ui">Block (bloque)</span> (figura 4.4): las medias de los bloques difieren en 0.700 t/ha. Vuelve a poner el factor.</li>
       <li>Revisa las figuras: en el diagrama de caja las cuatro cajas tienen alturas parecidas y no hay valores atípicos; en los perfiles por bloque las líneas son casi paralelas. El ensayo está listo para el Bloque 4.</li>
-      <li>Si quieres guardar la tabla, pulsa <span class="ui">Download table (CSV)</span>; las figuras se descargan una por una con <span class="ui">Download figure</span> o todas juntas desde el Bloque 6.</li>
+      <li>Si quieres guardar la tabla, pulsa <span class="ui">Descargar el cuadro (CSV)</span>; las figuras se descargan una por una con <span class="ui">Descargar la figura</span> o todas juntas desde el Bloque 6.</li>
     </ol>
   </div>
 
   <div class="caja ejemplo">
     <div class="caja-t"><span class="ico">▸</span>Paso a paso · jitomate, variedad × fertilización</div>
     <ol class="pasos" style="margin-bottom:0">
-      <li>En el Bloque 2 carga <span class="ui">Factorial 3×3 in RCBD · tomato</span> y pasa al Bloque 3. La respuesta inicial es <code>Yield_kg_plant</code>; la segunda, <code>Height_cm</code>, se elige en <span class="ui">Response variable</span>.</li>
+      <li>En el Bloque 2 carga <span class="ui">Factorial 3×3 en DBCA · jitomatevariedad × fertilizante, 3 bloques, 2 respuestas</span> y pasa al Bloque 3. La respuesta inicial es <code>Yield_kg_plant</code>; la segunda, <code>Height_cm</code>, se elige en <span class="ui">Variable de respuesta</span>.</li>
       <li>Las tarjetas dicen 27 observaciones, media 3.156, CV 25.7&nbsp;% y asimetría −0.02. El CV alto es de nuevo el efecto de los tratamientos: las variedades difieren mucho entre sí.</li>
-      <li>Elige <span class="ui">All treatment combinations</span> en <span class="ui">Group by</span> (figura 4.5) y mira la tabla de dos vías (figura 4.6): Saladette es la mejor variedad en los tres niveles de fertilización y F2 el mejor nivel en las tres variedades.</li>
+      <li>Elige <span class="ui">Todas las combinaciones de tratamiento</span> en <span class="ui">Agrupar por</span> (figura 4.5) y mira la tabla de dos vías (figura 4.6): Saladette es la mejor variedad en los tres niveles de fertilización y F2 el mejor nivel en las tres variedades.</li>
       <li>En el gráfico de interacción (figura 4.14) las líneas no son paralelas: la ganancia de F0 a F2 es de 1.2 kg en Saladette y de 0.5 kg en Cherry. Anótalo para el Bloque 5.</li>
       <li>El mapa de correlaciones (figura 4.15) muestra que rendimiento y altura casi no se relacionan (r = −0.19).</li>
     </ol>

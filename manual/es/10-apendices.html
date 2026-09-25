@@ -57,7 +57,7 @@
     <caption><b>Tabla A.1.</b> Formatos de entrada.</caption>
     <thead><tr><th style="width:22%">Extensión</th><th>Cómo se lee</th></tr></thead>
     <tbody>
-      <tr><td><code>.xlsx</code> <code>.xlsm</code> <code>.xlsb</code> <code>.xls</code> <code>.ods</code></td><td>Con el lector de hojas de cálculo incluido en <code>vendor/</code>. Se lee la primera hoja; si hay varias aparece el menú <span class="ui">Sheet</span>. Las celdas combinadas se detectan y se avisan.</td></tr>
+      <tr><td><code>.xlsx</code> <code>.xlsm</code> <code>.xlsb</code> <code>.xls</code> <code>.ods</code></td><td>Con el lector de hojas de cálculo incluido en <code>vendor/</code>. Se lee la primera hoja; si hay varias aparece el menú <span class="ui">Hoja</span>. Las celdas combinadas se detectan y se avisan.</td></tr>
       <tr><td><code>.csv</code> <code>.txt</code> <code>.dat</code> <code>.prn</code></td><td>Texto en UTF-8. El separador se detecta entre coma, punto y coma, tabulador y barra vertical, eligiendo el que aparece el mismo número de veces en las primeras diez líneas. Las comillas dobles protegen campos que contienen el separador.</td></tr>
       <tr><td><code>.tsv</code></td><td>Texto separado por tabuladores, siempre.</td></tr>
       <tr><td><code>.json</code></td><td>Una lista de objetos (uno por parcela), una lista de listas con los encabezados en la primera, un objeto <code>{columns, data}</code> o un objeto con una lista por columna.</td></tr>
@@ -84,11 +84,11 @@
     <caption><b>Tabla A.3.</b> Nombres de columna que la app reconoce para proponer un papel (sin distinguir mayúsculas). Las demás reglas están en la sección 3.4.</caption>
     <thead><tr><th style="width:26%">Papel propuesto</th><th>Nombres exactos</th></tr></thead>
     <tbody>
-      <tr><td><span class="ui">Block / replicate</span></td><td>Block, Blocks, Blk, Bloque, Bloques, Rep, Reps, Replicate, Replication, Repeticion, Repetición, R</td></tr>
-      <tr><td><span class="ui">Row</span></td><td>Row, Fila, Hilera, Renglon, Renglón</td></tr>
-      <tr><td><span class="ui">Column</span></td><td>Col, Column, Columna</td></tr>
-      <tr><td><span class="ui">Identifier / plot</span></td><td>Plot, PlotNo, Plot_No, FieldRow, FieldCol, Field_Row, Field_Col siempre; ID, Parcela, Unit, UE, Sample, Muestra, Obs, No, N°, Num, Number, Planta, Plant cuando todos sus valores son distintos</td></tr>
-      <tr><td><span class="ui">Covariate (ANCOVA)</span></td><td>Nombres que empiezan con Cov, Covariate, Covariable, Initial, Inicial, X0, Stand o Plants_per_plot</td></tr>
+      <tr><td><span class="ui">Bloque / repetición</span></td><td>Block, Blocks, Blk, Bloque, Bloques, Rep, Reps, Replicate, Replication, Repeticion, Repetición, R</td></tr>
+      <tr><td><span class="ui">Hilera</span></td><td>Row, Fila, Hilera, Renglon, Renglón</td></tr>
+      <tr><td><span class="ui">Columna</span></td><td>Col, Column, Columna</td></tr>
+      <tr><td><span class="ui">Identificador / parcela</span></td><td>Plot, PlotNo, Plot_No, FieldRow, FieldCol, Field_Row, Field_Col siempre; ID, Parcela, Unit, UE, Sample, Muestra, Obs, No, N°, Num, Number, Planta, Plant cuando todos sus valores son distintos</td></tr>
+      <tr><td><span class="ui">Covariable (ANCOVA)</span></td><td>Nombres que empiezan con Cov, Covariate, Covariable, Initial, Inicial, X0, Stand o Plants_per_plot</td></tr>
     </tbody>
   </table>
 
@@ -252,7 +252,7 @@
       <tr><td>Una variable numérica medida antes del tratamiento</td><td>Cualquiera de los anteriores + covariable</td><td>Peso inicial; población de plantas; análisis de suelo</td></tr>
     </tbody>
   </table>
-  <p class="regla-pie">Es la misma tabla que la app muestra en <span class="ui">Choosing the design from the layout</span>; el capítulo del Bloque 5 la desarrolla diseño por diseño.</p>
+  <p class="regla-pie">Es la misma tabla que la app muestra en <span class="ui">Elegir el diseño a partir del acomodo</span>; el capítulo del Bloque 5 la desarrolla diseño por diseño.</p>
   </div>
 
   <h3 class="ap-cap"><span class="chip k2">B2</span>Datos y roles de las variables</h3>
@@ -262,16 +262,16 @@
   <table class="compacta">
     <thead><tr><th style="width:46%">Si la columna…</th><th>la app propone…</th></tr></thead>
     <tbody>
-      <tr><td>se llama Block, Rep, Replicate, Bloque, Repetición o R (en cualquier combinación de mayúsculas)</td><td><span class="ui">Block / replicate</span></td></tr>
-      <tr><td>se llama Row, Fila, Hilera, Renglón · Col, Column, Columna</td><td><span class="ui">Row</span> · <span class="ui">Column</span></td></tr>
-      <tr><td>se llama Plot, Parcela, ID, Sample, Muestra, Obs… y todos sus valores son distintos</td><td><span class="ui">Identifier / plot</span></td></tr>
-      <tr><td>es de texto con hasta 40 niveles</td><td><span class="ui">Treatment factor</span></td></tr>
-      <tr><td>es de texto con todos los valores distintos, o con más de 40 categorías</td><td><span class="ui">Identifier</span> · <span class="ui">Exclude</span></td></tr>
-      <tr><td>es numérica con pocos valores enteros, repetidos casi el mismo número de veces, y no se llama como una medición</td><td><span class="ui">Treatment factor</span>, marcada <span class="ui">Integer codes (n levels)</span></td></tr>
-      <tr><td>es numérica, con pocos valores, pero con conteos desiguales o un nombre de medición (score, yield, height, peso, altura…)</td><td><span class="ui">Response (Y)</span>, con la señal <span class="ui">integer codes → factor?</span></td></tr>
-      <tr><td>se llama Cov, Covariate, Covariable, Initial, Inicial, Stand…</td><td><span class="ui">Covariate (ANCOVA)</span></td></tr>
-      <tr><td>es numérica y no tiene variación</td><td><span class="ui">Exclude</span>, marcada <span class="ui">Constant</span></td></tr>
-      <tr><td>es numérica y ninguna regla anterior aplica</td><td><span class="ui">Response (Y)</span></td></tr>
+      <tr><td>se llama Block, Rep, Replicate, Bloque, Repetición o R (en cualquier combinación de mayúsculas)</td><td><span class="ui">Bloque / repetición</span></td></tr>
+      <tr><td>se llama Row, Fila, Hilera, Renglón · Col, Column, Columna</td><td><span class="ui">Hilera</span> · <span class="ui">Columna</span></td></tr>
+      <tr><td>se llama Plot, Parcela, ID, Sample, Muestra, Obs… y todos sus valores son distintos</td><td><span class="ui">Identificador / parcela</span></td></tr>
+      <tr><td>es de texto con hasta 40 niveles</td><td><span class="ui">Factor de tratamiento</span></td></tr>
+      <tr><td>es de texto con todos los valores distintos, o con más de 40 categorías</td><td><span class="ui">Identificador</span> · <span class="ui">Excluir</span></td></tr>
+      <tr><td>es numérica con pocos valores enteros, repetidos casi el mismo número de veces, y no se llama como una medición</td><td><span class="ui">Factor de tratamiento</span>, marcada <span class="ui">Códigos enteros (n niveles)</span></td></tr>
+      <tr><td>es numérica, con pocos valores, pero con conteos desiguales o un nombre de medición (score, yield, height, peso, altura…)</td><td><span class="ui">Respuesta (Y)</span>, con la señal <span class="ui">¿códigos enteros → factor?</span></td></tr>
+      <tr><td>se llama Cov, Covariate, Covariable, Initial, Inicial, Stand…</td><td><span class="ui">Covariable (ANCOVA)</span></td></tr>
+      <tr><td>es numérica y no tiene variación</td><td><span class="ui">Excluir</span>, marcada <span class="ui">Constante</span></td></tr>
+      <tr><td>es numérica y ninguna regla anterior aplica</td><td><span class="ui">Respuesta (Y)</span></td></tr>
     </tbody>
   </table>
   <p class="regla-pie">Son propuestas. Una columna con códigos 1, 2, 3, 4 para las variedades parece numérica: si la app la deja como respuesta, cámbiala a factor. Y al revés: una calificación 1 a 9 con conteos parejos puede tomarse por códigos de tratamiento.</p>
@@ -411,7 +411,7 @@
       <tr><td>destacan en una sola parcela</td><td>Una parcela sospechosa; compárala con la tabla de observaciones sospechosas del Bloque 4.</td></tr>
     </tbody>
   </table>
-  <p class="regla-pie">La casilla <span class="ui">Centre the colour scale at zero</span> viene activada en el mapa de residuales para que el color neutro corresponda a un residual nulo.</p>
+  <p class="regla-pie">La casilla <span class="ui">Centrar la escala de color en cero</span> viene activada en el mapa de residuales para que el color neutro corresponda a un residual nulo.</p>
   </div>
 
   <h3 class="ap-cap"><span class="chip k7">B7</span>Informe y exportación</h3>
@@ -463,8 +463,9 @@
 <!-- reglas: fin -->
 
   <!-- ====================================================================== C -->
+<!-- ui:literal -->
   <h2 id="ap-c" data-nueva-hoja><span class="num">C</span>Glosario inglés–español</h2>
-  <p class="lead">Las siglas y los términos del manual con una definición breve, su nombre en inglés (tal como aparece en la app) y la sección donde se explican con calma.</p>
+  <p class="lead">Las siglas y los términos del manual con una definición breve, su nombre en inglés —el de la app cuando se cambia de idioma y el de la literatura científica— y la sección donde se explican con calma.</p>
 
   <h3>C.1 Siglas</h3>
   <table class="compacta">
@@ -555,8 +556,9 @@
   </table>
 
   <!-- ====================================================================== D -->
+<!-- /ui:literal -->
   <h2 id="ap-d" data-nueva-hoja><span class="num">D</span>Solución de problemas</h2>
-  <p class="lead">Los problemas más comunes, agrupados por el momento en que aparecen. Los mensajes de la app van en inglés, tal como se ven en pantalla; <code>{n}</code> marca una parte que cambia.</p>
+  <p class="lead">Los problemas más comunes, agrupados por el momento en que aparecen. Los mensajes van como se ven en pantalla con la app en español; <code>{n}</code> marca una parte que cambia.</p>
 
   <h3>D.1 Abrir la app y conservar el trabajo</h3>
   <table class="compacta">
@@ -579,12 +581,12 @@
       <tr><td><code>Could not load the example. Open the app through server.ps1</code></td><td>La app se abrió con doble clic y el navegador bloquea leer la carpeta <code>data/</code>.</td><td>Abre con <code>Open AgriDesign.bat</code> o usa la versión en línea. Tus propios archivos sí se leen con doble clic.</td><td class="c">3.2</td></tr>
       <tr><td><code>Could not read the spreadsheet: …</code></td><td>Libro protegido con contraseña, dañado o abierto en la nube sin descargar.</td><td>Quita la protección, guárdalo de nuevo como <code>.xlsx</code> o CSV, o cópialo a tu computadora.</td><td class="c">A.1</td></tr>
       <tr><td><code>Could not read the JSON file</code> o <code>Unrecognised JSON layout</code></td><td>El JSON no es una de las cuatro formas admitidas.</td><td>Usa una lista de objetos, uno por parcela.</td><td class="c">A.1</td></tr>
-      <tr><td><code>The file has no data.</code></td><td>Todas las filas están vacías, o la hoja leída no es la de los datos.</td><td>Elige la hoja correcta en <span class="ui">Sheet</span>.</td><td class="c">3.2</td></tr>
+      <tr><td><code>The file has no data.</code></td><td>Todas las filas están vacías, o la hoja leída no es la de los datos.</td><td>Elige la hoja correcta en <span class="ui">Hoja</span>.</td><td class="c">3.2</td></tr>
       <tr><td>Acentos convertidos en «�».</td><td>CSV guardado con una codificación antigua.</td><td>Guárdalo como CSV UTF-8 o usa <code>.xlsx</code>.</td><td class="c">A.1</td></tr>
-      <tr><td>Una columna numérica sale como texto o marcada <span class="ui">numbers mixed with text</span>.</td><td>Unidades dentro de las celdas, dos separadores decimales o texto en algunas celdas.</td><td>Limpia esas celdas en la libreta, o fija el separador en <span class="ui">Decimal separator</span> y vuelve a cargar.</td><td class="c">3.2</td></tr>
-      <tr><td>El número <code>1.234</code> se leyó como 1234.</td><td>La tabla tiene coma decimal y el punto se tomó como separador de miles.</td><td>Fija <span class="ui">Decimal separator: Point</span> si en realidad usas punto.</td><td class="c">A.1</td></tr>
+      <tr><td>Una columna numérica sale como texto o marcada <span class="ui">números mezclados con texto</span>.</td><td>Unidades dentro de las celdas, dos separadores decimales o texto en algunas celdas.</td><td>Limpia esas celdas en la libreta, o fija el separador en <span class="ui">Separador decimal</span> y vuelve a cargar.</td><td class="c">3.2</td></tr>
+      <tr><td>El número <code>1.234</code> se leyó como 1234.</td><td>La tabla tiene coma decimal y el punto se tomó como separador de miles.</td><td>Fija <span class="ui">Separador decimal: punto</span> si en realidad usas punto.</td><td class="c">A.1</td></tr>
       <tr><td>Aparece una fila de más o falta una.</td><td>Una fila de título encima de los encabezados o una fila de totales con otro nombre.</td><td>Revisa la vista previa y los avisos; quita títulos y totales de la hoja.</td><td class="c">3.3</td></tr>
-      <tr><td><code>Select at least one column to stack.</code></td><td>En el convertidor de tablas anchas no se marcó ninguna columna para apilar.</td><td>Marca las columnas de tratamientos en <span class="ui">Stack these columns</span>.</td><td class="c">3.6</td></tr>
+      <tr><td><code>Select at least one column to stack.</code></td><td>En el convertidor de tablas anchas no se marcó ninguna columna para apilar.</td><td>Marca las columnas de tratamientos en <span class="ui">Apilar estas columnas</span>.</td><td class="c">3.6</td></tr>
     </tbody>
   </table>
 
@@ -593,10 +595,10 @@
     <caption><b>Tabla D.3.</b> Problemas con los papeles de las columnas.</caption>
     <thead><tr><th style="width:27%">Síntoma o mensaje</th><th style="width:27%">Causa</th><th>Qué hacer</th><th style="width:7%" class="c">Ver</th></tr></thead>
     <tbody>
-      <tr><td><code>No treatment factor</code> con tratamientos codificados 1, 2, 3.</td><td>La columna parece numérica y se tomó como respuesta.</td><td>Cambia su papel a <span class="ui">Treatment factor</span>.</td><td class="c">3.4</td></tr>
+      <tr><td><code>No treatment factor</code> con tratamientos codificados 1, 2, 3.</td><td>La columna parece numérica y se tomó como respuesta.</td><td>Cambia su papel a <span class="ui">Factor de tratamiento</span>.</td><td class="c">3.4</td></tr>
       <tr><td><code>This looks like a wide table</code></td><td>Los tratamientos están en columnas.</td><td>Usa el convertidor a formato largo.</td><td class="c">3.6</td></tr>
       <tr><td><code>Some treatments have a single observation</code></td><td>Tabla ancha sin convertir, bloque tomado como factor o un nivel mal escrito.</td><td>Revisa papeles y niveles.</td><td class="c">3.5</td></tr>
-      <tr><td><span class="ui">levels differ only by case</span> o <span class="ui">levels with trailing spaces</span></td><td>Un nivel escrito de dos formas: <code>Control</code> y <code>control </code>.</td><td>Unifica la escritura en la libreta y vuelve a cargar.</td><td class="c">3.4</td></tr>
+      <tr><td><span class="ui">niveles que solo difieren en mayúsculas</span> o <span class="ui">niveles con espacios sobrantes</span></td><td>Un nivel escrito de dos formas: <code>Control</code> y <code>control </code>.</td><td>Unifica la escritura en la libreta y vuelve a cargar.</td><td class="c">3.4</td></tr>
       <tr><td><code>{n} treatment combinations never observed</code></td><td>Factorial incompleto o una celda perdida por completo.</td><td>Analiza las combinaciones observadas como un solo factor, o revisa si falta una parte de la tabla.</td><td class="c">3.5</td></tr>
       <tr><td><code>Row–column layout is not a Latin square</code></td><td>Filas, columnas y tratamientos no tienen el mismo número.</td><td>Revisa la tabla; si el diseño es fila–columna sin ser cuadrado, analízalo con bloques.</td><td class="c">3.5</td></tr>
       <tr><td>El diseño que se sembró no está disponible en el Bloque 5.</td><td>Faltan roles: dos columnas de bloque para bloques incompletos, fila y columna para el cuadro latino, dos factores para parcelas divididas.</td><td>Asigna los roles de la tabla A.4 en el Bloque 2.</td><td class="c">A.2</td></tr>
@@ -609,12 +611,12 @@
     <thead><tr><th style="width:27%">Síntoma o mensaje</th><th style="width:27%">Causa</th><th>Qué hacer</th><th style="width:7%" class="c">Ver</th></tr></thead>
     <tbody>
       <tr><td><code>Too few complete observations.</code></td><td>Menos de cuatro filas con respuesta y factores completos.</td><td>Revisa los datos faltantes de la respuesta y de los factores.</td><td class="c">5.2</td></tr>
-      <tr><td><code>The model leaves {n} residual degrees of freedom: nothing can be tested.</code></td><td>Una observación por combinación con todas las interacciones incluidas.</td><td>Desmarca <span class="ui">include all factor interactions</span> o revisa los roles.</td><td class="c">5.2</td></tr>
+      <tr><td><code>The model leaves {n} residual degrees of freedom: nothing can be tested.</code></td><td>Una observación por combinación con todas las interacciones incluidas.</td><td>Desmarca <span class="ui">incluir todas las interacciones entre factores</span> o revisa los roles.</td><td class="c">5.2</td></tr>
       <tr><td><code>No residual degrees of freedom: the model is saturated.</code></td><td>El diseño elegido pide más de lo que dan los datos.</td><td>Elige el diseño que corresponde a la estructura (tabla A.4).</td><td class="c">6.1</td></tr>
       <tr><td><code>Box–Cox needs strictly positive values</code></td><td>La respuesta tiene ceros o negativos.</td><td>Usa las transformaciones con constante, ln(y + 1) o √(y + 0.5).</td><td class="c">5.4</td></tr>
-      <tr><td>El factor de parcela grande sale muy significativo en un factorial.</td><td>Se analizó como factorial un ensayo sembrado en parcelas divididas.</td><td>Elige <span class="ui">Split-plot in RCBD</span> con ese factor primero.</td><td class="c">6.5</td></tr>
+      <tr><td>El factor de parcela grande sale muy significativo en un factorial.</td><td>Se analizó como factorial un ensayo sembrado en parcelas divididas.</td><td>Elige <span class="ui">Parcelas divididas en bloques al azar</span> con ese factor primero.</td><td class="c">6.5</td></tr>
       <tr><td>No aparece el análisis de tendencia.</td><td>Los niveles del factor no son números (<code>N0</code>, <code>N60</code>) o hay menos de tres.</td><td>Escribe las dosis como números en la libreta.</td><td class="c">3.6 · 6.6</td></tr>
-      <tr><td><code>Enter {n} numeric coefficients.</code> o <code>Coefficients must sum to zero.</code></td><td>En el contraste falta o sobra un coeficiente, o no suman cero.</td><td>Escribe uno por nivel, en el orden de <span class="ui">Level order</span>.</td><td class="c">6.6</td></tr>
+      <tr><td><code>Enter {n} numeric coefficients.</code> o <code>Coefficients must sum to zero.</code></td><td>En el contraste falta o sobra un coeficiente, o no suman cero.</td><td>Escribe uno por nivel, en el orden de <span class="ui">Orden de los niveles</span>.</td><td class="c">6.6</td></tr>
       <tr><td>Letras «ab» que parecen contradictorias.</td><td>La prueba no es transitiva: esa media no difiere de ninguno de los dos grupos.</td><td>Repórtalas tal cual.</td><td class="c">6.4</td></tr>
     </tbody>
   </table>
@@ -625,13 +627,13 @@
     <thead><tr><th style="width:27%">Síntoma o mensaje</th><th style="width:27%">Causa</th><th>Qué hacer</th><th style="width:7%" class="c">Ver</th></tr></thead>
     <tbody>
       <tr><td><code>No analysis yet. Run Block 5 first</code></td><td>No se ha corrido el Bloque 5, o los datos o roles cambiaron y el análisis anterior se descartó.</td><td>Corre el Bloque 5 y vuelve.</td><td class="c">7.1</td></tr>
-      <tr><td>Las ediciones de una figura desaparecieron.</td><td>La galería se reconstruyó tras un análisis nuevo o <span class="ui">Rebuild gallery</span>.</td><td>Termina el análisis antes de pulir las figuras.</td><td class="c">7.3</td></tr>
-      <tr><td><code>Tick at least two figures</code> o <code>Up to 8 panels.</code></td><td>El compositor multipanel necesita de dos a ocho figuras marcadas.</td><td>Marca <span class="ui">Add to multi-panel figure</span> en las figuras que quieras.</td><td class="c">7.4</td></tr>
-      <tr><td><code>Export failed: …</code></td><td>Casi siempre, una figura muy grande a 12× que excede la memoria del navegador.</td><td>Baja la resolución o reduce <span class="ui">Width (px)</span>.</td><td class="c">7.5</td></tr>
+      <tr><td>Las ediciones de una figura desaparecieron.</td><td>La galería se reconstruyó tras un análisis nuevo o <span class="ui">Rehacer la galería</span>.</td><td>Termina el análisis antes de pulir las figuras.</td><td class="c">7.3</td></tr>
+      <tr><td><code>Tick at least two figures</code> o <code>Up to 8 panels.</code></td><td>El compositor multipanel necesita de dos a ocho figuras marcadas.</td><td>Marca <span class="ui">Agregar a la figura de varios paneles</span> en las figuras que quieras.</td><td class="c">7.4</td></tr>
+      <tr><td><code>Export failed: …</code></td><td>Casi siempre, una figura muy grande a 12× que excede la memoria del navegador.</td><td>Baja la resolución o reduce <span class="ui">Ancho (px)</span>.</td><td class="c">7.5</td></tr>
       <tr><td>Letras de 3 a 4 puntos en la figura publicada.</td><td>La figura se redujo al ancho de una columna.</td><td>Sigue la tabla 7.8: menos ancho y más tamaño de letra.</td><td class="c">7.5</td></tr>
-      <tr><td>El informe no trae las figuras de un bloque.</td><td>Esas figuras no estaban dibujadas.</td><td>Abre el bloque, vuelve al 7 y pulsa <span class="ui">Build / refresh preview</span>.</td><td class="c">8.2</td></tr>
+      <tr><td>El informe no trae las figuras de un bloque.</td><td>Esas figuras no estaban dibujadas.</td><td>Abre el bloque, vuelve al 7 y pulsa <span class="ui">Construir / actualizar la vista previa</span>.</td><td class="c">8.2</td></tr>
       <tr><td><code>Allow pop-ups to print.</code></td><td>El navegador bloqueó la ventana del informe.</td><td>Permite ventanas emergentes para la app, o descarga el HTML e imprímelo desde ahí.</td><td class="c">8.3</td></tr>
-      <tr><td><code>Could not build the package: …</code></td><td>Casi siempre, muchas figuras a 900 dpi que exceden la memoria del navegador.</td><td>Elige 300 dpi o <span class="ui">SVG only</span>.</td><td class="c">8.4</td></tr>
+      <tr><td><code>Could not build the package: …</code></td><td>Casi siempre, muchas figuras a 900 dpi que exceden la memoria del navegador.</td><td>Elige 300 dpi o <span class="ui">Solo SVG</span>.</td><td class="c">8.4</td></tr>
       <tr><td><code>The number of treatments ({t}) must be a multiple of the block size ({k}).</code></td><td>En bloques incompletos, k no divide al número de tratamientos.</td><td>Cambia k o el número de tratamientos.</td><td class="c">9.2</td></tr>
       <tr><td><code>Enter the levels of factor C.</code></td><td>Parcelas subdivididas sin niveles del tercer factor.</td><td>Escribe los niveles de C separados por comas.</td><td class="c">9.2</td></tr>
       <tr><td>La libreta abierta como plantilla no deja continuar.</td><td>La respuesta está vacía: es lo esperado.</td><td>Captura las mediciones y carga el archivo lleno.</td><td class="c">9.4</td></tr>

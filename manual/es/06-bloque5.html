@@ -44,49 +44,49 @@
 
   <figure>
     <div class="marco"><img src="../img/b5-teoria.png" alt="La tarjeta de teoría del Bloque 5"></div>
-    <figcaption><b>Figura 6.1.</b> La tarjeta <span class="ui">Designs, error terms and mean separation</span>, con el primer tema abierto: cada diseño con su aleatorización, su modelo, sus términos de error y su uso típico, y el aviso sobre el error más frecuente, analizar una parcela dividida como factorial. Los otros tres temas explican la tabla de ANOVA, la elección de la prueba de medias y qué esperan los revisores.</figcaption>
+    <figcaption><b>Figura 6.1.</b> La tarjeta <span class="ui">Diseños, términos de error y comparación de medias</span>, con el primer tema abierto: cada diseño con su aleatorización, su modelo, sus términos de error y su uso típico, y el aviso sobre el error más frecuente, analizar una parcela dividida como factorial. Los otros tres temas explican la tabla de ANOVA, la elección de la prueba de medias y qué esperan los revisores.</figcaption>
   </figure>
 
   <table>
-    <caption><b>Tabla 6.1.</b> Los trece diseños del menú <span class="ui">Experimental design</span>, con lo que piden a los roles del Bloque 2 y el número de estratos de error.</caption>
+    <caption><b>Tabla 6.1.</b> Los trece diseños del menú <span class="ui">Diseño experimental</span>, con lo que piden a los roles del Bloque 2 y el número de estratos de error.</caption>
     <thead><tr><th style="width:30%">Diseño en la app</th><th style="width:22%">Roles que necesita</th><th style="width:30%">Modelo</th><th class="c">Errores</th></tr></thead>
     <tbody>
-      <tr><td><span class="ui">Completely randomised design (CRD)</span></td><td>1 factor</td><td>y = μ + τ + ε</td><td class="c">1</td></tr>
-      <tr><td><span class="ui">Randomised complete block design (RCBD)</span></td><td>1 factor, 1 bloque</td><td>y = μ + β + τ + ε</td><td class="c">1</td></tr>
-      <tr><td><span class="ui">Generalised RCBD</span></td><td>1 factor, 1 bloque, varias parcelas por bloque y tratamiento</td><td>y = μ + β + τ + (βτ) + ε</td><td class="c">1 o 2</td></tr>
-      <tr><td><span class="ui">Latin square</span></td><td>1 factor, fila y columna</td><td>y = μ + ρ + γ + τ + ε</td><td class="c">1</td></tr>
-      <tr><td><span class="ui">Incomplete block design</span></td><td>1 factor, 2 columnas de bloque (repetición y bloque)</td><td>y = μ + ρ + β(ρ) + τ + ε</td><td class="c">1</td></tr>
-      <tr><td><span class="ui">Augmented design</span></td><td>1 factor, 1 bloque</td><td>y = μ + β + τ + ε, con el error de los testigos</td><td class="c">1</td></tr>
-      <tr><td><span class="ui">Factorial in CRD</span></td><td>2 a 4 factores</td><td>y = μ + α + δ + (αδ) + ε</td><td class="c">1</td></tr>
-      <tr><td><span class="ui">Factorial in RCBD</span></td><td>2 a 4 factores, 1 bloque</td><td>y = μ + β + α + δ + (αδ) + ε</td><td class="c">1</td></tr>
-      <tr><td><span class="ui">Split-plot in RCBD</span></td><td>2 factores (el primero en parcela grande), 1 bloque</td><td>y = μ + β + α + (βα)<sub>a</sub> + δ + (αδ) + ε<sub>b</sub></td><td class="c">2</td></tr>
-      <tr><td><span class="ui">Split-plot in CRD</span></td><td>2 factores, 1 columna de repetición</td><td>y = μ + α + ε<sub>a</sub> + δ + (αδ) + ε<sub>b</sub></td><td class="c">2</td></tr>
-      <tr><td><span class="ui">Strip-plot in RCBD</span></td><td>2 factores, 1 bloque</td><td>y = μ + β + α + (βα)<sub>a</sub> + δ + (βδ)<sub>b</sub> + (αδ) + ε<sub>c</sub></td><td class="c">3</td></tr>
-      <tr><td><span class="ui">Split-split-plot in RCBD</span></td><td>3 factores, 1 bloque</td><td>tres tamaños de parcela anidados</td><td class="c">3</td></tr>
-      <tr><td><span class="ui">Nested (hierarchical)</span></td><td>2 factores, el segundo dentro del primero</td><td>y = μ + α + δ(α) + ε</td><td class="c">1 o 2</td></tr>
+      <tr><td><span class="ui">Diseño completamente al azar (DCA)</span></td><td>1 factor</td><td>y = μ + τ + ε</td><td class="c">1</td></tr>
+      <tr><td><span class="ui">Diseño de bloques completos al azar (DBCA)</span></td><td>1 factor, 1 bloque</td><td>y = μ + β + τ + ε</td><td class="c">1</td></tr>
+      <tr><td><span class="ui">DBCA generalizado</span></td><td>1 factor, 1 bloque, varias parcelas por bloque y tratamiento</td><td>y = μ + β + τ + (βτ) + ε</td><td class="c">1 o 2</td></tr>
+      <tr><td><span class="ui">Cuadro latino</span></td><td>1 factor, fila y columna</td><td>y = μ + ρ + γ + τ + ε</td><td class="c">1</td></tr>
+      <tr><td><span class="ui">Diseño de bloques incompletos</span></td><td>1 factor, 2 columnas de bloque (repetición y bloque)</td><td>y = μ + ρ + β(ρ) + τ + ε</td><td class="c">1</td></tr>
+      <tr><td><span class="ui">Diseño aumentado</span></td><td>1 factor, 1 bloque</td><td>y = μ + β + τ + ε, con el error de los testigos</td><td class="c">1</td></tr>
+      <tr><td><span class="ui">Factorial completamente al azar</span></td><td>2 a 4 factores</td><td>y = μ + α + δ + (αδ) + ε</td><td class="c">1</td></tr>
+      <tr><td><span class="ui">Factorial en bloques completos al azar</span></td><td>2 a 4 factores, 1 bloque</td><td>y = μ + β + α + δ + (αδ) + ε</td><td class="c">1</td></tr>
+      <tr><td><span class="ui">Parcelas divididas en bloques al azar</span></td><td>2 factores (el primero en parcela grande), 1 bloque</td><td>y = μ + β + α + (βα)<sub>a</sub> + δ + (αδ) + ε<sub>b</sub></td><td class="c">2</td></tr>
+      <tr><td><span class="ui">Parcelas divididas completamente al azar</span></td><td>2 factores, 1 columna de repetición</td><td>y = μ + α + ε<sub>a</sub> + δ + (αδ) + ε<sub>b</sub></td><td class="c">2</td></tr>
+      <tr><td><span class="ui">Franjas divididas en bloques al azar</span></td><td>2 factores, 1 bloque</td><td>y = μ + β + α + (βα)<sub>a</sub> + δ + (βδ)<sub>b</sub> + (αδ) + ε<sub>c</sub></td><td class="c">3</td></tr>
+      <tr><td><span class="ui">Parcelas subdivididas en bloques al azar</span></td><td>3 factores, 1 bloque</td><td>tres tamaños de parcela anidados</td><td class="c">3</td></tr>
+      <tr><td><span class="ui">Anidado (jerárquico)</span></td><td>2 factores, el segundo dentro del primero</td><td>y = μ + α + δ(α) + ε</td><td class="c">1 o 2</td></tr>
     </tbody>
   </table>
 
-  <p>El menú solo habilita los diseños compatibles con los roles asignados en el Bloque 2. Los demás aparecen en gris con la razón: <span class="ui">needs 2–4 treatment factors</span>, <span class="ui">needs row and column roles</span>, <span class="ui">needs several plots per block × treatment</span>. La estrella <span class="ui">★ suggested</span> marca el diseño que la app deduce de la estructura de la tabla: cuadro latino si hay fila y columna, bloques completos si hay un factor y un bloque, factorial en bloques si hay dos factores y un bloque, y así sucesivamente.</p>
+  <p>El menú solo habilita los diseños compatibles con los roles asignados en el Bloque 2. Los demás aparecen en gris con la razón: <span class="ui">necesita 2 a 4 factores de tratamiento</span>, <span class="ui">necesita papeles de hilera y de columna</span>, <span class="ui">necesita varias parcelas por bloque × tratamiento</span>. La estrella <span class="ui">★ sugerido</span> marca el diseño que la app deduce de la estructura de la tabla: cuadro latino si hay fila y columna, bloques completos si hay un factor y un bloque, factorial en bloques si hay dos factores y un bloque, y así sucesivamente.</p>
 
   <div class="caja importante">
     <div class="caja-t"><span class="ico">!</span>Importante · la sugerencia no puede ver el campo</div>
-    <p>Una tabla con riego, variedad y bloque se ve igual si se sembró como factorial en bloques o como parcela dividida. La app sugiere el factorial porque es lo único que puede deducir de la tabla; si el riego se aplicó a parcelas grandes y las variedades dentro de ellas, <b>tú</b> tienes que elegir <span class="ui">Split-plot in RCBD</span>. Lo mismo vale para las franjas y para los factores anidados. La sección 6.5 muestra cuánto cambian las pruebas.</p>
+    <p>Una tabla con riego, variedad y bloque se ve igual si se sembró como factorial en bloques o como parcela dividida. La app sugiere el factorial porque es lo único que puede deducir de la tabla; si el riego se aplicó a parcelas grandes y las variedades dentro de ellas, <b>tú</b> tienes que elegir <span class="ui">Parcelas divididas en bloques al azar</span>. Lo mismo vale para las franjas y para los factores anidados. La sección 6.5 muestra cuánto cambian las pruebas.</p>
   </div>
 
   <div class="caja teoria">
     <div class="caja-t"><span class="ico">θ</span>Teoría en breve · estratos de error</div>
-    <p>Cada tamaño de unidad experimental tiene su propia variación. En una parcela dividida, las parcelas grandes que recibieron el mismo riego difieren entre sí más que las subparcelas vecinas que recibieron la misma variedad, porque están más lejos y son menos. Por eso el riego se prueba contra el <b>error a</b> (bloque × riego), con pocos grados de libertad, y la variedad y la interacción contra el <b>error b</b>, el residual. Usar el error b para el riego es comparar parcelas grandes con la vara de las pequeñas: se declaran diferencias que no existen. La columna <span class="ui">Tested against</span> de la tabla de ANOVA dice, para cada fuente, contra qué error se probó.</p>
+    <p>Cada tamaño de unidad experimental tiene su propia variación. En una parcela dividida, las parcelas grandes que recibieron el mismo riego difieren entre sí más que las subparcelas vecinas que recibieron la misma variedad, porque están más lejos y son menos. Por eso el riego se prueba contra el <b>error a</b> (bloque × riego), con pocos grados de libertad, y la variedad y la interacción contra el <b>error b</b>, el residual. Usar el error b para el riego es comparar parcelas grandes con la vara de las pequeñas: se declaran diferencias que no existen. La columna <span class="ui">Se prueba contra</span> de la tabla de ANOVA dice, para cada fuente, contra qué error se probó.</p>
   </div>
 
   <div class="caja nota">
     <div class="caja-t"><span class="ico">i</span>Nota · opciones de algunos diseños</div>
-    <p>Dos diseños muestran una casilla bajo la descripción. En <span class="ui">Generalised RCBD</span>, <span class="ui">Blocks are random</span> prueba los tratamientos contra la interacción bloque × tratamiento, la elección correcta cuando los bloques representan ambientes que se quieren generalizar. En <span class="ui">Nested</span>, <span class="ui">B(A) is random</span> prueba el factor superior contra el anidado: los árboles dentro de huertas son la unidad con la que se juzga a las huertas. Las covariables marcadas en el Bloque 2 se añaden a cualquier diseño y convierten el análisis en uno de covarianza.</p>
+    <p>Dos diseños muestran una casilla bajo la descripción. En <span class="ui">DBCA generalizado</span>, <span class="ui">Los bloques son aleatorios</span> prueba los tratamientos contra la interacción bloque × tratamiento, la elección correcta cuando los bloques representan ambientes que se quieren generalizar. En <span class="ui">Anidado</span>, <span class="ui">B(A) es aleatorio</span> prueba el factor superior contra el anidado: los árboles dentro de huertas son la unidad con la que se juzga a las huertas. Las covariables marcadas en el Bloque 2 se añaden a cualquier diseño y convierten el análisis en uno de covarianza.</p>
   </div>
 
   <!-- 6.2 -->
   <h2 id="s6-2"><span class="num">6.2</span>Opciones: sumas de cuadrados, α y prueba de medias</h2>
-  <p>La tarjeta <span class="ui">1 · Design and options</span> reúne cinco decisiones. El análisis se calcula solo al abrir el bloque con las opciones predeterminadas y se repite con <span class="ui">Run the analysis</span>.</p>
+  <p>La tarjeta <span class="ui">1 · Diseño y opciones</span> reúne cinco decisiones. El análisis se calcula solo al abrir el bloque con las opciones predeterminadas y se repite con <span class="ui">Correr el análisis</span>.</p>
 
   <figure>
     <div class="marco" style="position:relative">
@@ -102,11 +102,11 @@
     <figcaption><b>Figura 6.2.</b> Opciones para el ejemplo de maíz y nitrógeno.</figcaption>
   </figure>
   <ul class="leyenda-marcas">
-    <li><span class="n">1</span><span class="ui">Response variable</span>: incluye las columnas transformadas del Bloque 4.</li>
-    <li><span class="n">2</span><span class="ui">Experimental design</span>: el diseño, con la sugerencia marcada y los incompatibles en gris.</li>
-    <li><span class="n">3</span><span class="ui">Sums of squares</span>: tipo III (marginal, predeterminado) o tipo I (secuencial).</li>
-    <li><span class="n">4</span><span class="ui">Significance level α</span>: 0.05, 0.01 o 0.10.</li>
-    <li><span class="n">5</span><span class="ui">Mean-separation test</span>: once pruebas, con una descripción bajo el menú. Con Dunnett aparece un menú más para elegir el testigo.</li>
+    <li><span class="n">1</span><span class="ui">Variable de respuesta</span>: incluye las columnas transformadas del Bloque 4.</li>
+    <li><span class="n">2</span><span class="ui">Diseño experimental</span>: el diseño, con la sugerencia marcada y los incompatibles en gris.</li>
+    <li><span class="n">3</span><span class="ui">Sumas de cuadrados</span>: tipo III (marginal, predeterminado) o tipo I (secuencial).</li>
+    <li><span class="n">4</span><span class="ui">Nivel de significancia α</span>: 0.05, 0.01 o 0.10.</li>
+    <li><span class="n">5</span><span class="ui">Prueba de comparación de medias</span>: once pruebas, con una descripción bajo el menú. Con Dunnett aparece un menú más para elegir el testigo.</li>
     <li><span class="n">6</span>El nombre del diseño, su modelo y cuándo se usa.</li>
     <li><span class="n">7</span>Un croquis del diseño, el mismo que dibuja el Bloque 8.</li>
   </ul>
@@ -120,15 +120,15 @@
     <caption><b>Tabla 6.2.</b> Las once pruebas de separación de medias. Letras de los ejemplos: frijol en azar completo, cinco variedades ordenadas de mayor a menor (Azufrado, Flor de Mayo, Pinto Saltillo, Negro Jamapa, Bayo), α = 0.05.</caption>
     <thead><tr><th style="width:21%">Prueba</th><th style="width:20%">Controla el error</th><th>Úsala cuando…</th><th style="width:18%">Letras del frijol</th></tr></thead>
     <tbody>
-      <tr><td><span class="ui">Tukey HSD</span></td><td>De la familia, todos los pares</td><td>Por omisión, para comparar todos los pares. Con repeticiones desiguales se usa la versión de Tukey–Kramer.</td><td>a · ab · b · c · c</td></tr>
-      <tr><td><span class="ui">Fisher's LSD</span></td><td>Por comparación</td><td>Pocos tratamientos (cuatro o menos), tras una F significativa, o comparaciones planeadas.</td><td>a · b · c · d · e</td></tr>
+      <tr><td><span class="ui">Tukey (HSD) es la opción por omisión para todas las comparaciones por pares: controla el error por familia. La DMS de Fisher es más potente, pero solo se defiende después de una F significativa y con pocos tratamientos. Duncan es liberal y cada vez más rechazada por las revistas. Dunnett responde una sola pregunta: ¿cada tratamiento difiere del testigo? Scheffé protege contrastes elegidos después de ver los datos. Games–Howell es para varianzas desiguales.</span></td><td>De la familia, todos los pares</td><td>Por omisión, para comparar todos los pares. Con repeticiones desiguales se usa la versión de Tukey–Kramer.</td><td>a · ab · b · c · c</td></tr>
+      <tr><td><span class="ui">DMS de Fisher</span></td><td>Por comparación</td><td>Pocos tratamientos (cuatro o menos), tras una F significativa, o comparaciones planeadas.</td><td>a · b · c · d · e</td></tr>
       <tr><td><span class="ui">Duncan</span></td><td>Ninguno (liberal)</td><td>Tradicional en agronomía; muchas revistas ya no la aceptan.</td><td>a · b · c · d · e</td></tr>
       <tr><td><span class="ui">Student–Newman–Keuls</span></td><td>Por paso</td><td>Rango múltiple; puede dar grupos no transitivos.</td><td>a · b · c · d · e</td></tr>
       <tr><td><span class="ui">REGWQ</span></td><td>De la familia</td><td>La mejor de rango múltiple cuando muchas medias son de verdad iguales.</td><td>a · b · b · c · d</td></tr>
       <tr><td><span class="ui">Bonferroni</span> · <span class="ui">Šidák</span></td><td>De la familia</td><td>Pocas comparaciones planeadas; conservadoras con muchos tratamientos.</td><td>a · ab · b · c · c</td></tr>
       <tr><td><span class="ui">Holm</span></td><td>De la familia</td><td>Siempre preferible a Bonferroni: el mismo control, más potencia.</td><td>a · b · c · d · e</td></tr>
       <tr><td><span class="ui">Scheffé</span></td><td>Todos los contrastes</td><td>Contrastes decididos después de ver los datos; la más conservadora para pares.</td><td>a · ab · b · c · c</td></tr>
-      <tr><td><span class="ui">Dunnett (vs control)</span></td><td>De la familia, contra el testigo</td><td>Solo interesa si cada tratamiento difiere del testigo.</td><td>* · * · * · testigo · *</td></tr>
+      <tr><td><span class="ui">Dunnett (contra el testigo)</span></td><td>De la familia, contra el testigo</td><td>Solo interesa si cada tratamiento difiere del testigo.</td><td>* · * · * · testigo · *</td></tr>
       <tr><td><span class="ui">Games–Howell</span></td><td>De la familia</td><td>Varianzas desiguales entre tratamientos (cada par usa su propio error).</td><td>a · ab · b · c · c</td></tr>
     </tbody>
   </table>
@@ -140,7 +140,7 @@
 
   <!-- 6.3 -->
   <h2 id="s6-3"><span class="num">6.3</span>La tabla de ANOVA y su interpretación</h2>
-  <p>La tarjeta <span class="ui">2 · Analysis of variance</span> abre con siete tarjetas de resumen, sigue con la tabla de ANOVA, los estratos de error y la interpretación, y termina con un borrador del párrafo de resultados.</p>
+  <p>La tarjeta <span class="ui">2 · Análisis de varianza</span> abre con siete tarjetas de resumen, sigue con la tabla de ANOVA, los estratos de error y la interpretación, y termina con un borrador del párrafo de resultados.</p>
 
   <figure>
     <div class="marco"><img src="../img/b5-anova.png" alt="Tarjetas y tabla de ANOVA del maíz"></div>
@@ -151,13 +151,13 @@
     <caption><b>Tabla 6.3.</b> Las tarjetas de resumen del ANOVA y sus valores para el maíz.</caption>
     <thead><tr><th style="width:28%">Tarjeta</th><th>Qué es</th><th class="c" style="width:12%">Maíz</th></tr></thead>
     <tbody>
-      <tr><td><span class="ui">Grand mean</span></td><td>Media general de la respuesta.</td><td class="c">6.032</td></tr>
+      <tr><td><span class="ui">Media general</span></td><td>Media general de la respuesta.</td><td class="c">6.032</td></tr>
       <tr><td><span class="ui">CV</span></td><td>√CME / media × 100: la precisión del ensayo, la cifra que piden los revisores.</td><td class="c">2.1&nbsp;%</td></tr>
-      <tr><td><span class="ui">R²</span></td><td>Proporción de la variación total que explica el modelo, bloques incluidos.</td><td class="c">0.994</td></tr>
-      <tr><td><span class="ui">RMSE</span></td><td>Desviación estándar residual, √CME.</td><td class="c">0.128</td></tr>
-      <tr><td><span class="ui">SE of a treatment mean</span></td><td>Error estándar de una media del primer factor: √(CM del error / r).</td><td class="c">0.064</td></tr>
-      <tr><td><span class="ui">SE of a difference</span></td><td>Error estándar de la diferencia entre dos medias: √(2 CM del error / r).</td><td class="c">0.091</td></tr>
-      <tr><td><span class="ui">Residual df</span></td><td>Grados de libertad del error; en ámbar si son menos de 6.</td><td class="c">9</td></tr>
+      <tr><td><span class="ui">R² del modelo: cuánta de la variación total explica el diseño (bloques incluidos).</span></td><td>Proporción de la variación total que explica el modelo, bloques incluidos.</td><td class="c">0.994</td></tr>
+      <tr><td><span class="ui">RCME</span></td><td>Desviación estándar residual, √CME.</td><td class="c">0.128</td></tr>
+      <tr><td><span class="ui">EE de una media de tratamiento</span></td><td>Error estándar de una media del primer factor: √(CM del error / r).</td><td class="c">0.064</td></tr>
+      <tr><td><span class="ui">EE de una diferencia</span></td><td>Error estándar de la diferencia entre dos medias: √(2 CM del error / r).</td><td class="c">0.091</td></tr>
+      <tr><td><span class="ui">g.l. del error</span></td><td>Grados de libertad del error; en ámbar si son menos de 6.</td><td class="c">9</td></tr>
     </tbody>
   </table>
 
@@ -165,17 +165,17 @@
     <caption><b>Tabla 6.4.</b> Las columnas de la tabla de ANOVA.</caption>
     <thead><tr><th style="width:24%">Columna</th><th>Lectura</th></tr></thead>
     <tbody>
-      <tr><td><span class="ui">Source</span></td><td>La fuente de variación. Las filas en gris son estratos de error.</td></tr>
-      <tr><td><span class="ui">df</span> · <span class="ui">SS</span> · <span class="ui">MS</span></td><td>Grados de libertad, suma de cuadrados y cuadrado medio (SS / df).</td></tr>
-      <tr><td><span class="ui">F</span> · <span class="ui">p-value</span></td><td>F = CM de la fuente / CM de su error, y su valor P. Los asteriscos marcan * P &lt; 0.05, ** P &lt; 0.01, *** P &lt; 0.001.</td></tr>
-      <tr><td><span class="ui">partial η²</span></td><td>SC de la fuente / (SC de la fuente + SC de su error): el tamaño del efecto, para acompañar al valor P.</td></tr>
-      <tr><td><span class="ui">Tested against</span></td><td>El error contra el que se probó la fuente.</td></tr>
+      <tr><td><span class="ui">Fuente</span></td><td>La fuente de variación. Las filas en gris son estratos de error.</td></tr>
+      <tr><td><span class="ui">g.l.</span> · <span class="ui">SC</span> · <span class="ui">CM</span></td><td>Grados de libertad, suma de cuadrados y cuadrado medio (SS / df).</td></tr>
+      <tr><td><span class="ui">F</span> · <span class="ui">valor de p</span></td><td>F = CM de la fuente / CM de su error, y su valor P. Los asteriscos marcan * P &lt; 0.05, ** P &lt; 0.01, *** P &lt; 0.001.</td></tr>
+      <tr><td><span class="ui">η² parcial</span></td><td>SC de la fuente / (SC de la fuente + SC de su error): el tamaño del efecto, para acompañar al valor P.</td></tr>
+      <tr><td><span class="ui">Se prueba contra</span></td><td>El error contra el que se probó la fuente.</td></tr>
     </tbody>
   </table>
 
   <figure>
     <div class="marco"><img src="../img/b5-interp.png" alt="Interpretación y borrador de resultados"></div>
-    <figcaption><b>Figura 6.4.</b> <span class="ui">Interpretation</span> y <span class="ui">Draft for the results section</span> del maíz. El borrador nombra el diseño, reporta cada F con sus grados de libertad en subíndice y su valor P, el CV y la prueba de medias; se copia al manuscrito y se ajusta.</figcaption>
+    <figcaption><b>Figura 6.4.</b> <span class="ui">Interpretación</span> y <span class="ui">Borrador para la sección de resultados</span> del maíz. El borrador nombra el diseño, reporta cada F con sus grados de libertad en subíndice y su valor P, el CV y la prueba de medias; se copia al manuscrito y se ajusta.</figcaption>
   </figure>
 
   <div class="caja regla">
@@ -206,11 +206,11 @@
     <caption><b>Tabla 6.5.</b> Las columnas de la tabla de medias.</caption>
     <thead><tr><th style="width:22%">Columna</th><th>Qué es</th></tr></thead>
     <tbody>
-      <tr><td><span class="ui">LS mean</span></td><td>Media de mínimos cuadrados: la media que predice el modelo con los demás factores en promedio y las covariables en su media. Con datos balanceados coincide con la media aritmética; con parcelas perdidas o covariables, la corrige.</td></tr>
-      <tr><td><span class="ui">SE</span></td><td>Error estándar de la media, con el error que corresponde al factor (el error a para la parcela grande).</td></tr>
-      <tr><td><span class="ui">Raw mean</span> · <span class="ui">SD</span></td><td>La media aritmética y la desviación estándar, para comparar.</td></tr>
-      <tr><td><span class="ui">Back-transformed mean</span></td><td>Solo con respuestas transformadas: la media en la escala original.</td></tr>
-      <tr><td><span class="ui">Group</span></td><td>Las letras. Medias que comparten una letra no difieren al nivel α elegido; una media puede llevar dos letras.</td></tr>
+      <tr><td><span class="ui">Media de mín. cuad.</span></td><td>Media de mínimos cuadrados: la media que predice el modelo con los demás factores en promedio y las covariables en su media. Con datos balanceados coincide con la media aritmética; con parcelas perdidas o covariables, la corrige.</td></tr>
+      <tr><td><span class="ui">EE</span></td><td>Error estándar de la media, con el error que corresponde al factor (el error a para la parcela grande).</td></tr>
+      <tr><td><span class="ui">Media simple</span> · <span class="ui">DE</span></td><td>La media aritmética y la desviación estándar, para comparar.</td></tr>
+      <tr><td><span class="ui">Media retro-transformada</span></td><td>Solo con respuestas transformadas: la media en la escala original.</td></tr>
+      <tr><td><span class="ui">Grupo</span></td><td>Las letras. Medias que comparten una letra no difieren al nivel α elegido; una media puede llevar dos letras.</td></tr>
     </tbody>
   </table>
 
@@ -220,11 +220,11 @@
   </figure>
 
   <h3>Comparar solo contra el testigo: Dunnett</h3>
-  <p>Si la pregunta es «¿qué variedades superan a la que ya siembra el productor?», no hacen falta los diez pares. Dunnett compara cada tratamiento solo con el testigo y gana potencia al hacer menos comparaciones. Al elegirla aparece el menú <span class="ui">Control level (Dunnett)</span>.</p>
+  <p>Si la pregunta es «¿qué variedades superan a la que ya siembra el productor?», no hacen falta los diez pares. Dunnett compara cada tratamiento solo con el testigo y gana potencia al hacer menos comparaciones. Al elegirla aparece el menú <span class="ui">Nivel testigo (Dunnett)</span>.</p>
 
   <figure>
     <div class="marco"><img src="../img/b5-dunnett.png" alt="Dunnett contra Negro Jamapa"></div>
-    <figcaption><b>Figura 6.7.</b> Dunnett en el frijol con Negro Jamapa como testigo. La columna <span class="ui">Group</span> muestra * para las variedades que difieren del testigo. La diferencia crítica es 0.198 kg, menor que la de Tukey (0.224): con ella Bayo sí difiere del testigo (P = 0.0318), cosa que Tukey no detectó.</figcaption>
+    <figcaption><b>Figura 6.7.</b> Dunnett en el frijol con Negro Jamapa como testigo. La columna <span class="ui">Grupo</span> muestra * para las variedades que difieren del testigo. La diferencia crítica es 0.198 kg, menor que la de Tukey (0.224): con ella Bayo sí difiere del testigo (P = 0.0318), cosa que Tukey no detectó.</figcaption>
   </figure>
 
   <div class="caja teoria">
@@ -257,7 +257,7 @@
   </figure>
 
   <h3>Parcelas divididas: el mismo cuadro, otros errores</h3>
-  <p>El ejemplo de riego × variedad se sembró con los dos sistemas de riego en parcelas grandes y las cuatro variedades en subparcelas. Se analiza eligiendo <span class="ui">Split-plot in RCBD (main plots in blocks)</span>, con el riego como primer factor.</p>
+  <p>El ejemplo de riego × variedad se sembró con los dos sistemas de riego en parcelas grandes y las cuatro variedades en subparcelas. Se analiza eligiendo <span class="ui">Parcelas divididas en bloques al azar (parcelas grandes dentro de bloques)</span>, con el riego como primer factor.</p>
 
   <figure>
     <div class="marco"><img src="../img/b5-split-anova.png" alt="ANOVA de parcelas divididas"></div>
@@ -318,7 +318,7 @@
   </div>
 
   <h3>Contrastes a la medida</h3>
-  <p>La última tarjeta del bloque, <span class="ui">Custom contrast</span>, prueba comparaciones planeadas entre grupos de tratamientos. Se elige el factor, se escribe un coeficiente por nivel en el orden que muestra <span class="ui">Level order</span> (deben sumar cero) y se pulsa <span class="ui">Test contrast</span>. Cada contraste se acumula en la tabla.</p>
+  <p>La última tarjeta del bloque, <span class="ui">Contraste a la medida</span>, prueba comparaciones planeadas entre grupos de tratamientos. Se elige el factor, se escribe un coeficiente por nivel en el orden que muestra <span class="ui">Orden de los niveles</span> (deben sumar cero) y se pulsa <span class="ui">Probar el contraste</span>. Cada contraste se acumula en la tabla.</p>
 
   <figure>
     <div class="marco"><img src="../img/b5-contraste.png" alt="Dos contrastes planeados en el maíz"></div>
@@ -342,7 +342,7 @@
   </table>
 
   <h3>Respuestas transformadas y covariables</h3>
-  <p>Si en el Bloque 4 creaste una columna transformada, elígela en <span class="ui">Response variable</span>. El ANOVA, las letras y la curva se calculan en la escala transformada, y la tabla de medias añade la columna <span class="ui">Back-transformed mean</span>. Si hay covariables, entran al modelo como una fila más de la tabla de ANOVA y las medias se ajustan a su valor promedio.</p>
+  <p>Si en el Bloque 4 creaste una columna transformada, elígela en <span class="ui">Variable de respuesta</span>. El ANOVA, las letras y la curva se calculan en la escala transformada, y la tabla de medias añade la columna <span class="ui">Media retro-transformada</span>. Si hay covariables, entran al modelo como una fila más de la tabla de ANOVA y las medias se ajustan a su valor promedio.</p>
 
   <figure>
     <div class="marco"><img src="../img/b5-tomate-ln.png" alt="Medias de variedades con la respuesta transformada"></div>
@@ -355,11 +355,11 @@
   <div class="caja ejemplo">
     <div class="caja-t"><span class="ico">▸</span>Paso a paso · maíz × nitrógeno, bloques completos al azar</div>
     <ol class="pasos" style="margin-bottom:0">
-      <li>Con el ejemplo cargado, pulsa el número <span class="ui">5</span>. La app elige <span class="ui">Randomised complete block design (RCBD) ★ suggested</span>, tipo III, α = 0.05 y Tukey, y calcula.</li>
+      <li>Con el ejemplo cargado, pulsa el número <span class="ui">5</span>. La app elige <span class="ui">Diseño de bloques completos al azar (DBCA) ★ sugerido</span>, tipo III, α = 0.05 y Tukey, y calcula.</li>
       <li>Lee las tarjetas y la tabla (figura 6.3): F(3, 9) = 437.27 para el nitrógeno, bloques significativos, CV de 2.1&nbsp;%.</li>
-      <li>Baja a <span class="ui">Means of Nitrogen_kg_ha</span> (figura 6.5): 180 kg a, 120 kg b, 60 kg c, 0 kg d.</li>
+      <li>Baja a <span class="ui">Medias de Nitrogen_kg_ha</span> (figura 6.5): 180 kg a, 120 kg b, 60 kg c, 0 kg d.</li>
       <li>Lee la tendencia (figuras 6.13 y 6.14): respuesta cuadrática con máximo en 179.5 kg.</li>
-      <li>En <span class="ui">Custom contrast</span> escribe <code>0,0,-1,1</code> y pulsa <span class="ui">Test contrast</span> para la pregunta planeada de 120 contra 180 kg.</li>
+      <li>En <span class="ui">Contraste a la medida</span> escribe <code>0,0,-1,1</code> y pulsa <span class="ui">Probar el contraste</span> para la pregunta planeada de 120 contra 180 kg.</li>
       <li>Copia el borrador de resultados (figura 6.4) y descarga la tabla de ANOVA y la de medias en CSV.</li>
     </ol>
   </div>
@@ -367,9 +367,9 @@
   <div class="caja ejemplo">
     <div class="caja-t"><span class="ico">▸</span>Paso a paso · riego × variedad en parcelas divididas</div>
     <ol class="pasos" style="margin-bottom:0">
-      <li>Carga <span class="ui">Split-plot · irrigation × variety</span> en el Bloque 2 y confirma que <code>Irrigation</code> es el primer factor: en las parcelas divididas, el primer factor es el de la parcela grande.</li>
-      <li>En el Bloque 5 la app sugiere <span class="ui">Factorial in RCBD</span>. Cámbialo a <span class="ui">Split-plot in RCBD (main plots in blocks)</span> y pulsa <span class="ui">Run the analysis</span>.</li>
-      <li>Verifica en <span class="ui">Tested against</span> que el riego se prueba contra <span class="ui">Error a (main plot)</span> (figura 6.11).</li>
+      <li>Carga <span class="ui">Parcelas divididas · riego × variedad2 parcelas grandes, 4 subparcelas, 3 bloques</span> en el Bloque 2 y confirma que <code>Irrigation</code> es el primer factor: en las parcelas divididas, el primer factor es el de la parcela grande.</li>
+      <li>En el Bloque 5 la app sugiere <span class="ui">Factorial en bloques completos al azar</span>. Cámbialo a <span class="ui">Parcelas divididas en bloques al azar (parcelas grandes dentro de bloques)</span> y pulsa <span class="ui">Correr el análisis</span>.</li>
+      <li>Verifica en <span class="ui">Se prueba contra</span> que el riego se prueba contra <span class="ui">Error a (parcela grande)</span> (figura 6.11).</li>
       <li>Como la interacción es significativa, lee los efectos simples (figura 6.12): V2 es la mejor variedad con los dos riegos y el goteo supera al surco en las cuatro variedades.</li>
     </ol>
   </div>
@@ -377,7 +377,7 @@
   <div class="caja ejemplo">
     <div class="caja-t"><span class="ico">▸</span>Paso a paso · trigo en cuadro latino</div>
     <ol class="pasos" style="margin-bottom:0">
-      <li>Carga <span class="ui">Latin square · wheat</span>. En el Bloque 5 la app elige <span class="ui">Latin square</span>: el modelo es <code>Yield_t_ha ~ Row + Column + Treatment</code>.</li>
+      <li>Carga <span class="ui">Cuadro latino · trigo4 tratamientos, 4 hileras × 4 columnas</span>. En el Bloque 5 la app elige <span class="ui">Cuadro latino</span>: el modelo es <code>Yield_t_ha ~ Row + Column + Treatment</code>.</li>
       <li>Lee la tabla (figura 6.17): los tratamientos difieren (F(3, 6) = 164.10) y ni las filas ni las columnas resultaron significativas.</li>
       <li>Las medias con Tukey ordenan C (4.510, a), D (4.090, b), B (3.792, c) y A (3.237, d).</li>
     </ol>
@@ -385,7 +385,7 @@
 
   <figure>
     <div class="marco"><img src="../img/b5-latino.png" alt="ANOVA del cuadro latino de trigo"></div>
-    <figcaption><b>Figura 6.17.</b> ANOVA del cuadro latino. Con solo 6 grados de libertad para el error la tarjeta <span class="ui">Residual df</span> no llega al umbral de aviso, pero está cerca: un cuadro latino de 4 × 4 deja poco error, y por eso los cuadros de 5 × 5 a 8 × 8 son más comunes en campo.</figcaption>
+    <figcaption><b>Figura 6.17.</b> ANOVA del cuadro latino. Con solo 6 grados de libertad para el error la tarjeta <span class="ui">g.l. del error</span> no llega al umbral de aviso, pero está cerca: un cuadro latino de 4 × 4 deja poco error, y por eso los cuadros de 5 × 5 a 8 × 8 son más comunes en campo.</figcaption>
   </figure>
 
   <div class="caja nota">
