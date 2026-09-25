@@ -1,17 +1,17 @@
 /* AgriDesign — Block 6 figures: publication graphics built on the ANOVA results. */
 
 const P6 = {};
-const TX6 = [{ key: 'title', label: 'Title', type: 'text' }, { key: 'subtitle', label: 'Subtitle', type: 'text' }, { key: 'xlab', label: 'X axis label', type: 'text' }, { key: 'ylab', label: 'Y axis label', type: 'text' }];
-const PAL6 = { key: 'palette', label: 'Palette', type: 'select', options: Object.entries(Fig.paletteNames) };
+const TX6 = () => [{ key: 'title', label: T('Title', 'Título'), type: 'text' }, { key: 'subtitle', label: T('Subtitle', 'Subtítulo'), type: 'text' }, { key: 'xlab', label: T('X axis label', 'Título del eje X'), type: 'text' }, { key: 'ylab', label: T('Y axis label', 'Título del eje Y'), type: 'text' }];
+const PAL6 = () => ({ key: 'palette', label: T('Palette', 'Paleta'), type: 'select', options: Object.entries(Fig.paletteNames) });
 const gcol = (cfg, i) => cfg.monochrome ? cfg.fill : ((cfg.colors && cfg.colors[i]) || Fig.color(cfg.palette, i));
 
 /* ---------- box plots of raw data with letters ---------- */
 P6.boxLetters = (groups, o) => ({
   title: o.title, fileName: o.fileName || 'box_letters', width: 860, height: 520,
   defaults: Object.assign({ title: o.title, xlab: o.xlab, ylab: o.ylab, palette: 'agri', monochrome: false, fill: '#2f7d4f', showPoints: true, showMean: true, showLetters: true, boxWidth: 0.6, letterSize: 13, includeZero: false, orient: 'v' }, o.defaults || {}),
-  controls: TX6.concat([PAL6, { key: 'monochrome', label: 'Single colour', type: 'checkbox' }, { key: 'fill', label: 'Colour (single)', type: 'color' }, { key: 'colors', label: 'Colour per level', type: 'colors', labels: groups.map(g => g.label) },
-    { key: 'showPoints', label: 'Show observations', type: 'checkbox' }, { key: 'showMean', label: 'Mean marker', type: 'checkbox' }, { key: 'showLetters', label: 'Show letters', type: 'checkbox' }, { key: 'includeZero', label: 'Y axis from zero', type: 'checkbox' },
-    { key: 'boxWidth', label: 'Box width', type: 'range', min: 0.2, max: 0.95, step: 0.05 }, { key: 'letterSize', label: 'Letter size', type: 'range', min: 8, max: 24, step: 1 }]),
+  controls: TX6().concat([PAL6(), { key: 'monochrome', label: T('Single colour', 'Un solo color'), type: 'checkbox' }, { key: 'fill', label: T('Colour (single)', 'Color (uno solo)'), type: 'color' }, { key: 'colors', label: T('Colour per level', 'Color por nivel'), type: 'colors', labels: groups.map(g => g.label) },
+    { key: 'showPoints', label: T('Show observations', 'Mostrar las observaciones'), type: 'checkbox' }, { key: 'showMean', label: T('Mean marker', 'Marca de la media'), type: 'checkbox' }, { key: 'showLetters', label: T('Show letters', 'Mostrar las letras'), type: 'checkbox' }, { key: 'includeZero', label: T('Y axis from zero', 'Eje Y desde cero'), type: 'checkbox' },
+    { key: 'boxWidth', label: T('Box width', 'Ancho de la caja'), type: 'range', min: 0.2, max: 0.95, step: 0.05 }, { key: 'letterSize', label: T('Letter size', 'Tamaño de las letras'), type: 'range', min: 8, max: 24, step: 1 }]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
     const f = Fig.frame(svg, cfg, {});
@@ -42,10 +42,10 @@ P6.boxLetters = (groups, o) => ({
 P6.stripLetters = (groups, o) => ({
   title: o.title, fileName: o.fileName || 'strip_letters', width: 860, height: 520,
   defaults: Object.assign({ title: o.title, xlab: o.xlab, ylab: o.ylab, palette: 'agri', monochrome: false, fill: '#2f7d4f', pointSize: 4.5, spread: 0.5, showLetters: true, errorType: 'se', letterSize: 13, includeZero: false }, o.defaults || {}),
-  controls: TX6.concat([PAL6, { key: 'monochrome', label: 'Single colour', type: 'checkbox' }, { key: 'fill', label: 'Colour (single)', type: 'color' }, { key: 'colors', label: 'Colour per level', type: 'colors', labels: groups.map(g => g.label) },
-    { key: 'errorType', label: 'Mean bar', type: 'select', options: [['se', 'Mean ± SE'], ['sd', 'Mean ± SD'], ['ci', 'Mean ± 95 % CI'], ['mean', 'Mean only']] },
-    { key: 'pointSize', label: 'Point size', type: 'range', min: 1.5, max: 10, step: 0.25 }, { key: 'spread', label: 'Horizontal spread', type: 'range', min: 0, max: 1, step: 0.05 },
-    { key: 'showLetters', label: 'Show letters', type: 'checkbox' }, { key: 'includeZero', label: 'Y axis from zero', type: 'checkbox' }, { key: 'letterSize', label: 'Letter size', type: 'range', min: 8, max: 24, step: 1 }]),
+  controls: TX6().concat([PAL6(), { key: 'monochrome', label: T('Single colour', 'Un solo color'), type: 'checkbox' }, { key: 'fill', label: T('Colour (single)', 'Color (uno solo)'), type: 'color' }, { key: 'colors', label: T('Colour per level', 'Color por nivel'), type: 'colors', labels: groups.map(g => g.label) },
+    { key: 'errorType', label: T('Mean bar', 'Barra de la media'), type: 'select', options: [['se', 'Mean ± SE'], ['sd', 'Mean ± SD'], ['ci', 'Mean ± 95 % CI'], ['mean', 'Mean only']] },
+    { key: 'pointSize', label: T('Point size', 'Tamaño de los puntos'), type: 'range', min: 1.5, max: 10, step: 0.25 }, { key: 'spread', label: T('Horizontal spread', 'Separación horizontal'), type: 'range', min: 0, max: 1, step: 0.05 },
+    { key: 'showLetters', label: T('Show letters', 'Mostrar las letras'), type: 'checkbox' }, { key: 'includeZero', label: T('Y axis from zero', 'Eje Y desde cero'), type: 'checkbox' }, { key: 'letterSize', label: T('Letter size', 'Tamaño de las letras'), type: 'range', min: 8, max: 24, step: 1 }]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
     const f = Fig.frame(svg, cfg, {});
@@ -72,11 +72,11 @@ P6.stripLetters = (groups, o) => ({
 P6.interactionLetters = (xLabels, series, o) => ({
   title: o.title, fileName: o.fileName || 'interaction_letters', width: 880, height: 540,
   defaults: Object.assign({ title: o.title, xlab: o.xlab, ylab: o.ylab, palette: 'agri', lineWidth: 2.4, markerSize: 5.5, showErr: true, showLetters: true, legendPos: 'right', includeZero: false, letterSize: 12, dashed: false }, o.defaults || {}),
-  controls: TX6.concat([PAL6, { key: 'colors', label: 'Colour per series', type: 'colors', labels: series.map(s => s.label) },
-    { key: 'legendPos', label: 'Legend', type: 'select', options: [['right', 'Top right'], ['left', 'Top left'], ['bottom', 'Below'], ['none', 'Hidden']] },
-    { key: 'lineWidth', label: 'Line width', type: 'range', min: 0.5, max: 6, step: 0.25 }, { key: 'markerSize', label: 'Marker size', type: 'range', min: 2, max: 10, step: 0.25 },
-    { key: 'dashed', label: 'Distinct line styles', type: 'checkbox' }, { key: 'showErr', label: 'Error bars (± SE)', type: 'checkbox' }, { key: 'showLetters', label: 'Letters at each point', type: 'checkbox' }, { key: 'includeZero', label: 'Y axis from zero', type: 'checkbox' },
-    { key: 'letterSize', label: 'Letter size', type: 'range', min: 8, max: 22, step: 1 }]),
+  controls: TX6().concat([PAL6(), { key: 'colors', label: T('Colour per series', 'Color por serie'), type: 'colors', labels: series.map(s => s.label) },
+    { key: 'legendPos', label: T('Legend', 'Leyenda'), type: 'select', options: [['right', 'Top right'], ['left', 'Top left'], ['bottom', 'Below'], ['none', 'Hidden']] },
+    { key: 'lineWidth', label: T('Line width', 'Grosor de la línea'), type: 'range', min: 0.5, max: 6, step: 0.25 }, { key: 'markerSize', label: T('Marker size', 'Tamaño de las marcas'), type: 'range', min: 2, max: 10, step: 0.25 },
+    { key: 'dashed', label: T('Distinct line styles', 'Estilos de línea distintos'), type: 'checkbox' }, { key: 'showErr', label: T('Error bars (± SE)', 'Barras de error (± EE)'), type: 'checkbox' }, { key: 'showLetters', label: T('Letters at each point', 'Letras en cada punto'), type: 'checkbox' }, { key: 'includeZero', label: T('Y axis from zero', 'Eje Y desde cero'), type: 'checkbox' },
+    { key: 'letterSize', label: T('Letter size', 'Tamaño de las letras'), type: 'range', min: 8, max: 22, step: 1 }]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
     const f = Fig.frame(svg, cfg, {});
@@ -110,7 +110,7 @@ P6.interactionLetters = (xLabels, series, o) => ({
 P6.cellHeat = (aLevels, bLevels, cells, o) => ({
   title: o.title, fileName: o.fileName || 'cell_heatmap', width: 760, height: 560,
   defaults: Object.assign({ title: o.title, xlab: o.xlab, ylab: o.ylab, colormap: 'ylgn', showValues: true, showLetters: true, digits: 2, cellGap: 3 }, o.defaults || {}),
-  controls: TX6.concat([{ key: 'colormap', label: 'Colour map', type: 'select', options: Object.entries(Fig.colormapNames) }, { key: 'showValues', label: 'Print means', type: 'checkbox' }, { key: 'showLetters', label: 'Print letters', type: 'checkbox' }, { key: 'digits', label: 'Decimals', type: 'number', min: 0, max: 4, step: 1 }]),
+  controls: TX6().concat([{ key: 'colormap', label: T('Colour map', 'Mapa de color'), type: 'select', options: Object.entries(Fig.colormapNames) }, { key: 'showValues', label: T('Print means', 'Escribir las medias'), type: 'checkbox' }, { key: 'showLetters', label: T('Print letters', 'Escribir las letras'), type: 'checkbox' }, { key: 'digits', label: T('Decimals', 'Decimales'), type: 'number', min: 0, max: 4, step: 1 }]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
     const f = Fig.frame(svg, cfg, { margin: { left: 110, bottom: 90, right: 80 } });
@@ -138,8 +138,8 @@ P6.cellHeat = (aLevels, bLevels, cells, o) => ({
 /* ---------- pairwise differences with confidence intervals (Tukey-style) ---------- */
 P6.diffCI = (pairs, o) => ({
   title: o.title, fileName: o.fileName || 'differences_ci', width: 820, height: Math.max(360, 120 + pairs.length * 28),
-  defaults: Object.assign({ title: o.title, xlab: o.xlab || 'Difference between means', ylab: '', fill: '#2f7d4f', sigColor: '#b5432f', sortDiff: true, showValues: true }, o.defaults || {}),
-  controls: TX6.concat([{ key: 'fill', label: 'Colour (not significant)', type: 'color' }, { key: 'sigColor', label: 'Colour (significant)', type: 'color' }, { key: 'sortDiff', label: 'Sort by difference', type: 'checkbox' }, { key: 'showValues', label: 'Print differences', type: 'checkbox' }]),
+  defaults: Object.assign({ title: o.title, xlab: o.xlab || T('Difference between means', 'Diferencia entre medias'), ylab: '', fill: '#2f7d4f', sigColor: '#b5432f', sortDiff: true, showValues: true }, o.defaults || {}),
+  controls: TX6().concat([{ key: 'fill', label: T('Colour (not significant)', 'Color (no significativo)'), type: 'color' }, { key: 'sigColor', label: T('Colour (significant)', 'Color (significativo)'), type: 'color' }, { key: 'sortDiff', label: T('Sort by difference', 'Ordenar por diferencia'), type: 'checkbox' }, { key: 'showValues', label: T('Print differences', 'Escribir las diferencias'), type: 'checkbox' }]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
     const f = Fig.frame(svg, cfg, { margin: { left: 190, bottom: 60 } });
@@ -165,9 +165,9 @@ P6.diffCI = (pairs, o) => ({
 
 /* ---------- sums-of-squares partition ---------- */
 P6.ssPartition = (rows, o) => ({
-  title: o.title || 'Partition of the total sum of squares', fileName: o.fileName || 'ss_partition', width: 820, height: 300 + rows.length * 8,
-  defaults: Object.assign({ title: o.title || 'Partition of the total sum of squares', xlab: '% of total SS', palette: 'agri', showPct: true }, o.defaults || {}),
-  controls: TX6.concat([PAL6, { key: 'colors', label: 'Colour per source', type: 'colors', labels: rows.map(r => r.label) }, { key: 'showPct', label: 'Print percentages', type: 'checkbox' }]),
+  title: o.title || T('Partition of the total sum of squares', 'Reparto de la suma de cuadrados total'), fileName: o.fileName || 'ss_partition', width: 820, height: 300 + rows.length * 8,
+  defaults: Object.assign({ title: o.title || T('Partition of the total sum of squares', 'Reparto de la suma de cuadrados total'), xlab: T('% of total SS', '% de la SC total'), palette: 'agri', showPct: true }, o.defaults || {}),
+  controls: TX6().concat([PAL6(), { key: 'colors', label: T('Colour per source', 'Color por fuente'), type: 'colors', labels: rows.map(r => r.label) }, { key: 'showPct', label: T('Print percentages', 'Escribir los porcentajes'), type: 'checkbox' }]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
     const f = Fig.frame(svg, cfg, { margin: { left: 40, bottom: 60, top: 60 } });
@@ -194,8 +194,8 @@ P6.ssPartition = (rows, o) => ({
 /* ---------- field map: rows × columns coloured by a value, labelled by treatment ---------- */
 P6.fieldMap = (rows, cols, plots, o) => ({
   title: o.title, fileName: o.fileName || 'field_map', width: 820, height: 560,
-  defaults: Object.assign({ title: o.title, xlab: o.xlab || 'Column', ylab: o.ylab || 'Row', colormap: 'ylgn', showLabels: true, showValues: true, cellGap: 4, digits: 2 }, o.defaults || {}),
-  controls: TX6.concat([{ key: 'colormap', label: 'Colour map', type: 'select', options: Object.entries(Fig.colormapNames) }, { key: 'centerZero', label: 'Centre the colour scale at zero', type: 'checkbox' }, { key: 'showLabels', label: 'Treatment labels', type: 'checkbox' }, { key: 'showValues', label: 'Print values', type: 'checkbox' }, { key: 'digits', label: 'Decimals', type: 'number', min: 0, max: 4, step: 1 }]),
+  defaults: Object.assign({ title: o.title, xlab: o.xlab || T('Column', 'Columna'), ylab: o.ylab || T('Row', 'Hilera'), colormap: 'ylgn', showLabels: true, showValues: true, cellGap: 4, digits: 2 }, o.defaults || {}),
+  controls: TX6().concat([{ key: 'colormap', label: T('Colour map', 'Mapa de color'), type: 'select', options: Object.entries(Fig.colormapNames) }, { key: 'centerZero', label: T('Centre the colour scale at zero', 'Centrar la escala de color en cero'), type: 'checkbox' }, { key: 'showLabels', label: T('Treatment labels', 'Etiquetas de tratamiento'), type: 'checkbox' }, { key: 'showValues', label: T('Print values', 'Escribir los valores'), type: 'checkbox' }, { key: 'digits', label: T('Decimals', 'Decimales'), type: 'number', min: 0, max: 4, step: 1 }]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
     const f = Fig.frame(svg, cfg, { margin: { left: 80, bottom: 70, right: 80 } });
@@ -227,14 +227,14 @@ P6.fieldMap = (rows, cols, plots, o) => ({
 
 /* ---------- multi-panel composer: specs rendered as nested <svg> with (a), (b)… labels ---------- */
 P6.panel = (specs, o) => ({
-  title: o.title || 'Multi-panel figure', fileName: o.fileName || 'panel', width: o.width || 1400, height: o.height || 900,
+  title: o.title || T('Multi-panel figure', 'Figura de varios paneles'), fileName: o.fileName || 'panel', width: o.width || 1400, height: o.height || 900,
   defaults: Object.assign({ cols: Math.min(2, specs.length), labelStyle: 'paren', labelSize: 18, gap: 16, panelTitles: true }, o.defaults || {}),
   controls: [
-    { key: 'cols', label: 'Columns', type: 'number', min: 1, max: 4, step: 1 },
-    { key: 'labelStyle', label: 'Panel labels', type: 'select', options: [['paren', '(a) (b) (c)'], ['upper', 'A B C'], ['lower', 'a b c'], ['none', 'none']] },
-    { key: 'labelSize', label: 'Label size', type: 'range', min: 10, max: 30, step: 1 },
-    { key: 'gap', label: 'Gap between panels', type: 'range', min: 0, max: 60, step: 2 },
-    { key: 'panelTitles', label: 'Keep panel titles', type: 'checkbox' },
+    { key: 'cols', label: T('Columns', 'Columnas'), type: 'number', min: 1, max: 4, step: 1 },
+    { key: 'labelStyle', label: T('Panel labels', 'Etiquetas de los paneles'), type: 'select', options: [['paren', '(a) (b) (c)'], ['upper', 'A B C'], ['lower', 'a b c'], ['none', 'none']] },
+    { key: 'labelSize', label: T('Label size', 'Tamaño de las etiquetas'), type: 'range', min: 10, max: 30, step: 1 },
+    { key: 'gap', label: T('Gap between panels', 'Separación entre paneles'), type: 'range', min: 0, max: 60, step: 2 },
+    { key: 'panelTitles', label: T('Keep panel titles', 'Conservar los títulos de los paneles'), type: 'checkbox' },
   ],
   render(cfg) {
     const cols = Math.max(1, Math.min(4, +cfg.cols || 1)), rows = Math.ceil(specs.length / cols), gap = +cfg.gap;

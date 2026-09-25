@@ -5,15 +5,24 @@
 const MISSING_CODES = new Set(['', 'na', 'n/a', 'nan', 'null', 'none', '.', '-', '--', '?', 'nd', 's/d', 'sd',
   'missing', 'faltante', '#n/a', '#div/0!', '#value!', '#valor!', '#ref!', '#name?', 'inf', '-inf']);
 
+/* The label and the help text are getters, so they always speak the language in use. */
 const ROLES = {
-  response:  { label: 'Response (Y)',         color: '#2b7bb9', help: 'Measured outcome: yield, height, biomass, pH…' },
-  factor:    { label: 'Treatment factor',      color: '#2f7d4f', help: 'What you compare: variety, dose, irrigation. Several factors = factorial.' },
-  block:     { label: 'Block / replicate',     color: '#c8842a', help: 'Local control: block, rep, field, year, location.' },
-  row:       { label: 'Row (Latin square)',    color: '#7a5195', help: 'Row blocking factor for Latin square / row–column designs.' },
-  col:       { label: 'Column (Latin square)', color: '#9b6bb0', help: 'Column blocking factor for Latin square / row–column designs.' },
-  covariate: { label: 'Covariate (ANCOVA)',    color: '#3b9db3', help: 'Numeric variable measured before treatment, e.g. initial stand.' },
-  id:        { label: 'Identifier / plot',     color: '#6d6e71', help: 'Plot number, sample id. Not analysed.' },
-  excluded:  { label: 'Exclude',               color: '#b5b5b5', help: 'Ignore this column.' },
+  response:  { color: '#2b7bb9', get label() { return T('Response (Y)', 'Respuesta (Y)'); },
+               get help() { return T('Measured outcome: yield, height, biomass, pH…', 'Lo que se mide: rendimiento, altura, biomasa, pH…'); } },
+  factor:    { color: '#2f7d4f', get label() { return T('Treatment factor', 'Factor de tratamiento'); },
+               get help() { return T('What you compare: variety, dose, irrigation. Several factors = factorial.', 'Lo que comparas: variedad, dosis, riego. Varios factores = factorial.'); } },
+  block:     { color: '#c8842a', get label() { return T('Block / replicate', 'Bloque / repetición'); },
+               get help() { return T('Local control: block, rep, field, year, location.', 'Control local: bloque, repetición, terreno, año, localidad.'); } },
+  row:       { color: '#7a5195', get label() { return T('Row (Latin square)', 'Hilera (cuadro latino)'); },
+               get help() { return T('Row blocking factor for Latin square / row–column designs.', 'Factor de bloqueo por hileras, para el cuadro latino y los diseños hilera–columna.'); } },
+  col:       { color: '#9b6bb0', get label() { return T('Column (Latin square)', 'Columna (cuadro latino)'); },
+               get help() { return T('Column blocking factor for Latin square / row–column designs.', 'Factor de bloqueo por columnas, para el cuadro latino y los diseños hilera–columna.'); } },
+  covariate: { color: '#3b9db3', get label() { return T('Covariate (ANCOVA)', 'Covariable (ANCOVA)'); },
+               get help() { return T('Numeric variable measured before treatment, e.g. initial stand.', 'Variable numérica medida antes del tratamiento, por ejemplo la población inicial.'); } },
+  id:        { color: '#6d6e71', get label() { return T('Identifier / plot', 'Identificador / parcela'); },
+               get help() { return T('Plot number, sample id. Not analysed.', 'Número de parcela o clave de muestra. No se analiza.'); } },
+  excluded:  { color: '#b5b5b5', get label() { return T('Exclude', 'Excluir'); },
+               get help() { return T('Ignore this column.', 'No tomar en cuenta esta columna.'); } },
 };
 window.ROLES = ROLES;
 
@@ -90,30 +99,44 @@ function guessDecimal(rows) {
    ============================================================ */
 function diagnoseGrid(rows, merges) {
   const issues = [];
-  if (!rows.length) { issues.push({ level: 'bad', title: 'The sheet is empty', text: 'No rows with content were found.' }); return { issues, headerRow: 0 }; }
+  if (!rows.length) { issues.push({ level: 'bad', title: { en: 'The sheet is empty', es: 'La hoja está vacía' }, text: { en: 'No rows with content were found.', es: 'No se encontró ningún renglón con contenido.' } }); return { issues, headerRow: 0 }; }
   /* title rows above the header: rows with ≤ 1 non-empty cell before a wide row */
   const widths = rows.map(r => r.filter(v => !isMissing(v)).length);
   const maxW = Math.max(...widths);
   let headerRow = 0;
   while (headerRow < rows.length - 1 && widths[headerRow] < Math.max(2, maxW * 0.5)) headerRow++;
-  if (headerRow > 0) issues.push({ level: 'warn', title: `${headerRow} title row${headerRow > 1 ? 's' : ''} above the header`, text: `The header appears to be on row ${headerRow + 1}. Those rows were skipped automatically — check the preview.` });
-  if (merges && merges.length) issues.push({ level: 'bad', title: `${merges.length} merged cell range${merges.length > 1 ? 's' : ''} detected`, text: 'Merged cells break the one-row-per-plot rule: only the first cell keeps its value, the others read as blank. Unmerge them and fill every row.' });
+  if (headerRow > 0) issues.push({ level: 'warn',
+    title: { en: `${headerRow} title row${headerRow > 1 ? 's' : ''} above the header`, es: `${headerRow} ${headerRow > 1 ? 'renglones de título' : 'renglón de título'} arriba del encabezado` },
+    text: { en: `The header appears to be on row ${headerRow + 1}. Those rows were skipped automatically — check the preview.`, es: `El encabezado parece estar en el renglón ${headerRow + 1}. Esos renglones se saltaron solos; revisa la vista previa.` } });
+  if (merges && merges.length) issues.push({ level: 'bad',
+    title: { en: `${merges.length} merged cell range${merges.length > 1 ? 's' : ''} detected`, es: `${merges.length} ${merges.length > 1 ? 'rangos de celdas combinadas detectados' : 'rango de celdas combinadas detectado'}` },
+    text: { en: 'Merged cells break the one-row-per-plot rule: only the first cell keeps its value, the others read as blank. Unmerge them and fill every row.', es: 'Las celdas combinadas rompen la regla de un renglón por parcela: solo la primera conserva el valor y las demás se leen vacías. Sepáralas y llena todos los renglones.' } });
   const hdr = rows[headerRow] || [];
   const blanks = hdr.filter(v => isMissing(v)).length;
-  if (blanks) issues.push({ level: 'warn', title: `${blanks} column${blanks > 1 ? 's' : ''} without a name`, text: 'Unnamed columns were named V1, V2… Give every column a short header without spaces or symbols (e.g. Yield_kg).' });
+  if (blanks) issues.push({ level: 'warn',
+    title: { en: `${blanks} column${blanks > 1 ? 's' : ''} without a name`, es: `${blanks} ${blanks > 1 ? 'columnas sin nombre' : 'columna sin nombre'}` },
+    text: { en: 'Unnamed columns were named V1, V2… Give every column a short header without spaces or symbols (e.g. Yield_kg).', es: 'Las columnas sin nombre se llamaron V1, V2… Ponle a cada una un encabezado corto, sin espacios ni símbolos (por ejemplo Rendimiento_kg).' } });
   const names = hdr.map(v => String(v ?? '').trim()).filter(Boolean);
   const dup = names.filter((n, i) => names.indexOf(n) !== i);
-  if (dup.length) issues.push({ level: 'warn', title: 'Duplicated column names', text: `Renamed with a suffix: ${[...new Set(dup)].join(', ')}.` });
+  if (dup.length) issues.push({ level: 'warn',
+    title: { en: 'Duplicated column names', es: 'Nombres de columna repetidos' },
+    text: { en: `Renamed with a suffix: ${[...new Set(dup)].join(', ')}.`, es: `Se les agregó un sufijo: ${[...new Set(dup)].join(', ')}.` } });
   /* ragged rows */
   const body = rows.slice(headerRow + 1);
   const ragged = body.filter(r => r.filter(v => !isMissing(v)).length > hdr.length).length;
-  if (ragged) issues.push({ level: 'warn', title: `${ragged} row${ragged > 1 ? 's' : ''} with more cells than the header`, text: 'Extra cells beyond the last column were dropped. Notes or totals written beside the table cause this.' });
+  if (ragged) issues.push({ level: 'warn',
+    title: { en: `${ragged} row${ragged > 1 ? 's' : ''} with more cells than the header`, es: `${ragged} ${ragged > 1 ? 'renglones tienen' : 'renglón tiene'} más celdas que el encabezado` },
+    text: { en: 'Extra cells beyond the last column were dropped. Notes or totals written beside the table cause this.', es: 'Las celdas que pasan de la última columna se descartaron. Esto pasa cuando hay notas o totales escritos junto a la tabla.' } });
   /* fully empty rows inside the body */
   const empty = body.filter(r => r.every(v => isMissing(v))).length;
-  if (empty) issues.push({ level: 'info', title: `${empty} empty row${empty > 1 ? 's' : ''} removed`, text: 'Blank rows are ignored. Keep the table compact.' });
+  if (empty) issues.push({ level: 'info',
+    title: { en: `${empty} empty row${empty > 1 ? 's' : ''} removed`, es: `Se quitaron ${empty} ${empty > 1 ? 'renglones vacíos' : 'renglón vacío'}` },
+    text: { en: 'Blank rows are ignored. Keep the table compact.', es: 'Los renglones en blanco no se toman en cuenta. Conserva la tabla compacta.' } });
   /* totals rows */
   const totals = body.filter(r => /^(total|mean|average|promedio|suma|sum|media)$/i.test(String(r[0] ?? '').trim())).length;
-  if (totals) issues.push({ level: 'bad', title: `${totals} summary row${totals > 1 ? 's' : ''} (Total / Mean) inside the data`, text: 'Remove totals and averages from the data table: the app computes them and they would be analysed as plots.' });
+  if (totals) issues.push({ level: 'bad',
+    title: { en: `${totals} summary row${totals > 1 ? 's' : ''} (Total / Mean) inside the data`, es: `${totals} ${totals > 1 ? 'renglones de resumen' : 'renglón de resumen'} (Total / Media) dentro de los datos` },
+    text: { en: 'Remove totals and averages from the data table: the app computes them and they would be analysed as plots.', es: 'Quita los totales y los promedios de la tabla de datos: la plataforma los calcula sola y aquí se analizarían como si fueran parcelas.' } });
   return { issues, headerRow };
 }
 
@@ -123,7 +146,8 @@ function diagnoseGrid(rows, merges) {
 const BLOCK_RX = /^(block|blk|bloque|rep|reps|replicate|replication|repeticion|repetición|r|blocks|bloques)$/i;
 const ROW_RX = /^(row|fila|hilera|renglon|renglón)$/i;
 const COL_RX = /^(col|column|columna)$/i;
-const ID_RX = /^(id|plot|parcela|unit|ue|u.e.|sample|muestra|obs|no|n°|num|number|planta|plant|fieldrow|fieldcol|field_row|field_col|plotno|plot_no)$/i;
+/* The field book of Block 8 writes these names in Spanish too, so both spellings are recognised. */
+const ID_RX = /^(id|plot|parcela|unit|ue|u.e.|sample|muestra|obs|no|n°|num|number|planta|plant|fieldrow|fieldcol|field_row|field_col|plotno|plot_no|hileracampo|columnacampo|hilera_campo|columna_campo)$/i;
 const COV_RX = /^(cov|covariate|covariable|initial|inicial|x0|stand|plants_per_plot)/i;
 
 function profileColumns(header, rows, decimal) {
@@ -141,7 +165,7 @@ function profileColumns(header, rows, decimal) {
     };
     const lname = name.trim();
     if (present.length === 0) {
-      Object.assign(col, { kind: 'numeric', num: [], allInt: false, constant: false, levels: [], levelCounts: {}, role: 'response', detected: 'Empty (to be filled in)', empty: true });
+      Object.assign(col, { kind: 'numeric', num: [], allInt: false, constant: false, levels: [], levelCounts: {}, role: 'response', detected: { en: 'Empty (to be filled in)', es: 'Vacía (por llenar)' }, empty: true });
       return col;
     }
     if (numericRatio >= 0.9 && nOk >= 2) {
@@ -164,27 +188,27 @@ function profileColumns(header, rows, decimal) {
       const measureName = /(score|scale|sever|yield|height|weight|mass|count|number|num|index|percent|pct|rate|days|length|width|diam|area|content|ph$|_n$|nota|calif|rend|altura|peso)/i.test(lname);
       const fewLevels = col.allInt && uniq.size <= 12 && uniq.size < present.length / 2;
       const codeLike = fewLevels && evenCounts && !measureName;
-      if (/^(fieldrow|fieldcol|field_row|field_col|plotno|plot_no|plot)$/i.test(lname)) { col.role = 'id'; col.detected = 'Field position / plot number'; }
-      else if (BLOCK_RX.test(lname)) { col.role = 'block'; col.detected = 'Block code'; }
-      else if (ROW_RX.test(lname)) { col.role = 'row'; col.detected = 'Row code'; }
-      else if (COL_RX.test(lname)) { col.role = 'col'; col.detected = 'Column code'; }
-      else if (ID_RX.test(lname) && uniq.size === present.length) { col.role = 'id'; col.detected = 'Identifier'; }
-      else if (col.constant) { col.role = 'excluded'; col.detected = 'Constant'; }
-      else if (codeLike) { col.role = 'factor'; col.detected = `Integer codes (${uniq.size} levels)`; col.hintCat = true; }
-      else if (fewLevels && !measureName) { col.role = 'response'; col.detected = `Numeric (${uniq.size} distinct values)`; col.hintCat = true; }
-      else if (COV_RX.test(lname)) { col.role = 'covariate'; col.detected = 'Numeric (covariate?)'; }
-      else { col.role = 'response'; col.detected = col.allInt ? 'Numeric (integers)' : 'Numeric (continuous)'; }
+      if (/^(fieldrow|fieldcol|field_row|field_col|plotno|plot_no|plot|parcela|hileracampo|columnacampo|hilera_campo|columna_campo)$/i.test(lname)) { col.role = 'id'; col.detected = { en: 'Field position / plot number', es: 'Posición en el terreno / número de parcela' }; }
+      else if (BLOCK_RX.test(lname)) { col.role = 'block'; col.detected = { en: 'Block code', es: 'Clave de bloque' }; }
+      else if (ROW_RX.test(lname)) { col.role = 'row'; col.detected = { en: 'Row code', es: 'Clave de hilera' }; }
+      else if (COL_RX.test(lname)) { col.role = 'col'; col.detected = { en: 'Column code', es: 'Clave de columna' }; }
+      else if (ID_RX.test(lname) && uniq.size === present.length) { col.role = 'id'; col.detected = { en: 'Identifier', es: 'Identificador' }; }
+      else if (col.constant) { col.role = 'excluded'; col.detected = { en: 'Constant', es: 'Constante' }; }
+      else if (codeLike) { col.role = 'factor'; col.detected = { en: `Integer codes (${uniq.size} levels)`, es: `Códigos enteros (${uniq.size} niveles)` }; col.hintCat = true; }
+      else if (fewLevels && !measureName) { col.role = 'response'; col.detected = { en: `Numeric (${uniq.size} distinct values)`, es: `Numérica (${uniq.size} valores distintos)` }; col.hintCat = true; }
+      else if (COV_RX.test(lname)) { col.role = 'covariate'; col.detected = { en: 'Numeric (covariate?)', es: 'Numérica (¿covariable?)' }; }
+      else { col.role = 'response'; col.detected = col.allInt ? { en: 'Numeric (integers)', es: 'Numérica (enteros)' } : { en: 'Numeric (continuous)', es: 'Numérica (continua)' }; }
     } else {
       col.kind = 'categorical';
       col.levelCounts = {};
       present.forEach(v => { const k = String(v).trim(); col.levelCounts[k] = (col.levelCounts[k] || 0) + 1; });
       col.levels = Object.keys(col.levelCounts);
-      if (uniq.size === present.length && present.length > 3) { col.role = 'id'; col.detected = 'Text, all distinct (identifier)'; }
-      else if (BLOCK_RX.test(lname)) { col.role = 'block'; col.detected = `Block (${uniq.size} levels)`; }
-      else if (ROW_RX.test(lname)) { col.role = 'row'; col.detected = `Row (${uniq.size} levels)`; }
-      else if (COL_RX.test(lname)) { col.role = 'col'; col.detected = `Column (${uniq.size} levels)`; }
-      else if (uniq.size > 40) { col.role = 'excluded'; col.detected = `Text (${uniq.size} categories)`; }
-      else { col.role = 'factor'; col.detected = `Categorical (${uniq.size} levels)`; }
+      if (uniq.size === present.length && present.length > 3) { col.role = 'id'; col.detected = { en: 'Text, all distinct (identifier)', es: 'Texto, todos distintos (identificador)' }; }
+      else if (BLOCK_RX.test(lname)) { col.role = 'block'; col.detected = { en: `Block (${uniq.size} levels)`, es: `Bloque (${uniq.size} niveles)` }; }
+      else if (ROW_RX.test(lname)) { col.role = 'row'; col.detected = { en: `Row (${uniq.size} levels)`, es: `Hilera (${uniq.size} niveles)` }; }
+      else if (COL_RX.test(lname)) { col.role = 'col'; col.detected = { en: `Column (${uniq.size} levels)`, es: `Columna (${uniq.size} niveles)` }; }
+      else if (uniq.size > 40) { col.role = 'excluded'; col.detected = { en: `Text (${uniq.size} categories)`, es: `Texto (${uniq.size} categorías)` }; }
+      else { col.role = 'factor'; col.detected = { en: `Categorical (${uniq.size} levels)`, es: `Categórica (${uniq.size} niveles)` }; }
       if (numericRatio > 0.5 && numericRatio < 0.9) col.mixed = true;
     }
     return col;
@@ -206,7 +230,7 @@ function uniqueNames(hdr) {
 function afterLoad(grid, fileName, sheetName, merges) {
   const rows0 = grid.filter(r => r.some(v => !isMissing(v)));
   const diag = diagnoseGrid(rows0, merges);
-  if (!rows0.length) { showMessage('dataMessages', 'error', 'The file has no data.'); return; }
+  if (!rows0.length) { showMessage('dataMessages', 'error', T('The file has no data.', 'El archivo no trae datos.')); return; }
   const hdrRow = rows0[diag.headerRow] || [];
   const header = uniqueNames(hdrRow);
   let rows = rows0.slice(diag.headerRow + 1).map(r => header.map((_, j) => r[j] == null ? '' : r[j]));
@@ -220,10 +244,9 @@ function afterLoad(grid, fileName, sheetName, merges) {
   state.gridIssues = diag.issues;
   state.ready = false;
 
+  state.loadInfo = { fileName, sheetName, rows: rows.length, cols: header.length, decimal };
   clearMessages('dataMessages');
-  showMessage('dataMessages', 'success',
-    `<b>${esc(fileName)}</b>${sheetName ? ' · sheet <b>' + esc(sheetName) + '</b>' : ''} — ` +
-    `${rows.length} rows × ${header.length} columns read. Decimal separator: <b>${decimal === 'comma' ? 'comma' : 'point'}</b>.`);
+  showLoadMessage();
   renderIssues();
   renderVarTable();
   renderPreview();
@@ -234,11 +257,21 @@ function afterLoad(grid, fileName, sheetName, merges) {
   el('varCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+/* the summary of the last file read, repeated when the language changes */
+function showLoadMessage() {
+  const i = state.loadInfo;
+  if (!i) return;
+  const sheet = i.sheetName ? T(' · sheet <b>', ' · hoja <b>') + esc(i.sheetName) + '</b>' : '';
+  showMessage('dataMessages', 'success', `<b>${esc(i.fileName)}</b>${sheet} — ` + T(
+    `${i.rows} rows × ${i.cols} columns read. Decimal separator: <b>${i.decimal === 'comma' ? 'comma' : 'point'}</b>.`,
+    `se leyeron ${i.rows} renglones × ${i.cols} columnas. Separador decimal: <b>${i.decimal === 'comma' ? 'coma' : 'punto'}</b>.`));
+}
+
 function readFile(file) {
   const name = file.name.toLowerCase();
   const reader = new FileReader();
   clearMessages('dataMessages');
-  showMessage('dataMessages', 'info', '<span class="loading"></span> Reading file…');
+  showMessage('dataMessages', 'info', '<span class="loading"></span> ' + T('Reading file…', 'Leyendo el archivo…'));
   const ext = name.split('.').pop();
   if (['csv', 'tsv', 'txt', 'dat', 'prn'].includes(ext)) {
     reader.onload = e => {
@@ -246,13 +279,13 @@ function readFile(file) {
         const delim = el('delimSel').value || null;
         const rows = parseCSV(e.target.result, ext === 'tsv' ? '\t' : delim);
         afterLoad(rows, file.name);
-      } catch (err) { clearMessages('dataMessages'); showMessage('dataMessages', 'error', 'Could not read the text file: ' + err.message); }
+      } catch (err) { clearMessages('dataMessages'); showMessage('dataMessages', 'error', T('Could not read the text file: ', 'No se pudo leer el archivo de texto: ') + err.message); }
     };
     reader.readAsText(file, 'UTF-8');
   } else if (ext === 'json') {
     reader.onload = e => {
       try { afterLoad(jsonToGrid(JSON.parse(e.target.result)), file.name); }
-      catch (err) { clearMessages('dataMessages'); showMessage('dataMessages', 'error', 'Could not read the JSON file: ' + err.message); }
+      catch (err) { clearMessages('dataMessages'); showMessage('dataMessages', 'error', T('Could not read the JSON file: ', 'No se pudo leer el archivo JSON: ') + err.message); }
     };
     reader.readAsText(file, 'UTF-8');
   } else {
@@ -265,7 +298,7 @@ function readFile(file) {
         wb.SheetNames.forEach(s => pick.appendChild(mk('option', { value: s }, esc(s))));
         el('sheetPicker').style.display = wb.SheetNames.length > 1 ? '' : 'none';
         loadSheet(wb.SheetNames[0], file.name);
-      } catch (err) { clearMessages('dataMessages'); showMessage('dataMessages', 'error', 'Could not read the spreadsheet: ' + err.message); }
+      } catch (err) { clearMessages('dataMessages'); showMessage('dataMessages', 'error', T('Could not read the spreadsheet: ', 'No se pudo leer la hoja de cálculo: ') + err.message); }
     };
     reader.readAsArrayBuffer(file);
   }
@@ -287,13 +320,13 @@ function jsonToGrid(j) {
     const keys = Object.keys(j).filter(k => Array.isArray(j[k]));
     if (keys.length) { const n = Math.max(...keys.map(k => j[k].length)); return [keys].concat(Array.from({ length: n }, (_, i) => keys.map(k => j[k][i] == null ? '' : j[k][i]))); }
   }
-  throw new Error('Unrecognised JSON layout. Use an array of objects (one object per plot).');
+  throw new Error(T('Unrecognised JSON layout. Use an array of objects (one object per plot).', 'No se reconoce el acomodo del JSON. Usa un arreglo de objetos (un objeto por parcela).'));
 }
 function loadPasted() {
   const text = el('pasteArea').value;
   if (!text.trim()) return;
   try { afterLoad(parseCSV(text, el('delimSel').value || null), 'pasted-data.txt'); }
-  catch (err) { showMessage('dataMessages', 'error', 'Could not parse the pasted text: ' + err.message); }
+  catch (err) { showMessage('dataMessages', 'error', T('Could not parse the pasted text: ', 'No se pudo interpretar el texto pegado: ') + err.message); }
 }
 
 /* ============================================================
@@ -304,12 +337,12 @@ function renderIssues() {
   host.innerHTML = '';
   const issues = state.gridIssues || [];
   if (!issues.length) {
-    host.innerHTML = '<div class="check-item ok"><div class="ck-icon">✅</div><div class="ck-body"><div class="ck-title">Tidy table</div><div class="ck-text">One header row, one row per experimental unit, no merged cells or summary rows.</div></div></div>';
+    host.innerHTML = `<div class="check-item ok"><div class="ck-icon">✅</div><div class="ck-body"><div class="ck-title">${T('Tidy table', 'Tabla ordenada')}</div><div class="ck-text">${T('One header row, one row per experimental unit, no merged cells or summary rows.', 'Un renglón de encabezado, un renglón por unidad experimental, sin celdas combinadas ni renglones de resumen.')}</div></div></div>`;
     return;
   }
   issues.forEach(i => {
     host.appendChild(mk('div', { class: 'check-item ' + i.level },
-      `<div class="ck-icon">${i.level === 'bad' ? '⛔' : i.level === 'warn' ? '⚠️' : 'ℹ️'}</div><div class="ck-body"><div class="ck-title">${esc(i.title)}</div><div class="ck-text">${i.text}</div></div>`));
+      `<div class="ck-icon">${i.level === 'bad' ? '⛔' : i.level === 'warn' ? '⚠️' : 'ℹ️'}</div><div class="ck-body"><div class="ck-title">${esc(T(i.title))}</div><div class="ck-text">${T(i.text)}</div></div>`));
   });
 }
 function sparkline(col) {
@@ -336,30 +369,30 @@ function sparkline(col) {
 }
 function flagsFor(col) {
   const f = [];
-  if (col.constant) f.push('<span class="flag bad">zero variance</span>');
-  if (col.missingPct > 0.2) f.push(`<span class="flag bad">${fmtPct(col.missingPct, 0)} missing</span>`);
-  else if (col.missingPct > 0) f.push(`<span class="flag">${col.missing} missing</span>`);
-  if (col.mixed) f.push('<span class="flag bad">numbers mixed with text</span>');
+  if (col.constant) f.push(`<span class="flag bad">${T('zero variance', 'varianza cero')}</span>`);
+  if (col.missingPct > 0.2) f.push(`<span class="flag bad">${fmtPct(col.missingPct, 0)} ${T('missing', 'faltantes')}</span>`);
+  else if (col.missingPct > 0) f.push(`<span class="flag">${col.missing} ${T('missing', 'faltantes')}</span>`);
+  if (col.mixed) f.push(`<span class="flag bad">${T('numbers mixed with text', 'números mezclados con texto')}</span>`);
   if (col.kind === 'numeric' && col.role === 'response') {
-    if (Math.abs(col.skew) > 2) f.push('<span class="flag bad">strongly skewed</span>');
-    else if (Math.abs(col.skew) > 1) f.push('<span class="flag">skewed</span>');
-    if (col.outliers > 0) f.push(`<span class="flag">${col.outliers} outlier${col.outliers > 1 ? 's' : ''} |z|&gt;3</span>`);
-    if (col.negatives && col.zeros === 0) f.push('<span class="flag">negative values</span>');
+    if (Math.abs(col.skew) > 2) f.push(`<span class="flag bad">${T('strongly skewed', 'muy sesgada')}</span>`);
+    else if (Math.abs(col.skew) > 1) f.push(`<span class="flag">${T('skewed', 'sesgada')}</span>`);
+    if (col.outliers > 0) f.push(`<span class="flag">${col.outliers} ${T(`outlier${col.outliers > 1 ? 's' : ''}`, `${col.outliers > 1 ? 'atípicos' : 'atípico'}`)} |z|&gt;3</span>`);
+    if (col.negatives && col.zeros === 0) f.push(`<span class="flag">${T('negative values', 'valores negativos')}</span>`);
   }
-  if (col.hintCat) f.push('<span class="flag">integer codes → factor?</span>');
+  if (col.hintCat) f.push(`<span class="flag">${T('integer codes → factor?', '¿códigos enteros → factor?')}</span>`);
   if (col.kind === 'categorical' && col.levels) {
     const lc = col.levels.map(l => l.toLowerCase());
-    if (new Set(lc).size < lc.length) f.push('<span class="flag bad">levels differ only by case</span>');
-    if (col.levels.some(l => /\s$|^\s/.test(l))) f.push('<span class="flag bad">levels with trailing spaces</span>');
+    if (new Set(lc).size < lc.length) f.push(`<span class="flag bad">${T('levels differ only by case', 'niveles que solo difieren en mayúsculas')}</span>`);
+    if (col.levels.some(l => /\s$|^\s/.test(l))) f.push(`<span class="flag bad">${T('levels with trailing spaces', 'niveles con espacios sobrantes')}</span>`);
   }
-  if (!f.length) f.push('<span class="flag ok">ok</span>');
+  if (!f.length) f.push(`<span class="flag ok">${T('ok', 'bien')}</span>`);
   return f.join(' ');
 }
 function renderVarTable() {
   const host = el('varTable');
   host.innerHTML = '';
   const table = mk('table', { class: 'var-table' });
-  table.innerHTML = `<thead><tr><th>Variable</th><th>Detected</th><th>Role in the experiment</th><th class="num">n</th><th class="num">Missing</th><th class="num">Levels / unique</th><th>Summary</th><th>Distribution</th><th>Checks</th></tr></thead>`;
+  table.innerHTML = `<thead><tr><th>${T('Variable', 'Variable')}</th><th>${T('Detected', 'Detectada como')}</th><th>${T('Role in the experiment', 'Papel en el experimento')}</th><th class="num">n</th><th class="num">${T('Missing', 'Faltantes')}</th><th class="num">${T('Levels / unique', 'Niveles / distintos')}</th><th>${T('Summary', 'Resumen')}</th><th>${T('Distribution', 'Distribución')}</th><th>${T('Checks', 'Revisiones')}</th></tr></thead>`;
   const tb = mk('tbody');
   state.columns.forEach(col => {
     const tr = mk('tr');
@@ -371,9 +404,9 @@ function renderVarTable() {
     sel.addEventListener('change', () => { col.role = sel.value; updateDesign(); renderVarTable(); });
     const pillClass = col.kind === 'numeric' ? (col.role === 'factor' || col.role === 'block' ? 'cat' : 'num') : (col.role === 'id' ? 'id' : 'cat');
     const summary = col.kind === 'numeric' && !col.hintCat && col.role !== 'factor' && col.role !== 'block'
-      ? `mean ${fmtNum(col.mean, 3)} · SD ${fmtNum(col.sd, 3)} · [${fmtNum(col.min, 3)}, ${fmtNum(col.max, 3)}]`
+      ? `${T('mean', 'media')} ${fmtNum(col.mean, 3)} · ${T('SD', 'DE')} ${fmtNum(col.sd, 3)} · [${fmtNum(col.min, 3)}, ${fmtNum(col.max, 3)}]`
       : (col.levels || []).slice(0, 6).map(esc).join(', ') + ((col.levels || []).length > 6 ? ', …' : '');
-    tr.innerHTML = `<td class="var-name">${esc(col.name)}</td><td><span class="pill ${pillClass}">${esc(col.detected)}</span></td><td></td>
+    tr.innerHTML = `<td class="var-name">${esc(col.name)}</td><td><span class="pill ${pillClass}">${esc(T(col.detected))}</span></td><td></td>
       <td class="num">${col.n}</td><td class="num">${col.missing}</td><td class="num">${col.unique}</td><td>${summary}</td><td>${sparkline(col)}</td><td>${flagsFor(col)}</td>`;
     tr.children[2].appendChild(sel);
     tr.style.opacity = col.role === 'excluded' ? 0.55 : 1;
@@ -393,7 +426,9 @@ function renderPreview() {
    ============================================================ */
 function levelsOf(col) { return col.levels || [...new Set(col.values.filter(v => !isMissing(v)).map(v => String(v).trim()))]; }
 
-function updateDesign() {
+/* `silent` redraws the summary without declaring a change of data: it is what a change of
+   language needs, because otherwise the analyses of Blocks 4 to 7 would be thrown away. */
+function updateDesign(silent) {
   const d = state.design;
   const by = role => state.columns.filter(c => c.role === role);
   d.responses = by('response').map(c => c.name);
@@ -410,11 +445,11 @@ function updateDesign() {
   const items = [];
   const facInfo = d.factors.map(f => ({ name: f, levels: levelsOf(colBy(f)) }));
   const nTrt = facInfo.reduce((p, f) => p * f.levels.length, 1);
-  items.push(['Observations', n, 'rows in the table']);
-  items.push(['Response variables', d.responses.length ? d.responses.join(', ') : '—', d.responses.length > 1 ? 'each is analysed separately' : '']);
-  items.push(['Treatment factors', facInfo.length ? facInfo.map(f => `${f.name} (${f.levels.length})`).join(' × ') : '—', facInfo.length ? `${nTrt} treatment combination${nTrt > 1 ? 's' : ''}` : '']);
-  items.push(['Blocking', d.blocks.length ? d.blocks.map(b => `${b} (${levelsOf(colBy(b)).length})`).join(', ') : (d.row && d.col ? `${d.row} × ${d.col}` : 'none'), '']);
-  if (d.covariates.length) items.push(['Covariates', d.covariates.join(', '), 'ANCOVA']);
+  items.push([T('Observations', 'Observaciones'), n, T('rows in the table', 'renglones en la tabla')]);
+  items.push([T('Response variables', 'Variables de respuesta'), d.responses.length ? d.responses.join(', ') : '—', d.responses.length > 1 ? T('each is analysed separately', 'cada una se analiza por separado') : '']);
+  items.push([T('Treatment factors', 'Factores de tratamiento'), facInfo.length ? facInfo.map(f => `${f.name} (${f.levels.length})`).join(' × ') : '—', facInfo.length ? T(`${nTrt} treatment combination${nTrt > 1 ? 's' : ''}`, `${nTrt} ${nTrt > 1 ? 'combinaciones de tratamiento' : 'combinación de tratamiento'}`) : '']);
+  items.push([T('Blocking', 'Bloqueo'), d.blocks.length ? d.blocks.map(b => `${b} (${levelsOf(colBy(b)).length})`).join(', ') : (d.row && d.col ? `${d.row} × ${d.col}` : T('none', 'ninguno')), '']);
+  if (d.covariates.length) items.push([T('Covariates', 'Covariables'), d.covariates.join(', '), 'ANCOVA']);
   /* replication */
   let repText = '—', balance = null;
   if (facInfo.length) {
@@ -425,26 +460,26 @@ function updateDesign() {
     const observed = Object.keys(counts).length;
     const mn = Math.min(...vals), mx = Math.max(...vals);
     balance = { counts, observed, expected: nTrt, min: mn, max: mx, balanced: mn === mx && observed === nTrt };
-    repText = mn === mx ? `${mn} per treatment` : `${mn}–${mx} per treatment`;
-    items.push(['Replication', repText, balance.balanced ? 'balanced' : 'unbalanced']);
+    repText = mn === mx ? T(`${mn} per treatment`, `${mn} por tratamiento`) : T(`${mn}–${mx} per treatment`, `${mn}–${mx} por tratamiento`);
+    items.push([T('Replication', 'Repetición'), repText, balance.balanced ? T('balanced', 'balanceado') : T('unbalanced', 'desbalanceado')]);
   }
   items.forEach(([l, v, s]) => host.appendChild(mk('div', { class: 'ds-item' }, `<div class="ds-label">${l}</div><div class="ds-value">${esc(String(v))}</div>${s ? `<div class="ds-sub">${esc(s)}</div>` : ''}`)));
 
   /* checks */
   const add = (level, title, text) => checks.appendChild(mk('div', { class: 'check-item ' + level },
     `<div class="ck-icon">${level === 'ok' ? '✅' : level === 'bad' ? '⛔' : level === 'warn' ? '⚠️' : 'ℹ️'}</div><div class="ck-body"><div class="ck-title">${title}</div><div class="ck-text">${text}</div></div>`));
-  if (!d.responses.length) add('bad', 'No response variable', 'Mark at least one numeric column as <b>Response (Y)</b>.');
-  if (!d.factors.length) add('bad', 'No treatment factor', 'Mark the column that identifies the treatments as <b>Treatment factor</b>.');
-  if (!d.factors.length && d.responses.length >= 3) add('info', 'This looks like a wide table', 'Several numeric columns and no factor: the treatments are probably spread across columns. Use the <b>wide → long</b> converter below, keeping the block / plot columns as identifiers.');
+  if (!d.responses.length) add('bad', T('No response variable', 'Sin variable de respuesta'), T('Mark at least one numeric column as <b>Response (Y)</b>.', 'Marca al menos una columna numérica como <b>Respuesta (Y)</b>.'));
+  if (!d.factors.length) add('bad', T('No treatment factor', 'Sin factor de tratamiento'), T('Mark the column that identifies the treatments as <b>Treatment factor</b>.', 'Marca como <b>factor de tratamiento</b> la columna que identifica los tratamientos.'));
+  if (!d.factors.length && d.responses.length >= 3) add('info', T('This looks like a wide table', 'Esto parece una tabla ancha'), T('Several numeric columns and no factor: the treatments are probably spread across columns. Use the <b>wide → long</b> converter below, keeping the block / plot columns as identifiers.', 'Varias columnas numéricas y ningún factor: es probable que los tratamientos estén repartidos en columnas. Usa el convertidor de <b>ancho a largo</b> de abajo y conserva como identificadores las columnas de bloque o parcela.'));
   facInfo.forEach(f => {
-    if (f.levels.length < 2) add('bad', `Factor ${esc(f.name)} has a single level`, 'A factor needs at least two levels to be compared.');
-    if (f.levels.length > 30) add('warn', `Factor ${esc(f.name)} has ${f.levels.length} levels`, 'Many levels: is this really a treatment factor, or an identifier?');
+    if (f.levels.length < 2) add('bad', T(`Factor ${esc(f.name)} has a single level`, `El factor ${esc(f.name)} tiene un solo nivel`), T('A factor needs at least two levels to be compared.', 'Un factor necesita al menos dos niveles para poder comparar.'));
+    if (f.levels.length > 30) add('warn', T(`Factor ${esc(f.name)} has ${f.levels.length} levels`, `El factor ${esc(f.name)} tiene ${f.levels.length} niveles`), T('Many levels: is this really a treatment factor, or an identifier?', 'Son muchos niveles: ¿de verdad es un factor de tratamiento o es un identificador?'));
   });
   if (balance) {
-    if (balance.observed < balance.expected) add('warn', `${balance.expected - balance.observed} treatment combination${balance.expected - balance.observed > 1 ? 's' : ''} never observed`, 'The factorial is incomplete. Interactions will be partially estimable; consider analysing as a one-way layout of the observed combinations.');
-    if (balance.min < 2) add('bad', 'Some treatments have a single observation', 'Without replication the experimental error cannot be estimated. Check the factor and block roles: a wide table (treatments in columns) must be reshaped to long format first.');
-    else if (balance.min < 3) add('warn', 'Only 2 replicates for some treatments', 'Two replicates give a very imprecise error estimate. Three or more are recommended (four is the usual minimum in field trials).');
-    else add('ok', `Replication: ${repText}`, balance.balanced ? 'Balanced design: every treatment has the same number of observations.' : 'Unbalanced: sums of squares will be computed with Type III (marginal) tests.');
+    if (balance.observed < balance.expected) add('warn', T(`${balance.expected - balance.observed} treatment combination${balance.expected - balance.observed > 1 ? 's' : ''} never observed`, `${balance.expected - balance.observed} ${balance.expected - balance.observed > 1 ? 'combinaciones de tratamiento que nunca se observaron' : 'combinación de tratamiento que nunca se observó'}`), T('The factorial is incomplete. Interactions will be partially estimable; consider analysing as a one-way layout of the observed combinations.', 'El factorial está incompleto. Las interacciones solo se podrán estimar en parte; considera analizarlo como un solo factor con las combinaciones observadas.'));
+    if (balance.min < 2) add('bad', T('Some treatments have a single observation', 'Hay tratamientos con una sola observación'), T('Without replication the experimental error cannot be estimated. Check the factor and block roles: a wide table (treatments in columns) must be reshaped to long format first.', 'Sin repetición no se puede estimar el error experimental. Revisa los papeles de factor y bloque: una tabla ancha (tratamientos en columnas) hay que convertirla antes a formato largo.'));
+    else if (balance.min < 3) add('warn', T('Only 2 replicates for some treatments', 'Solo 2 repeticiones en algunos tratamientos'), T('Two replicates give a very imprecise error estimate. Three or more are recommended (four is the usual minimum in field trials).', 'Con dos repeticiones el error se estima con muy poca precisión. Se recomiendan tres o más (cuatro es el mínimo habitual en campo).'));
+    else add('ok', T(`Replication: ${repText}`, `Repetición: ${repText}`), balance.balanced ? T('Balanced design: every treatment has the same number of observations.', 'Diseño balanceado: todos los tratamientos tienen el mismo número de observaciones.') : T('Unbalanced: sums of squares will be computed with Type III (marginal) tests.', 'Desbalanceado: las sumas de cuadrados se calcularán con pruebas de tipo III (marginales).'));
   }
   if (d.blocks.length) {
     const b = colBy(d.blocks[0]);
@@ -454,25 +489,25 @@ function updateDesign() {
       const seen = {};
       state.rawRows.forEach(r => { const k = String(r[b.index]).trim() + '|' + String(r[colBy(d.factors[0]).index]).trim(); seen[k] = (seen[k] || 0) + 1; });
       const v = Object.values(seen);
-      if (Object.keys(seen).length === bl.length * facInfo[0].levels.length && v.every(x => x === 1)) add('ok', 'Complete blocks', `Every treatment appears exactly once in each of the ${bl.length} blocks → randomised complete block design (RCBD).`);
-      else if (v.every(x => x >= 1) && Object.keys(seen).length === bl.length * facInfo[0].levels.length) add('ok', 'Generalised complete blocks', 'Every treatment appears more than once per block → generalised RCBD (block × treatment interaction estimable).');
-      else add('info', 'Incomplete blocks', 'Not every treatment appears in every block → incomplete block design (lattice, alpha, BIBD) or missing plots.');
+      if (Object.keys(seen).length === bl.length * facInfo[0].levels.length && v.every(x => x === 1)) add('ok', T('Complete blocks', 'Bloques completos'), T(`Every treatment appears exactly once in each of the ${bl.length} blocks → randomised complete block design (RCBD).`, `Cada tratamiento aparece exactamente una vez en cada uno de los ${bl.length} bloques → diseño de bloques completos al azar.`));
+      else if (v.every(x => x >= 1) && Object.keys(seen).length === bl.length * facInfo[0].levels.length) add('ok', T('Generalised complete blocks', 'Bloques completos generalizados'), T('Every treatment appears more than once per block → generalised RCBD (block × treatment interaction estimable).', 'Cada tratamiento aparece más de una vez por bloque → bloques completos al azar generalizados (la interacción bloque × tratamiento sí se puede estimar).'));
+      else add('info', T('Incomplete blocks', 'Bloques incompletos'), T('Not every treatment appears in every block → incomplete block design (lattice, alpha, BIBD) or missing plots.', 'No todos los tratamientos aparecen en todos los bloques → diseño de bloques incompletos (látice, alfa, BIBD) o parcelas perdidas.'));
     }
-    if (bl.length < 2) add('bad', 'Blocking column with one level', 'A blocking factor needs at least two blocks.');
+    if (bl.length < 2) add('bad', T('Blocking column with one level', 'Columna de bloque con un solo nivel'), T('A blocking factor needs at least two blocks.', 'Un factor de bloqueo necesita al menos dos bloques.'));
   }
   if (d.row && d.col && facInfo.length === 1) {
     const rl = levelsOf(colBy(d.row)).length, cl = levelsOf(colBy(d.col)).length, tl = facInfo[0].levels.length;
-    if (rl === cl && cl === tl) add('ok', 'Latin square structure', `${tl} treatments × ${rl} rows × ${cl} columns.`);
-    else add('warn', 'Row–column layout is not a Latin square', `Rows: ${rl}, columns: ${cl}, treatments: ${tl}. A Latin square needs all three equal; otherwise use a row–column design.`);
+    if (rl === cl && cl === tl) add('ok', T('Latin square structure', 'Estructura de cuadro latino'), T(`${tl} treatments × ${rl} rows × ${cl} columns.`, `${tl} tratamientos × ${rl} hileras × ${cl} columnas.`));
+    else add('warn', T('Row–column layout is not a Latin square', 'El acomodo hilera–columna no es un cuadro latino'), T(`Rows: ${rl}, columns: ${cl}, treatments: ${tl}. A Latin square needs all three equal; otherwise use a row–column design.`, `Hileras: ${rl}, columnas: ${cl}, tratamientos: ${tl}. El cuadro latino necesita los tres iguales; si no, usa un diseño hilera–columna.`));
   }
   d.responses.forEach(rn => {
     const c = colBy(rn);
-    if (c.empty) { add('info', `${esc(rn)} is empty`, 'A field-book template: fill in the measurements, save the file and load it again. The design structure above is already valid.'); return; }
-    if (c.missing) add('warn', `${esc(rn)}: ${c.missing} missing value${c.missing > 1 ? 's' : ''}`, 'Missing plots make the design unbalanced. Rows with a missing response are dropped for that variable.');
-    if (c.negatives === 0 && c.zeros === 0 && c.min > 0 && c.max / c.min > 20) add('info', `${esc(rn)} spans more than one order of magnitude`, 'A log transformation may be needed (Block 4 will test this).');
+    if (c.empty) { add('info', T(`${esc(rn)} is empty`, `${esc(rn)} está vacía`), T('A field-book template: fill in the measurements, save the file and load it again. The design structure above is already valid.', 'Es una plantilla de libreta de campo: anota las mediciones, guarda el archivo y vuélvelo a cargar. La estructura del diseño de arriba ya es válida.')); return; }
+    if (c.missing) add('warn', T(`${esc(rn)}: ${c.missing} missing value${c.missing > 1 ? 's' : ''}`, `${esc(rn)}: ${c.missing} ${c.missing > 1 ? 'valores faltantes' : 'valor faltante'}`), T('Missing plots make the design unbalanced. Rows with a missing response are dropped for that variable.', 'Las parcelas perdidas desbalancean el diseño. Los renglones sin respuesta se descartan para esa variable.'));
+    if (c.negatives === 0 && c.zeros === 0 && c.min > 0 && c.max / c.min > 20) add('info', T(`${esc(rn)} spans more than one order of magnitude`, `${esc(rn)} abarca más de un orden de magnitud`), T('A log transformation may be needed (Block 4 will test this).', 'Quizá haga falta una transformación logarítmica (el Bloque 4 lo revisa).'));
     const ordinalName = /(score|scale|sever|nota|calif|grade|rating|escala)/i.test(rn);
-    if (c.allInt && c.min >= 0 && c.max <= 10 && (c.unique <= 6 || ordinalName)) add('info', `${esc(rn)} looks like a short ordinal scale`, 'Scores (1–5, 1–9) violate ANOVA assumptions; the non-parametric alternatives in Block 4 (Kruskal–Wallis, Friedman, aligned ranks) are appropriate.');
-    else if (c.max <= 100 && c.min >= 0 && /(%|pct|percent|porc|incid|germ|proportion|mortal)/i.test(rn)) add('info', `${esc(rn)} looks like a percentage`, 'Percentages from counts often need an arcsine-√ or logit transformation, or a GLM (Block 4).');
+    if (c.allInt && c.min >= 0 && c.max <= 10 && (c.unique <= 6 || ordinalName)) add('info', T(`${esc(rn)} looks like a short ordinal scale`, `${esc(rn)} parece una escala ordinal corta`), T('Scores (1–5, 1–9) violate ANOVA assumptions; the non-parametric alternatives in Block 4 (Kruskal–Wallis, Friedman, aligned ranks) are appropriate.', 'Las calificaciones (1–5, 1–9) violan los supuestos del análisis de varianza; las alternativas no paramétricas del Bloque 4 (Kruskal–Wallis, Friedman, rangos alineados) son las adecuadas.'));
+    else if (c.max <= 100 && c.min >= 0 && /(%|pct|percent|porc|incid|germ|proportion|mortal)/i.test(rn)) add('info', T(`${esc(rn)} looks like a percentage`, `${esc(rn)} parece un porcentaje`), T('Percentages from counts often need an arcsine-√ or logit transformation, or a GLM (Block 4).', 'Los porcentajes que vienen de conteos suelen pedir una transformación arcoseno-√ o logit, o un modelo lineal generalizado (Bloque 4).'));
   });
   /* balance table for factor × block */
   const bt = el('balanceTable');
@@ -485,12 +520,13 @@ function updateDesign() {
     state.rawRows.forEach(r => { const k = String(r[rowsF.index]).trim() + '|' + String(r[colsF.index]).trim(); cnt[k] = (cnt[k] || 0) + 1; });
     const cols = [{ key: 'lvl', label: esc(rowsF.name) + ' \\ ' + esc(colsF.name), html: true }].concat(cl.map(c => ({ key: c, label: esc(c), num: true, html: true })));
     const rows = rl.map(l => { const o = { lvl: `<b>${esc(l)}</b>` }; cl.forEach(c => { const v = cnt[l + '|' + c] || 0; o[c] = v === 0 ? '<span class="flag bad">0</span>' : String(v); }); return o; });
-    buildTable(bt, cols, rows, { caption: 'Observations per cell' });
+    buildTable(bt, cols, rows, { caption: T('Observations per cell', 'Observaciones por celda') });
   }
   const ok = d.responses.some(rn => !colBy(rn).empty) && d.factors.length && (!balance || balance.min >= 2);
   state.ready = !!ok;
   enableStep(3, !!ok); enableStep(4, !!ok); enableStep(5, !!ok); enableStep(7, !!ok);
   el('nextBtn2').disabled = !ok;
+  if (silent) return;
   /* results computed on the previous table or roles are no longer valid: Blocks 6 and 7 must not
      show them, and Blocks 4 and 5 recompute when they are opened again */
   state.anova = null; state.assumptions = null;
@@ -513,9 +549,9 @@ function renderReshape() {
 function doReshape() {
   const keep = els('input:checked', el('reshapeKeep')).map(i => i.value);
   const stack = els('input:checked', el('reshapeStack')).map(i => i.value);
-  if (!stack.length) { alert('Select at least one column to stack.'); return; }
-  const nameCol = el('reshapeName').value.trim() || 'Treatment';
-  const valCol = el('reshapeValue').value.trim() || 'Value';
+  if (!stack.length) { alert(T('Select at least one column to stack.', 'Elige al menos una columna para apilar.')); return; }
+  const nameCol = el('reshapeName').value.trim() || T('Treatment', 'Tratamiento');
+  const valCol = el('reshapeValue').value.trim() || T('Value', 'Valor');
   const idx = n => state.rawHeader.indexOf(n);
   const header = keep.concat([nameCol, valCol]);
   const rows = [];
@@ -534,10 +570,10 @@ function downloadClean() {
 }
 function loadExample(path, name) {
   clearMessages('dataMessages');
-  showMessage('dataMessages', 'info', '<span class="loading"></span> Loading example…');
+  showMessage('dataMessages', 'info', '<span class="loading"></span> ' + T('Loading example…', 'Cargando el ejemplo…'));
   fetch(path).then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
     .then(txt => afterLoad(parseCSV(txt, ','), name))
-    .catch(() => { clearMessages('dataMessages'); showMessage('dataMessages', 'error', 'Could not load the example. Open the app through <b>server.ps1</b> (examples cannot be read from file://).'); });
+    .catch(() => { clearMessages('dataMessages'); showMessage('dataMessages', 'error', T('Could not load the example. Open the app through <b>server.ps1</b> (examples cannot be read from file://).', 'No se pudo cargar el ejemplo. Abre la plataforma con <b>server.ps1</b> (los ejemplos no se pueden leer desde file://).')); });
 }
 
 /* Add a derived column (e.g. a transformed response). Never overwrites an existing one. */
@@ -573,7 +609,35 @@ function init() {
   /* grids produced elsewhere (Block 8 field-book template) */
   document.addEventListener('loadgrid', e => { clearMessages('dataMessages'); afterLoad(e.detail.grid, e.detail.name, null, []); });
   /* role legend */
+  renderRoleLegend();
+  syncReshapeDefaults();
+
+  /* when the language changes, everything Block 2 wrote is written again */
+  document.addEventListener('langchange', () => {
+    renderRoleLegend();
+    syncReshapeDefaults();
+    if (!state.columns || !state.columns.length) return;
+    clearMessages('dataMessages');
+    showLoadMessage();
+    renderIssues();
+    renderVarTable();
+    renderReshape();
+    updateDesign(true);
+  });
+}
+/* the proposed names of the two new columns follow the language, unless the reader typed their own */
+function syncReshapeDefaults() {
+  const pairs = [['reshapeName', ['Treatment', 'Tratamiento'], T('Treatment', 'Tratamiento')],
+                 ['reshapeValue', ['Value', 'Valor'], T('Value', 'Valor')]];
+  pairs.forEach(([id, defaults, now]) => {
+    const inp = el(id);
+    if (inp && defaults.includes(inp.value.trim())) inp.value = now;
+  });
+}
+function renderRoleLegend() {
   const leg = el('roleLegend');
+  if (!leg) return;
+  leg.innerHTML = '';
   Object.entries(ROLES).forEach(([k, r]) => leg.appendChild(mk('div', { class: 'role-item' }, `<span class="r-dot" style="background:${r.color}"></span><div><b>${r.label}</b><span>${r.help}</span></div>`)));
 }
 document.addEventListener('DOMContentLoaded', init);

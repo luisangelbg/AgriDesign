@@ -4,59 +4,61 @@
 const DS = {};
 
 /* helper to declare a term */
-const T = (name, factors, o) => Object.assign({ name, factors, error: 'Residuals' }, o || {});
+const term = (name, factors, o) => Object.assign({ name, factors, error: 'Residuals' }, o || {});
 const covTerms = d => (d.covariates || []).map(c => ({ name: c, numeric: [c], error: 'Residuals', cov: true }));
 const factorialTerms = (F, maxOrder) => {
   const out = [];
   for (let order = 1; order <= Math.min(maxOrder || F.length, F.length); order++) {
-    const rec = (start, cur) => { if (cur.length === order) { out.push(T(cur.join(':'), cur.slice())); return; } for (let i = start; i < F.length; i++) { cur.push(F[i]); rec(i + 1, cur); cur.pop(); } };
+    const rec = (start, cur) => { if (cur.length === order) { out.push(term(cur.join(':'), cur.slice())); return; } for (let i = start; i < F.length; i++) { cur.push(F[i]); rec(i + 1, cur); cur.pop(); } };
     rec(0, []);
   }
   return out;
 };
 
+/* The name and the description of every design travel in both languages ({en, es});
+   whoever shows them passes them through T(). */
 DS.catalog = [
-  { id: 'crd', name: 'Completely randomised design (CRD)', art: 'crd', factors: [1, 1], blocks: [0, 0],
-    model: 'y = μ + τ + ε', desc: 'Treatments assigned at random to homogeneous units (pots, greenhouse benches, laboratory). Unequal replication allowed.',
-    build: d => covTerms(d).concat([T(d.factors[0], [d.factors[0]])]) },
-  { id: 'rcbd', name: 'Randomised complete block design (RCBD)', art: 'rcbd', factors: [1, 1], blocks: [1, 1],
-    model: 'y = μ + β + τ + ε', desc: 'Every treatment once in each block; blocks remove a known gradient. The workhorse of field trials.',
-    build: d => covTerms(d).concat([T(d.blocks[0], [d.blocks[0]]), T(d.factors[0], [d.factors[0]])]) },
-  { id: 'grcbd', name: 'Generalised RCBD (several plots per block × treatment)', art: 'rcbd', factors: [1, 1], blocks: [1, 1], needReps: true,
-    model: 'y = μ + β + τ + (βτ) + ε', desc: 'Each treatment repeated within blocks; the block × treatment interaction is estimable and can serve as the error when blocks are random.',
-    options: [{ key: 'blocksRandom', label: 'Blocks are random → test treatments against block × treatment', default: true }],
-    build: (d, o) => covTerms(d).concat([T(d.blocks[0], [d.blocks[0]]), T(d.factors[0], [d.factors[0]], { error: o.blocksRandom ? d.blocks[0] + ':' + d.factors[0] : 'Residuals' }), T(d.blocks[0] + ':' + d.factors[0], [d.blocks[0], d.factors[0]], { isError: o.blocksRandom, label: 'Block × treatment' + (o.blocksRandom ? ' (Error a)' : '') })]) },
-  { id: 'latin', name: 'Latin square', art: 'latin', factors: [1, 1], blocks: [0, 0], needRowCol: true,
-    model: 'y = μ + ρ + γ + τ + ε', desc: 'Two blocking directions (rows and columns); t treatments, t rows, t columns.',
-    build: d => covTerms(d).concat([T(d.row, [d.row]), T(d.col, [d.col]), T(d.factors[0], [d.factors[0]])]) },
-  { id: 'ibd', name: 'Incomplete block design (lattice, alpha, BIBD) — intra-block analysis', art: 'lattice', factors: [1, 1], blocks: [2, 2],
-    model: 'y = μ + ρ + β(ρ) + τ + ε', desc: 'Blocks smaller than the number of treatments, nested in replicates. Treatment effects are adjusted for blocks (Type III); means shown are adjusted means.',
-    build: d => covTerms(d).concat([T(d.blocks[0], [d.blocks[0]]), T(d.blocks[1] + '(' + d.blocks[0] + ')', [d.blocks[0], d.blocks[1]]), T(d.factors[0], [d.factors[0]])]) },
-  { id: 'augmented', name: 'Augmented design (replicated checks + unreplicated entries)', art: 'augmented', factors: [1, 1], blocks: [1, 1],
-    model: 'y = μ + β + τ + ε', desc: 'Checks appear in every block; new entries once. The error comes from the checks; entry means are adjusted for block effects.',
-    build: d => covTerms(d).concat([T(d.blocks[0], [d.blocks[0]]), T(d.factors[0], [d.factors[0]])]) },
-  { id: 'fact_crd', name: 'Factorial in CRD', art: 'factorial', factors: [2, 4], blocks: [0, 0],
-    model: 'y = μ + α + δ + (αδ) + ε', desc: 'Two or more factors, all combinations, completely randomised.',
+  { id: 'crd', name: { en: 'Completely randomised design (CRD)', es: 'Diseño completamente al azar (DCA)' }, art: 'crd', factors: [1, 1], blocks: [0, 0],
+    model: 'y = μ + τ + ε', desc: { en: 'Treatments assigned at random to homogeneous units (pots, greenhouse benches, laboratory). Unequal replication allowed.', es: 'Los tratamientos se asignan al azar a unidades homogéneas (macetas, mesas de invernadero, laboratorio). Admite repetición desigual.' },
+    build: d => covTerms(d).concat([term(d.factors[0], [d.factors[0]])]) },
+  { id: 'rcbd', name: { en: 'Randomised complete block design (RCBD)', es: 'Diseño de bloques completos al azar (DBCA)' }, art: 'rcbd', factors: [1, 1], blocks: [1, 1],
+    model: 'y = μ + β + τ + ε', desc: { en: 'Every treatment once in each block; blocks remove a known gradient. The workhorse of field trials.', es: 'Cada tratamiento una vez en cada bloque; los bloques retiran un gradiente conocido. Es el caballito de batalla de los ensayos de campo.' },
+    build: d => covTerms(d).concat([term(d.blocks[0], [d.blocks[0]]), term(d.factors[0], [d.factors[0]])]) },
+  { id: 'grcbd', name: { en: 'Generalised RCBD (several plots per block × treatment)', es: 'Bloques completos al azar generalizado (varias parcelas por bloque × tratamiento)' }, art: 'rcbd', factors: [1, 1], blocks: [1, 1], needReps: true,
+    model: 'y = μ + β + τ + (βτ) + ε', desc: { en: 'Each treatment repeated within blocks; the block × treatment interaction is estimable and can serve as the error when blocks are random.', es: 'Cada tratamiento se repite dentro de los bloques; la interacción bloque × tratamiento se puede estimar y sirve como error cuando los bloques son aleatorios.' },
+    options: [{ key: 'blocksRandom', get label() { return T('Blocks are random → test treatments against block × treatment', 'Los bloques son aleatorios → probar los tratamientos contra bloque × tratamiento'); }, default: true }],
+    build: (d, o) => covTerms(d).concat([term(d.blocks[0], [d.blocks[0]]), term(d.factors[0], [d.factors[0]], { error: o.blocksRandom ? d.blocks[0] + ':' + d.factors[0] : 'Residuals' }), term(d.blocks[0] + ':' + d.factors[0], [d.blocks[0], d.factors[0]], { isError: o.blocksRandom, label: T('Block × treatment', 'Bloque × tratamiento') + (o.blocksRandom ? ' (Error a)' : '') })]) },
+  { id: 'latin', name: { en: 'Latin square', es: 'Cuadro latino' }, art: 'latin', factors: [1, 1], blocks: [0, 0], needRowCol: true,
+    model: 'y = μ + ρ + γ + τ + ε', desc: { en: 'Two blocking directions (rows and columns); t treatments, t rows, t columns.', es: 'Dos direcciones de bloqueo (hileras y columnas); t tratamientos, t hileras, t columnas.' },
+    build: d => covTerms(d).concat([term(d.row, [d.row]), term(d.col, [d.col]), term(d.factors[0], [d.factors[0]])]) },
+  { id: 'ibd', name: { en: 'Incomplete block design (lattice, alpha, BIBD) — intra-block analysis', es: 'Diseño de bloques incompletos (látice, alfa, BIBD): análisis intrabloque' }, art: 'lattice', factors: [1, 1], blocks: [2, 2],
+    model: 'y = μ + ρ + β(ρ) + τ + ε', desc: { en: 'Blocks smaller than the number of treatments, nested in replicates. Treatment effects are adjusted for blocks (Type III); means shown are adjusted means.', es: 'Bloques más chicos que el número de tratamientos, anidados en repeticiones. Los efectos de tratamiento se ajustan por bloques (tipo III); las medias que se muestran son medias ajustadas.' },
+    build: d => covTerms(d).concat([term(d.blocks[0], [d.blocks[0]]), term(d.blocks[1] + '(' + d.blocks[0] + ')', [d.blocks[0], d.blocks[1]]), term(d.factors[0], [d.factors[0]])]) },
+  { id: 'augmented', name: { en: 'Augmented design (replicated checks + unreplicated entries)', es: 'Diseño aumentado (testigos repetidos + entradas sin repetir)' }, art: 'augmented', factors: [1, 1], blocks: [1, 1],
+    model: 'y = μ + β + τ + ε', desc: { en: 'Checks appear in every block; new entries once. The error comes from the checks; entry means are adjusted for block effects.', es: 'Los testigos aparecen en cada bloque; las entradas nuevas una sola vez. El error sale de los testigos; las medias de las entradas se ajustan por el efecto de bloque.' },
+    build: d => covTerms(d).concat([term(d.blocks[0], [d.blocks[0]]), term(d.factors[0], [d.factors[0]])]) },
+  { id: 'fact_crd', name: { en: 'Factorial in CRD', es: 'Factorial completamente al azar' }, art: 'factorial', factors: [2, 4], blocks: [0, 0],
+    model: 'y = μ + α + δ + (αδ) + ε', desc: { en: 'Two or more factors, all combinations, completely randomised.', es: 'Dos o más factores, todas las combinaciones, completamente al azar.' },
     build: d => covTerms(d).concat(factorialTerms(d.factors)) },
-  { id: 'fact_rcbd', name: 'Factorial in RCBD', art: 'factorial', factors: [2, 4], blocks: [1, 1],
-    model: 'y = μ + β + α + δ + (αδ) + ε', desc: 'All factor combinations randomised within each block.',
-    build: d => covTerms(d).concat([T(d.blocks[0], [d.blocks[0]])], factorialTerms(d.factors)) },
-  { id: 'split_rcbd', name: 'Split-plot in RCBD (main plots in blocks)', art: 'split', factors: [2, 2], blocks: [1, 1],
-    model: 'y = μ + β + α + (βα)ₐ + δ + (αδ) + ε_b', desc: 'First factor on main plots (hard to apply on small plots: irrigation, tillage, sowing date); second factor on sub-plots. Two error terms.',
-    build: d => { const [A, B] = d.factors, R = d.blocks[0]; return covTerms(d).concat([T(R, [R], { error: R + ':' + A }), T(A, [A], { error: R + ':' + A }), T(R + ':' + A, [R, A], { isError: true, label: 'Error a (main plot)' }), T(B, [B]), T(A + ':' + B, [A, B])]); } },
-  { id: 'split_crd', name: 'Split-plot in CRD (main plots completely randomised)', art: 'split', factors: [2, 2], blocks: [1, 1],
-    model: 'y = μ + α + ε_a + δ + (αδ) + ε_b', desc: 'Main plots randomised without blocks; the block column identifies the replicate of each main plot.',
-    build: d => { const [A, B] = d.factors, R = d.blocks[0]; return covTerms(d).concat([T(A, [A], { error: A + ':' + R }), T(A + ':' + R, [A, R], { isError: true, label: 'Error a (replicates within ' + A + ')' }), T(B, [B]), T(A + ':' + B, [A, B])]); } },
-  { id: 'strip_rcbd', name: 'Strip-plot (split-block) in RCBD', art: 'strip', factors: [2, 2], blocks: [1, 1],
-    model: 'y = μ + β + α + (βα)ₐ + δ + (βδ)_b + (αδ) + ε_c', desc: 'Both factors applied in perpendicular strips across each block; three error terms.',
-    build: d => { const [A, B] = d.factors, R = d.blocks[0]; return covTerms(d).concat([T(R, [R]), T(A, [A], { error: R + ':' + A }), T(R + ':' + A, [R, A], { isError: true, label: 'Error a' }), T(B, [B], { error: R + ':' + B }), T(R + ':' + B, [R, B], { isError: true, label: 'Error b' }), T(A + ':' + B, [A, B])]); } },
-  { id: 'splitsplit_rcbd', name: 'Split-split-plot in RCBD', art: 'split', factors: [3, 3], blocks: [1, 1],
-    model: 'y = μ + β + α + ε_a + δ + (αδ) + ε_b + γ + (αγ) + (δγ) + (αδγ) + ε_c', desc: 'Three factors in nested plots: main, sub and sub-sub plots. Three error terms.',
-    build: d => { const [A, B, C] = d.factors, R = d.blocks[0]; return covTerms(d).concat([T(R, [R], { error: R + ':' + A }), T(A, [A], { error: R + ':' + A }), T(R + ':' + A, [R, A], { isError: true, label: 'Error a' }), T(B, [B], { error: R + ':' + A + ':' + B }), T(A + ':' + B, [A, B], { error: R + ':' + A + ':' + B }), T(R + ':' + A + ':' + B, [R, A, B], { isError: true, label: 'Error b' }), T(C, [C]), T(A + ':' + C, [A, C]), T(B + ':' + C, [B, C]), T(A + ':' + B + ':' + C, [A, B, C])]); } },
-  { id: 'nested', name: 'Nested (hierarchical): second factor within the first', art: 'nested', factors: [2, 2], blocks: [0, 0],
-    model: 'y = μ + α + δ(α) + ε', desc: 'Levels of B are different inside each level of A (e.g. trees within orchards, plants within plots).',
-    options: [{ key: 'bRandom', label: 'B(A) is random → test A against B(A)', default: true }],
-    build: (d, o) => { const [A, B] = d.factors; return covTerms(d).concat([T(A, [A], { error: o.bRandom ? B + '(' + A + ')' : 'Residuals' }), T(B + '(' + A + ')', [A, B], { isError: o.bRandom, label: B + ' within ' + A })]); } },
+  { id: 'fact_rcbd', name: { en: 'Factorial in RCBD', es: 'Factorial en bloques completos al azar' }, art: 'factorial', factors: [2, 4], blocks: [1, 1],
+    model: 'y = μ + β + α + δ + (αδ) + ε', desc: { en: 'All factor combinations randomised within each block.', es: 'Todas las combinaciones de los factores se aleatorizan dentro de cada bloque.' },
+    build: d => covTerms(d).concat([term(d.blocks[0], [d.blocks[0]])], factorialTerms(d.factors)) },
+  { id: 'split_rcbd', name: { en: 'Split-plot in RCBD (main plots in blocks)', es: 'Parcelas divididas en bloques al azar (parcelas grandes dentro de bloques)' }, art: 'split', factors: [2, 2], blocks: [1, 1],
+    model: 'y = μ + β + α + (βα)ₐ + δ + (αδ) + ε_b', desc: { en: 'First factor on main plots (hard to apply on small plots: irrigation, tillage, sowing date); second factor on sub-plots. Two error terms.', es: 'El primer factor va en las parcelas grandes (lo difícil de aplicar en parcelas chicas: riego, labranza, fecha de siembra); el segundo, en las subparcelas. Dos términos de error.' },
+    build: d => { const [A, B] = d.factors, R = d.blocks[0]; return covTerms(d).concat([term(R, [R], { error: R + ':' + A }), term(A, [A], { error: R + ':' + A }), term(R + ':' + A, [R, A], { isError: true, label: T('Error a (main plot)', 'Error a (parcela grande)') }), term(B, [B]), term(A + ':' + B, [A, B])]); } },
+  { id: 'split_crd', name: { en: 'Split-plot in CRD (main plots completely randomised)', es: 'Parcelas divididas completamente al azar (parcelas grandes al azar)' }, art: 'split', factors: [2, 2], blocks: [1, 1],
+    model: 'y = μ + α + ε_a + δ + (αδ) + ε_b', desc: { en: 'Main plots randomised without blocks; the block column identifies the replicate of each main plot.', es: 'Las parcelas grandes se aleatorizan sin bloques; la columna de bloque identifica la repetición de cada parcela grande.' },
+    build: d => { const [A, B] = d.factors, R = d.blocks[0]; return covTerms(d).concat([term(A, [A], { error: A + ':' + R }), term(A + ':' + R, [A, R], { isError: true, label: T('Error a (replicates within ', 'Error a (repeticiones dentro de ') + A + ')' }), term(B, [B]), term(A + ':' + B, [A, B])]); } },
+  { id: 'strip_rcbd', name: { en: 'Strip-plot (split-block) in RCBD', es: 'Franjas divididas (bloques divididos) en bloques al azar' }, art: 'strip', factors: [2, 2], blocks: [1, 1],
+    model: 'y = μ + β + α + (βα)ₐ + δ + (βδ)_b + (αδ) + ε_c', desc: { en: 'Both factors applied in perpendicular strips across each block; three error terms.', es: 'Los dos factores se aplican en franjas perpendiculares a lo ancho de cada bloque; tres términos de error.' },
+    build: d => { const [A, B] = d.factors, R = d.blocks[0]; return covTerms(d).concat([term(R, [R]), term(A, [A], { error: R + ':' + A }), term(R + ':' + A, [R, A], { isError: true, label: 'Error a' }), term(B, [B], { error: R + ':' + B }), term(R + ':' + B, [R, B], { isError: true, label: 'Error b' }), term(A + ':' + B, [A, B])]); } },
+  { id: 'splitsplit_rcbd', name: { en: 'Split-split-plot in RCBD', es: 'Parcelas subdivididas en bloques al azar' }, art: 'split', factors: [3, 3], blocks: [1, 1],
+    model: 'y = μ + β + α + ε_a + δ + (αδ) + ε_b + γ + (αγ) + (δγ) + (αδγ) + ε_c', desc: { en: 'Three factors in nested plots: main, sub and sub-sub plots. Three error terms.', es: 'Tres factores en parcelas anidadas: grande, subparcela y sub-subparcela. Tres términos de error.' },
+    build: d => { const [A, B, C] = d.factors, R = d.blocks[0]; return covTerms(d).concat([term(R, [R], { error: R + ':' + A }), term(A, [A], { error: R + ':' + A }), term(R + ':' + A, [R, A], { isError: true, label: 'Error a' }), term(B, [B], { error: R + ':' + A + ':' + B }), term(A + ':' + B, [A, B], { error: R + ':' + A + ':' + B }), term(R + ':' + A + ':' + B, [R, A, B], { isError: true, label: 'Error b' }), term(C, [C]), term(A + ':' + C, [A, C]), term(B + ':' + C, [B, C]), term(A + ':' + B + ':' + C, [A, B, C])]); } },
+  { id: 'nested', name: { en: 'Nested (hierarchical): second factor within the first', es: 'Anidado (jerárquico): el segundo factor dentro del primero' }, art: 'nested', factors: [2, 2], blocks: [0, 0],
+    model: 'y = μ + α + δ(α) + ε', desc: { en: 'Levels of B are different inside each level of A (e.g. trees within orchards, plants within plots).', es: 'Los niveles de B son distintos dentro de cada nivel de A (por ejemplo, árboles dentro de huertas o plantas dentro de parcelas).' },
+    options: [{ key: 'bRandom', get label() { return T('B(A) is random → test A against B(A)', 'B(A) es aleatorio → probar A contra B(A)'); }, default: true }],
+    build: (d, o) => { const [A, B] = d.factors; return covTerms(d).concat([term(A, [A], { error: o.bRandom ? B + '(' + A + ')' : 'Residuals' }), term(B + '(' + A + ')', [A, B], { isError: o.bRandom, label: B + T(' within ', ' dentro de ') + A })]); } },
 ];
 DS.byId = id => DS.catalog.find(c => c.id === id);
 
@@ -68,11 +70,11 @@ DS.applicable = (d, recs) => {
   const multi = Object.values(cnt).some(v => v > 1);
   const out = DS.catalog.map(c => {
     let ok = true, why = [];
-    if (nf < c.factors[0] || nf > c.factors[1]) { ok = false; why.push(`needs ${c.factors[0] === c.factors[1] ? c.factors[0] : c.factors[0] + '–' + c.factors[1]} treatment factor${c.factors[1] > 1 ? 's' : ''}`); }
-    if (nb < c.blocks[0]) { ok = false; why.push(`needs ${c.blocks[0]} block column${c.blocks[0] > 1 ? 's' : ''}`); }
-    if (c.needRowCol && !(d.row && d.col)) { ok = false; why.push('needs row and column roles'); }
-    if (c.needReps && nb >= c.blocks[0] && !multi) { ok = false; why.push('needs several plots per block × treatment'); }
-    if (!c.needRowCol && d.row && d.col && c.id !== 'latin') why.push('row/column roles ignored');
+    if (nf < c.factors[0] || nf > c.factors[1]) { ok = false; why.push(T(`needs ${c.factors[0] === c.factors[1] ? c.factors[0] : c.factors[0] + '–' + c.factors[1]} treatment factor${c.factors[1] > 1 ? 's' : ''}`, `necesita ${c.factors[0] === c.factors[1] ? c.factors[0] : c.factors[0] + ' a ' + c.factors[1]} ${c.factors[1] > 1 ? 'factores de tratamiento' : 'factor de tratamiento'}`)); }
+    if (nb < c.blocks[0]) { ok = false; why.push(T(`needs ${c.blocks[0]} block column${c.blocks[0] > 1 ? 's' : ''}`, `necesita ${c.blocks[0]} ${c.blocks[0] > 1 ? 'columnas de bloque' : 'columna de bloque'}`)); }
+    if (c.needRowCol && !(d.row && d.col)) { ok = false; why.push(T('needs row and column roles', 'necesita papeles de hilera y de columna')); }
+    if (c.needReps && nb >= c.blocks[0] && !multi) { ok = false; why.push(T('needs several plots per block × treatment', 'necesita varias parcelas por bloque × tratamiento')); }
+    if (!c.needRowCol && d.row && d.col && c.id !== 'latin') why.push(T('row/column roles ignored', 'no toma en cuenta los papeles de hilera y columna'));
     return { design: c, ok, why: why.join('; ') };
   });
   /* suggestion */
@@ -115,7 +117,7 @@ DS.analyze = (designId, resp, d, opts) => {
     strata: {},
   };
   terms.forEach(t => { if (t.isError) { const r = an.rows.find(x => x.term === t.name); res.strata[t.name] = { ms: r.ms, df: r.df, label: t.label || t.name }; } });
-  res.strata.Residuals = { ms: an.residual.ms, df: an.residual.df, label: 'Residual error' + (Object.keys(res.strata).length ? ' (last stratum)' : '') };
+  res.strata.Residuals = { ms: an.residual.ms, df: an.residual.df, label: T('Residual error', 'Error residual') + (Object.keys(res.strata).length ? T(' (last stratum)', ' (último estrato)') : '') };
   return res;
 };
 

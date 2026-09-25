@@ -89,7 +89,7 @@ Art.hero = () => {
       const x = bx + t * (pw + gap), y = by + b * (ph + gap);
       plots += `<rect x="${x}" y="${y}" width="${pw}" height="${ph}" rx="3" fill="${TR[order[t]]}" opacity="0.9"/><text x="${x + pw / 2}" y="${y + 15}" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" ${F}>T${order[t] + 1}</text>`;
     }
-    plots += `<text x="${bx - 6}" y="${by + b * (ph + gap) + 15}" text-anchor="end" font-size="9" fill="#5b5b55" ${F}>Block ${b + 1}</text>`;
+    plots += `<text x="${bx - 6}" y="${by + b * (ph + gap) + 15}" text-anchor="end" font-size="9" fill="#5b5b55" ${F}>${T("Block ", "Bloque ")}${b + 1}</text>`;
   }
   const means = [58, 82, 73, 66], letters = ['c', 'a', 'b', 'bc'];
   let bars = '';
@@ -111,16 +111,16 @@ Art.hero = () => {
   <g stroke="#3f2a1c" stroke-width="2" opacity="0.4"><path d="M30 400 L 90 300"/><path d="M110 400 L 150 300"/><path d="M190 400 L 210 300"/><path d="M270 400 L 270 300"/></g>
   <g stroke="#7a5a3a" stroke-width="2.5"><line x1="336" y1="196" x2="336" y2="400"/><line x1="336" y1="230" x2="600" y2="222"/><line x1="336" y1="270" x2="600" y2="262"/><line x1="336" y1="312" x2="600" y2="304"/><line x1="470" y1="220" x2="470" y2="400"/><line x1="580" y1="218" x2="580" y2="400"/></g>
   <rect x="92" y="98" width="290" height="102" rx="10" fill="#ffffff" opacity="0.94" filter="url(#hsh)"/>
-  <text x="104" y="92" font-size="10" font-weight="700" fill="#2b2b28" ${F} letter-spacing="1.4">RANDOMISED COMPLETE BLOCKS &#183; 4 &#215; 3</text>
+  <text x="104" y="92" font-size="10" font-weight="700" fill="#2b2b28" ${F} letter-spacing="1.4">${T("RANDOMISED COMPLETE BLOCKS", "BLOQUES COMPLETOS AL AZAR")} &#183; 4 &#215; 3</text>
   ${plots}
   <rect x="${cx - 4}" y="${cy - 26}" width="140" height="${ch + 50}" rx="10" fill="#ffffff" opacity="0.95" filter="url(#hsh)"/>
-  <text x="${cx + 6}" y="${cy - 10}" font-size="9" font-weight="700" fill="#2b2b28" ${F} letter-spacing="1.2">YIELD &#183; TUKEY HSD</text>
+  <text x="${cx + 6}" y="${cy - 10}" font-size="9" font-weight="700" fill="#2b2b28" ${F} letter-spacing="1.2">${T("YIELD &#183; TUKEY HSD", "RENDIMIENTO &#183; TUKEY")}</text>
   <line x1="${cx + 4}" x2="${cx + 132}" y1="${cy + ch}" y2="${cy + ch}" stroke="#999"/>
   ${bars}
   ${place(Art.crop.maize(), 4, 198, 1.45)}${place(Art.crop.maize(), 72, 226, 1.2)}
   ${place(Art.crop.chile(), 192, 250, 1.1)}${place(Art.crop.tomato(), 236, 282, 1.0)}${place(Art.crop.coffee(), 24, 330, 0.72)}
   ${place(Art.animal.cow(), 440, 296, 0.95)}${place(Art.animal.sheep(), 348, 326, 0.7)}${place(Art.animal.goat(), 492, 336, 0.62)}
-  <text x="346" y="212" font-size="8.5" fill="#ffffff" font-weight="700" ${F} opacity="0.9">GRAZING TRIAL &#183; 3 PADDOCKS</text>
+  <text x="346" y="212" font-size="8.5" fill="#ffffff" font-weight="700" ${F} opacity="0.9">${T("GRAZING TRIAL &#183; 3 PADDOCKS", "ENSAYO DE PASTOREO &#183; 3 POTREROS")}</text>
 </svg>`;
 };
 

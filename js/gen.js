@@ -48,7 +48,7 @@ GEN.crd = o => {
   const list = rng.shuffle(o.trts.flatMap(t => Array(o.reps).fill(t)));
   const cols = o.cols || Math.ceil(Math.sqrt(list.length));
   const cells = list.map((t, i) => ({ trt: t, label: t, inBlock: i, blockIndex: 0 }));
-  return arrange([{ name: 'Field', grid: toGrid(cells, cols) }], { arrangement: 'stacked' });
+  return arrange([{ name: T('Field', 'Terreno'), grid: toGrid(cells, cols) }], { arrangement: 'stacked' });
 };
 GEN.rcbd = o => {
   const rng = S.rng(o.seed);
@@ -56,7 +56,7 @@ GEN.rcbd = o => {
   for (let b = 0; b < o.reps; b++) {
     const perm = rng.shuffle(o.trts);
     const cols = o.cols || perm.length;
-    blocks.push({ name: 'Block ' + (b + 1), grid: toGrid(perm.map((t, i) => ({ trt: t, label: t, rep: b + 1, inBlock: i, blockIndex: b })), cols) });
+    blocks.push({ name: T('Block ', 'Bloque ') + (b + 1), grid: toGrid(perm.map((t, i) => ({ trt: t, label: t, rep: b + 1, inBlock: i, blockIndex: b })), cols) });
   }
   return arrange(blocks, o);
 };
@@ -65,7 +65,7 @@ GEN.latin = o => {
   const rp = rng.shuffle(o.trts.map((_, i) => i)), cp = rng.shuffle(o.trts.map((_, i) => i)), sp = rng.shuffle(o.trts);
   const grid = [];
   for (let i = 0; i < t; i++) { const row = []; for (let j = 0; j < t; j++) { const s = sp[(rp[i] + cp[j]) % t]; row.push({ trt: s, label: s, rowF: i + 1, colF: j + 1, inBlock: i * t + j, blockIndex: 0 }); } grid.push(row); }
-  return arrange([{ name: 'Square', grid }], { arrangement: 'stacked' });
+  return arrange([{ name: T('Square', 'Cuadro'), grid }], { arrangement: 'stacked' });
 };
 GEN.factorial = o => {
   const combos = [];
@@ -88,7 +88,7 @@ GEN.split = o => {
       subs.forEach((s, si) => { grid[si][mi] = { trt: lab(a, s), label: s, A: a, B: s, main: mi + 1, rep: b + 1, inBlock: k++, blockIndex: b }; });
       boxes.push({ name: a, r0: 0, c0: mi, r1: o.B.length - 1, c1: mi, kind: 'main' });
     });
-    blocks.push({ name: (o.crdMain ? 'Rep ' : 'Block ') + (b + 1), grid, boxes });
+    blocks.push({ name: (o.crdMain ? T('Rep ', 'Rep ') : T('Block ', 'Bloque ')) + (b + 1), grid, boxes });
   }
   return arrange(blocks, o);
 };
@@ -100,7 +100,7 @@ GEN.strip = o => {
     let k = 0;
     const grid = ra.map(a => cb.map(bb => ({ trt: lab(a, bb), label: lab(a, bb), A: a, B: bb, rep: b + 1, inBlock: k++, blockIndex: b })));
     const boxes = ra.map((a, i) => ({ name: a, r0: i, c0: 0, r1: i, c1: cb.length - 1, kind: 'main' }));
-    blocks.push({ name: 'Block ' + (b + 1), grid, boxes });
+    blocks.push({ name: T('Block ', 'Bloque ') + (b + 1), grid, boxes });
   }
   return arrange(blocks, o);
 };
@@ -116,7 +116,7 @@ GEN.splitsplit = o => {
       subs.forEach(s => { const ss = rng.shuffle(o.C); ss.forEach((c, ci) => { grid[ci][col] = { trt: lab(a, s, c), label: c, A: a, B: s, C: c, rep: b + 1, inBlock: k++, blockIndex: b }; }); boxes.push({ name: s, r0: 0, c0: col, r1: o.C.length - 1, c1: col, kind: 'sub' }); col++; });
       boxes.push({ name: a, r0: 0, c0, r1: o.C.length - 1, c1: col - 1, kind: 'main' });
     });
-    blocks.push({ name: 'Block ' + (b + 1), grid, boxes });
+    blocks.push({ name: T('Block ', 'Bloque ') + (b + 1), grid, boxes });
   }
   return arrange(blocks, o);
 };
@@ -130,7 +130,7 @@ GEN.ibd = o => {
     const nb = t / k;
     const grid = []; const boxes = [];
     for (let b = 0; b < nb; b++) { grid.push(perm.slice(b * k, (b + 1) * k).map((tt, i) => ({ trt: tt, label: tt, rep: r + 1, ib: b + 1, inBlock: b * k + i, blockIndex: r }))); boxes.push({ name: 'B' + (b + 1), r0: b, c0: 0, r1: b, c1: k - 1, kind: 'sub' }); }
-    blocks.push({ name: 'Rep ' + (r + 1), grid, boxes });
+    blocks.push({ name: T('Rep ', 'Rep ') + (r + 1), grid, boxes });
   }
   return arrange(blocks, o);
 };
@@ -143,7 +143,7 @@ GEN.augmented = o => {
     const mine = entries.slice(b * per, (b + 1) * per);
     const list = rng.shuffle(o.checks.concat(mine));
     const cols = o.cols || list.length;
-    blocks.push({ name: 'Block ' + (b + 1), grid: toGrid(list.map((t, i) => ({ trt: t, label: t, rep: b + 1, check: o.checks.includes(t), inBlock: i, blockIndex: b })), cols) });
+    blocks.push({ name: T('Block ', 'Bloque ') + (b + 1), grid: toGrid(list.map((t, i) => ({ trt: t, label: t, rep: b + 1, check: o.checks.includes(t), inBlock: i, blockIndex: b })), cols) });
   }
   return arrange(blocks, o);
 };
@@ -151,13 +151,15 @@ GEN.augmented = o => {
 /* ---------- field book ---------- */
 GEN.fieldBook = (L, o) => {
   const hasA = L.plots.some(p => p.A != null), hasC = L.plots.some(p => p.C != null), hasRC = L.plots.some(p => p.rowF != null);
-  const cols = ['Plot'];
-  if (L.plots.some(p => p.rep != null)) cols.push(o.repName || 'Block');
-  if (L.plots.some(p => p.ib != null)) cols.push('IncBlock');
-  if (hasRC) cols.push('Row', 'Column'); else cols.push('FieldRow', 'FieldCol');
+  /* These names travel in the file and Block 2 reads them back, so the Spanish ones are the
+     words its role detector already recognises (Parcela, Hilera, Columna). */
+  const cols = [T('Plot', 'Parcela')];
+  if (L.plots.some(p => p.rep != null)) cols.push(o.repName || T('Block', 'Bloque'));
+  if (L.plots.some(p => p.ib != null)) cols.push(T('IncBlock', 'BloqueInc'));
+  if (hasRC) cols.push(T('Row', 'Hilera'), T('Column', 'Columna')); else cols.push(T('FieldRow', 'HileraCampo'), T('FieldCol', 'ColumnaCampo'));
   if (hasA) { cols.push(o.aName || 'A', o.bName || 'B'); if (hasC) cols.push(o.cName || 'C'); }
-  cols.push(o.trtName || 'Treatment');
-  if (L.plots.some(p => p.check != null)) cols.push('Type');
+  cols.push(o.trtName || T('Treatment', 'Tratamiento'));
+  if (L.plots.some(p => p.check != null)) cols.push(T('Type', 'Tipo'));
   (o.responses || []).forEach(r => cols.push(r));
   const rows = L.plots.slice().sort((a, b) => a.plot - b.plot).map(p => {
     const r = [p.plot];
@@ -166,7 +168,7 @@ GEN.fieldBook = (L, o) => {
     if (hasRC) r.push(p.rowF, p.colF); else r.push(p.row + 1, p.col + 1);
     if (hasA) { r.push(p.A, p.B); if (hasC) r.push(p.C); }
     r.push(p.trt);
-    if (p.check != null) r.push(p.check ? 'check' : 'entry');
+    if (p.check != null) r.push(p.check ? T('check', 'testigo') : T('entry', 'entrada'));
     (o.responses || []).forEach(() => r.push(''));
     return r;
   });

@@ -49,7 +49,7 @@ Art.hero = () => {
       /* seedlings rows */
       for (let k = 0; k < 3; k++) plots += `<circle cx="${x + 12 + k * 22}" cy="${y + ph - 7}" r="2.2" fill="#fff" opacity="0.55"/>`;
     }
-    plots += `<text x="${px - 10}" y="${py + b * (ph + gap) + ph / 2 + 4}" text-anchor="end" font-size="11" class="art-mut" font-family="Segoe UI, Helvetica, Arial, sans-serif">Block ${b + 1}</text>`;
+    plots += `<text x="${px - 10}" y="${py + b * (ph + gap) + ph / 2 + 4}" text-anchor="end" font-size="11" class="art-mut" font-family="Segoe UI, Helvetica, Arial, sans-serif">${T("Block ", "Bloque ")}${b + 1}</text>`;
   }
   /* bar chart card with letters */
   const means = [62, 78, 71, 55], letters = ['bc', 'a', 'ab', 'c'], se = [5, 4, 6, 5];
@@ -80,10 +80,10 @@ Art.hero = () => {
     <path d="M520 380 L 450 300" stroke="#3f2a1c" stroke-width="2" opacity="0.5"/>
   </g>
   <rect x="48" y="138" width="316" height="182" rx="12" fill="#ffffff" opacity="0.93" filter="url(#sh)"/>
-  <text x="60" y="130" font-size="11" font-weight="700" fill="#2b2b28" font-family="Segoe UI, Helvetica, Arial, sans-serif" letter-spacing="1.5">RANDOMISED COMPLETE BLOCK DESIGN</text>
+  <text x="60" y="130" font-size="11" font-weight="700" fill="#2b2b28" font-family="Segoe UI, Helvetica, Arial, sans-serif" letter-spacing="1.5">${T("RANDOMISED COMPLETE BLOCK DESIGN", "DISEÑO DE BLOQUES COMPLETOS AL AZAR")}</text>
   ${plots}
   <rect x="${cx}" y="${cy - 30}" width="${cw + 30}" height="${ch + 62}" rx="12" fill="#ffffff" opacity="0.95" filter="url(#sh)"/>
-  <text x="${cx + 14}" y="${cy - 12}" font-size="10" font-weight="700" fill="#2b2b28" font-family="Segoe UI, Helvetica, Arial, sans-serif" letter-spacing="1.2">YIELD (t/ha) · TUKEY HSD</text>
+  <text x="${cx + 14}" y="${cy - 12}" font-size="10" font-weight="700" fill="#2b2b28" font-family="Segoe UI, Helvetica, Arial, sans-serif" letter-spacing="1.2">${T("YIELD (t/ha) · TUKEY HSD", "RENDIMIENTO (t/ha) · TUKEY")}</text>
   <line x1="${cx + 8}" x2="${cx + cw + 20}" y1="${cy + ch}" y2="${cy + ch}" stroke="#999" stroke-width="1"/>
   ${bars}
   ${plant(30, 330, 34)}${plant(58, 345, 40)}${plant(578, 338, 38)}${plant(552, 352, 30)}
@@ -111,7 +111,7 @@ Art.block = n => {
       <line x1="30" x2="170" y1="90" y2="20" class="art-line" stroke-width="2" stroke-dasharray="4 4"/>
       ${[[34, 90], [48, 78], [62, 72], [76, 62], [90, 58], [104, 50], [118, 44], [132, 36], [146, 30], [160, 18]].map(([x, y], i) => `<circle cx="${x}" cy="${y + (i % 2 ? 4 : -4)}" r="4.5" fill="${TR[0]}"/>`).join('')}
       <path d="M120 100 q 18 -40 36 0" class="art-a" opacity="0.5"/>
-      <text x="40" y="24" font-size="12" font-weight="700" ${F} class="art-txt">Q–Q · Shapiro · Levene</text>
+      <text x="40" y="24" font-size="12" font-weight="700" ${F} class="art-txt">${T("Q–Q · Shapiro · Levene", "Q–Q · Shapiro · Levene")}</text>
     </svg>`;
     case 5: return `<svg viewBox="0 0 200 110" xmlns="http://www.w3.org/2000/svg">
       ${[[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]].map((row, i) => row.map((t, j) => `<rect x="${44 + j * 29}" y="${8 + i * 24}" width="26" height="21" rx="4" fill="${TR[t]}"/><text x="${57 + j * 29}" y="${23 + i * 24}" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" ${F}>${'ABCD'[t]}</text>`).join('')).join('')}
@@ -197,14 +197,14 @@ Art.design = id => {
 
 /* ================= misc icons ================= */
 Art.upload = () => `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg"><circle cx="26" cy="26" r="24" class="art-p" opacity="0.15"/><path d="M26 36 V16 M17 25 l9 -9 l9 9" stroke="#2f7d4f" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 38 h22" stroke="#2f7d4f" stroke-width="3.2" stroke-linecap="round"/></svg>`;
-Art.soon = () => `<svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg"><path d="M0 95 C 40 80, 100 90, 180 78 L180 120 L0 120Z" fill="#8c5a3c" opacity="0.8"/>${plant(50, 100, 22)}${plant(90, 98, 30)}${plant(130, 102, 26)}<circle cx="150" cy="30" r="12" fill="#f6c453"/><text x="90" y="24" text-anchor="middle" font-size="12" font-family="Segoe UI, Helvetica, Arial, sans-serif" class="art-mut">growing…</text></svg>`;
+Art.soon = () => `<svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg"><path d="M0 95 C 40 80, 100 90, 180 78 L180 120 L0 120Z" fill="#8c5a3c" opacity="0.8"/>${plant(50, 100, 22)}${plant(90, 98, 30)}${plant(130, 102, 26)}<circle cx="150" cy="30" r="12" fill="#f6c453"/><text x="90" y="24" text-anchor="middle" font-size="12" font-family="Segoe UI, Helvetica, Arial, sans-serif" class="art-mut">${T("growing…", "creciendo…")}</text></svg>`;
 
 /* good-experiment principles icons (Fisher) */
 Art.principle = which => {
   const F = 'font-family="Segoe UI, Helvetica, Arial, sans-serif"';
-  if (which === 'replication') return `<svg class="inline-art" viewBox="0 0 220 90" xmlns="http://www.w3.org/2000/svg">${[0, 1, 2, 3].map(i => `<rect x="${10 + i * 52}" y="20" width="46" height="46" rx="6" fill="${TR[0]}" opacity="${0.9 - i * 0.12}"/><text x="${33 + i * 52}" y="48" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" ${F}>T1</text>`).join('')}<text x="110" y="84" text-anchor="middle" font-size="10" class="art-mut" ${F}>the same treatment on r independent units</text></svg>`;
-  if (which === 'randomization') { const r = rnd(3); const o = shuffled([0, 1, 2, 3, 0, 1, 2, 3], r); return `<svg class="inline-art" viewBox="0 0 220 90" xmlns="http://www.w3.org/2000/svg">${o.map((t, i) => `<rect x="${10 + (i % 4) * 52}" y="${8 + Math.floor(i / 4) * 34}" width="46" height="30" rx="5" fill="${TR[t]}"/><text x="${33 + (i % 4) * 52}" y="${27 + Math.floor(i / 4) * 34}" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" ${F}>T${t + 1}</text>`).join('')}<text x="110" y="86" text-anchor="middle" font-size="10" class="art-mut" ${F}>assignment by chance, not by convenience</text></svg>`; }
-  const gid = "grad" + (Art._gid = (Art._gid || 0) + 1); return `<svg class="inline-art" viewBox="0 0 220 90" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="${gid}" x1="0" x2="1"><stop offset="0" stop-color="#6b4630"/><stop offset="1" stop-color="#d9c8a9"/></linearGradient></defs><rect x="8" y="8" width="204" height="60" rx="6" fill="url(#${gid})" opacity="0.7"/>${[0, 1, 2, 3].map(b => `<rect x="${12 + b * 50}" y="12" width="46" height="52" rx="4" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="4 3"/><text x="${35 + b * 50}" y="42" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" ${F}>Block ${b + 1}</text>`).join('')}<text x="110" y="84" text-anchor="middle" font-size="10" class="art-mut" ${F}>blocks follow the fertility / moisture gradient</text></svg>`;
+  if (which === 'replication') return `<svg class="inline-art" viewBox="0 0 220 90" xmlns="http://www.w3.org/2000/svg">${[0, 1, 2, 3].map(i => `<rect x="${10 + i * 52}" y="20" width="46" height="46" rx="6" fill="${TR[0]}" opacity="${0.9 - i * 0.12}"/><text x="${33 + i * 52}" y="48" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" ${F}>T1</text>`).join('')}<text x="110" y="84" text-anchor="middle" font-size="10" class="art-mut" ${F}>${T("the same treatment on r independent units", "el mismo tratamiento en r unidades independientes")}</text></svg>`;
+  if (which === 'randomization') { const r = rnd(3); const o = shuffled([0, 1, 2, 3, 0, 1, 2, 3], r); return `<svg class="inline-art" viewBox="0 0 220 90" xmlns="http://www.w3.org/2000/svg">${o.map((t, i) => `<rect x="${10 + (i % 4) * 52}" y="${8 + Math.floor(i / 4) * 34}" width="46" height="30" rx="5" fill="${TR[t]}"/><text x="${33 + (i % 4) * 52}" y="${27 + Math.floor(i / 4) * 34}" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" ${F}>T${t + 1}</text>`).join('')}<text x="110" y="86" text-anchor="middle" font-size="10" class="art-mut" ${F}>${T("assignment by chance, not by convenience", "asignación al azar, no por comodidad")}</text></svg>`; }
+  const gid = "grad" + (Art._gid = (Art._gid || 0) + 1); return `<svg class="inline-art" viewBox="0 0 220 90" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="${gid}" x1="0" x2="1"><stop offset="0" stop-color="#6b4630"/><stop offset="1" stop-color="#d9c8a9"/></linearGradient></defs><rect x="8" y="8" width="204" height="60" rx="6" fill="url(#${gid})" opacity="0.7"/>${[0, 1, 2, 3].map(b => `<rect x="${12 + b * 50}" y="12" width="46" height="52" rx="4" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="4 3"/><text x="${35 + b * 50}" y="42" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" ${F}>Block ${b + 1}</text>`).join('')}<text x="110" y="84" text-anchor="middle" font-size="10" class="art-mut" ${F}>${T("blocks follow the fertility / moisture gradient", "los bloques siguen el gradiente de fertilidad o humedad")}</text></svg>`;
 };
 
 window.Art = Art;

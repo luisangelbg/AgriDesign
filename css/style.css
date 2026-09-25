@@ -22,15 +22,32 @@
   --shadow: 0 1px 2px rgba(16, 24, 40, 0.05), 0 6px 20px rgba(16, 24, 40, 0.05);
   --mono: "Cascadia Code", "SF Mono", Consolas, "Liberation Mono", monospace;
 }
+
+/* ---------- Dark theme ----------
+   The same palette is used twice: when the reader picks dark mode with the
+   button in the top bar (html[data-theme="dark"]) and when the operating
+   system asks for it and the reader has not picked light mode. */
+html[data-theme="dark"] {
+  --bg: #111613; --bg-soft: #191f1b; --card-bg: #1a211c; --text: #e6ece7;
+  --text-muted: #9aa79e; --border: #2a332c; --border-strong: #3a463d;
+  --primary: #5fbf85; --primary-dark: #4daa73; --primary-soft: rgba(95, 191, 133, 0.14);
+  --accent: #e0a24e; --accent-soft: rgba(224, 162, 78, 0.16); --sky: #5aa6dd;
+  --success: #57c46a; --danger: #e4675a; --warning: #e8a93c;
+  --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 6px 20px rgba(0,0,0,0.25);
+  color-scheme: dark;
+}
 @media (prefers-color-scheme: dark) {
-  :root {
+  html:not([data-theme="light"]) {
     --bg: #111613; --bg-soft: #191f1b; --card-bg: #1a211c; --text: #e6ece7;
     --text-muted: #9aa79e; --border: #2a332c; --border-strong: #3a463d;
     --primary: #5fbf85; --primary-dark: #4daa73; --primary-soft: rgba(95, 191, 133, 0.14);
     --accent: #e0a24e; --accent-soft: rgba(224, 162, 78, 0.16); --sky: #5aa6dd;
+    --success: #57c46a; --danger: #e4675a; --warning: #e8a93c;
     --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 6px 20px rgba(0,0,0,0.25);
+    color-scheme: dark;
   }
 }
+html[data-theme="light"] { color-scheme: light; }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -440,3 +457,25 @@ details.fig-editor > summary { cursor: pointer; font-size: 0.82rem; color: var(-
 .cite-ref { font-size: 1rem; line-height: 1.6; margin: 0; padding: 12px 16px; background: var(--bg-soft); border-radius: 10px; }
 .cite-ref a { word-break: break-all; }
 .cite-card .formula { white-space: pre; }
+
+/* ---------- Language switch and theme button (top bar) ---------- */
+.topbar-tools { display: flex; align-items: center; gap: 8px; }
+.lang-seg {
+  display: inline-flex; border: 1px solid var(--border-strong); border-radius: 9px;
+  overflow: hidden; background: var(--bg-soft);
+}
+.lang-seg button {
+  border: 0; background: transparent; color: var(--text-muted); cursor: pointer;
+  font-family: inherit; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.4px;
+  padding: 5px 9px; transition: all .15s;
+}
+.lang-seg button:hover { color: var(--text); }
+.lang-seg button.on { background: var(--primary); color: #fff; }
+#themeBtn {
+  width: 30px; height: 28px; border: 1px solid var(--border-strong); border-radius: 9px;
+  background: var(--bg-soft); color: var(--text); cursor: pointer; font-size: 0.95rem;
+  line-height: 1; display: inline-flex; align-items: center; justify-content: center;
+  font-family: inherit; transition: all .15s;
+}
+#themeBtn:hover { background: var(--primary-soft); color: var(--primary); border-color: var(--primary); }
+@media (max-width: 720px) { .topbar-tools { margin-left: auto; } }

@@ -1,23 +1,23 @@
 /* AgriDesign — Block 5 figures: treatment means with letters, dose–response trend. */
 
 const P5 = {};
-const TXT5 = [{ key: 'title', label: 'Title', type: 'text' }, { key: 'subtitle', label: 'Subtitle', type: 'text' }, { key: 'xlab', label: 'X axis label', type: 'text' }, { key: 'ylab', label: 'Y axis label', type: 'text' }];
+const TXT5 = () => [{ key: 'title', label: T('Title', 'Título'), type: 'text' }, { key: 'subtitle', label: T('Subtitle', 'Subtítulo'), type: 'text' }, { key: 'xlab', label: T('X axis label', 'Título del eje X'), type: 'text' }, { key: 'ylab', label: T('Y axis label', 'Título del eje Y'), type: 'text' }];
 
 /* items: [{label, mean, se, letters, group?}] */
 P5.meansLetters = (items, o) => ({
   title: o.title, fileName: o.fileName || 'means_letters', width: 860, height: 520,
   defaults: Object.assign({ title: o.title, xlab: o.xlab, ylab: o.ylab, palette: 'agri', style: 'bars', errorType: 'se', showLetters: true, showValues: false, barWidth: 0.65, letterSize: 13, sortMeans: false, includeZero: true, valueDigits: 2, monochrome: false, fill: '#2f7d4f' }, o.defaults || {}),
-  controls: TXT5.concat([
-    { key: 'style', label: 'Style', type: 'select', options: [['bars', 'Bars'], ['points', 'Points'], ['lollipop', 'Lollipop']] },
-    { key: 'errorType', label: 'Error bars', type: 'select', options: [['se', 'Standard error of the mean'], ['ci', '95 % confidence interval'], ['none', 'None']] },
-    { key: 'palette', label: 'Palette', type: 'select', options: Object.entries(Fig.paletteNames) },
-    { key: 'monochrome', label: 'Single colour', type: 'checkbox' }, { key: 'fill', label: 'Colour (single)', type: 'color' },
-    { key: 'colors', label: 'Colour per level', type: 'colors', labels: items.map(i => i.label) },
-    { key: 'showLetters', label: 'Show letters', type: 'checkbox' }, { key: 'showValues', label: 'Print means', type: 'checkbox' },
-    { key: 'sortMeans', label: 'Sort by mean (descending)', type: 'checkbox' }, { key: 'includeZero', label: 'Y axis from zero', type: 'checkbox' },
-    { key: 'barWidth', label: 'Bar width', type: 'range', min: 0.2, max: 0.95, step: 0.05 },
-    { key: 'letterSize', label: 'Letter size', type: 'range', min: 8, max: 24, step: 1 },
-    { key: 'valueDigits', label: 'Decimals', type: 'number', min: 0, max: 5, step: 1 },
+  controls: TXT5().concat([
+    { key: 'style', label: T('Style', 'Estilo'), type: 'select', options: [['bars', 'Bars'], ['points', 'Points'], ['lollipop', 'Lollipop']] },
+    { key: 'errorType', label: T('Error bars', 'Barras de error'), type: 'select', options: [['se', T('Standard error of the mean', 'Error estándar de la media')], ['ci', T('95 % confidence interval', 'Intervalo de confianza del 95 %')], ['none', T('None', 'Ninguna')]] },
+    { key: 'palette', label: T('Palette', 'Paleta'), type: 'select', options: Object.entries(Fig.paletteNames) },
+    { key: 'monochrome', label: T('Single colour', 'Un solo color'), type: 'checkbox' }, { key: 'fill', label: T('Colour (single)', 'Color (uno solo)'), type: 'color' },
+    { key: 'colors', label: T('Colour per level', 'Color por nivel'), type: 'colors', labels: items.map(i => i.label) },
+    { key: 'showLetters', label: T('Show letters', 'Mostrar las letras'), type: 'checkbox' }, { key: 'showValues', label: T('Print means', 'Escribir las medias'), type: 'checkbox' },
+    { key: 'sortMeans', label: T('Sort by mean (descending)', 'Ordenar por media (de mayor a menor)'), type: 'checkbox' }, { key: 'includeZero', label: T('Y axis from zero', 'Eje Y desde cero'), type: 'checkbox' },
+    { key: 'barWidth', label: T('Bar width', 'Ancho de las barras'), type: 'range', min: 0.2, max: 0.95, step: 0.05 },
+    { key: 'letterSize', label: T('Letter size', 'Tamaño de las letras'), type: 'range', min: 8, max: 24, step: 1 },
+    { key: 'valueDigits', label: T('Decimals', 'Decimales'), type: 'number', min: 0, max: 5, step: 1 },
   ]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
@@ -48,8 +48,8 @@ P5.meansLetters = (items, o) => ({
       if (cfg.showValues) { f.g.appendChild(Fig.text(cx, ty, i.mean.toFixed(+cfg.valueDigits), { size: 10.5, anchor: 'middle', fill: f.t.fg, font: f.font, role: 'label', halo: f.t.bg })); ty -= 13 * Fig.fs('label'); }
       if (cfg.showLetters && i.letters) f.g.appendChild(Fig.text(cx, ty, i.letters, { size: +cfg.letterSize, weight: 'bold', anchor: 'middle', fill: f.t.fg, font: f.font, role: 'label', halo: f.t.bg }));
     });
-    const lab = { se: 'Mean ± SE', ci: 'Mean ± 95 % CI', none: 'Mean' }[cfg.errorType];
-    f.g.appendChild(Fig.text(f.x1, f.y0 - 6, lab + (o.testName ? ' · letters: ' + o.testName : ''), { size: 10, anchor: 'end', fill: f.t.muted, font: f.font, role: 'label' }));
+    const lab = { se: T('Mean ± SE', 'Media ± EE'), ci: T('Mean ± 95 % CI', 'Media ± IC 95 %'), none: T('Mean', 'Media') }[cfg.errorType];
+    f.g.appendChild(Fig.text(f.x1, f.y0 - 6, lab + (o.testName ? T(' · letters: ', ' · letras: ') + o.testName : ''), { size: 10, anchor: 'end', fill: f.t.muted, font: f.font, role: 'label' }));
     return svg;
   },
 });
@@ -58,13 +58,13 @@ P5.meansLetters = (items, o) => ({
 P5.groupedMeans = (cells, aLevels, bLevels, o) => ({
   title: o.title, fileName: o.fileName || 'interaction_means', width: 900, height: 540,
   defaults: Object.assign({ title: o.title, xlab: o.xlab, ylab: o.ylab, palette: 'agri', errorType: 'se', showLetters: true, legendPos: 'right', includeZero: true, letterSize: 12 }, o.defaults || {}),
-  controls: TXT5.concat([
-    { key: 'palette', label: 'Palette', type: 'select', options: Object.entries(Fig.paletteNames) },
-    { key: 'colors', label: 'Colour per ' + o.bName, type: 'colors', labels: bLevels },
-    { key: 'errorType', label: 'Error bars', type: 'select', options: [['se', 'Standard error'], ['none', 'None']] },
-    { key: 'legendPos', label: 'Legend', type: 'select', options: [['right', 'Top right'], ['left', 'Top left'], ['bottom', 'Below'], ['none', 'Hidden']] },
-    { key: 'showLetters', label: 'Show letters', type: 'checkbox' }, { key: 'includeZero', label: 'Y axis from zero', type: 'checkbox' },
-    { key: 'letterSize', label: 'Letter size', type: 'range', min: 8, max: 22, step: 1 },
+  controls: TXT5().concat([
+    { key: 'palette', label: T('Palette', 'Paleta'), type: 'select', options: Object.entries(Fig.paletteNames) },
+    { key: 'colors', label: T('Colour per ', 'Color por') + o.bName, type: 'colors', labels: bLevels },
+    { key: 'errorType', label: T('Error bars', 'Barras de error'), type: 'select', options: [['se', T('Standard error', 'Error estándar')], ['none', T('None', 'Ninguna')]] },
+    { key: 'legendPos', label: T('Legend', 'Leyenda'), type: 'select', options: [['right', 'Top right'], ['left', 'Top left'], ['bottom', 'Below'], ['none', 'Hidden']] },
+    { key: 'showLetters', label: T('Show letters', 'Mostrar las letras'), type: 'checkbox' }, { key: 'includeZero', label: T('Y axis from zero', 'Eje Y desde cero'), type: 'checkbox' },
+    { key: 'letterSize', label: T('Letter size', 'Tamaño de las letras'), type: 'range', min: 8, max: 22, step: 1 },
   ]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
@@ -94,7 +94,7 @@ P5.groupedMeans = (cells, aLevels, bLevels, o) => ({
 P5.trend = (x, means, fitFn, o) => ({
   title: o.title, fileName: o.fileName || 'trend', width: 800, height: 520,
   defaults: Object.assign({ title: o.title, xlab: o.xlab, ylab: o.ylab, fill: '#2f7d4f', lineColor: '#c8842a', showEq: true, pointSize: 5, showOptimum: true }, o.defaults || {}),
-  controls: TXT5.concat([{ key: 'fill', label: 'Point colour', type: 'color' }, { key: 'lineColor', label: 'Curve colour', type: 'color' }, { key: 'pointSize', label: 'Point size', type: 'range', min: 2, max: 10, step: 0.25 }, { key: 'showEq', label: 'Print equation', type: 'checkbox' }, { key: 'showOptimum', label: 'Mark the optimum (quadratic)', type: 'checkbox' }]),
+  controls: TXT5().concat([{ key: 'fill', label: T('Point colour', 'Color de los puntos'), type: 'color' }, { key: 'lineColor', label: T('Curve colour', 'Color de la curva'), type: 'color' }, { key: 'pointSize', label: T('Point size', 'Tamaño de los puntos'), type: 'range', min: 2, max: 10, step: 0.25 }, { key: 'showEq', label: T('Print equation', 'Escribir la ecuación'), type: 'checkbox' }, { key: 'showOptimum', label: T('Mark the optimum (quadratic)', 'Marcar el óptimo (cuadrática)'), type: 'checkbox' }]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
     const f = Fig.frame(svg, cfg, {});
@@ -114,7 +114,7 @@ P5.trend = (x, means, fitFn, o) => ({
     });
     if (cfg.showOptimum && o.optimum && o.optimum.x >= xd[0] && o.optimum.x <= xd[1]) {
       f.g.appendChild(Fig.el('line', { x1: xs(o.optimum.x), x2: xs(o.optimum.x), y1: ysc(o.optimum.y), y2: f.y1, stroke: f.t.muted, 'stroke-width': 1, 'stroke-dasharray': '4 3' }));
-      f.g.appendChild(Fig.text(xs(o.optimum.x), f.y1 - 6, `${o.optimum.kind} at x = ${o.optimum.x.toFixed(1)}`, { size: 10, anchor: 'middle', fill: f.t.muted, font: f.font, role: 'label', halo: f.t.bg }));
+      f.g.appendChild(Fig.text(xs(o.optimum.x), f.y1 - 6, T(`${o.optimum.kind} at x = ${o.optimum.x.toFixed(1)}`, `respuesta ${o.optimum.kind} en x = ${o.optimum.x.toFixed(1)}`), { size: 10, anchor: 'middle', fill: f.t.muted, font: f.font, role: 'label', halo: f.t.bg }));
     }
     if (cfg.showEq && o.equation) f.g.appendChild(Fig.text(f.x0 + 8, f.y0 + 16 * Fig.fs('label'), o.equation, { size: 11, fill: f.t.fg, font: f.font, role: 'label', halo: f.t.bg }));
     return svg;

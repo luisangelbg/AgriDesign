@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- The whole platform is now bilingual (English / Spanish) and has a light and a dark theme, chosen from the top bar (EN | ES and ☾ / ☀) and remembered between sessions. The language starts from the browser and the theme from the operating system until the reader picks one. Every block, every table, every automatic interpretation, the figure editor and export bar, the field book of Block 8 and the whole report of Block 7 (including its date, its table and figure captions and the drafted methods paragraph) follow the chosen language; figures keep a light background whatever the page theme, and the "Dark background" preset is still available per figure.
 - server.ps1: when the port is busy, the message now suggests `server.ps1 -Port 8801` (it named a non-existent `servidor.ps1`).
 - Block 8: augmented layouts draw the checks in palette colours and every unreplicated entry in one neutral colour, with a single legend entry; before, the palette repeated and entries looked like checks.
 - Block 8: the Latin square reports its real number of replicates (rows = columns = treatments) instead of the hidden replicates box; a failed generation hides the previous layout; the field-size note says whether alleys are included.

@@ -173,16 +173,18 @@ AS.studentized = fit => {
 /* ---------- transformations ---------- */
 AS.transforms = y => {
   const mn = S.min(y), mx = S.max(y);
-  const list = [{ id: 'none', label: 'None (original scale)', f: v => v, inv: v => v, suffix: '' }];
-  if (mn > 0) list.push({ id: 'log', label: 'Natural logarithm ln(y)', f: Math.log, inv: Math.exp, suffix: '_ln', when: 'multiplicative effects, CV constant across treatments, SD ∝ mean' });
-  if (mn >= 0) list.push({ id: 'log1', label: 'ln(y + 1)', f: v => Math.log(v + 1), inv: v => Math.exp(v) - 1, suffix: '_ln1', when: 'counts with zeros' });
-  if (mn > 0) list.push({ id: 'log10', label: 'log₁₀(y)', f: Math.log10, inv: v => Math.pow(10, v), suffix: '_log10' });
-  if (mn >= 0) list.push({ id: 'sqrt', label: 'Square root √y', f: Math.sqrt, inv: v => v * v, suffix: '_sqrt', when: 'Poisson counts, variance ∝ mean' });
-  if (mn >= 0) list.push({ id: 'sqrt05', label: '√(y + 0.5)', f: v => Math.sqrt(v + 0.5), inv: v => v * v - 0.5, suffix: '_sqrt05', when: 'small counts with zeros (Bartlett)' });
-  if (mn >= 0 && mx <= 100 && mx > 1) list.push({ id: 'asin', label: 'Arcsine √(y/100)', f: v => Math.asin(Math.sqrt(v / 100)), inv: v => 100 * Math.sin(v) ** 2, suffix: '_asin', when: 'percentages from counts, especially < 20 % or > 80 %' });
-  if (mn >= 0 && mx <= 1) list.push({ id: 'asinp', label: 'Arcsine √y (proportion)', f: v => Math.asin(Math.sqrt(v)), inv: v => Math.sin(v) ** 2, suffix: '_asin', when: 'proportions from counts' });
-  if (mn > 0 && mx < 1) list.push({ id: 'logit', label: 'Logit ln(y / (1 − y))', f: v => Math.log(v / (1 - v)), inv: v => 1 / (1 + Math.exp(-v)), suffix: '_logit', when: 'proportions away from 0 and 1' });
-  if (mn > 0) list.push({ id: 'inv', label: 'Reciprocal 1/y', f: v => 1 / v, inv: v => 1 / v, suffix: '_inv', when: 'rates and times; SD ∝ mean²' });
+  /* The name of each transformation travels in both languages ({en, es}); whoever prints it
+     passes it through T(), so a stored transformation follows the language too. */
+  const list = [{ id: 'none', label: { en: 'None (original scale)', es: 'Ninguna (escala original)' }, f: v => v, inv: v => v, suffix: '' }];
+  if (mn > 0) list.push({ id: 'log', label: { en: 'Natural logarithm ln(y)', es: 'Logaritmo natural ln(y)' }, f: Math.log, inv: Math.exp, suffix: '_ln', when: { en: 'multiplicative effects, CV constant across treatments, SD ∝ mean', es: 'efectos multiplicativos, CV constante entre tratamientos, DE ∝ media' } });
+  if (mn >= 0) list.push({ id: 'log1', label: { en: 'ln(y + 1)', es: 'ln(y + 1)' }, f: v => Math.log(v + 1), inv: v => Math.exp(v) - 1, suffix: '_ln1', when: { en: 'counts with zeros', es: 'conteos con ceros' } });
+  if (mn > 0) list.push({ id: 'log10', label: { en: 'log₁₀(y)', es: 'log₁₀(y)' }, f: Math.log10, inv: v => Math.pow(10, v), suffix: '_log10' });
+  if (mn >= 0) list.push({ id: 'sqrt', label: { en: 'Square root √y', es: 'Raíz cuadrada √y' }, f: Math.sqrt, inv: v => v * v, suffix: '_sqrt', when: { en: 'Poisson counts, variance ∝ mean', es: 'conteos de Poisson, varianza ∝ media' } });
+  if (mn >= 0) list.push({ id: 'sqrt05', label: { en: '√(y + 0.5)', es: '√(y + 0.5)' }, f: v => Math.sqrt(v + 0.5), inv: v => v * v - 0.5, suffix: '_sqrt05', when: { en: 'small counts with zeros (Bartlett)', es: 'conteos chicos con ceros (Bartlett)' } });
+  if (mn >= 0 && mx <= 100 && mx > 1) list.push({ id: 'asin', label: { en: 'Arcsine √(y/100)', es: 'Arcoseno √(y/100)' }, f: v => Math.asin(Math.sqrt(v / 100)), inv: v => 100 * Math.sin(v) ** 2, suffix: '_asin', when: { en: 'percentages from counts, especially < 20 % or > 80 %', es: 'porcentajes que vienen de conteos, sobre todo < 20 % o > 80 %' } });
+  if (mn >= 0 && mx <= 1) list.push({ id: 'asinp', label: { en: 'Arcsine √y (proportion)', es: 'Arcoseno √y (proporción)' }, f: v => Math.asin(Math.sqrt(v)), inv: v => Math.sin(v) ** 2, suffix: '_asin', when: { en: 'proportions from counts', es: 'proporciones que vienen de conteos' } });
+  if (mn > 0 && mx < 1) list.push({ id: 'logit', label: { en: 'Logit ln(y / (1 − y))', es: 'Logit ln(y / (1 − y))' }, f: v => Math.log(v / (1 - v)), inv: v => 1 / (1 + Math.exp(-v)), suffix: '_logit', when: { en: 'proportions away from 0 and 1', es: 'proporciones alejadas de 0 y de 1' } });
+  if (mn > 0) list.push({ id: 'inv', label: { en: 'Reciprocal 1/y', es: 'Recíproco 1/y' }, f: v => 1 / v, inv: v => 1 / v, suffix: '_inv', when: { en: 'rates and times; SD ∝ mean²', es: 'tasas y tiempos; DE ∝ media²' } });
   return list;
 };
 /* Box–Cox profile likelihood on a grid; y must be > 0 */

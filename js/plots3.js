@@ -3,9 +3,9 @@
 
 const P3 = {};
 
-const PALETTE_OPTS = Object.entries(Fig.paletteNames);
-const CMAP_OPTS = Object.entries(Fig.colormapNames);
-const LEGEND_OPTS = [['right', 'Top right'], ['left', 'Top left'], ['bottom', 'Below the plot'], ['none', 'Hidden']];
+const PALETTE_OPTS = () => Object.entries(Fig.paletteNames);
+const CMAP_OPTS = () => Object.entries(Fig.colormapNames);
+const LEGEND_OPTS = () => [['right', T('Top right', 'Arriba a la derecha')], ['left', T('Top left', 'Arriba a la izquierda')], ['bottom', T('Below the plot', 'Debajo de la gráfica')], ['none', T('Hidden', 'Sin leyenda')]];
 
 function groupColor(cfg, i) { return (cfg.colors && cfg.colors[i]) || Fig.color(cfg.palette, i); }
 function allValues(groups) { return groups.flatMap(g => g.values); }
@@ -16,12 +16,12 @@ function yDomain(groups, includeZero) {
 function jitterFn(seed) { const r = S.rng(seed || 11); return () => (r() - 0.5); }
 function baseControls(groups, extra) {
   return [
-    { key: 'title', label: 'Title', type: 'text' },
-    { key: 'subtitle', label: 'Subtitle', type: 'text' },
-    { key: 'xlab', label: 'X axis label', type: 'text' },
-    { key: 'ylab', label: 'Y axis label', type: 'text' },
-    { key: 'palette', label: 'Palette', type: 'select', options: PALETTE_OPTS },
-    ...(groups ? [{ key: 'colors', label: 'Colour per group', type: 'colors', labels: groups.map(g => g.label) }] : []),
+    { key: 'title', label: T('Title', 'Título'), type: 'text' },
+    { key: 'subtitle', label: T('Subtitle', 'Subtítulo'), type: 'text' },
+    { key: 'xlab', label: T('X axis label', 'Título del eje X'), type: 'text' },
+    { key: 'ylab', label: T('Y axis label', 'Título del eje Y'), type: 'text' },
+    { key: 'palette', label: T('Palette', 'Paleta'), type: 'select', options: PALETTE_OPTS() },
+    ...(groups ? [{ key: 'colors', label: T('Colour per group', 'Color por grupo'), type: 'colors', labels: groups.map(g => g.label) }] : []),
     ...(extra || []),
   ];
 }
@@ -55,17 +55,17 @@ function nText(f, groups, band, cfg) {
 /* ================= histogram + density ================= */
 P3.histogram = (values, o) => ({
   title: o.title, fileName: o.fileName || 'histogram', width: 820, height: 500,
-  defaults: Object.assign({ title: o.title, xlab: o.xlab, ylab: 'Frequency', binRule: 'sturges', bins: 0, fill: '#2f7d4f', showDensity: true, showNormal: true, showRug: false, showMeanLine: true }, o.defaults || {}),
+  defaults: Object.assign({ title: o.title, xlab: o.xlab, ylab: T('Frequency', 'Frecuencia'), binRule: 'sturges', bins: 0, fill: '#2f7d4f', showDensity: true, showNormal: true, showRug: false, showMeanLine: true }, o.defaults || {}),
   controls: [
-    { key: 'title', label: 'Title', type: 'text' }, { key: 'subtitle', label: 'Subtitle', type: 'text' },
-    { key: 'xlab', label: 'X axis label', type: 'text' }, { key: 'ylab', label: 'Y axis label', type: 'text' },
-    { key: 'fill', label: 'Bar colour', type: 'color' },
-    { key: 'binRule', label: 'Bin rule', type: 'select', options: [['sturges', 'Sturges'], ['fd', 'Freedman–Diaconis'], ['sqrt', 'Square root']] },
-    { key: 'bins', label: 'Bins (0 = rule)', type: 'number', min: 0, max: 80, step: 1 },
-    { key: 'showDensity', label: 'Kernel density curve', type: 'checkbox' },
-    { key: 'showNormal', label: 'Normal curve', type: 'checkbox' },
-    { key: 'showMeanLine', label: 'Mean and median lines', type: 'checkbox' },
-    { key: 'showRug', label: 'Rug of observations', type: 'checkbox' },
+    { key: 'title', label: T('Title', 'Título'), type: 'text' }, { key: 'subtitle', label: T('Subtitle', 'Subtítulo'), type: 'text' },
+    { key: 'xlab', label: T('X axis label', 'Título del eje X'), type: 'text' }, { key: 'ylab', label: T('Y axis label', 'Título del eje Y'), type: 'text' },
+    { key: 'fill', label: T('Bar colour', 'Color de las barras'), type: 'color' },
+    { key: 'binRule', label: T('Bin rule', 'Regla de intervalos'), type: 'select', options: [['sturges', 'Sturges'], ['fd', 'Freedman–Diaconis'], ['sqrt', T('Square root', 'Raíz cuadrada')]] },
+    { key: 'bins', label: T('Bins (0 = rule)', 'Intervalos (0 = la regla)'), type: 'number', min: 0, max: 80, step: 1 },
+    { key: 'showDensity', label: T('Kernel density curve', 'Curva de densidad suavizada'), type: 'checkbox' },
+    { key: 'showNormal', label: T('Normal curve', 'Curva normal'), type: 'checkbox' },
+    { key: 'showMeanLine', label: T('Mean and median lines', 'Líneas de media y mediana'), type: 'checkbox' },
+    { key: 'showRug', label: T('Rug of observations', 'Marcas de las observaciones'), type: 'checkbox' },
   ],
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
@@ -98,8 +98,8 @@ P3.histogram = (values, o) => ({
     }
     if (cfg.showRug) values.forEach(v => f.g.appendChild(Fig.el('line', { x1: xs(v), x2: xs(v), y1: f.y1 - 8, y2: f.y1, stroke: f.t.fg, 'stroke-width': 1, opacity: 0.6 })));
     const items = [];
-    if (dens) items.push({ label: 'Kernel density', color: '#c8842a', shape: 'line' });
-    if (norm) items.push({ label: 'Normal (same mean, SD)', color: '#2b7bb9', shape: 'line' });
+    if (dens) items.push({ label: T('Kernel density', 'Densidad suavizada'), color: '#c8842a', shape: 'line' });
+    if (norm) items.push({ label: T('Normal (same mean, SD)', 'Normal (misma media y DE)'), color: '#2b7bb9', shape: 'line' });
     if (items.length) Fig.legend(f, items, cfg);
     return svg;
   },
@@ -110,14 +110,14 @@ P3.boxplot = (groups, o) => ({
   title: o.title, fileName: o.fileName || 'boxplot', width: 860, height: 520,
   defaults: Object.assign({ title: o.title, xlab: o.xlab, ylab: o.ylab, palette: 'agri', showPoints: true, showMean: true, showOutliers: true, showN: true, boxWidth: 0.6, boxOpacity: 0.55, pointSize: 3.2, pointOpacity: 0.7, legendPos: 'none', includeZero: false }, o.defaults || {}),
   controls: baseControls(groups, [
-    { key: 'showPoints', label: 'Show observations (jittered)', type: 'checkbox' },
-    { key: 'showMean', label: 'Mean marker (◆)', type: 'checkbox' },
-    { key: 'showOutliers', label: 'Mark outliers', type: 'checkbox' },
-    { key: 'showN', label: 'Show n per group', type: 'checkbox' },
-    { key: 'includeZero', label: 'Y axis from zero', type: 'checkbox' },
-    { key: 'boxWidth', label: 'Box width', type: 'range', min: 0.2, max: 0.95, step: 0.05 },
-    { key: 'boxOpacity', label: 'Box fill opacity', type: 'range', min: 0, max: 1, step: 0.05 },
-    { key: 'pointSize', label: 'Point size', type: 'range', min: 1, max: 8, step: 0.2 },
+    { key: 'showPoints', label: T('Show observations (jittered)', 'Mostrar las observaciones (con dispersión)'), type: 'checkbox' },
+    { key: 'showMean', label: T('Mean marker (◆)', 'Marca de la media (◆)'), type: 'checkbox' },
+    { key: 'showOutliers', label: T('Mark outliers', 'Marcar los atípicos'), type: 'checkbox' },
+    { key: 'showN', label: T('Show n per group', 'Mostrar n por grupo'), type: 'checkbox' },
+    { key: 'includeZero', label: T('Y axis from zero', 'Eje Y desde cero'), type: 'checkbox' },
+    { key: 'boxWidth', label: T('Box width', 'Ancho de la caja'), type: 'range', min: 0.2, max: 0.95, step: 0.05 },
+    { key: 'boxOpacity', label: T('Box fill opacity', 'Opacidad del relleno de la caja'), type: 'range', min: 0, max: 1, step: 0.05 },
+    { key: 'pointSize', label: T('Point size', 'Tamaño de los puntos'), type: 'range', min: 1, max: 8, step: 0.2 },
   ]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
@@ -144,13 +144,13 @@ P3.violin = (groups, o) => ({
   title: o.title, fileName: o.fileName || 'violin', width: 860, height: 520,
   defaults: Object.assign({ title: o.title, xlab: o.xlab, ylab: o.ylab, palette: 'agri', innerBox: true, showPoints: false, showN: true, violinWidth: 0.8, bandwidthMult: 1, fillOpacity: 0.55, pointSize: 2.6, legendPos: 'none', includeZero: false }, o.defaults || {}),
   controls: baseControls(groups, [
-    { key: 'innerBox', label: 'Inner box plot', type: 'checkbox' },
-    { key: 'showPoints', label: 'Show observations', type: 'checkbox' },
-    { key: 'showN', label: 'Show n per group', type: 'checkbox' },
-    { key: 'includeZero', label: 'Y axis from zero', type: 'checkbox' },
-    { key: 'violinWidth', label: 'Violin width', type: 'range', min: 0.3, max: 1, step: 0.05 },
-    { key: 'bandwidthMult', label: 'Smoothing (bandwidth ×)', type: 'range', min: 0.3, max: 3, step: 0.1 },
-    { key: 'fillOpacity', label: 'Fill opacity', type: 'range', min: 0.1, max: 1, step: 0.05 },
+    { key: 'innerBox', label: T('Inner box plot', 'Caja por dentro'), type: 'checkbox' },
+    { key: 'showPoints', label: T('Show observations', 'Mostrar las observaciones'), type: 'checkbox' },
+    { key: 'showN', label: T('Show n per group', 'Mostrar n por grupo'), type: 'checkbox' },
+    { key: 'includeZero', label: T('Y axis from zero', 'Eje Y desde cero'), type: 'checkbox' },
+    { key: 'violinWidth', label: T('Violin width', 'Ancho del violín'), type: 'range', min: 0.3, max: 1, step: 0.05 },
+    { key: 'bandwidthMult', label: T('Smoothing (bandwidth ×)', 'Suavizado (ancho de banda ×)'), type: 'range', min: 0.3, max: 3, step: 0.1 },
+    { key: 'fillOpacity', label: T('Fill opacity', 'Opacidad del relleno'), type: 'range', min: 0.1, max: 1, step: 0.05 },
   ]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
@@ -196,13 +196,13 @@ P3.means = (groups, o) => ({
   title: o.title, fileName: o.fileName || 'means', width: 860, height: 520,
   defaults: Object.assign({ title: o.title, xlab: o.xlab, ylab: o.ylab, palette: 'agri', style: 'bars', errorType: 'se', showValues: true, showPoints: false, barWidth: 0.65, capWidth: 0.3, valueDigits: 2, legendPos: 'none', includeZero: true }, o.defaults || {}),
   controls: baseControls(groups, [
-    { key: 'style', label: 'Style', type: 'select', options: [['bars', 'Bars'], ['points', 'Points'], ['lollipop', 'Lollipop']] },
-    { key: 'errorType', label: 'Error bars', type: 'select', options: [['se', 'Standard error'], ['sd', 'Standard deviation'], ['ci', '95 % confidence interval'], ['none', 'None']] },
-    { key: 'showValues', label: 'Print mean values', type: 'checkbox' },
-    { key: 'showPoints', label: 'Overlay observations', type: 'checkbox' },
-    { key: 'includeZero', label: 'Y axis from zero', type: 'checkbox' },
-    { key: 'barWidth', label: 'Bar width', type: 'range', min: 0.2, max: 0.95, step: 0.05 },
-    { key: 'valueDigits', label: 'Decimals', type: 'number', min: 0, max: 5, step: 1 },
+    { key: 'style', label: T('Style', 'Estilo'), type: 'select', options: [['bars', 'Bars'], ['points', 'Points'], ['lollipop', 'Lollipop']] },
+    { key: 'errorType', label: T('Error bars', 'Barras de error'), type: 'select', options: [['se', T('Standard error', 'Error estándar')], ['sd', T('Standard deviation', 'Desviación estándar')], ['ci', T('95 % confidence interval', 'Intervalo de confianza del 95 %')], ['none', T('None', 'Ninguna')]] },
+    { key: 'showValues', label: T('Print mean values', 'Escribir el valor de las medias'), type: 'checkbox' },
+    { key: 'showPoints', label: T('Overlay observations', 'Encimar las observaciones'), type: 'checkbox' },
+    { key: 'includeZero', label: T('Y axis from zero', 'Eje Y desde cero'), type: 'checkbox' },
+    { key: 'barWidth', label: T('Bar width', 'Ancho de las barras'), type: 'range', min: 0.2, max: 0.95, step: 0.05 },
+    { key: 'valueDigits', label: T('Decimals', 'Decimales'), type: 'number', min: 0, max: 5, step: 1 },
   ]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
@@ -233,8 +233,8 @@ P3.means = (groups, o) => ({
       if (cfg.style !== 'bars') f.g.appendChild(Fig.marker(cx, ys(s.m), 5 * Fig.fs('label'), 'circle', { fill: col, stroke: f.t.bg, 'stroke-width': 1.2 }));
       if (cfg.showValues) f.g.appendChild(Fig.text(cx, ys(s.m + s.err) - 7 * Fig.fs('label'), s.m.toFixed(+cfg.valueDigits), { size: 11, anchor: 'middle', fill: f.t.fg, font: f.font, role: 'label', halo: f.t.bg }));
     });
-    const errLab = { se: '± SE', sd: '± SD', ci: '± 95 % CI', none: '' }[cfg.errorType];
-    if (errLab) f.g.appendChild(Fig.text(f.x1, f.y0 - 6, 'Mean ' + errLab, { size: 10, anchor: 'end', fill: f.t.muted, font: f.font, role: 'label' }));
+    const errLab = { se: T('± SE', '± EE'), sd: T('± SD', '± DE'), ci: T('± 95 % CI', '± IC 95 %'), none: '' }[cfg.errorType];
+    if (errLab) f.g.appendChild(Fig.text(f.x1, f.y0 - 6, T('Mean ', 'Media ') + errLab, { size: 10, anchor: 'end', fill: f.t.muted, font: f.font, role: 'label' }));
     return svg;
   },
 });
@@ -244,14 +244,14 @@ P3.strip = (groups, o) => ({
   title: o.title, fileName: o.fileName || 'stripplot', width: 860, height: 520,
   defaults: Object.assign({ title: o.title, xlab: o.xlab, ylab: o.ylab, palette: 'agri', pointSize: 4.5, pointOpacity: 0.8, pointShape: 'circle', spread: 0.6, showMean: true, showMedian: false, showN: true, legendPos: 'none', includeZero: false }, o.defaults || {}),
   controls: baseControls(groups, [
-    { key: 'pointShape', label: 'Point shape', type: 'select', options: Fig.shapes.map(s => [s, s]) },
-    { key: 'pointSize', label: 'Point size', type: 'range', min: 1.5, max: 10, step: 0.25 },
-    { key: 'pointOpacity', label: 'Point opacity', type: 'range', min: 0.1, max: 1, step: 0.05 },
-    { key: 'spread', label: 'Horizontal spread', type: 'range', min: 0, max: 1, step: 0.05 },
-    { key: 'showMean', label: 'Mean ± SE bar', type: 'checkbox' },
-    { key: 'showMedian', label: 'Median line', type: 'checkbox' },
-    { key: 'showN', label: 'Show n per group', type: 'checkbox' },
-    { key: 'includeZero', label: 'Y axis from zero', type: 'checkbox' },
+    { key: 'pointShape', label: T('Point shape', 'Forma de los puntos'), type: 'select', options: Fig.shapes.map(s => [s, s]) },
+    { key: 'pointSize', label: T('Point size', 'Tamaño de los puntos'), type: 'range', min: 1.5, max: 10, step: 0.25 },
+    { key: 'pointOpacity', label: T('Point opacity', 'Opacidad de los puntos'), type: 'range', min: 0.1, max: 1, step: 0.05 },
+    { key: 'spread', label: T('Horizontal spread', 'Separación horizontal'), type: 'range', min: 0, max: 1, step: 0.05 },
+    { key: 'showMean', label: T('Mean ± SE bar', 'Barra de media ± EE'), type: 'checkbox' },
+    { key: 'showMedian', label: T('Median line', 'Línea de la mediana'), type: 'checkbox' },
+    { key: 'showN', label: T('Show n per group', 'Mostrar n por grupo'), type: 'checkbox' },
+    { key: 'includeZero', label: T('Y axis from zero', 'Eje Y desde cero'), type: 'checkbox' },
   ]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
@@ -283,13 +283,13 @@ P3.lines = (xLabels, series, o) => ({
   title: o.title, fileName: o.fileName || 'lines', width: 860, height: 520,
   defaults: Object.assign({ title: o.title, xlab: o.xlab, ylab: o.ylab, palette: 'agri', lineWidth: 2.4, markerSize: 5, markerShape: 'circle', showErr: false, legendPos: 'right', includeZero: false, labelEnds: false }, o.defaults || {}),
   controls: baseControls(series, [
-    { key: 'legendPos', label: 'Legend', type: 'select', options: LEGEND_OPTS },
-    { key: 'lineWidth', label: 'Line width', type: 'range', min: 0.5, max: 6, step: 0.25 },
-    { key: 'markerShape', label: 'Marker shape', type: 'select', options: [['none', 'none']].concat(Fig.shapes.map(s => [s, s])) },
-    { key: 'markerSize', label: 'Marker size', type: 'range', min: 2, max: 10, step: 0.25 },
-    ...(series.some(s => s.se) ? [{ key: 'showErr', label: 'Error bars (± SE)', type: 'checkbox' }] : []),
-    { key: 'labelEnds', label: 'Label lines at the right end', type: 'checkbox' },
-    { key: 'includeZero', label: 'Y axis from zero', type: 'checkbox' },
+    { key: 'legendPos', label: T('Legend', 'Leyenda'), type: 'select', options: LEGEND_OPTS() },
+    { key: 'lineWidth', label: T('Line width', 'Grosor de la línea'), type: 'range', min: 0.5, max: 6, step: 0.25 },
+    { key: 'markerShape', label: T('Marker shape', 'Forma de las marcas'), type: 'select', options: [['none', 'none']].concat(Fig.shapes.map(s => [s, s])) },
+    { key: 'markerSize', label: T('Marker size', 'Tamaño de las marcas'), type: 'range', min: 2, max: 10, step: 0.25 },
+    ...(series.some(s => s.se) ? [{ key: 'showErr', label: T('Error bars (± SE)', 'Barras de error (± EE)'), type: 'checkbox' }] : []),
+    { key: 'labelEnds', label: T('Label lines at the right end', 'Etiquetar las líneas en el extremo derecho'), type: 'checkbox' },
+    { key: 'includeZero', label: T('Y axis from zero', 'Eje Y desde cero'), type: 'checkbox' },
   ]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
@@ -328,14 +328,14 @@ P3.scatter = (x, y, o) => ({
   title: o.title, fileName: o.fileName || 'scatter', width: 780, height: 520,
   defaults: Object.assign({ title: o.title, xlab: o.xlab, ylab: o.ylab, palette: 'agri', fill: '#2f7d4f', pointSize: 4.5, pointOpacity: 0.75, pointShape: 'circle', showFit: true, showStats: true, showCI: true, legendPos: 'right' }, o.defaults || {}),
   controls: [
-    { key: 'title', label: 'Title', type: 'text' }, { key: 'subtitle', label: 'Subtitle', type: 'text' },
-    { key: 'xlab', label: 'X axis label', type: 'text' }, { key: 'ylab', label: 'Y axis label', type: 'text' },
-    ...(o.groups ? [{ key: 'palette', label: 'Palette', type: 'select', options: PALETTE_OPTS }, { key: 'colors', label: 'Colour per group', type: 'colors', labels: o.groups.levels }, { key: 'legendPos', label: 'Legend', type: 'select', options: LEGEND_OPTS }] : [{ key: 'fill', label: 'Point colour', type: 'color' }]),
-    { key: 'pointShape', label: 'Point shape', type: 'select', options: Fig.shapes.map(s => [s, s]) },
-    { key: 'pointSize', label: 'Point size', type: 'range', min: 1.5, max: 10, step: 0.25 },
-    { key: 'showFit', label: 'Least-squares line', type: 'checkbox' },
-    { key: 'showCI', label: '95 % confidence band', type: 'checkbox' },
-    { key: 'showStats', label: 'Print r, R² and equation', type: 'checkbox' },
+    { key: 'title', label: T('Title', 'Título'), type: 'text' }, { key: 'subtitle', label: T('Subtitle', 'Subtítulo'), type: 'text' },
+    { key: 'xlab', label: T('X axis label', 'Título del eje X'), type: 'text' }, { key: 'ylab', label: T('Y axis label', 'Título del eje Y'), type: 'text' },
+    ...(o.groups ? [{ key: 'palette', label: T('Palette', 'Paleta'), type: 'select', options: PALETTE_OPTS() }, { key: 'colors', label: T('Colour per group', 'Color por grupo'), type: 'colors', labels: o.groups.levels }, { key: 'legendPos', label: T('Legend', 'Leyenda'), type: 'select', options: LEGEND_OPTS() }] : [{ key: 'fill', label: T('Point colour', 'Color de los puntos'), type: 'color' }]),
+    { key: 'pointShape', label: T('Point shape', 'Forma de los puntos'), type: 'select', options: Fig.shapes.map(s => [s, s]) },
+    { key: 'pointSize', label: T('Point size', 'Tamaño de los puntos'), type: 'range', min: 1.5, max: 10, step: 0.25 },
+    { key: 'showFit', label: T('Least-squares line', 'Línea de mínimos cuadrados'), type: 'checkbox' },
+    { key: 'showCI', label: T('95 % confidence band', 'Banda de confianza del 95 %'), type: 'checkbox' },
+    { key: 'showStats', label: T('Print r, R² and equation', 'Escribir r, R² y la ecuación'), type: 'checkbox' },
   ],
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
@@ -378,10 +378,10 @@ P3.corrHeat = (names, M, o) => ({
   title: o.title, fileName: o.fileName || 'correlation', width: 700, height: 600,
   defaults: Object.assign({ title: o.title, colormap: 'rdbu', showValues: true, digits: 2, cellGap: 2 }, o.defaults || {}),
   controls: [
-    { key: 'title', label: 'Title', type: 'text' }, { key: 'subtitle', label: 'Subtitle', type: 'text' },
-    { key: 'colormap', label: 'Colour map', type: 'select', options: CMAP_OPTS },
-    { key: 'showValues', label: 'Print coefficients', type: 'checkbox' },
-    { key: 'digits', label: 'Decimals', type: 'number', min: 0, max: 4, step: 1 },
+    { key: 'title', label: T('Title', 'Título'), type: 'text' }, { key: 'subtitle', label: T('Subtitle', 'Subtítulo'), type: 'text' },
+    { key: 'colormap', label: T('Colour map', 'Mapa de color'), type: 'select', options: CMAP_OPTS() },
+    { key: 'showValues', label: T('Print coefficients', 'Escribir los coeficientes'), type: 'checkbox' },
+    { key: 'digits', label: T('Decimals', 'Decimales'), type: 'number', min: 0, max: 4, step: 1 },
   ],
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);

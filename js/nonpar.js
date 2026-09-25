@@ -29,7 +29,7 @@ NP.adjust = (p, method) => {
   }
   return p.slice();
 };
-NP.adjustNames = { holm: 'Holm', bonferroni: 'Bonferroni', BH: 'Benjamini–Hochberg (FDR)', hochberg: 'Hochberg', none: 'None' };
+Object.defineProperty(NP, 'adjustNames', { get: () => ({ holm: 'Holm', bonferroni: 'Bonferroni', BH: 'Benjamini–Hochberg (FDR)', hochberg: 'Hochberg', none: T('None', 'Ninguno') }) });
 
 /* ---------- compact letter display via maximal cliques (Bron–Kerbosch) ----------
    means: [{name, mean}], different(i, j) → true if significantly different.

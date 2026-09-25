@@ -1,16 +1,16 @@
 /* AgriDesign — Block 4 figures: residual diagnostics, Box–Cox profile, rank means with letters. */
 
 const P4 = {};
-const TXT = [{ key: 'title', label: 'Title', type: 'text' }, { key: 'subtitle', label: 'Subtitle', type: 'text' }, { key: 'xlab', label: 'X axis label', type: 'text' }, { key: 'ylab', label: 'Y axis label', type: 'text' }];
+const TXT = () => [{ key: 'title', label: T('Title', 'Título'), type: 'text' }, { key: 'subtitle', label: T('Subtitle', 'Subtítulo'), type: 'text' }, { key: 'xlab', label: T('X axis label', 'Título del eje X'), type: 'text' }, { key: 'ylab', label: T('Y axis label', 'Título del eje Y'), type: 'text' }];
 
 /* ---------- normal Q–Q plot with 95 % band (Fox's pointwise approximation) ---------- */
 P4.qq = (r, o) => ({
-  title: o.title || 'Normal Q–Q plot of residuals', fileName: o.fileName || 'qq_plot', width: 640, height: 560,
-  defaults: Object.assign({ title: o.title || 'Normal Q–Q plot of residuals', xlab: 'Theoretical quantiles', ylab: o.ylab || 'Standardized residuals', fill: '#2f7d4f', lineColor: '#c8842a', showBand: true, showLabels: true, pointSize: 4.2 }, o.defaults || {}),
-  controls: TXT.concat([
-    { key: 'fill', label: 'Point colour', type: 'color' }, { key: 'lineColor', label: 'Line colour', type: 'color' },
-    { key: 'showBand', label: '95 % confidence band', type: 'checkbox' }, { key: 'showLabels', label: 'Label extreme points', type: 'checkbox' },
-    { key: 'pointSize', label: 'Point size', type: 'range', min: 1.5, max: 9, step: 0.25 },
+  title: o.title || T('Normal Q–Q plot of residuals', 'Gráfica Q–Q normal de los residuales'), fileName: o.fileName || 'qq_plot', width: 640, height: 560,
+  defaults: Object.assign({ title: o.title || T('Normal Q–Q plot of residuals', 'Gráfica Q–Q normal de los residuales'), xlab: T('Theoretical quantiles', 'Cuantiles teóricos'), ylab: o.ylab || T('Standardized residuals', 'Residuales estandarizados'), fill: '#2f7d4f', lineColor: '#c8842a', showBand: true, showLabels: true, pointSize: 4.2 }, o.defaults || {}),
+  controls: TXT().concat([
+    { key: 'fill', label: T('Point colour', 'Color de los puntos'), type: 'color' }, { key: 'lineColor', label: T('Line colour', 'Color de la línea'), type: 'color' },
+    { key: 'showBand', label: T('95 % confidence band', 'Banda de confianza del 95 %'), type: 'checkbox' }, { key: 'showLabels', label: T('Label extreme points', 'Etiquetar los puntos extremos'), type: 'checkbox' },
+    { key: 'pointSize', label: T('Point size', 'Tamaño de los puntos'), type: 'range', min: 1.5, max: 9, step: 0.25 },
   ]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
@@ -46,13 +46,13 @@ P4.qq = (r, o) => ({
 /* ---------- residuals vs fitted (or vs order / vs group centre) with loess-like smoother ---------- */
 P4.residScatter = (x, r, o) => ({
   title: o.title, fileName: o.fileName || 'residuals', width: 760, height: 500,
-  defaults: Object.assign({ title: o.title, xlab: o.xlab, ylab: o.ylab || 'Residuals', fill: '#2f7d4f', showSmooth: true, showRef: true, pointSize: 4.2, showLabels: true }, o.defaults || {}),
-  controls: TXT.concat([
-    { key: 'fill', label: 'Point colour', type: 'color' },
-    { key: 'showSmooth', label: 'Running-mean smoother', type: 'checkbox' },
-    { key: 'showRef', label: 'Reference lines (0, ±2)', type: 'checkbox' },
-    { key: 'showLabels', label: 'Label |r| > 2.5', type: 'checkbox' },
-    { key: 'pointSize', label: 'Point size', type: 'range', min: 1.5, max: 9, step: 0.25 },
+  defaults: Object.assign({ title: o.title, xlab: o.xlab, ylab: o.ylab || T('Residuals', 'Residuales'), fill: '#2f7d4f', showSmooth: true, showRef: true, pointSize: 4.2, showLabels: true }, o.defaults || {}),
+  controls: TXT().concat([
+    { key: 'fill', label: T('Point colour', 'Color de los puntos'), type: 'color' },
+    { key: 'showSmooth', label: T('Running-mean smoother', 'Suavizado de media móvil'), type: 'checkbox' },
+    { key: 'showRef', label: T('Reference lines (0, ±2)', 'Líneas de referencia (0, ±2)'), type: 'checkbox' },
+    { key: 'showLabels', label: T('Label |r| > 2.5', 'Etiquetar |r| > 2.5'), type: 'checkbox' },
+    { key: 'pointSize', label: T('Point size', 'Tamaño de los puntos'), type: 'range', min: 1.5, max: 9, step: 0.25 },
   ]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
@@ -82,9 +82,9 @@ P4.residScatter = (x, r, o) => ({
 
 /* ---------- Box–Cox profile likelihood ---------- */
 P4.boxcox = (bc, o) => ({
-  title: 'Box–Cox profile log-likelihood', fileName: 'boxcox', width: 700, height: 460,
-  defaults: Object.assign({ title: 'Box–Cox profile log-likelihood', xlab: 'λ', ylab: 'log-likelihood', lineColor: '#2f7d4f' }, o && o.defaults || {}),
-  controls: TXT.concat([{ key: 'lineColor', label: 'Line colour', type: 'color' }]),
+  title: T('Box–Cox profile log-likelihood', 'Perfil de log-verosimilitud de Box–Cox'), fileName: 'boxcox', width: 700, height: 460,
+  defaults: Object.assign({ title: T('Box–Cox profile log-likelihood', 'Perfil de log-verosimilitud de Box–Cox'), xlab: 'λ', ylab: T('log-likelihood', 'log-verosimilitud'), lineColor: '#2f7d4f' }, o && o.defaults || {}),
+  controls: TXT().concat([{ key: 'lineColor', label: T('Line colour', 'Color de la línea'), type: 'color' }]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);
     const f = Fig.frame(svg, cfg, {});
@@ -109,11 +109,11 @@ P4.boxcox = (bc, o) => ({
 P4.rankMeans = (items, o) => ({
   title: o.title, fileName: o.fileName || 'rank_means', width: 820, height: 500,
   defaults: Object.assign({ title: o.title, xlab: o.xlab, ylab: o.ylab, palette: 'agri', showLetters: true, barWidth: 0.6 }, o.defaults || {}),
-  controls: TXT.concat([
-    { key: 'palette', label: 'Palette', type: 'select', options: Object.entries(Fig.paletteNames) },
-    { key: 'colors', label: 'Colour per group', type: 'colors', labels: items.map(i => i.label) },
-    { key: 'showLetters', label: 'Show letters', type: 'checkbox' },
-    { key: 'barWidth', label: 'Bar width', type: 'range', min: 0.2, max: 0.95, step: 0.05 },
+  controls: TXT().concat([
+    { key: 'palette', label: T('Palette', 'Paleta'), type: 'select', options: Object.entries(Fig.paletteNames) },
+    { key: 'colors', label: T('Colour per group', 'Color por grupo'), type: 'colors', labels: items.map(i => i.label) },
+    { key: 'showLetters', label: T('Show letters', 'Mostrar las letras'), type: 'checkbox' },
+    { key: 'barWidth', label: T('Bar width', 'Ancho de las barras'), type: 'range', min: 0.2, max: 0.95, step: 0.05 },
   ]),
   render(cfg) {
     const svg = Fig.svg(cfg.width, cfg.height, cfg.theme);

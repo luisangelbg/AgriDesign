@@ -20,10 +20,12 @@ Fig.palettes = {
   pastel:   ['#a8c8ec', '#f7bd92', '#9ddcaf', '#f3a6a3', '#cdbff5', '#dcc0a3', '#f2b6de', '#d3d3d3', '#f6f2a4', '#bde8e5'],
   greys:    ['#111827', '#374151', '#6b7280', '#9ca3af', '#d1d5db', '#4b5563', '#1f2937', '#e5e7eb', '#111827', '#6b7280'],
 };
-Fig.paletteNames = {
-  agri: 'AgriDesign (field)', harvest: 'Harvest', soil: 'Soil & crop', set2: 'Soft', dark2: 'Deep',
-  okabe: 'Okabe–Ito (colour-blind safe)', tol: 'Paul Tol (colour-blind safe)', pastel: 'Pastel', greys: 'Greyscale',
-};
+/* The names of the palettes, colour maps, themes and fonts are getters: every time the figure
+   editor is built they come back in the language in use. */
+Object.defineProperty(Fig, 'paletteNames', { get: () => ({
+  agri: T('AgriDesign (field)', 'AgriDesign (campo)'), harvest: T('Harvest', 'Cosecha'), soil: T('Soil & crop', 'Suelo y cultivo'), set2: T('Soft', 'Suaves'), dark2: T('Deep', 'Profundos'),
+  okabe: T('Okabe–Ito (colour-blind safe)', 'Okabe–Ito (segura para daltonismo)'), tol: T('Paul Tol (colour-blind safe)', 'Paul Tol (segura para daltonismo)'), pastel: T('Pastel', 'Pastel'), greys: T('Greyscale', 'Escala de grises'),
+}) });
 
 function lerp(a, b, t) { return a + (b - a) * t; }
 function rgb(r, g, b) { return `rgb(${Math.round(r)},${Math.round(g)},${Math.round(b)})`; }
@@ -55,11 +57,11 @@ Fig.colormaps = {
   browns:  rampFrom([[253,245,230],[204,153,102],[102,51,0]]),
   heat:    rampFrom([[255,247,217],[253,146,62],[158,18,43]]),
 };
-Fig.colormapNames = {
-  viridis: 'Viridis', magma: 'Magma', inferno: 'Inferno', plasma: 'Plasma', cividis: 'Cividis (colour-blind safe)',
-  rdylbu: 'Red–Yellow–Blue', rdbu: 'Red–Blue (diverging)', spectral: 'Spectral', bluered: 'Blue–White–Red',
-  greens: 'Greens', ylgn: 'Yellow–Green', browns: 'Browns (soil)', heat: 'Heat',
-};
+Object.defineProperty(Fig, 'colormapNames', { get: () => ({
+  viridis: 'Viridis', magma: 'Magma', inferno: 'Inferno', plasma: 'Plasma', cividis: T('Cividis (colour-blind safe)', 'Cividis (segura para daltonismo)'),
+  rdylbu: T('Red–Yellow–Blue', 'Rojo–amarillo–azul'), rdbu: T('Red–Blue (diverging)', 'Rojo–azul (divergente)'), spectral: T('Spectral', 'Espectral'), bluered: T('Blue–White–Red', 'Azul–blanco–rojo'),
+  greens: T('Greens', 'Verdes'), ylgn: T('Yellow–Green', 'Amarillo–verde'), browns: T('Browns (soil)', 'Cafés (suelo)'), heat: T('Heat', 'Calor'),
+}) });
 
 function parseColor(col) {
   let m = /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/.exec(col);
@@ -99,7 +101,10 @@ Fig.themes = {
   minimal: { bg: '#ffffff', fg: '#111111', muted: '#555555', grid: 'none',    axis: '#111111' },
   journal: { bg: '#ffffff', fg: '#000000', muted: '#333333', grid: 'none',    axis: '#000000' },
 };
-Fig.themeNames = { light: 'Light', paper: 'Paper', dark: 'Dark', minimal: 'Minimal', journal: 'Journal (black & white axes)' };
+Object.defineProperty(Fig, 'themeNames', { get: () => ({
+  light: T('Light', 'Claro'), paper: T('Paper', 'Papel'), dark: T('Dark', 'Oscuro'), minimal: T('Minimal', 'Mínimo'),
+  journal: T('Journal (black & white axes)', 'Revista (ejes en blanco y negro)'),
+}) });
 Fig.fonts = {
   sans: 'Helvetica, Arial, sans-serif',
   arial: 'Arial, Helvetica, sans-serif',
@@ -110,10 +115,10 @@ Fig.fonts = {
   cambria: 'Cambria, Georgia, serif',
   mono: 'Consolas, "Courier New", monospace',
 };
-Fig.fontNames = {
+Object.defineProperty(Fig, 'fontNames', { get: () => ({
   sans: 'Helvetica', arial: 'Arial', serif: 'Georgia', times: 'Times New Roman', segoe: 'Segoe UI',
-  calibri: 'Calibri', cambria: 'Cambria', mono: 'Monospace',
-};
+  calibri: 'Calibri', cambria: 'Cambria', mono: T('Monospace', 'Monoespaciada'),
+}) });
 
 /* ================= SVG constructors ================= */
 Fig.svg = (w, h, theme) => {
@@ -490,19 +495,19 @@ function fitViewBox(svg) {
 
 /* Controls shared by every figure: style + typography. Their values persist
    across figures and sessions (the user's preferred look is remembered). */
-Fig.STYLE_CONTROLS = [
-  { key: 'theme', label: 'Theme', type: 'select', options: Object.entries(Fig.themeNames), shared: true },
-  { key: 'font', label: 'Font family', type: 'select', options: Object.entries(Fig.fontNames), shared: true },
-  { key: 'fontScale', label: 'Font size: all', type: 'range', min: 0.6, max: 2.6, step: 0.05, shared: true },
-  { key: 'fsTitle', label: 'Font size: titles', type: 'range', min: 0.6, max: 3, step: 0.05, shared: true },
-  { key: 'fsAxis', label: 'Font size: axes & ticks', type: 'range', min: 0.6, max: 3, step: 0.05, shared: true },
-  { key: 'fsLabel', label: 'Font size: labels & legend', type: 'range', min: 0.6, max: 3, step: 0.05, shared: true },
-  { key: 'axisBold', label: 'Bold axis titles', type: 'checkbox', shared: true },
-  { key: 'grid', label: 'Gridlines', type: 'checkbox', shared: true },
-  { key: 'gridDash', label: 'Dashed gridlines', type: 'checkbox', shared: true },
-  { key: 'width', label: 'Width (px)', type: 'number', min: 400, max: 2400, step: 20 },
-  { key: 'height', label: 'Height (px)', type: 'number', min: 300, max: 2000, step: 20 },
-];
+Object.defineProperty(Fig, 'STYLE_CONTROLS', { get: () => [
+  { key: 'theme', label: T('Theme', 'Tema'), type: 'select', options: Object.entries(Fig.themeNames), shared: true },
+  { key: 'font', label: T('Font family', 'Tipo de letra'), type: 'select', options: Object.entries(Fig.fontNames), shared: true },
+  { key: 'fontScale', label: T('Font size: all', 'Tamaño de letra: todo'), type: 'range', min: 0.6, max: 2.6, step: 0.05, shared: true },
+  { key: 'fsTitle', label: T('Font size: titles', 'Tamaño de letra: títulos'), type: 'range', min: 0.6, max: 3, step: 0.05, shared: true },
+  { key: 'fsAxis', label: T('Font size: axes & ticks', 'Tamaño de letra: ejes y marcas'), type: 'range', min: 0.6, max: 3, step: 0.05, shared: true },
+  { key: 'fsLabel', label: T('Font size: labels & legend', 'Tamaño de letra: etiquetas y leyenda'), type: 'range', min: 0.6, max: 3, step: 0.05, shared: true },
+  { key: 'axisBold', label: T('Bold axis titles', 'Títulos de eje en negritas'), type: 'checkbox', shared: true },
+  { key: 'grid', label: T('Gridlines', 'Líneas de rejilla'), type: 'checkbox', shared: true },
+  { key: 'gridDash', label: T('Dashed gridlines', 'Rejilla punteada'), type: 'checkbox', shared: true },
+  { key: 'width', label: T('Width (px)', 'Ancho (px)'), type: 'number', min: 400, max: 2400, step: 20 },
+  { key: 'height', label: T('Height (px)', 'Alto (px)'), type: 'number', min: 300, max: 2000, step: 20 },
+] });
 const SHARED_DEFAULTS = { theme: 'light', font: 'sans', fontScale: 1, fsTitle: 1, fsAxis: 1, fsLabel: 1, axisBold: false, grid: true, gridDash: false };
 
 Fig.mount = (host, spec) => {
@@ -538,11 +543,11 @@ Fig.mount = (host, spec) => {
 
   /* --- editor --- */
   const det = mk('details', { class: 'fig-editor' });
-  det.appendChild(mk('summary', null, '⚙ Edit figure — titles, colours, fonts, sizes'));
+  det.appendChild(mk('summary', null, T('⚙ Edit figure — titles, colours, fonts, sizes', '⚙ Editar la figura: títulos, colores, letras, tamaños')));
   const tabs = mk('div', { class: 'fig-tabs' });
   const groups = [
-    { name: 'Content & colours', controls: spec.controls || [] },
-    { name: 'Style & typography', controls: Fig.STYLE_CONTROLS },
+    { name: T('Content & colours', 'Contenido y colores'), controls: spec.controls || [] },
+    { name: T('Style & typography', 'Estilo y tipografía'), controls: Fig.STYLE_CONTROLS },
   ];
   groups.forEach((gr, gi) => {
     const tab = mk('button', { class: 'fig-tab' + (gi === 0 ? ' active' : ''), type: 'button' }, gr.name);
@@ -620,23 +625,23 @@ Fig.mount = (host, spec) => {
   /* --- export bar --- */
   const tools = mk('div', { class: 'fig-tools' });
   const fmt = mk('select');
-  [['png', 'PNG'], ['tiff', 'TIFF (journal submission)'], ['svg', 'SVG (vector, editable)'], ['jpg', 'JPG'], ['webp', 'WEBP']]
+  [['png', 'PNG'], ['tiff', T('TIFF (journal submission)', 'TIFF (envío a revista)')], ['svg', T('SVG (vector, editable)', 'SVG (vectorial, editable)')], ['jpg', 'JPG'], ['webp', 'WEBP']]
     .forEach(([v, t]) => fmt.appendChild(mk('option', { value: v }, t)));
   const res = mk('select');
-  [['2', 'Screen · 2× (150 dpi)'], ['4', 'High · 4× (300 dpi)'], ['6', 'Very high · 6× (450 dpi)'],
-   ['8', 'Publication · 8× (600 dpi)'], ['12', 'Maximum · 12× (900 dpi)']].forEach(([v, t]) => res.appendChild(mk('option', { value: v }, t)));
+  [['2', T('Screen · 2× (150 dpi)', 'Pantalla · 2× (150 ppp)')], ['4', T('High · 4× (300 dpi)', 'Alta · 4× (300 ppp)')], ['6', T('Very high · 6× (450 dpi)', 'Muy alta · 6× (450 ppp)')],
+   ['8', T('Publication · 8× (600 dpi)', 'Publicación · 8× (600 ppp)')], ['12', T('Maximum · 12× (900 dpi)', 'Máxima · 12× (900 ppp)')]].forEach(([v, t]) => res.appendChild(mk('option', { value: v }, t)));
   res.value = Prefs.get('figres', '4');
   const bgSel = mk('select');
-  [['#ffffff', 'White background'], ['transparent', 'Transparent (PNG)']].forEach(([v, t]) => bgSel.appendChild(mk('option', { value: v }, t)));
-  const btn = mk('button', { class: 'btn btn-secondary btn-sm' }, '⬇ Download figure');
+  [['#ffffff', T('White background', 'Fondo blanco')], ['transparent', T('Transparent (PNG)', 'Transparente (PNG)')]].forEach(([v, t]) => bgSel.appendChild(mk('option', { value: v }, t)));
+  const btn = mk('button', { class: 'btn btn-secondary btn-sm' }, T('⬇ Download figure', '⬇ Descargar la figura'));
   const info = mk('span', { class: 'hint', style: 'margin:0' });
   function updateInfo() {
     if (!current) return;
     const w = +current.dataset.w, h = +current.dataset.h, k = +res.value;
     const dpi = k * 75;
     info.textContent = fmt.value === 'svg'
-      ? 'Vector: scales without loss; editable in Inkscape, Illustrator or PowerPoint.'
-      : `${Math.round(w * k)} × ${Math.round(h * k)} px · ${(w * k / dpi * 2.54).toFixed(1)} × ${(h * k / dpi * 2.54).toFixed(1)} cm at ${dpi} dpi`;
+      ? T('Vector: scales without loss; editable in Inkscape, Illustrator or PowerPoint.', 'Vectorial: se agranda sin perder calidad y se edita en Inkscape, Illustrator o PowerPoint.')
+      : `${Math.round(w * k)} × ${Math.round(h * k)} px · ${(w * k / dpi * 2.54).toFixed(1)} × ${(h * k / dpi * 2.54).toFixed(1)} cm ${T('at', 'a')} ${dpi} ${T('dpi', 'ppp')}`;
   }
   fmt.addEventListener('change', updateInfo);
   res.addEventListener('change', () => { Prefs.set('figres', res.value); updateInfo(); });
@@ -648,12 +653,12 @@ Fig.mount = (host, spec) => {
         name: (spec.fileName || slug(spec.title || 'figure')),
         background: bgSel.value === 'transparent' ? null : bgSel.value,
       });
-    } catch (e) { alert('Export failed: ' + e.message); }
+    } catch (e) { alert(T('Export failed: ', 'Falló la exportación: ') + e.message); }
     btn.disabled = false;
   });
-  tools.appendChild(mk('span', { class: 'inline-label' }, 'Format'));
+  tools.appendChild(mk('span', { class: 'inline-label' }, T('Format', 'Formato')));
   tools.appendChild(fmt);
-  tools.appendChild(mk('span', { class: 'inline-label' }, 'Resolution'));
+  tools.appendChild(mk('span', { class: 'inline-label' }, T('Resolution', 'Resolución')));
   tools.appendChild(res);
   tools.appendChild(bgSel);
   tools.appendChild(btn);

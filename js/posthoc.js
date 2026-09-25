@@ -4,19 +4,20 @@
 
 const PH = {};
 
-PH.methods = {
-  tukey:      { name: 'Tukey HSD (Tukey–Kramer)', family: 'q', desc: 'Controls the family-wise error rate for all pairwise comparisons; the standard for agronomic trials.' },
-  lsd:        { name: "Fisher's LSD", family: 't', desc: 'Least significant difference. Per-comparison error rate; use only after a significant F (protected LSD) and with few treatments.' },
-  bonferroni: { name: 'Bonferroni', family: 't', desc: 'Very conservative for many treatments; safe with pre-planned comparisons.' },
-  sidak:      { name: 'Šidák', family: 't', desc: 'Slightly less conservative than Bonferroni.' },
-  holm:       { name: 'Holm (step-down Bonferroni)', family: 't', desc: 'Uniformly more powerful than Bonferroni, same error control.' },
-  duncan:     { name: "Duncan's multiple range test", family: 'range', desc: 'Liberal (does not control the family-wise error); still common in agronomy journals, now discouraged.' },
-  snk:        { name: 'Student–Newman–Keuls', family: 'range', desc: 'Multiple range test with the studentized range at each step; controls per-step error only.' },
-  regwq:      { name: 'REGWQ (Ryan–Einot–Gabriel–Welsch)', family: 'range', desc: 'Multiple range test that controls the family-wise error; more powerful than Tukey when many means are equal.' },
-  scheffe:    { name: 'Scheffé', family: 'F', desc: 'Protects all possible contrasts, so it is the most conservative for pairwise comparisons; use when contrasts are chosen after seeing the data.' },
-  dunnett:    { name: 'Dunnett (vs control)', family: 'dunnett', desc: 'Compares every treatment with the control only; exact multivariate-t adjustment.' },
-  gameshowell:{ name: 'Games–Howell', family: 'gh', desc: 'For unequal variances; uses the studentized range with Welch degrees of freedom per pair (needs group SDs).' },
-};
+/* A getter, so the names and the descriptions of the tests always come back in the language in use. */
+Object.defineProperty(PH, 'methods', { get: () => ({
+  tukey:      { name: T('Tukey HSD (Tukey–Kramer)', 'Tukey HSD (Tukey–Kramer)'), family: 'q', desc: T('Controls the family-wise error rate for all pairwise comparisons; the standard for agronomic trials.', 'Controla el error por familia en todas las comparaciones por pares; es la norma en ensayos agronómicos.') },
+  lsd:        { name: T("Fisher's LSD", 'DMS de Fisher'), family: 't', desc: T('Least significant difference. Per-comparison error rate; use only after a significant F (protected LSD) and with few treatments.', 'Diferencia mínima significativa. Controla el error por comparación; úsala solo después de una F significativa (DMS protegida) y con pocos tratamientos.') },
+  bonferroni: { name: 'Bonferroni', family: 't', desc: T('Very conservative for many treatments; safe with pre-planned comparisons.', 'Muy conservadora cuando hay muchos tratamientos; segura con comparaciones planeadas de antemano.') },
+  sidak:      { name: 'Šidák', family: 't', desc: T('Slightly less conservative than Bonferroni.', 'Un poco menos conservadora que Bonferroni.') },
+  holm:       { name: T('Holm (step-down Bonferroni)', 'Holm (Bonferroni descendente)'), family: 't', desc: T('Uniformly more powerful than Bonferroni, same error control.', 'Siempre más potente que Bonferroni, con el mismo control del error.') },
+  duncan:     { name: T("Duncan's multiple range test", 'Prueba de rangos múltiples de Duncan'), family: 'range', desc: T('Liberal (does not control the family-wise error); still common in agronomy journals, now discouraged.', 'Liberal (no controla el error por familia); sigue siendo común en revistas de agronomía, pero ya se desaconseja.') },
+  snk:        { name: 'Student–Newman–Keuls', family: 'range', desc: T('Multiple range test with the studentized range at each step; controls per-step error only.', 'Prueba de rangos múltiples con el rango estudentizado en cada paso; solo controla el error por paso.') },
+  regwq:      { name: 'REGWQ (Ryan–Einot–Gabriel–Welsch)', family: 'range', desc: T('Multiple range test that controls the family-wise error; more powerful than Tukey when many means are equal.', 'Prueba de rangos múltiples que sí controla el error por familia; más potente que Tukey cuando muchas medias son iguales.') },
+  scheffe:    { name: 'Scheffé', family: 'F', desc: T('Protects all possible contrasts, so it is the most conservative for pairwise comparisons; use when contrasts are chosen after seeing the data.', 'Protege todos los contrastes posibles, así que es la más conservadora para comparaciones por pares; úsala cuando los contrastes se eligen después de ver los datos.') },
+  dunnett:    { name: T('Dunnett (vs control)', 'Dunnett (contra el testigo)'), family: 'dunnett', desc: T('Compares every treatment with the control only; exact multivariate-t adjustment.', 'Compara cada tratamiento solo con el testigo; ajuste exacto con la t multivariante.') },
+  gameshowell:{ name: 'Games–Howell', family: 'gh', desc: T('For unequal variances; uses the studentized range with Welch degrees of freedom per pair (needs group SDs).', 'Para varianzas desiguales; usa el rango estudentizado con grados de libertad de Welch en cada par (necesita las DE de los grupos).') },
+}) });
 
 /* studentized range critical value */
 const qcrit = (alpha, p, df) => S.qtukey(1 - alpha, p, df);
@@ -69,16 +70,16 @@ PH.compare = o => {
     const adj = method === 'lsd' ? raw : method === 'bonferroni' ? raw.map(p => Math.min(1, p * m)) : method === 'sidak' ? raw.map(p => 1 - Math.pow(1 - p, m)) : NP.adjust(raw, 'holm');
     pairs.forEach((p, q) => { p.padj = adj[q]; p.sig = p.padj < alpha; });
     const a = method === 'lsd' ? alpha : method === 'bonferroni' ? alpha / m : method === 'sidak' ? 1 - Math.pow(1 - alpha, 1 / m) : null;
-    if (a != null && seBal) { msd = S.qt(1 - a / 2, dfe) * seBal; msdLabel = method === 'lsd' ? 'LSD' : 'Minimum significant difference'; }
+    if (a != null && seBal) { msd = S.qt(1 - a / 2, dfe) * seBal; msdLabel = method === 'lsd' ? T('LSD', 'DMS') : T('Minimum significant difference', 'Diferencia mínima significativa'); }
     pairs.forEach(p => { if (a != null) p.crit = S.qt(1 - a / 2, dfe) * p.se; });
-    if (method === 'lsd') note = 'Per-comparison α; interpret as a protected LSD only if the treatment F-test was significant.';
+    if (method === 'lsd') note = T('Per-comparison α; interpret as a protected LSD only if the treatment F-test was significant.', 'α por comparación; interprétala como DMS protegida solo si la prueba de F de tratamientos resultó significativa.');
   } else if (method === 'tukey') {
     pairs.forEach(p => { p.stat = p.q; p.p = 1 - S.ptukey(p.q, k, dfe); p.padj = p.p; p.sig = p.p < alpha; p.crit = qcrit(alpha, k, dfe) * p.se / Math.SQRT2; });
     if (seBal) { msd = qcrit(alpha, k, dfe) * seBal / Math.SQRT2; msdLabel = 'HSD'; }
-    if (!nBal) note = 'Unequal replication: Tukey–Kramer form (harmonic SE for each pair).';
+    if (!nBal) note = T('Unequal replication: Tukey–Kramer form (harmonic SE for each pair).', 'Repetición desigual: forma de Tukey–Kramer (error estándar armónico en cada par).');
   } else if (method === 'scheffe') {
     pairs.forEach(p => { p.stat = p.t * p.t / (k - 1); p.p = 1 - S.pf(p.stat, k - 1, dfe); p.padj = p.p; p.sig = p.p < alpha; p.crit = Math.sqrt((k - 1) * S.qf(1 - alpha, k - 1, dfe)) * p.se; });
-    if (seBal) { msd = Math.sqrt((k - 1) * S.qf(1 - alpha, k - 1, dfe)) * seBal; msdLabel = 'Scheffé MSD'; }
+    if (seBal) { msd = Math.sqrt((k - 1) * S.qf(1 - alpha, k - 1, dfe)) * seBal; msdLabel = T('Scheffé MSD', 'DMS de Scheffé'); }
   } else if (method === 'snk' || method === 'duncan' || method === 'regwq') {
     /* multiple range procedure on sorted means */
     const order = groups.map((g, i) => i).sort((a, b) => groups[b].mean - groups[a].mean);
@@ -105,8 +106,10 @@ PH.compare = o => {
       p.padj = method === 'duncan' ? 1 - Math.pow(1 - p.p, 1 / (span - 1)) : p.p;
       p.sig = !decl(Math.min(pos[p.i], pos[p.j]), Math.max(pos[p.i], pos[p.j]));
     });
-    if (seBal) { msd = Array.from({ length: k - 1 }, (_, i) => ({ p: i + 2, value: qcrit(alphaP(i + 2), i + 2, dfe) * seBal / Math.SQRT2 })); msdLabel = 'Least significant range by number of means spanned'; }
-    note = method === 'duncan' ? 'Duncan uses a protection level (1 − α)^(p−1) for a range of p means, which makes it liberal.' : method === 'snk' ? 'Step-down test: a difference inside a range already declared homogeneous is not tested.' : 'REGWQ uses α_p = 1 − (1 − α)^(p/k) for p < k − 1 and α for the two largest ranges.';
+    if (seBal) { msd = Array.from({ length: k - 1 }, (_, i) => ({ p: i + 2, value: qcrit(alphaP(i + 2), i + 2, dfe) * seBal / Math.SQRT2 })); msdLabel = T('Least significant range by number of means spanned', 'Rango mínimo significativo según el número de medias abarcadas'); }
+    note = method === 'duncan' ? T('Duncan uses a protection level (1 − α)^(p−1) for a range of p means, which makes it liberal.', 'Duncan usa un nivel de protección (1 − α)^(p−1) para un rango de p medias, y por eso resulta liberal.')
+         : method === 'snk' ? T('Step-down test: a difference inside a range already declared homogeneous is not tested.', 'Prueba descendente: una diferencia dentro de un rango que ya se declaró homogéneo no se vuelve a probar.')
+         : T('REGWQ uses α_p = 1 − (1 − α)^(p/k) for p < k − 1 and α for the two largest ranges.', 'REGWQ usa α_p = 1 − (1 − α)^(p/k) para p < k − 1 y α para los dos rangos más grandes.');
   } else if (method === 'dunnett') {
     const c = o.control != null ? o.control : 0;
     pairs.length = 0;
@@ -114,8 +117,8 @@ PH.compare = o => {
     const nc = groups[c].n, rho = S.mean(pairs.map(p => nc / (nc + groups[p.i].n)));
     const crit = PH.dunnettCrit(alpha, pairs.length, dfe, rho);
     pairs.forEach(p => { p.stat = p.t; p.p = PH.dunnettP(p.t, pairs.length, dfe, rho); p.padj = p.p; p.sig = p.p < alpha; p.crit = crit * p.se; });
-    if (seBal) { msd = crit * seBal; msdLabel = "Dunnett's critical difference"; }
-    note = `Two-sided comparisons with the control (${groups[c].label}); correlation ρ = ${rho.toFixed(2)} used in the multivariate t.`;
+    if (seBal) { msd = crit * seBal; msdLabel = T("Dunnett's critical difference", 'Diferencia crítica de Dunnett'); }
+    note = T(`Two-sided comparisons with the control (${groups[c].label}); correlation ρ = ${rho.toFixed(2)} used in the multivariate t.`, `Comparaciones de dos colas contra el testigo (${groups[c].label}); en la t multivariante se usó la correlación ρ = ${rho.toFixed(2)}.`);
   } else if (method === 'gameshowell') {
     pairs.forEach(p => {
       const gi = groups[p.i], gj = groups[p.j];
@@ -124,7 +127,7 @@ PH.compare = o => {
       p.q = Math.abs(p.diff) / p.se * Math.SQRT2; p.stat = p.q; p.t = p.diff / p.se;
       p.p = 1 - S.ptukey(p.q, k, p.df); p.padj = p.p; p.sig = p.p < alpha; p.crit = qcrit(alpha, k, p.df) * p.se / Math.SQRT2;
     });
-    note = 'Each pair uses its own SE and Welch df; no pooled error.';
+    note = T('Each pair uses its own SE and Welch df; no pooled error.', 'Cada par usa su propio error estándar y sus grados de libertad de Welch; no hay error combinado.');
   }
   /* letters */
   const different = (i, j) => { const p = pairs.find(x => (x.i === i && x.j === j) || (x.i === j && x.j === i)); return p ? !!p.sig : false; };
@@ -158,11 +161,11 @@ PH.orthoPoly = (x, n, maxDeg) => {
   }
   return polys.slice(1);
 };
-const DEG = ['Linear', 'Quadratic', 'Cubic', 'Quartic', 'Quintic'];
+const DEG = () => [T('Linear', 'Lineal'), T('Quadratic', 'Cuadrático'), T('Cubic', 'Cúbico'), T('Quartic', 'Cuártico'), T('Quintic', 'Quíntico')];
 PH.polyContrasts = (groups, x, mse, dfe, maxDeg) => {
   const n = groups.map(g => g.n);
   const P = PH.orthoPoly(x, n, maxDeg);
-  return P.map((c, d) => Object.assign({ name: DEG[d] || 'Degree ' + (d + 1), coef: c }, PH.contrast(groups, c, mse, dfe)));
+  return P.map((c, d) => Object.assign({ name: DEG()[d] || T('Degree ', 'Grado ') + (d + 1), coef: c }, PH.contrast(groups, c, mse, dfe)));
 };
 /* least-squares polynomial fit of y on x (raw observations) */
 PH.polyFit = (x, y, deg) => {
