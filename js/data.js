@@ -396,7 +396,7 @@ function renderVarTable() {
   const tb = mk('tbody');
   state.columns.forEach(col => {
     const tr = mk('tr');
-    const sel = mk('select');
+    const sel = mk('select', { 'aria-label': T('Role of ', 'Papel de ') + col.name });
     Object.entries(ROLES).forEach(([k, r]) => {
       if (col.kind !== 'numeric' && (k === 'response' || k === 'covariate')) return;
       const op = mk('option', { value: k }, r.label); if (col.role === k) op.selected = true; sel.appendChild(op);

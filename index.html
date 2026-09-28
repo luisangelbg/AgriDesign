@@ -412,9 +412,9 @@
         <span class="field-help" data-es="Las hojas de cálculo con configuración regional latinoamericana suelen exportar con coma.">Spreadsheets set to a Latin American locale often export with a comma.</span></div>
       <div class="field" id="sheetPicker" style="display:none"><label data-es="Hoja">Sheet</label><select id="sheetSelect"></select><span class="field-help" data-es="El libro tiene varias hojas.">The workbook has several sheets.</span></div>
     </div>
-    <details class="acc"><summary data-es="Pegar del portapapeles en lugar de cargar">Paste from the clipboard instead</summary>
+    <details class="acc"><summary id="pasteSum" data-es="Pegar del portapapeles en lugar de cargar">Paste from the clipboard instead</summary>
       <div class="acc-body">
-        <textarea id="pasteArea" rows="6" style="width:100%" placeholder="Block	Treatment	Yield&#10;1	A	4.6&#10;1	B	6.2&#10;…" data-es-ph="Bloque	Tratamiento	Rendimiento&#10;1	A	4.6&#10;1	B	6.2&#10;…"></textarea>
+        <textarea id="pasteArea" aria-labelledby="pasteSum" rows="6" style="width:100%" placeholder="Block	Treatment	Yield&#10;1	A	4.6&#10;1	B	6.2&#10;…" data-es-ph="Bloque	Tratamiento	Rendimiento&#10;1	A	4.6&#10;1	B	6.2&#10;…"></textarea>
         <div class="btn-row"><button class="btn btn-secondary btn-sm" id="pasteBtn" data-es="Usar los datos pegados">Use pasted data</button></div>
       </div>
     </details>
@@ -835,10 +835,10 @@
       <div class="tabs" id="gfxPresets"></div>
       <h4 style="margin-top:14px" data-es="Exportación en lote">Batch export</h4>
       <div class="btn-row">
-        <span class="inline-label" data-es="Formato">Format</span>
-        <select id="gfxFmt"><option value="png">PNG</option><option value="tiff">TIFF</option><option value="svg">SVG</option><option value="jpg">JPG</option><option value="all">PNG + SVG</option></select>
-        <span class="inline-label" data-es="Resolución">Resolution</span>
-        <select id="gfxRes"><option value="2" data-es="Pantalla · 2× (150 ppp)">Screen · 2× (150 dpi)</option><option value="4" selected data-es="Alta · 4× (300 ppp)">High · 4× (300 dpi)</option><option value="6" data-es="Muy alta · 6× (450 ppp)">Very high · 6× (450 dpi)</option><option value="8" data-es="Publicación · 8× (600 ppp)">Publication · 8× (600 dpi)</option><option value="12" data-es="Máxima · 12× (900 ppp)">Maximum · 12× (900 dpi)</option></select>
+        <span class="inline-label" id="gfxFmtLbl" data-es="Formato">Format</span>
+        <select id="gfxFmt" aria-labelledby="gfxFmtLbl"><option value="png">PNG</option><option value="tiff">TIFF</option><option value="svg">SVG</option><option value="jpg">JPG</option><option value="all">PNG + SVG</option></select>
+        <span class="inline-label" id="gfxResLbl" data-es="Resolución">Resolution</span>
+        <select id="gfxRes" aria-labelledby="gfxResLbl"><option value="2" data-es="Pantalla · 2× (150 ppp)">Screen · 2× (150 dpi)</option><option value="4" selected data-es="Alta · 4× (300 ppp)">High · 4× (300 dpi)</option><option value="6" data-es="Muy alta · 6× (450 ppp)">Very high · 6× (450 dpi)</option><option value="8" data-es="Publicación · 8× (600 ppp)">Publication · 8× (600 dpi)</option><option value="12" data-es="Máxima · 12× (900 ppp)">Maximum · 12× (900 dpi)</option></select>
         <button class="btn btn-primary" id="gfxZip" data-es="⬇ Descargar todas las figuras (ZIP)">⬇ Download all figures (ZIP)</button>
         <span class="hint" id="gfxCount" style="margin:0"></span>
       </div>
@@ -916,9 +916,9 @@
       <div class="btn-row">
         <button class="btn btn-primary" id="rpHtml" data-es="⬇ Descargar el informe (HTML)">⬇ Download report (HTML)</button>
         <button class="btn btn-secondary" id="rpPrint" data-es="🖨 Imprimir / guardar como PDF">🖨 Print / save as PDF</button>
-        <span class="inline-label" data-es="Empaquetar las figuras como">Package figures as</span>
-        <select id="rpZipFmt"><option value="png" selected>PNG + SVG</option><option value="tiff">TIFF + SVG</option><option value="jpg">JPG + SVG</option><option value="svg" data-es="Solo SVG">SVG only</option></select>
-        <select id="rpZipRes"><option value="4" selected data-es="300 ppp">300 dpi</option><option value="8" data-es="600 ppp">600 dpi</option><option value="12" data-es="900 ppp">900 dpi</option></select>
+        <span class="inline-label" id="rpZipLbl" data-es="Empaquetar las figuras como">Package figures as</span>
+        <select id="rpZipFmt" aria-labelledby="rpZipLbl"><option value="png" selected>PNG + SVG</option><option value="tiff">TIFF + SVG</option><option value="jpg">JPG + SVG</option><option value="svg" data-es="Solo SVG">SVG only</option></select>
+        <select id="rpZipRes" title="Resolution of the packaged figures" aria-label="Resolution of the packaged figures" data-es-title="Resolución de las figuras del paquete"><option value="4" selected data-es="300 ppp">300 dpi</option><option value="8" data-es="600 ppp">600 dpi</option><option value="12" data-es="900 ppp">900 dpi</option></select>
         <button class="btn btn-accent" id="rpZip" data-es="⬇ Descargar el paquete completo (ZIP)">⬇ Download full package (ZIP)</button>
       </div>
       <iframe id="rpFrame" style="width:100%;height:760px;border:1px solid var(--border);border-radius:10px;background:#fff;margin-top:12px"></iframe>

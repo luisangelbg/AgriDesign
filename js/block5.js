@@ -294,9 +294,9 @@ function renderCellTable(host, t, row) {
 /* ---------- user-defined contrasts ---------- */
 function renderUserContrast(host) {
   const c = section(host, T('Custom contrast', 'Contraste a la medida'), T('Compare groups of treatments: enter one coefficient per level (they must sum to zero), e.g. control vs the rest: 3, −1, −1, −1.', 'Compara grupos de tratamientos: escribe un coeficiente por nivel (deben sumar cero), por ejemplo testigo contra el resto: 3, −1, −1, −1.'));
-  const fsel = mk('select'); R.d.factors.forEach(f => fsel.appendChild(mk('option', { value: f }, esc(f))));
+  const fsel = mk('select', { 'aria-label': T('Factor of the contrast', 'Factor del contraste') }); R.d.factors.forEach(f => fsel.appendChild(mk('option', { value: f }, esc(f))));
   const levelsInfo = mk('p', { class: 'hint' });
-  const inp = mk('input', { type: 'text', style: 'width:320px', placeholder: '1, -1, 0, 0' });
+  const inp = mk('input', { type: 'text', style: 'width:320px', placeholder: '1, -1, 0, 0', 'aria-label': T('Contrast coefficients, one per level', 'Coeficientes del contraste, uno por nivel') });
   const btn = mk('button', { class: 'btn btn-secondary btn-sm' }, T('Test contrast', 'Probar el contraste'));
   const out = mk('div', { class: 'table-scroll', style: 'margin-top:10px' });
   const showLevels = () => { levelsInfo.innerHTML = T('Level order: ', 'Orden de los niveles: ') + R.levelsMap[fsel.value].map((l, i) => `<b>${i + 1}</b> ${esc(l)}`).join(' · '); };
