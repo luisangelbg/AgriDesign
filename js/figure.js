@@ -640,7 +640,7 @@ Fig.mount = (host, spec) => {
     const w = +current.dataset.w, h = +current.dataset.h, k = +res.value;
     const dpi = k * 75;
     info.textContent = fmt.value === 'svg'
-      ? T('Vector: scales without loss; editable in Inkscape, Illustrator or PowerPoint.', 'Vectorial: se agranda sin perder calidad y se edita en Inkscape, Illustrator o PowerPoint.')
+      ? T('Vector: scales without loss; editable in any vector-drawing or presentation program.', 'Vectorial: se agranda sin perder calidad y se edita en cualquier programa de dibujo vectorial o de presentaciones.')
       : `${Math.round(w * k)} × ${Math.round(h * k)} px · ${(w * k / dpi * 2.54).toFixed(1)} × ${(h * k / dpi * 2.54).toFixed(1)} cm ${T('at', 'a')} ${dpi} ${T('dpi', 'ppp')}`;
   }
   fmt.addEventListener('change', updateInfo);

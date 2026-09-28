@@ -31,7 +31,7 @@ S.mad = a => { const m = S.median(a); return 1.4826 * S.median(a.map(v => Math.a
 S.cv = a => 100 * S.sd(a) / S.mean(a);
 S.geomean = a => a.every(v => v > 0) ? Math.exp(S.mean(a.map(Math.log))) : NaN;
 S.harmean = a => a.every(v => v > 0) ? a.length / S.sum(a.map(v => 1 / v)) : NaN;
-/* sample skewness (G1) and excess kurtosis (G2), bias-corrected as in SAS / Excel */
+/* sample skewness (G1) and excess kurtosis (G2), bias-corrected as in standard statistical software */
 S.skewness = a => {
   const n = a.length; if (n < 3) return NaN;
   const m = S.mean(a), sd = S.sd(a); if (!sd) return 0;

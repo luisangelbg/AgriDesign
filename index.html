@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,8 +23,8 @@
     </nav>
     <div class="topbar-tools">
       <div class="lang-seg" role="group" aria-label="Language / Idioma">
-        <button type="button" data-lang="en">EN</button>
         <button type="button" data-lang="es">ES</button>
+        <button type="button" data-lang="en">EN</button>
       </div>
       <button type="button" id="themeBtn" title="Switch to dark mode" aria-label="Switch to dark mode">☾</button>
     </div>
@@ -41,10 +41,10 @@
       <div>
         <div class="eyebrow" data-es="Diseño experimental para la investigación agrícola · cultivos y ganado">Experimental design for agricultural research · crops and livestock</div>
         <h1 data-es-html="Diseña y analiza <span class=&quot;accent&quot;>experimentos agrícolas</span> sin escribir código">Design and analyse <span class="accent">agricultural experiments</span> without writing code</h1>
-        <p class="lead" data-es-html="Parcelas de maíz, jitomate, chile o café; vacas, borregos o cabras en corrales: la misma ruta guiada te lleva de la libreta de campo al <b>análisis de varianza con el error correcto</b>, las <b>letras de comparación de medias</b>, las <b>curvas de respuesta</b> y las <b>figuras listas para publicar</b>, y de regreso al campo con el croquis aleatorizado del siguiente ensayo. No hace falta R, SAS ni Python.">Maize, tomato, chile or coffee plots; cows, sheep or goats in pens — the same guided route takes you from
+        <p class="lead" data-es-html="Parcelas de maíz, jitomate, chile o café; vacas, borregos o cabras en corrales: la misma ruta guiada te lleva de la libreta de campo al <b>análisis de varianza con el error correcto</b>, las <b>letras de comparación de medias</b>, las <b>curvas de respuesta</b> y las <b>figuras listas para publicar</b>, y de regreso al campo con el croquis aleatorizado del siguiente ensayo. No hace falta programar ni instalar nada.">Maize, tomato, chile or coffee plots; cows, sheep or goats in pens — the same guided route takes you from
           the field book to <b>ANOVA with the right error terms</b>, <b>mean-separation letters</b>, <b>response curves</b> and
           <b>journal-ready figures</b>, and back to the field with a randomised layout for the next trial.
-          No R, SAS or Python required.</p>
+          No programming and nothing to install.</p>
         <div class="hero-cta">
           <button class="btn btn-primary btn-lg" id="startBtn" data-es="Empezar con mis datos →">Start with my data →</button>
           <button class="btn btn-secondary btn-lg" id="simBtn" data-es="Probar el simulador">Try the simulator</button>
@@ -301,8 +301,8 @@
     <details class="acc">
       <summary data-es="3 · Cómo acomodar tu tabla (un renglón por parcela)">3 · How to arrange your table (one row per plot)</summary>
       <div class="acc-body">
-        <p data-es-html="La plataforma lee tablas <b>ordenadas</b> (formato largo): <b>un renglón por unidad experimental</b> y <b>una columna por variable</b>. El primer renglón lleva los nombres de las columnas. Es el acomodo que usan R, SAS, SPSS y las tablas dinámicas de Excel.">The platform reads <b>tidy</b> (long-format) tables: <b>one row per experimental unit</b> and <b>one column per
-          variable</b>. The first row holds the column names. This is the layout used by R, SAS, SPSS and Excel pivot tables.</p>
+        <p data-es-html="La plataforma lee tablas <b>ordenadas</b> (formato largo): <b>un renglón por unidad experimental</b> y <b>una columna por variable</b>. El primer renglón lleva los nombres de las columnas. Es el acomodo que esperan los programas de estadística y las tablas dinámicas de las hojas de cálculo.">The platform reads <b>tidy</b> (long-format) tables: <b>one row per experimental unit</b> and <b>one column per
+          variable</b>. The first row holds the column names. This is the layout that statistical software and spreadsheet pivot tables expect.</p>
         <div class="good-bad">
           <div class="good"><h5 data-es="✓ Correcto">✓ Correct</h5>
             <table class="mini-table"><tr><th data-es="Bloque">Block</th><th data-es="Nitrógeno">Nitrogen</th><th data-es="Variedad">Variety</th><th data-es="Rendimiento">Yield</th></tr>
@@ -369,10 +369,10 @@
       <summary data-es="6 · Formatos de archivo aceptados">6 · Accepted file formats</summary>
       <div class="acc-body">
         <ul>
-          <li data-es-html="<b>Excel</b>: .xlsx, .xlsm, .xlsb, .xls (la hoja se elige después de cargar)."><b>Excel</b>: .xlsx, .xlsm, .xlsb, .xls (choose the sheet after loading).</li>
-          <li data-es-html="<b>Formatos abiertos</b>: .ods (LibreOffice), .csv, .tsv, .txt (cualquier separador: coma, punto y coma, tabulador, barra vertical), .dat, .prn."><b>Open formats</b>: .ods (LibreOffice), .csv, .tsv, .txt (any delimiter: comma, semicolon, tab, pipe), .dat, .prn.</li>
+          <li data-es-html="<b>Hoja de cálculo</b>: .xlsx, .xlsm, .xlsb, .xls (la hoja se elige después de cargar)."><b>Spreadsheet</b>: .xlsx, .xlsm, .xlsb, .xls (choose the sheet after loading).</li>
+          <li data-es-html="<b>Formatos abiertos</b>: .ods (hoja de cálculo abierta), .csv, .tsv, .txt (cualquier separador: coma, punto y coma, tabulador, barra vertical), .dat, .prn."><b>Open formats</b>: .ods (open spreadsheet), .csv, .tsv, .txt (any delimiter: comma, semicolon, tab, pipe), .dat, .prn.</li>
           <li data-es-html="<b>JSON</b>: un arreglo de objetos (uno por parcela), un arreglo de arreglos, o <code>{columns:[…], data:[…]}</code>."><b>JSON</b>: an array of objects (one per plot), an array of arrays, or <code>{columns:[…], data:[…]}</code>.</li>
-          <li data-es-html="<b>Portapapeles</b>: copia un rango en Excel y pégalo en el recuadro de abajo."><b>Clipboard</b>: copy a range in Excel and paste it in the box below.</li>
+          <li data-es-html="<b>Portapapeles</b>: copia un rango de tu hoja de cálculo y pégalo en el recuadro de abajo."><b>Clipboard</b>: copy a range from your spreadsheet and paste it in the box below.</li>
         </ul>
         <p data-es="Los archivos se leen en tu computadora con la interfaz FileReader; no se transmite nada.">Files are read locally with the FileReader API; nothing is transmitted.</p>
       </div>
@@ -395,7 +395,7 @@
         <span class="field-help" data-es="Solo para archivos .csv / .txt.">Only for .csv / .txt files.</span></div>
       <div class="field"><label data-es="Separador decimal">Decimal separator</label>
         <select id="decimalSel"><option value="auto" data-es="Detectar solo">Auto-detect</option><option value="dot" data-es="Punto (4.65)">Point (4.65)</option><option value="comma" data-es="Coma (4,65)">Comma (4,65)</option></select>
-        <span class="field-help" data-es="El Excel de América Latina suele exportar con coma.">Latin American Excel often exports with a comma.</span></div>
+        <span class="field-help" data-es="Las hojas de cálculo con configuración regional latinoamericana suelen exportar con coma.">Spreadsheets set to a Latin American locale often export with a comma.</span></div>
       <div class="field" id="sheetPicker" style="display:none"><label data-es="Hoja">Sheet</label><select id="sheetSelect"></select><span class="field-help" data-es="El libro tiene varias hojas.">The workbook has several sheets.</span></div>
     </div>
     <details class="acc"><summary data-es="Pegar del portapapeles en lugar de cargar">Paste from the clipboard instead</summary>
@@ -797,7 +797,7 @@
         <ul>
           <li data-es-html="<b>Resolución</b>: 300 ppp para color y medios tonos, 600 a 1000 ppp para dibujo de línea. La barra de exportación muestra el tamaño en píxeles y el tamaño impreso en centímetros de cada opción."><b>Resolution</b>: 300 dpi for colour/halftone, 600–1000 dpi for line art. The export bar shows the pixel size and the printed size in cm for each option.</li>
           <li data-es-html="<b>Ancho</b>: una columna ≈ 8.5 cm, dos columnas ≈ 17.5 cm (Elsevier, Springer y Wiley son parecidas). A 300 ppp eso da ≈ 1000 y 2100 px; elige «Alta · 4×» o «Publicación · 8×» según el caso."><b>Width</b>: single column ≈ 8.5 cm, double column ≈ 17.5 cm (Elsevier, Springer, Wiley are similar). At 300 dpi that is ≈ 1000 and 2100 px; choose "High · 4×" or "Publication · 8×" accordingly.</li>
-          <li data-es-html="<b>Formatos</b>: TIFF (aquí sin compresión y con la resolución marcada), PNG, o vectorial (SVG → conviértelo a EPS o PDF en Inkscape si la revista insiste). JPG solo para fotografías."><b>Formats</b>: TIFF (with resolution tag, uncompressed here), PNG, or vector (SVG → convert to EPS/PDF in Inkscape if the journal insists). JPG only for photographs.</li>
+          <li data-es-html="<b>Formatos</b>: TIFF (aquí sin compresión y con la resolución marcada), PNG, o vectorial (SVG → conviértelo a EPS o PDF con un programa de dibujo vectorial si la revista insiste). JPG solo para fotografías."><b>Formats</b>: TIFF (with resolution tag, uncompressed here), PNG, or vector (SVG → convert to EPS/PDF with a vector-drawing program if the journal insists). JPG only for photographs.</li>
           <li data-es-html="<b>Letras</b>: Arial/Helvetica o Times, de 8 a 12 puntos en el tamaño final; los estilos predefinidos «Revista» de abajo lo ajustan."><b>Fonts</b>: Arial/Helvetica or Times, 8–12 pt at final size; the "Journal" presets below set this.</li>
           <li data-es-html="<b>Varios paneles</b>: etiqueta los paneles (a), (b)… en negritas arriba a la izquierda; conserva la misma escala de los ejes entre paneles que se comparan."><b>Multi-panel</b>: label panels (a), (b)… in bold at the top-left; keep the same axis scale across panels when they are compared.</li>
         </ul>
@@ -1009,7 +1009,7 @@
       <p class="hint" data-es="Un renglón por parcela, en orden de parcela, con las columnas de respuesta vacías para llenar en el campo. Es exactamente el formato ordenado que el Bloque 2 vuelve a leer.">One row per plot, in plot order, with empty response columns to fill in the field. This is exactly the tidy format Block 2 reads back.</p>
       <div class="btn-row">
         <button class="btn btn-secondary" id="gnCsv" data-es="⬇ Libreta de campo (CSV)">⬇ Field book (CSV)</button>
-        <button class="btn btn-secondary" id="gnXlsx" data-es="⬇ Libreta de campo (Excel)">⬇ Field book (Excel)</button>
+        <button class="btn btn-secondary" id="gnXlsx" data-es="⬇ Libreta de campo (.xlsx)">⬇ Field book (.xlsx)</button>
         <button class="btn btn-accent" id="gnTemplate" data-es="Abrir como plantilla de datos en el Bloque 2 →">Open as data template in Block 2 →</button>
       </div>
       <div class="table-scroll" id="gnBook" style="margin-top:12px"></div>

@@ -14,7 +14,7 @@
         module that drew it listens for the 'langchange' event to redraw.
 
    The starting language is the one the reader chose last time; otherwise
-   Spanish when the browser is set to Spanish and English everywhere else.
+   Spanish, the default of every application in the suite.
    The theme follows the operating system until the reader picks one. */
 
 (function () {
@@ -25,8 +25,7 @@
   function initialLang() {
     const saved = read(KEY_LANG);
     if (saved === 'es' || saved === 'en') return saved;
-    const nav = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
-    return /^es\b/i.test(nav) ? 'es' : 'en';
+    return 'es';
   }
 
   /* remember the English original the first time a node is translated */
