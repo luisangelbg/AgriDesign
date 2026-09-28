@@ -73,7 +73,7 @@ main { max-width: 1180px; margin: 0 auto; padding: 0 20px 80px; }
 .feature .f-num { position: absolute; top: 10px; left: 10px; width: 26px; height: 26px; border-radius: 50%; background: var(--primary); color: var(--on-primary); font-size: 0.78rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
 .feature h3 { margin: 4px 0 0; font-size: 1rem; }
 .feature p { margin: 0; font-size: 0.85rem; color: var(--text-muted); }
-.feature .f-tag { font-size: 0.7rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
+.feature .f-tag { font-size: 0.7rem; font-weight: 600; color: var(--accent-text); text-transform: uppercase; letter-spacing: .06em; }
 .feature.soon { opacity: .75; }
 .feature.soon .f-tag { color: var(--text-muted); }
 
@@ -131,7 +131,7 @@ main { max-width: 1180px; margin: 0 auto; padding: 0 20px 80px; }
 }
 .acc > summary::-webkit-details-marker { display: none; }
 .acc > summary::before {
-  content: "▸"; color: var(--accent); font-size: 0.85rem; transition: transform .15s;
+  content: "▸"; color: var(--accent-text); font-size: 0.85rem; transition: transform .15s;
   display: inline-block; width: 12px;
 }
 .acc[open] > summary::before { transform: rotate(90deg); }
@@ -365,7 +365,7 @@ details.fig-editor > summary { cursor: pointer; font-size: 0.82rem; color: var(-
 .mcard svg { width: 64px; height: 44px; flex-shrink: 0; border-radius: 6px; background: var(--bg-soft); }
 .mcard .m-n { font-weight: 700; font-size: 0.86rem; }
 .mcard .m-s { font-size: 0.74rem; color: var(--text-muted); }
-.mcard .m-f { font-size: 0.62rem; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); font-weight: 700; }
+.mcard .m-f { font-size: 0.62rem; text-transform: uppercase; letter-spacing: .06em; color: var(--accent-text); font-weight: 700; }
 .compare-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; background: var(--card-bg); }
 .compare-wrap table { font-size: 0.86rem; }
 .compare-wrap td.yes { color: var(--success-text); font-weight: 700; text-align: center; }
