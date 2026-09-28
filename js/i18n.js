@@ -122,7 +122,9 @@
     const b = document.getElementById('themeBtn');
     if (!b) return;
     const dark = Theme.dark();
-    b.textContent = dark ? '☀' : '☾';
+    /* the button holds the sun and moon icons of the suite bar; the style
+       sheet shows the right one, so only the label and pressed state change */
+    b.setAttribute('aria-pressed', dark ? 'true' : 'false');
     const tip = dark ? T('Switch to light mode', 'Cambiar a modo claro')
                      : T('Switch to dark mode', 'Cambiar a modo oscuro');
     b.setAttribute('title', tip);
@@ -154,6 +156,10 @@
     if (tb) tb.addEventListener('click', () => Theme.toggle());
   });
   document.addEventListener('langchange', paintButton);
+
+  /* the common suite core (when loaded) keeps the theme under the same key,
+     so both read and write one single preference */
+  if (window.LABG && LABG.theme) LABG.theme.key = KEY_THEME;
 
   window.I18N = I18N;
   window.T = T;

@@ -47,6 +47,8 @@ function showMessage(container, type, text) {
   if (typeof container === 'string') container = el(container);
   if (!container) return null;
   const div = mk('div', { class: 'msg msg-' + type }, text);
+  /* errors and warnings are announced to screen readers */
+  if (window.LABG) LABG.messageRole(div, type);
   container.appendChild(div);
   return div;
 }
@@ -171,18 +173,100 @@ function slug(s) {
     .replace(/[^\w\-]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 60) || 'agridesign';
 }
 
-/* ---------------- step navigation ---------------- */
+/* ---------------- step navigation ----------------
+   Blocks are numbered 1..8 and read in that order. Block 1 is the home page
+   and Block 8 (design generator) works without data, so neither counts when
+   deciding whether a block of the data route is finished. */
+const STEP_ORDER = [1, 2, 3, 4, 5, 6, 7, 8];
+const STEP_ROUTE = [2, 3, 4, 5, 6, 7];
+const stepBtn = n => document.querySelector('.step-btn[data-step="' + n + '"]');
+/* T() lives in i18n.js; without it (tests) the English original is used */
+const TT = (en, es) => (typeof T === 'function' ? T(en, es) : en);
+const stepOn = n => { const b = stepBtn(n); return !!b && !b.disabled; };
+
 function goStep(n) {
+  /* the listeners of 'stepchange' compare numbers: the keyboard and the block
+     footers hand over the data-step text, so it is turned into a number here */
+  n = Number(n);
   els('.step-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + n));
   els('.step-btn').forEach(b => b.classList.toggle('active', b.dataset.step === String(n)));
-  document.body.classList.toggle('on-home', String(n) === '1');
+  document.body.classList.toggle('on-home', n === 1);
+  if (window.LABG) {
+    LABG.setCurrentStep(n);
+    LABG.announce(TT('Block: ', 'Bloque: ') + stepLabel(n));
+  }
+  refreshStepFooters();
   window.scrollTo({ top: 0, behavior: 'smooth' });
   document.dispatchEvent(new CustomEvent('stepchange', { detail: { step: n } }));
 }
 function enableStep(n, on) {
-  const b = document.querySelector('.step-btn[data-step="' + n + '"]');
+  const b = stepBtn(n);
   if (b) b.disabled = (on === false);
+  refreshStepMarks();
+  refreshStepFooters();
 }
+
+/* A block of the data route is «finished» when a later block of the route is
+   already open. Recomputed on every enableStep, so loading new data clears it. */
+function refreshStepMarks() {
+  if (!window.LABG) return;
+  STEP_ROUTE.forEach((s, i) => {
+    const later = STEP_ROUTE.slice(i + 1).some(stepOn);
+    LABG.markStep(s, stepOn(s) && later ? 'done' : null);
+  });
+}
+
+/* Footer of every block: Previous / Next, with the name of the block. */
+function stepLabel(n) {
+  const b = stepBtn(n); if (!b) return '';
+  const num = b.querySelector('.step-num').textContent.trim();
+  const name = (b.querySelector('[data-es]') || b).textContent.replace(/\s+/g, ' ').trim();
+  return num + ' · ' + name;
+}
+function refreshStepFooters() {
+  const bar = el('stepper');
+  if (bar) bar.setAttribute('aria-label', TT('Blocks', 'Bloques'));
+  els('.step-panel').forEach(p => {
+    const n = Number(p.id.replace('panel-', ''));
+    const i = STEP_ORDER.indexOf(n);
+    if (i < 0) return;
+    let f = p.querySelector(':scope > .step-footer');
+    if (!f) {
+      f = mk('nav', { class: 'step-footer no-print' });
+      f.innerHTML = '<button type="button" class="btn btn-secondary prev"></button><button type="button" class="btn btn-primary next"></button>';
+      /* data-target, not data-go: the home page binds every [data-go] on load */
+      f.addEventListener('click', e => { const b = e.target.closest('button[data-target]'); if (b && !b.disabled) goStep(b.dataset.target); });
+      p.appendChild(f);
+    }
+    f.setAttribute('aria-label', TT('Blocks', 'Bloques'));
+    const prev = STEP_ORDER.slice(0, i).reverse().find(stepOn);
+    const next = STEP_ORDER.slice(i + 1).find(s => stepBtn(s));
+    const bp = f.querySelector('.prev'), bn = f.querySelector('.next');
+    bp.hidden = !prev;
+    if (prev) { bp.dataset.target = prev; bp.innerHTML = `← <span><small>${TT('Previous', 'Anterior')}</small>${esc(stepLabel(prev))}</span>`; }
+    bn.hidden = !next;
+    if (next) {
+      bn.dataset.target = next; bn.disabled = !stepOn(next);
+      bn.innerHTML = `<span><small>${TT('Next', 'Siguiente')}</small>${esc(stepLabel(next))}</span> →`;
+    }
+  });
+}
+
+/* Common suite bar: shortcuts, help, warning before closing and keyboard.
+   Language and theme stay with I18N and Theme (i18n.js). Only in the app:
+   the tests load core.js without labg-core.js. */
+document.addEventListener('DOMContentLoaded', () => {
+  if (!window.LABG) return;
+  const hb = el('helpBtn');
+  if (hb) hb.addEventListener('click', () => LABG.showShortcuts());
+  LABG.shortcuts([]);
+  LABG.bindStepKeys(goStep);
+  LABG.guardUnload(() => !!state.fileName);
+  LABG.setCurrentStep((document.querySelector('.step-btn.active') || {}).dataset?.step || '1');
+  document.addEventListener('langchange', () => { refreshStepMarks(); refreshStepFooters(); });
+  refreshStepMarks();
+  refreshStepFooters();
+});
 
 /* Persisted user preferences (figure style etc.) */
 const Prefs = {
