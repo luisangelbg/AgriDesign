@@ -45,6 +45,8 @@ function esc(s) {
 
 function showMessage(container, type, text) {
   if (typeof container === 'string') container = el(container);
+  /* an error during a computation closes the waiting window without the tick */
+  if (type === 'error' && agWork.current) agWork.current._failed = true;
   if (!container) return null;
   const div = mk('div', { class: 'msg msg-' + type }, text);
   /* errors and warnings are announced to screen readers */
@@ -55,6 +57,38 @@ function showMessage(container, type, text) {
 function clearMessages(container) {
   if (typeof container === 'string') container = el(container);
   if (container) container.innerHTML = '';
+}
+
+/* ---------- Waiting window (LABG.work) ----------
+   agWork opens the common animated window (300 ms delay: a quick computation
+   finishes before it shows). agAfterPaint lets the browser paint, runs the
+   computation unchanged and closes the window with the tick, or without it if
+   the computation threw or showed an error. Without labg-core (tests) nothing
+   breaks: the window is null and the thread is simply yielded. */
+function agWork(es, en) {
+  if (!window.LABG || !LABG.work) return null;
+  const w = LABG.work({ title: LABG.t(es, en || es), delay: 300 });
+  agWork.current = w;
+  return w;
+}
+agWork.current = null;
+function agAfterPaint(f, w) {
+  const done = () => {
+    if (agWork.current === w) agWork.current = null;
+    if (w && !w.ended) { if (w._failed) w.close(); else w.done(); }
+  };
+  return (window.LABG ? LABG.nextPaint() : new Promise(r => setTimeout(r, 30)))
+    .then(f).then(done, e => { console.error(e); if (w) w._failed = true; done(); });
+}
+/* Inline progress bar placed right after an element (created once, reused). */
+function agInlineBar(afterEl, id, label) {
+  if (!window.LABG || !LABG.progressBar || !afterEl) return null;
+  let host = el(id);
+  if (!host) {
+    host = mk('div', { id, style: 'margin-top:10px' });
+    afterEl.parentNode.insertBefore(host, afterEl.nextSibling);
+  }
+  return LABG.progressBar(host, { label });
 }
 
 function statTiles(container, tiles) {
@@ -257,6 +291,17 @@ function refreshStepFooters() {
    the tests load core.js without labg-core.js. */
 document.addEventListener('DOMContentLoaded', () => {
   if (!window.LABG) return;
+  if (LABG.work) {
+    LABG.work.scene = 'grow';
+    LABG.work.tips = [
+      ['Reducir el CV a la mitad equivale a cuadruplicar el número de repeticiones.',
+        'Halving the CV is equivalent to quadrupling the number of replicates.'],
+      ['Los niveles que comparten una letra no difieren de manera significativa; un nivel puede llevar varias letras.',
+        'Levels sharing a letter are not significantly different; a level may carry several letters.'],
+      ['Con bloques, la prueba de aditividad de Tukey busca una interacción bloque × tratamiento multiplicativa.',
+        'With blocking, Tukey\'s additivity test looks for a multiplicative block × treatment interaction.'],
+    ];
+  }
   const hb = el('helpBtn');
   if (hb) hb.addEventListener('click', () => LABG.showShortcuts());
   LABG.shortcuts([]);
@@ -277,5 +322,5 @@ const Prefs = {
 Object.assign(window, {
   el, els, mk, esc, showMessage, clearMessages, statTiles, buildTable, tableToCSV,
   fmtNum, fmtFixed, fmtP, fmtPLabel, sigStars, fmtPct, csvEscape, matrixToCSV, download, slug,
-  goStep, enableStep, Prefs,
+  goStep, enableStep, Prefs, agWork, agAfterPaint, agInlineBar,
 });

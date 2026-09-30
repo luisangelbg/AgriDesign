@@ -318,7 +318,8 @@ function renderUserContrast(host) {
 
 function init() {
   if (!el('anResponse')) return;
-  el('anRun').addEventListener('click', run);
+  /* the button opens the waiting window; the automatic runs (step change, language) stay as they were */
+  el('anRun').addEventListener('click', () => { const b = el('anRun'); b.disabled = true; agAfterPaint(run, agWork('Calculando el análisis de varianza y las medias…', 'Computing the ANOVA and the means…')).then(() => { b.disabled = false; }); });
   el('anDesign').addEventListener('change', () => { chosenDesign = el('anDesign').value; designChanged(); });
   el('anMethod').addEventListener('change', designChanged);
   el('anResponse').addEventListener('change', fillControls);

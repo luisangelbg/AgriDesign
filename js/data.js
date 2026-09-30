@@ -271,25 +271,31 @@ function readFile(file) {
   const name = file.name.toLowerCase();
   const reader = new FileReader();
   clearMessages('dataMessages');
-  showMessage('dataMessages', 'info', '<span class="loading"></span> ' + T('Reading file…', 'Leyendo el archivo…'));
+  const w = agWork('Leyendo el archivo…', 'Reading file…');
+  if (!w) showMessage('dataMessages', 'info', T('Reading file…', 'Leyendo el archivo…'));
+  reader.onerror = () => {
+    clearMessages('dataMessages');
+    showMessage('dataMessages', 'error', T('Could not read the file.', 'No se pudo leer el archivo.'));
+    if (w) { w._failed = true; agAfterPaint(() => {}, w); }
+  };
   const ext = name.split('.').pop();
   if (['csv', 'tsv', 'txt', 'dat', 'prn'].includes(ext)) {
-    reader.onload = e => {
+    reader.onload = e => agAfterPaint(() => {
       try {
         const delim = el('delimSel').value || null;
         const rows = parseCSV(e.target.result, ext === 'tsv' ? '\t' : delim);
         afterLoad(rows, file.name);
       } catch (err) { clearMessages('dataMessages'); showMessage('dataMessages', 'error', T('Could not read the text file: ', 'No se pudo leer el archivo de texto: ') + err.message); }
-    };
+    }, w);
     reader.readAsText(file, 'UTF-8');
   } else if (ext === 'json') {
-    reader.onload = e => {
+    reader.onload = e => agAfterPaint(() => {
       try { afterLoad(jsonToGrid(JSON.parse(e.target.result)), file.name); }
       catch (err) { clearMessages('dataMessages'); showMessage('dataMessages', 'error', T('Could not read the JSON file: ', 'No se pudo leer el archivo JSON: ') + err.message); }
-    };
+    }, w);
     reader.readAsText(file, 'UTF-8');
   } else {
-    reader.onload = e => {
+    reader.onload = e => agAfterPaint(() => {
       try {
         const wb = XLSX.read(new Uint8Array(e.target.result), { type: 'array', cellDates: true });
         state.sheets = wb.SheetNames; state.workbook = wb;
@@ -299,7 +305,7 @@ function readFile(file) {
         el('sheetPicker').style.display = wb.SheetNames.length > 1 ? '' : 'none';
         loadSheet(wb.SheetNames[0], file.name);
       } catch (err) { clearMessages('dataMessages'); showMessage('dataMessages', 'error', T('Could not read the spreadsheet: ', 'No se pudo leer la hoja de cálculo: ') + err.message); }
-    };
+    }, w);
     reader.readAsArrayBuffer(file);
   }
 }
@@ -570,10 +576,12 @@ function downloadClean() {
 }
 function loadExample(path, name) {
   clearMessages('dataMessages');
-  showMessage('dataMessages', 'info', '<span class="loading"></span> ' + T('Loading example…', 'Cargando el ejemplo…'));
+  const w = agWork('Cargando el ejemplo…', 'Loading example…');
+  if (!w) showMessage('dataMessages', 'info', T('Loading example…', 'Cargando el ejemplo…'));
   fetch(path).then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
     .then(txt => afterLoad(parseCSV(txt, ','), name))
-    .catch(() => { clearMessages('dataMessages'); showMessage('dataMessages', 'error', T('Could not load the example. Open the app through <b>server.ps1</b> (examples cannot be read from file://).', 'No se pudo cargar el ejemplo. Abre la plataforma con <b>server.ps1</b> (los ejemplos no se pueden leer desde file://).')); });
+    .catch(() => { clearMessages('dataMessages'); showMessage('dataMessages', 'error', T('Could not load the example. Open the app through <b>server.ps1</b> (examples cannot be read from file://).', 'No se pudo cargar el ejemplo. Abre la plataforma con <b>server.ps1</b> (los ejemplos no se pueden leer desde file://).')); })
+    .then(() => { if (w) agAfterPaint(() => {}, w); });   // closes the window (without the tick after an error)
 }
 
 /* Add a derived column (e.g. a transformed response). Never overwrites an existing one. */

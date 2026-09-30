@@ -341,7 +341,8 @@ function runNonpar() {
 
 function init() {
   if (!el('assResponse')) return;
-  el('assRun').addEventListener('click', run);
+  /* the button opens the waiting window; the automatic runs (step change, transforms) stay as they were */
+  el('assRun').addEventListener('click', () => { const b = el('assRun'); b.disabled = true; agAfterPaint(run, agWork('Revisando los supuestos…', 'Checking the assumptions…')).then(() => { b.disabled = false; }); });
   el('assResponse').addEventListener('change', showFormula);
   el('assInter').addEventListener('change', showFormula);
   el('npRun').addEventListener('click', runNonpar);

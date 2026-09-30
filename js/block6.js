@@ -117,20 +117,27 @@ function applyPreset(key) {
 /* ---------- batch export ---------- */
 async function exportAll() {
   const fmt = el('gfxFmt').value, scale = +el('gfxRes').value, dpi = scale * 75;
-  const btn = el('gfxZip'); btn.disabled = true; btn.textContent = T('Preparing…', 'Preparando…');
+  const btn = el('gfxZip'); btn.disabled = true;
+  /* inline bar under the export row (ends with a tick); without labg-core the button label says it */
+  const bar = agInlineBar(btn.parentNode, 'gfxZipProgress', T('⬇ Download all figures (ZIP)', '⬇ Descargar todas las figuras (ZIP)'));
+  if (!bar) btn.textContent = T('Preparing…', 'Preparando…');
   const files = [];
   const list = figs.slice(); const pf = Fig.registry.fig6_panel; if (pf) list.push({ id: 'panel', api: pf });
   try {
-    for (const f of list) {
+    for (const [i, f] of list.entries()) {
+      if (bar) bar.update(0.9 * i / Math.max(1, list.length), T(`Figure ${i + 1} of ${list.length}…`, `Figura ${i + 1} de ${list.length}…`));
+      if (bar && fmt === 'svg') await LABG.nextPaint();
       const svg = f.api.svg, name = (f.api.fileName || f.id);
       if (fmt === 'svg' || fmt === 'all') files.push({ name: name + '.svg', data: Fig.serialize(svg) });
       if (fmt !== 'svg') { const ff = fmt === 'all' ? 'png' : fmt; const blob = await Fig.toRaster(svg, { format: ff, scale, dpi, background: '#ffffff' }); files.push({ name: name + '.' + (ff === 'jpg' ? 'jpg' : ff === 'tiff' ? 'tif' : ff), data: blob }); }
     }
     files.push({ name: 'README.txt', data: T(`AgriDesign figures\nResponse: ${state.anova.resp}\nDesign: ${T(state.anova.design.name)}\nMean separation: ${PH.methods[state.anova.method].name}, alpha = ${state.anova.alpha}\nResolution: ${dpi} dpi (${scale}x)\nGenerated: ${new Date().toISOString()}\n`,
       `Figuras de AgriDesign\nRespuesta: ${state.anova.resp}\nDiseño: ${T(state.anova.design.name)}\nComparación de medias: ${PH.methods[state.anova.method].name}, alfa = ${state.anova.alpha}\nResolución: ${dpi} ppp (${scale}x)\nGeneradas: ${new Date().toISOString()}\n`) });
+    if (bar) { bar.update(0.93, T('Compressing…', 'Comprimiendo…')); await LABG.nextPaint(); }
     const zip = await Zip.build(files);
     download(zip, slug(state.anova.resp) + '_figures_' + dpi + 'dpi.zip');
-  } catch (e) { alert(T('Export failed: ', 'Falló la exportación: ') + e.message); }
+    if (bar) bar.done(T(`Done · ${files.length} files`, `Listo · ${files.length} archivos`));
+  } catch (e) { if (bar) bar.fail(T('Export failed', 'Falló la exportación')); alert(T('Export failed: ', 'Falló la exportación: ') + e.message); }
   btn.disabled = false; btn.textContent = T('⬇ Download all figures (ZIP)', '⬇ Descargar todas las figuras (ZIP)');
 }
 
@@ -153,7 +160,7 @@ function init() {
   Object.entries(PRESETS).forEach(([k, p]) => { const b = mk('button', { class: 'preset-btn tab' + (k === 'colour' ? ' active' : ''), 'data-preset': k }, p.label); b.addEventListener('click', () => applyPreset(k)); pb.appendChild(b); });
   el('gfxZip').addEventListener('click', exportAll);
   el('gfxPanelBtn').addEventListener('click', buildPanel);
-  el('gfxRebuild').addEventListener('click', build);
+  el('gfxRebuild').addEventListener('click', () => { const b = el('gfxRebuild'); b.disabled = true; agAfterPaint(build, agWork('Construyendo la galería de figuras…', 'Building the figure gallery…')).then(() => { b.disabled = false; }); });
   el('gfxGo5').addEventListener('click', () => goStep(5));
   document.addEventListener('datachange', () => { el('gfxFigs').innerHTML = ''; el('gfxPanelHost').innerHTML = ''; figs = []; builtFor = null; });
   document.addEventListener('stepchange', e => {
