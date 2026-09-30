@@ -84,7 +84,15 @@ function downloadBook(kind) {
   if (!lastOpts) return;
   const { header, rows } = lastOpts.fb, name = 'field_book_' + lastOpts.design.id + '_seed' + lastOpts.seed;
   if (kind === 'csv') download(matrixToCSV(header, rows), name + '.csv', 'text/csv;charset=utf-8');
-  else { const wb = XLSX.utils.book_new(); const ws = XLSX.utils.aoa_to_sheet([header].concat(rows)); XLSX.utils.book_append_sheet(wb, ws, T('Field book', 'Libreta de campo')); const info = XLSX.utils.aoa_to_sheet([[T('Design', 'Diseño'), lastOpts.design.name], [T('Seed', 'Semilla'), lastOpts.seed], [T('Replicates', 'Repeticiones'), lastOpts.reps], [T('Generated', 'Generada'), new Date().toISOString()], [T('Software', 'Programa'), 'AgriDesign']]); XLSX.utils.book_append_sheet(wb, info, T('Info', 'Datos')); XLSX.writeFile(wb, name + '.xlsx'); }
+  else {
+    /* .xlsx written with the spreadsheet module of the program itself (js/sheets.js) */
+    const info = [[T('Design', 'Diseño'), lastOpts.design.name], [T('Seed', 'Semilla'), lastOpts.seed],
+                  [T('Replicates', 'Repeticiones'), lastOpts.reps], [T('Generated', 'Generada'), new Date().toISOString()],
+                  [T('Software', 'Programa'), 'AgriDesign']];
+    Sheets.write([{ name: T('Field book', 'Libreta de campo'), rows: [header].concat(rows) }, { name: T('Info', 'Datos'), rows: info }])
+      .then(blob => download(blob, name + '.xlsx'))
+      .catch(e => alert(T('Could not write the workbook: ', 'No se pudo escribir el libro: ') + e.message));
+  }
 }
 function useAsTemplate() {
   if (!lastOpts) return;

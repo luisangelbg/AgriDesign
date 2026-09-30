@@ -72,7 +72,7 @@ js/report.js      Block 7 report builder (HTML), ZIP package, print
 js/gen.js         Block 8 algorithms: randomisation per design, layout geometry, numbering, field book, power
 js/plots8.js      Block 8 figures (field layout, power curves, detectable difference)
 js/block8.js      Block 8 UI
-vendor/           SheetJS (spreadsheet reader), bundled so the app works offline
+js/sheets.js      spreadsheet reader and writer (.xlsx, .xlsm, .ods), written for this program
 data/             example datasets (CSV)
 ```
 
@@ -115,4 +115,6 @@ The `CITATION.cff` file contains the same information in machine-readable form (
 ## License
 
 AgriDesign is free software released under the **GNU General Public License v3.0** (see `LICENSE`).
-It bundles [SheetJS Community Edition](https://sheetjs.com/) (`vendor/xlsx.full.min.js`, Apache-2.0) for reading spreadsheets.
+It has no third-party code: every file in `js/` and `css/` was written for this program. Spreadsheets
+(`.xlsx`, `.xlsm`, `.ods`) are read and written by `js/sheets.js`, which opens the archive with the
+decompressor the browser already provides and parses the XML with `DOMParser`.

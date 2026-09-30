@@ -383,7 +383,7 @@
       <summary data-es="6 · Formatos de archivo aceptados">6 · Accepted file formats</summary>
       <div class="acc-body">
         <ul>
-          <li data-es-html="<b>Hoja de cálculo</b>: .xlsx, .xlsm, .xlsb, .xls (la hoja se elige después de cargar)."><b>Spreadsheet</b>: .xlsx, .xlsm, .xlsb, .xls (choose the sheet after loading).</li>
+          <li data-es-html="<b>Hoja de cálculo</b>: .xlsx, .xlsm y .ods (la hoja se elige después de cargar). Los formatos binarios antiguos .xls y .xlsb se guardan antes como .xlsx o .csv desde Excel o LibreOffice."><b>Spreadsheet</b>: .xlsx, .xlsm and .ods (choose the sheet after loading). The old binary formats .xls and .xlsb should first be saved as .xlsx or .csv from Excel or LibreOffice.</li>
           <li data-es-html="<b>Formatos abiertos</b>: .ods (hoja de cálculo abierta), .csv, .tsv, .txt (cualquier separador: coma, punto y coma, tabulador, barra vertical), .dat, .prn."><b>Open formats</b>: .ods (open spreadsheet), .csv, .tsv, .txt (any delimiter: comma, semicolon, tab, pipe), .dat, .prn.</li>
           <li data-es-html="<b>JSON</b>: un arreglo de objetos (uno por parcela), un arreglo de arreglos, o <code>{columns:[…], data:[…]}</code>."><b>JSON</b>: an array of objects (one per plot), an array of arrays, or <code>{columns:[…], data:[…]}</code>.</li>
           <li data-es-html="<b>Portapapeles</b>: copia un rango de tu hoja de cálculo y pégalo en el recuadro de abajo."><b>Clipboard</b>: copy a range from your spreadsheet and paste it in the box below.</li>
@@ -400,8 +400,8 @@
     <div class="drop-zone" id="dropZone">
       <div class="dz-icon" id="dzIcon"></div>
       <p data-es-html="<b>Suelta aquí tu archivo</b> o pulsa para elegirlo"><b>Drop your file here</b> or click to choose</p>
-      <div class="format-chips"><span>.xlsx</span><span>.xls</span><span>.xlsm</span><span>.xlsb</span><span>.ods</span><span>.csv</span><span>.tsv</span><span>.txt</span><span>.json</span><span>.dat</span></div>
-      <input type="file" id="fileInput" accept=".xlsx,.xls,.xlsm,.xlsb,.ods,.csv,.tsv,.txt,.json,.dat,.prn" hidden>
+      <div class="format-chips"><span>.xlsx</span><span>.xlsm</span><span>.ods</span><span>.csv</span><span>.tsv</span><span>.txt</span><span>.json</span><span>.dat</span></div>
+      <input type="file" id="fileInput" accept=".xlsx,.xlsm,.ods,.csv,.tsv,.txt,.json,.dat,.prn" hidden>
     </div>
     <div class="field-grid" style="margin-top:14px">
       <div class="field"><label data-es="Separador de columnas">Text delimiter</label>
@@ -1053,7 +1053,6 @@
 
 </main>
 
-<script src="vendor/xlsx.full.min.js"></script>
 <script src="js/labg-core.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/core.js"></script>
@@ -1074,6 +1073,7 @@
 <script src="js/plots5.js"></script>
 <script src="js/block5.js"></script>
 <script src="js/zip.js"></script>
+<script src="js/sheets.js"></script>
 <script src="js/plots6.js"></script>
 <script src="js/block6.js"></script>
 <script src="js/report.js"></script>

@@ -294,25 +294,28 @@ function readFile(file) {
       catch (err) { clearMessages('dataMessages'); showMessage('dataMessages', 'error', T('Could not read the JSON file: ', 'No se pudo leer el archivo JSON: ') + err.message); }
     }, w);
     reader.readAsText(file, 'UTF-8');
+  } else if (Sheets.isOldFormat(ext)) {
+    clearMessages('dataMessages');
+    showMessage('dataMessages', 'error', T(
+      `The old binary format .${ext} is not read here. Open the file in Excel or LibreOffice and save it as .xlsx or .csv.`,
+      `El formato binario antiguo .${ext} no se lee aquí. Abre el archivo en Excel o LibreOffice y guárdalo como .xlsx o .csv.`));
   } else {
     reader.onload = e => agAfterPaint(() => {
-      try {
-        const wb = XLSX.read(new Uint8Array(e.target.result), { type: 'array', cellDates: true });
-        state.sheets = wb.SheetNames; state.workbook = wb;
+      Sheets.read(e.target.result, ext).then(wb => {
+        state.sheets = wb.names; state.workbook = wb;
         const pick = el('sheetSelect');
         pick.innerHTML = '';
-        wb.SheetNames.forEach(s => pick.appendChild(mk('option', { value: s }, esc(s))));
-        el('sheetPicker').style.display = wb.SheetNames.length > 1 ? '' : 'none';
-        loadSheet(wb.SheetNames[0], file.name);
-      } catch (err) { clearMessages('dataMessages'); showMessage('dataMessages', 'error', T('Could not read the spreadsheet: ', 'No se pudo leer la hoja de cálculo: ') + err.message); }
+        wb.names.forEach(s => pick.appendChild(mk('option', { value: s }, esc(s))));
+        el('sheetPicker').style.display = wb.names.length > 1 ? '' : 'none';
+        loadSheet(wb.names[0], file.name);
+      }).catch(err => { clearMessages('dataMessages'); showMessage('dataMessages', 'error', T('Could not read the spreadsheet: ', 'No se pudo leer la hoja de cálculo: ') + err.message); });
     }, w);
     reader.readAsArrayBuffer(file);
   }
 }
 function loadSheet(sheetName, fileName) {
-  const ws = state.workbook.Sheets[sheetName];
-  const grid = XLSX.utils.sheet_to_json(ws, { header: 1, blankrows: false, defval: '', raw: true });
-  afterLoad(grid, fileName || state.fileName, sheetName, ws['!merges'] || []);
+  const ws = state.workbook.sheets[sheetName];
+  afterLoad(ws.grid, fileName || state.fileName, sheetName, ws.merges || []);
 }
 /* JSON: array of objects, array of arrays, or {columns:[], data:[]} */
 function jsonToGrid(j) {
