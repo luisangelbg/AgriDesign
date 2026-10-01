@@ -129,8 +129,9 @@ P6.cellHeat = (aLevels, bLevels, cells, o) => ({
     if (cfg.xlab) f.g.appendChild(Fig.text((f.x0 + f.x1) / 2, f.y1 + 44, cfg.xlab, { size: 13, anchor: 'middle', fill: f.t.fg, font: f.font, role: 'axis' }));
     if (cfg.ylab) f.g.appendChild(Fig.text(22, (f.y0 + f.y1) / 2, cfg.ylab, { size: 13, anchor: 'middle', fill: f.t.fg, font: f.font, role: 'axis', rotate: -90 }));
     const bx = f.x1 + 18, bh = f.y1 - f.y0;
-    for (let k = 0; k < 40; k++) f.g.appendChild(Fig.el('rect', { x: bx, y: f.y0 + bh * (1 - (k + 1) / 40), width: 14, height: bh / 40 + 0.5, fill: cmap(k / 39) }));
-    [0, 0.5, 1].forEach(t => f.g.appendChild(Fig.text(bx + 19, f.y0 + bh * (1 - t) + 4, (mn + t * span).toFixed(+cfg.digits), { size: 10, fill: f.t.muted, font: f.font, role: 'tick' })));
+    const cb = f.g.appendChild(Fig.g({ 'data-legend': 'colorbar' }));   /* colour bar, grouped for the figure studio */
+    for (let k = 0; k < 40; k++) cb.appendChild(Fig.el('rect', { x: bx, y: f.y0 + bh * (1 - (k + 1) / 40), width: 14, height: bh / 40 + 0.5, fill: cmap(k / 39) }));
+    [0, 0.5, 1].forEach(t => cb.appendChild(Fig.text(bx + 19, f.y0 + bh * (1 - t) + 4, (mn + t * span).toFixed(+cfg.digits), { size: 10, fill: f.t.muted, font: f.font, role: 'tick' })));
     return svg;
   },
 });
@@ -181,11 +182,12 @@ P6.ssPartition = (rows, o) => ({
       if (cfg.showPct && pct > 4) f.g.appendChild(Fig.text(xs(x + pct / 2), barY + barH / 2 + 4, pct.toFixed(1) + ' %', { size: 11, anchor: 'middle', fill: Fig.onColor(col), font: f.font, role: 'label', weight: 'bold' }));
       x += pct;
     });
-    /* legend rows below the bar */
+    /* legend rows below the bar, in one group for the figure studio (data-li = entry) */
+    const lg = f.g.appendChild(Fig.g({ 'data-role': 'legend' }));
     rows.forEach((r, i) => {
       const col = (cfg.colors && cfg.colors[i]) || Fig.color(cfg.palette, i), y = barY + barH + 30 + i * 20 * Fig.fs('legend');
-      f.g.appendChild(Fig.el('rect', { x: f.x0, y: y - 10, width: 12, height: 12, fill: col, rx: 2 }));
-      f.g.appendChild(Fig.text(f.x0 + 18, y, `${r.label}: SS = ${r.ss.toFixed(3)} (${(r.ss / total * 100).toFixed(1)} %), df = ${r.df}${r.p != null && isFinite(r.p) ? ', ' + fmtPLabel(r.p) : ''}`, { size: 11, fill: f.t.fg, font: f.font, role: 'legend' }));
+      lg.appendChild(Fig.el('rect', { x: f.x0, y: y - 10, width: 12, height: 12, fill: col, rx: 2, 'data-li': i }));
+      lg.appendChild(Fig.text(f.x0 + 18, y, `${r.label}: SS = ${r.ss.toFixed(3)} (${(r.ss / total * 100).toFixed(1)} %), df = ${r.df}${r.p != null && isFinite(r.p) ? ', ' + fmtPLabel(r.p) : ''}`, { size: 11, fill: f.t.fg, font: f.font, role: 'legend' })).setAttribute('data-li', i);
     });
     return svg;
   },
@@ -219,8 +221,9 @@ P6.fieldMap = (rows, cols, plots, o) => ({
     if (cfg.xlab) f.g.appendChild(Fig.text((f.x0 + f.x1) / 2, f.y1 + 44, cfg.xlab, { size: 13, anchor: 'middle', fill: f.t.fg, font: f.font, role: 'axis' }));
     if (cfg.ylab) f.g.appendChild(Fig.text(22, (f.y0 + f.y1) / 2, cfg.ylab, { size: 13, anchor: 'middle', fill: f.t.fg, font: f.font, role: 'axis', rotate: -90 }));
     const bx = f.x1 + 18, bh = f.y1 - f.y0;
-    for (let k = 0; k < 40; k++) f.g.appendChild(Fig.el('rect', { x: bx, y: f.y0 + bh * (1 - (k + 1) / 40), width: 14, height: bh / 40 + 0.5, fill: cmap(k / 39) }));
-    [0, 0.5, 1].forEach(t => f.g.appendChild(Fig.text(bx + 19, f.y0 + bh * (1 - t) + 4, (mn + t * span).toFixed(+cfg.digits), { size: 10, fill: f.t.muted, font: f.font, role: 'tick' })));
+    const cb = f.g.appendChild(Fig.g({ 'data-legend': 'colorbar' }));   /* colour bar, grouped for the figure studio */
+    for (let k = 0; k < 40; k++) cb.appendChild(Fig.el('rect', { x: bx, y: f.y0 + bh * (1 - (k + 1) / 40), width: 14, height: bh / 40 + 0.5, fill: cmap(k / 39) }));
+    [0, 0.5, 1].forEach(t => cb.appendChild(Fig.text(bx + 19, f.y0 + bh * (1 - t) + 4, (mn + t * span).toFixed(+cfg.digits), { size: 10, fill: f.t.muted, font: f.font, role: 'tick' })));
     return svg;
   },
 });

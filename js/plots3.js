@@ -396,10 +396,11 @@ P3.corrHeat = (names, M, o) => ({
       f.g.appendChild(Fig.text(f.x0 - 8, f.y0 + i * ch + ch / 2 + 4, nm, { size: 11, anchor: 'end', fill: f.t.fg, font: f.font, role: 'tick' }));
       f.g.appendChild(Fig.text(f.x0 + i * cw + cw / 2, f.y1 + 14, nm, { size: 11, anchor: 'end', fill: f.t.fg, font: f.font, role: 'tick', rotate: -40 }));
     });
-    /* colour bar */
+    /* colour bar, in its own group for the figure studio */
     const bx = f.x1 + 18, bh = f.y1 - f.y0;
-    for (let k = 0; k < 40; k++) f.g.appendChild(Fig.el('rect', { x: bx, y: f.y0 + bh * (1 - (k + 1) / 40), width: 14, height: bh / 40 + 0.5, fill: cmap(k / 39) }));
-    [-1, -0.5, 0, 0.5, 1].forEach(v => f.g.appendChild(Fig.text(bx + 19, f.y0 + bh * (1 - (v + 1) / 2) + 4, String(v), { size: 10, fill: f.t.muted, font: f.font, role: 'tick' })));
+    const cb = f.g.appendChild(Fig.g({ 'data-legend': 'colorbar' }));
+    for (let k = 0; k < 40; k++) cb.appendChild(Fig.el('rect', { x: bx, y: f.y0 + bh * (1 - (k + 1) / 40), width: 14, height: bh / 40 + 0.5, fill: cmap(k / 39) }));
+    [-1, -0.5, 0, 0.5, 1].forEach(v => cb.appendChild(Fig.text(bx + 19, f.y0 + bh * (1 - (v + 1) / 2) + 4, String(v), { size: 10, fill: f.t.muted, font: f.font, role: 'tick' })));
     return svg;
   },
 });

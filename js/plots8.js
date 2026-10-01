@@ -27,6 +27,8 @@ P8.layout = (L, o) => {
       if (cfg.title) g.appendChild(Fig.text(cfg.width / 2, 28, cfg.title, { size: 17, weight: 'bold', anchor: 'middle', fill: t.fg, font, role: 'title' }));
       if (cfg.subtitle) g.appendChild(Fig.text(cfg.width / 2, 46, cfg.subtitle, { size: 12, anchor: 'middle', fill: t.muted, font, role: 'subtitle' }));
       const cx = c => x0 + c * cellW, cy = r => y0 + r * cellH, gap = +cfg.cellGap;
+      /* the plot area for the figure studio: the grid of plots */
+      svg.setAttribute('data-plot', [x0, y0, L.nCols * cellW, L.nRows * cellH].map(v => +v.toFixed(2)).join(' '));
       /* augmented designs: the checks get the palette colours and all unreplicated entries share one neutral
          colour (with many entries the palette repeats and an entry would look like a check) */
       const isEntry = new Set(L.plots.filter(p => p.check === false).map(p => p.trt));
@@ -54,7 +56,8 @@ P8.layout = (L, o) => {
       if (cfg.showLegend) {
         const lx = x0 + L.nCols * cellW + 20; let ly = y0 + 8;
         const legendItems = isEntry.size ? checkList.concat(['__entries__']) : trts;
-        legendItems.forEach(tr => { if (tr === '__entries__') { g.appendChild(Fig.el('rect', { x: lx, y: ly - 9, width: 12, height: 12, fill: ENTRY, stroke: Fig.darken(ENTRY, 0.25), rx: 2 })); g.appendChild(Fig.text(lx + 17, ly + 1, T(`New entries (${isEntry.size}, unreplicated)`, `Entradas nuevas (${isEntry.size}, sin repetir)`), { size: 10.5, fill: t.fg, font, role: 'legend' })); ly += 16 * Fig.fs('legend'); return; } g.appendChild(Fig.el('rect', { x: lx, y: ly - 9, width: 12, height: 12, fill: col(tr), rx: 2 })); g.appendChild(Fig.text(lx + 17, ly + 1, tr, { size: 10.5, fill: t.fg, font, role: 'legend' })); ly += 16 * Fig.fs('legend'); if (ly > cfg.height - 20) return; });
+        const lg = g.appendChild(Fig.g({ 'data-role': 'legend' }));   /* one group for the figure studio; data-li = entry */
+        legendItems.forEach((tr, i) => { if (tr === '__entries__') { lg.appendChild(Fig.el('rect', { x: lx, y: ly - 9, width: 12, height: 12, fill: ENTRY, stroke: Fig.darken(ENTRY, 0.25), rx: 2, 'data-li': i })); lg.appendChild(Fig.text(lx + 17, ly + 1, T(`New entries (${isEntry.size}, unreplicated)`, `Entradas nuevas (${isEntry.size}, sin repetir)`), { size: 10.5, fill: t.fg, font, role: 'legend' })).setAttribute('data-li', i); ly += 16 * Fig.fs('legend'); return; } lg.appendChild(Fig.el('rect', { x: lx, y: ly - 9, width: 12, height: 12, fill: col(tr), rx: 2, 'data-li': i })); lg.appendChild(Fig.text(lx + 17, ly + 1, tr, { size: 10.5, fill: t.fg, font, role: 'legend' })).setAttribute('data-li', i); ly += 16 * Fig.fs('legend'); if (ly > cfg.height - 20) return; });
       }
       return svg;
     },
