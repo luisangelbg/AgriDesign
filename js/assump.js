@@ -70,20 +70,26 @@ AS.andersonDarling = x0 => {
   const x = S.sorted(x0), n = x.length;
   if (n < 8) return { A: NaN, p: NaN, n, note: 'needs n ≥ 8' };
   const m = S.mean(x), sd = S.sd(x);
+  /* log Φ(z) without losing the tails: log1p above 0, Laplace's asymptotic series below z = −37 */
+  const logPnorm = z => {
+    if (z > 0) return Math.log1p(-S.pnorm(-z));
+    if (z > -37) return Math.log(S.pnorm(z));
+    const y2 = z * z;
+    return -y2 / 2 - Math.log(-z) - 0.918938533204672741780329736406 + Math.log1p(-1 / y2 + 3 / (y2 * y2) - 15 / (y2 * y2 * y2) + 105 / (y2 * y2 * y2 * y2));
+  };
   let s = 0;
-  for (let i = 0; i < n; i++) {
-    const F1 = Math.min(1 - 1e-12, Math.max(1e-12, S.pnorm((x[i] - m) / sd)));
-    const F2 = Math.min(1 - 1e-12, Math.max(1e-12, S.pnorm((x[n - 1 - i] - m) / sd)));
-    s += (2 * i + 1) * (Math.log(F1) + Math.log(1 - F2));
-  }
+  for (let i = 0; i < n; i++) s += (2 * i + 1) * (logPnorm((x[i] - m) / sd) + logPnorm(-(x[n - 1 - i] - m) / sd));
   const A = -n - s / n;
   const AA = A * (1 + 0.75 / n + 2.25 / (n * n));
+  /* Stephens' p for the modified statistic, on the same intervals as nortest; from 10 on p stays at 3.7e-24,
+     because the last quadratic turns upwards (it would give p = 1 near AA = 307) */
   let p;
-  if (AA >= 0.6) p = Math.exp(1.2937 - 5.709 * AA + 0.0186 * AA * AA);
-  else if (AA > 0.34) p = Math.exp(0.9177 - 4.279 * AA - 1.38 * AA * AA);
-  else if (AA > 0.2) p = 1 - Math.exp(-8.318 + 42.796 * AA - 59.938 * AA * AA);
-  else p = 1 - Math.exp(-13.436 + 101.14 * AA - 223.73 * AA * AA);
-  return { A: AA, p: Math.min(1, Math.max(0, p)), n };
+  if (AA < 0.2) p = 1 - Math.exp(-13.436 + 101.14 * AA - 223.73 * AA * AA);
+  else if (AA < 0.34) p = 1 - Math.exp(-8.318 + 42.796 * AA - 59.938 * AA * AA);
+  else if (AA < 0.6) p = Math.exp(0.9177 - 4.279 * AA - 1.38 * AA * AA);
+  else if (AA < 10) p = Math.exp(1.2937 - 5.709 * AA + 0.0186 * AA * AA);
+  else p = 3.7e-24;
+  return { A, AA, p: Math.min(1, Math.max(0, p)), n };
 };
 
 /* ---------- Jarque–Bera (skewness + kurtosis) ---------- */
