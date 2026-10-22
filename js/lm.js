@@ -1,5 +1,6 @@
 /* AgriDesign — linear model engine (fixed effects, least squares).
-   - Effect (sum-to-zero) coding for factors, so drop-one-term tests are Type III.
+   - Effect (sum-to-zero) coding for factors, so drop-one-term tests are Type III;
+     a term without its marginal terms (nested, B(A)) is coded within the nesting factor.
    - Modified Gram–Schmidt QR with column dropping for rank-deficient designs
      (incomplete factorials, aliased terms), as R's lm does with pivoting.
    Data are passed as arrays of "records": {y, f: {Factor: level}, x: {Cov: value}}. */
@@ -16,12 +17,53 @@ function effectCols(level, levels) {
   if (i === k - 1) out.fill(-1); else out[i] = 1;
   return out;
 }
+/* Marginality, as in R's model.matrix: a factor of a term gets contrasts when the term without it
+   lies inside an earlier term; otherwise it is a nesting factor (A in B(A), in Rep:Block of an
+   incomplete-block design, in A:R, the Error a of a split-plot in CRD, or in R:A:B, the Error b of
+   a split-split plot). The other factors of the term then get sum-to-zero contrasts within each
+   cell of the nesting factors, over the levels present there: B(A) has Σ(bᵢ − 1) df whether the
+   labels of B repeat inside each A (plants p1, p2, p3 in every orchard) or not. The levels found
+   in each cell are kept with levelsMap, so predictions and LS means use the coding of the fit. */
+const NESTED = new WeakMap();
+function withinCols(level, levels) {
+  const i = levels.indexOf(level);
+  return i < 0 ? new Array(levels.length - 1).fill(0) : effectCols(level, levels);
+}
 LM.modelMatrix = (recs, terms, levelsMap) => {
   levelsMap = levelsMap || {};
   const lv = f => levelsMap[f] || (levelsMap[f] = LM.levels(recs, f));
   const n = recs.length;
   const cols = [new Array(n).fill(1)], colTerm = [-1], names = ['(Intercept)'];
+  if (!NESTED.has(levelsMap)) NESTED.set(levelsMap, {});
+  const nestCache = NESTED.get(levelsMap);
+  const vars = t => (t.factors || []).concat(t.numeric || []);
   terms.forEach((t, ti) => {
+    const outer = (t.factors || []).filter(f => {
+      const rest = vars(t).filter(v => v !== f);
+      return rest.length && !terms.slice(0, ti).some(p => rest.every(v => vars(p).includes(v)));
+    });
+    if (outer.length) {
+      const inner = t.factors.filter(f => !outer.includes(f));
+      const cellOf = r => outer.map(f => r.f[f]).join('\u0001');
+      const key = outer.join('\u0001') + '\u0002' + inner.join('\u0001');
+      if (!nestCache[key]) {
+        const seen = {};
+        recs.forEach(r => { const s = seen[cellOf(r)] || (seen[cellOf(r)] = {}); inner.forEach(f => (s[f] || (s[f] = new Set())).add(r.f[f])); });
+        const cells = outer.reduce((acc, f) => acc.flatMap(a => lv(f).map(l => a.concat([l]))), [[]]).filter(c => seen[c.join('\u0001')]);
+        nestCache[key] = cells.map(c => ({ key: c.join('\u0001'), name: outer.map((f, i) => f + '[' + c[i] + ']').join(':'), within: inner.map(f => lv(f).filter(l => seen[c.join('\u0001')][f].has(l))) }));
+      }
+      nestCache[key].forEach(cell => {
+        let gens = [[r => cellOf(r) === cell.key ? 1 : 0, cell.name]];
+        inner.forEach((f, k) => {
+          const L = cell.within[k], next = [];
+          gens.forEach(([g, nm]) => L.slice(0, -1).forEach((l, i) => next.push([r => g(r) * withinCols(r.f[f], L)[i], nm + ':' + f + '[' + l + ']'])));
+          gens = next;
+        });
+        (t.numeric || []).forEach(x => { gens = gens.map(([g, nm]) => [r => g(r) * r.x[x], nm + ':' + x]); });
+        gens.forEach(([g, nm]) => { cols.push(recs.map(g)); colTerm.push(ti); names.push(nm); });
+      });
+      return;
+    }
     /* build the list of column-generators per component then take products */
     let gens = [[() => 1, '']];
     (t.factors || []).forEach(f => {
