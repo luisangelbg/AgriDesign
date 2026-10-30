@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AgriDesign · User manual · Block 5: designs, ANOVA and mean comparisons</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;1,500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../interior.css">
+<!-- reparte el contenido en hojas tamaño carta, con encabezados y números de página -->
+<script src="../paginar.js"></script>
+<style>
+  figure.chica .marco { width: 70%; margin: 0 auto; }
+  figure.chica figcaption { margin-left: 15%; margin-right: 15%; }
+  figure.mini .marco { width: 56%; margin: 0 auto; }
+  figure.mini figcaption { margin-left: 22%; margin-right: 22%; }
+</style>
+</head>
+<body>
+
+<section class="capitulo" id="cap-b5" data-pestana="B5" data-orden="6" style="--acento: var(--b5)">
+  <div class="cap-apertura">
+    <div class="cap-num">B5</div>
+    <div class="cap-etiqueta">Chapter six · Block 5 · Designs &amp; ANOVA</div>
+    <h1 data-corto="Block 5 · Designs, ANOVA and means">Designs, ANOVA and mean comparisons</h1>
+    <div class="cap-regla"></div>
+    <p class="cap-resumen">The heart of the program. Block 5 fits the model of the design that was actually sown, tests each source of variation against its own error, computes the adjusted means, separates them with letters using any of eleven tests, breaks interactions down into simple effects, fits response curves to quantitative factors and tests planned contrasts. All of it comes with a results paragraph ready for the manuscript.</p>
+    <div class="cap-franja"><span class="k5"></span><span class="k5" style="opacity:.75"></span><span class="k5" style="opacity:.5"></span><span class="k5" style="opacity:.3"></span></div>
+    <ul class="cap-contenido">
+      <li><b>6.1</b>The catalogue of designs and their errors</li>
+      <li><b>6.2</b>Options: sums of squares, α and mean-separation test</li>
+      <li><b>6.3</b>The ANOVA table and its interpretation</li>
+      <li><b>6.4</b>Adjusted means and letters</li>
+      <li><b>6.5</b>Factorials: interaction and simple effects</li>
+      <li><b>6.6</b>Trends, response curves and contrasts</li>
+      <li><b>6.7</b>Step-by-step examples</li>
+    </ul>
+  </div>
+
+  <!-- 6.1 -->
+  <h2 id="s6-1"><span class="num">6.1</span>The catalogue of designs and their errors</h2>
+  <p class="lead">The design is not chosen for convenience at the analysis stage: it is the way the treatments were randomised in the field. Two identical tables may call for different analyses if one was sown in complete blocks and the other as a split-plot. Block 5 offers thirteen designs and, for each one, builds the model with the correct error terms.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b5-teoria.png" alt="The Block 5 theory card"></div>
+    <figcaption><b>Figure 6.1.</b> The <span class="ui">Designs, error terms and mean separation</span> card, with the first topic open: each design with its randomisation, its model, its error terms and its typical use, followed by a warning about the most frequent mistake, analysing a split-plot as a factorial. The other three topics explain the ANOVA table, how to choose the mean-separation test and what reviewers expect.</figcaption>
+  </figure>
+
+  <table>
+    <caption><b>Table 6.1.</b> The thirteen designs in the <span class="ui">Experimental design</span> menu, with the Block 2 roles each one requires and the number of error strata.</caption>
+    <thead><tr><th style="width:30%">Design in the app</th><th style="width:22%">Roles required</th><th style="width:30%">Model</th><th class="c">Errors</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Completely randomised design (CRD)</span></td><td>1 factor</td><td>y = μ + τ + ε</td><td class="c">1</td></tr>
+      <tr><td><span class="ui">Randomised complete block design (RCBD)</span></td><td>1 factor, 1 block</td><td>y = μ + β + τ + ε</td><td class="c">1</td></tr>
+      <tr><td><span class="ui">Generalised RCBD</span></td><td>1 factor, 1 block, several plots per block and treatment</td><td>y = μ + β + τ + (βτ) + ε</td><td class="c">1 or 2</td></tr>
+      <tr><td><span class="ui">Latin square</span></td><td>1 factor, row and column</td><td>y = μ + ρ + γ + τ + ε</td><td class="c">1</td></tr>
+      <tr><td><span class="ui">Incomplete block design</span></td><td>1 factor, 2 block columns (replicate and block)</td><td>y = μ + ρ + β(ρ) + τ + ε</td><td class="c">1</td></tr>
+      <tr><td><span class="ui">Augmented design</span></td><td>1 factor, 1 block</td><td>y = μ + β + τ + ε, with the error from the checks</td><td class="c">1</td></tr>
+      <tr><td><span class="ui">Factorial in CRD</span></td><td>2 to 4 factors</td><td>y = μ + α + δ + (αδ) + ε</td><td class="c">1</td></tr>
+      <tr><td><span class="ui">Factorial in RCBD</span></td><td>2 to 4 factors, 1 block</td><td>y = μ + β + α + δ + (αδ) + ε</td><td class="c">1</td></tr>
+      <tr><td><span class="ui">Split-plot in RCBD</span></td><td>2 factors (the first on main plots), 1 block</td><td>y = μ + β + α + (βα)<sub>a</sub> + δ + (αδ) + ε<sub>b</sub></td><td class="c">2</td></tr>
+      <tr><td><span class="ui">Split-plot in CRD</span></td><td>2 factors, 1 replicate column</td><td>y = μ + α + ε<sub>a</sub> + δ + (αδ) + ε<sub>b</sub></td><td class="c">2</td></tr>
+      <tr><td><span class="ui">Strip-plot (split-block) in RCBD</span></td><td>2 factors, 1 block</td><td>y = μ + β + α + (βα)<sub>a</sub> + δ + (βδ)<sub>b</sub> + (αδ) + ε<sub>c</sub></td><td class="c">3</td></tr>
+      <tr><td><span class="ui">Split-split-plot in RCBD</span></td><td>3 factors, 1 block</td><td>three nested plot sizes</td><td class="c">3</td></tr>
+      <tr><td><span class="ui">Nested (hierarchical)</span></td><td>2 factors, the second within the first</td><td>y = μ + α + δ(α) + ε</td><td class="c">1 or 2</td></tr>
+    </tbody>
+  </table>
+
+  <p>The menu enables only the designs compatible with the roles assigned in Block 2. The rest are greyed out with the reason: <span class="ui">needs 2–4 treatment factors</span>, <span class="ui">needs row and column roles</span>, <span class="ui">needs several plots per block × treatment</span>. The <span class="ui">★ suggested</span> star marks the design the app infers from the structure of the table: a Latin square if there are a row and a column, complete blocks if there are one factor and one block, a factorial in blocks if there are two factors and one block, and so on.</p>
+
+  <div class="caja importante">
+    <div class="caja-t"><span class="ico">!</span>Important · the suggestion cannot see the field</div>
+    <p>A table with irrigation, variety and block looks the same whether it was sown as a factorial in blocks or as a split-plot. The app suggests the factorial because that is all it can infer from the table; if irrigation was applied to main plots and the varieties within them, <b>you</b> must choose <span class="ui">Split-plot in RCBD</span>. The same applies to strip-plots and to nested factors. Section 6.5 shows how much the tests change.</p>
+  </div>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>Theory in brief · error strata</div>
+    <p>Each size of experimental unit has its own variation. In a split-plot, main plots that received the same irrigation differ from one another more than neighbouring sub-plots that received the same variety, because they are farther apart and fewer. That is why irrigation is tested against <b>error a</b> (block × irrigation), which has few degrees of freedom, and variety and the interaction against <b>error b</b>, the residual. Using error b for irrigation means judging main plots by the yardstick of the small ones: differences are declared that do not exist. The <span class="ui">Tested against</span> column of the ANOVA table states, for each source, which error it was tested against.</p>
+  </div>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · options of some designs</div>
+    <p>Two designs show a checkbox under the description. In <span class="ui">Generalised RCBD</span>, <span class="ui">Blocks are random</span> tests the treatments against the block × treatment interaction, the right choice when the blocks represent environments to which you want to generalise. In <span class="ui">Nested</span>, <span class="ui">B(A) is random</span> tests the upper factor against the nested one: the trees within orchards are the unit by which the orchards are judged. Covariates flagged in Block 2 are added to any design and turn the analysis into an analysis of covariance.</p>
+  </div>
+
+  <!-- 6.2 -->
+  <h2 id="s6-2"><span class="num">6.2</span>Options: sums of squares, α and mean-separation test</h2>
+  <p>The <span class="ui">1 · Design and options</span> card gathers five decisions. The analysis is computed automatically with the default options when the block opens, and is repeated with <span class="ui">Run the analysis</span>.</p>
+
+  <figure>
+    <div class="marco" style="position:relative">
+      <img src="../img/en/b5-opciones.png" alt="Analysis options in Block 5">
+      <span class="marca" style="left:31.3%;top:12.2%">1</span>
+      <span class="marca" style="left:52.1%;top:12.2%">2</span>
+      <span class="marca" style="left:69.9%;top:12.2%">3</span>
+      <span class="marca" style="left:32.2%;top:32.3%">4</span>
+      <span class="marca" style="left:52.8%;top:32.3%">5</span>
+      <span class="marca" style="left:19.7%;top:56.7%">6</span>
+      <span class="marca" style="left:70%;top:54.2%">7</span>
+    </div>
+    <figcaption><b>Figure 6.2.</b> Options for the maize and nitrogen example.</figcaption>
+  </figure>
+  <ul class="leyenda-marcas">
+    <li><span class="n">1</span><span class="ui">Response variable</span>: includes the transformed columns from Block 4.</li>
+    <li><span class="n">2</span><span class="ui">Experimental design</span>: the design, with the suggestion marked and the incompatible ones greyed out.</li>
+    <li><span class="n">3</span><span class="ui">Sums of squares</span>: Type III (marginal, the default) or Type I (sequential).</li>
+    <li><span class="n">4</span><span class="ui">Significance level α</span>: 0.05, 0.01 or 0.10.</li>
+    <li><span class="n">5</span><span class="ui">Mean-separation test</span>: eleven tests, with a description under the menu. With Dunnett, an extra menu appears for choosing the control.</li>
+    <li><span class="n">6</span>The name of the design, its model and when it is used.</li>
+    <li><span class="n">7</span>A layout of the design, the same one Block 8 draws.</li>
+  </ul>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>Theory in brief · Type I or Type III</div>
+    <p><b>Type I</b> sums of squares are computed in order: each term is adjusted only for the ones before it. <b>Type III</b> sums of squares adjust each term for all the others. With balanced data, as in all the program's examples, the two coincide. With missing plots, incomplete blocks or covariates they differ, and Type III gives the test most readers expect: the treatment effect, regardless of the order in which the model was written. Keep Type III unless you have a reason for a hierarchical order.</p>
+  </div>
+
+  <table>
+    <caption><b>Table 6.2.</b> The eleven mean-separation tests. Letters from the example: beans in a CRD, five varieties ranked from highest to lowest (Azufrado, Flor de Mayo, Pinto Saltillo, Negro Jamapa, Bayo), α = 0.05.</caption>
+    <thead><tr><th style="width:21%">Test</th><th style="width:20%">Error controlled</th><th>Use it when…</th><th style="width:18%">Bean letters</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Tukey HSD</span></td><td>Family-wise, all pairs</td><td>By default, to compare all pairs. With unequal replication the Tukey–Kramer version is used.</td><td>a · ab · b · c · c</td></tr>
+      <tr><td><span class="ui">Fisher's LSD</span></td><td>Per comparison</td><td>Few treatments (four or fewer), after a significant F, or planned comparisons.</td><td>a · b · c · d · e</td></tr>
+      <tr><td><span class="ui">Duncan</span></td><td>None (liberal)</td><td>Traditional in agronomy; many journals no longer accept it.</td><td>a · b · c · d · e</td></tr>
+      <tr><td><span class="ui">Student–Newman–Keuls</span></td><td>Per step</td><td>Multiple range; can produce non-transitive groups.</td><td>a · b · c · d · e</td></tr>
+      <tr><td><span class="ui">REGWQ</span></td><td>Family-wise</td><td>The best multiple range test when many means are truly equal.</td><td>a · b · b · c · d</td></tr>
+      <tr><td><span class="ui">Bonferroni</span> · <span class="ui">Šidák</span></td><td>Family-wise</td><td>A few planned comparisons; conservative with many treatments.</td><td>a · ab · b · c · c</td></tr>
+      <tr><td><span class="ui">Holm</span></td><td>Family-wise</td><td>Always preferable to Bonferroni: the same control, more power.</td><td>a · b · c · d · e</td></tr>
+      <tr><td><span class="ui">Scheffé</span></td><td>All contrasts</td><td>Contrasts decided after seeing the data; the most conservative for pairs.</td><td>a · ab · b · c · c</td></tr>
+      <tr><td><span class="ui">Dunnett (vs control)</span></td><td>Family-wise, against the control</td><td>The only question is whether each treatment differs from the control.</td><td>* · * · * · control · *</td></tr>
+      <tr><td><span class="ui">Games–Howell</span></td><td>Family-wise</td><td>Unequal variances among treatments (each pair uses its own error).</td><td>a · ab · b · c · c</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja dato">
+    <div class="dato-cifra">0.215</div>
+    <div class="dato-txt"><div class="caja-t">The same difference, two verdicts</div>Negro Jamapa (2.132 kg) and Bayo (1.917 kg) differ by 0.215 kg per plot. Tukey's minimum significant difference is 0.224 and Bonferroni's 0.239: with either, the two beans share the letter c. The LSD, which does not control the family-wise error, is much smaller and separates them. With five treatments there are ten pairs; on average, the LSD lets through about one false positive in every two trials. That is why the test is chosen before seeing the results and is stated in the table footnote.</div>
+  </div>
+
+  <!-- 6.3 -->
+  <h2 id="s6-3"><span class="num">6.3</span>The ANOVA table and its interpretation</h2>
+  <p>The <span class="ui">2 · Analysis of variance</span> card opens with seven summary tiles, continues with the ANOVA table, the error strata and the interpretation, and ends with a draft of the results paragraph.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b5-anova.png" alt="ANOVA tiles and table for maize"></div>
+    <figcaption><b>Figure 6.3.</b> ANOVA of maize and nitrogen in a randomised complete block design. The nitrogen dose explains almost all the variation (F = 437.267, partial η² = 0.993) and the blocks also differ (F = 21.692, P = 0.0002).</figcaption>
+  </figure>
+
+  <table class="compacta">
+    <caption><b>Table 6.3.</b> The ANOVA summary tiles and their values for maize.</caption>
+    <thead><tr><th style="width:28%">Tile</th><th>What it is</th><th class="c" style="width:12%">Maize</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Grand mean</span></td><td>Overall mean of the response.</td><td class="c">6.032</td></tr>
+      <tr><td><span class="ui">CV</span></td><td>√MSE / mean × 100: the precision of the trial, the figure reviewers ask for.</td><td class="c">2.1%</td></tr>
+      <tr><td><span class="ui">R²</span></td><td>Proportion of the total variation explained by the model, blocks included.</td><td class="c">0.994</td></tr>
+      <tr><td><span class="ui">RMSE</span></td><td>Residual standard deviation, √MSE.</td><td class="c">0.128</td></tr>
+      <tr><td><span class="ui">SE of a treatment mean</span></td><td>Standard error of a mean of the first factor: √(MS error / r).</td><td class="c">0.064</td></tr>
+      <tr><td><span class="ui">SE of a difference</span></td><td>Standard error of the difference between two means: √(2 MS error / r).</td><td class="c">0.091</td></tr>
+      <tr><td><span class="ui">Residual df</span></td><td>Degrees of freedom of the error; shown in amber if fewer than 6.</td><td class="c">9</td></tr>
+    </tbody>
+  </table>
+
+  <table class="compacta">
+    <caption><b>Table 6.4.</b> The columns of the ANOVA table.</caption>
+    <thead><tr><th style="width:24%">Column</th><th>How to read it</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Source</span></td><td>The source of variation. Rows in grey are error strata.</td></tr>
+      <tr><td><span class="ui">df</span> · <span class="ui">SS</span> · <span class="ui">MS</span></td><td>Degrees of freedom, sum of squares and mean square (SS / df).</td></tr>
+      <tr><td><span class="ui">F</span> · <span class="ui">p-value</span></td><td>F = MS of the source / MS of its error, and its P value. Asterisks mark * P &lt; 0.05, ** P &lt; 0.01, *** P &lt; 0.001.</td></tr>
+      <tr><td><span class="ui">partial η²</span></td><td>SS of the source / (SS of the source + SS of its error): the effect size, to accompany the P value.</td></tr>
+      <tr><td><span class="ui">Tested against</span></td><td>The error against which the source was tested.</td></tr>
+    </tbody>
+  </table>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b5-interp.png" alt="Interpretation and draft of the results"></div>
+    <figcaption><b>Figure 6.4.</b> <span class="ui">Interpretation</span> and <span class="ui">Draft for the results section</span> for maize. The draft names the design, reports each F with its degrees of freedom as subscripts and its P value, the CV and the mean-separation test; copy it into the manuscript and adjust it.</figcaption>
+  </figure>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Decision rule · what to read first in the table</div>
+    <table class="compacta">
+      <thead><tr><th style="width:40%">If…</th><th>then…</th></tr></thead>
+      <tbody>
+        <tr><td>there is a significant interaction</td><td>Read the cell means and the simple effects (section 6.5). Main effects on their own can be misleading.</td></tr>
+        <tr><td>there is no interaction and a main effect is significant</td><td>Separate the means of that factor (section 6.4).</td></tr>
+        <tr><td>the factor is quantitative (doses, densities, dates)</td><td>Fit the trend (section 6.6) in addition to, or instead of, the letters.</td></tr>
+        <tr><td>the block is significant</td><td>It is not a result about the treatments: it says that blocking was worthwhile.</td></tr>
+        <tr><td>the treatment F is not significant</td><td>Do not separate means with the LSD: the difference is not protected. Report the absence of differences with its power in mind.</td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">In the paper, report for each factor and interaction the F with its two degrees of freedom and the P value, the CV of the trial and, preferably, the partial η².</p>
+  </div>
+
+  <!-- 6.4 -->
+  <h2 id="s6-4"><span class="num">6.4</span>Adjusted means and letters</h2>
+  <p>Below the ANOVA, the app opens a card for each treatment factor with the table of means, the letters, the expandable pairwise comparisons and a figure of means with letters ready for export.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b5-medias.png" alt="Nitrogen means with Tukey letters"></div>
+    <figcaption><b>Figure 6.5.</b> Nitrogen means with Tukey letters and the six pairwise comparisons expanded. The honestly significant difference is 0.283 t/ha: the four doses all differ from one another, even 120 and 180 kg (difference of 0.297, P = 0.0393).</figcaption>
+  </figure>
+
+  <table class="compacta">
+    <caption><b>Table 6.5.</b> The columns of the table of means.</caption>
+    <thead><tr><th style="width:22%">Column</th><th>What it is</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">LS mean</span></td><td>Least-squares mean: the mean predicted by the model with the other factors averaged and the covariates at their mean. With balanced data it equals the arithmetic mean; with missing plots or covariates, it corrects it.</td></tr>
+      <tr><td><span class="ui">SE</span></td><td>Standard error of the mean, using the error that corresponds to the factor (error a for the main plot).</td></tr>
+      <tr><td><span class="ui">Raw mean</span> · <span class="ui">SD</span></td><td>The arithmetic mean and the standard deviation, for comparison.</td></tr>
+      <tr><td><span class="ui">Back-transformed mean</span></td><td>Only with transformed responses: the mean on the original scale.</td></tr>
+      <tr><td><span class="ui">Group</span></td><td>The letters. Means sharing a letter do not differ at the chosen α; a mean can carry two letters.</td></tr>
+    </tbody>
+  </table>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b5-medias-fig.png" alt="Figure of means with letters"></div>
+    <figcaption><b>Figure 6.6.</b> The figure of means ± SE with Tukey letters. The subtitle states what the bars are and which test produced the letters. It is edited and exported like any other figure and also appears in the Block 6 gallery.</figcaption>
+  </figure>
+
+  <h3>Comparing only against the control: Dunnett</h3>
+  <p>If the question is “which varieties outperform the one the farmer already grows?”, the ten pairs are not needed. Dunnett compares each treatment only with the control and gains power by making fewer comparisons. When you choose it, the <span class="ui">Control level (Dunnett)</span> menu appears.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b5-dunnett.png" alt="Dunnett against Negro Jamapa"></div>
+    <figcaption><b>Figure 6.7.</b> Dunnett on the beans with Negro Jamapa as the control. The <span class="ui">Group</span> column shows * for the varieties that differ from the control. The critical difference is 0.198 kg, smaller than Tukey's (0.224): with it, Bayo does differ from the control (P = 0.0318), which Tukey did not detect.</figcaption>
+  </figure>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">ab</span>Overlapping letters</div>
+    <p>In the beans with Tukey, Flor de Mayo carries “ab”: it differs neither from Azufrado (a) nor from Pinto Saltillo (b), although Azufrado and Pinto Saltillo do differ from each other. This is not a bug in the program: mean-separation tests are not transitive, and “ab” is the honest way of saying that the data are not enough to place Flor de Mayo in a single group. The app builds the letters with the maximal-groups method, which guarantees that two means share a letter if and only if the test did not separate them.</p>
+  </div>
+
+  <!-- 6.5 -->
+  <h2 id="s6-5"><span class="num">6.5</span>Factorials: interaction and simple effects</h2>
+  <p>With two factors, the app adds a card for the interaction: the table of cell means, the simple effects in both directions, the comparison of all combinations (except in split-plots and strip-plots) and a grouped bar chart with letters.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b5-tomate-anova.png" alt="ANOVA of the tomato factorial"></div>
+    <figcaption><b>Figure 6.8.</b> ANOVA of the tomato factorial in blocks. Variety, fertilisation and their interaction are significant (interaction F(4, 16) = 173.312, P &lt; 0.0001). The interpretation adds a warning: with an interaction, conclusions are drawn from the cells.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b5-tomate-simples.png" alt="Cell means and simple effects for tomato"></div>
+    <figcaption><b>Figure 6.9.</b> The interaction card: means of the nine cells and the simple effects. Within each variety, F2 &gt; F1 &gt; F0 (letters a, b, c in each row); within each fertilisation level, Saladette &gt; Rio Grande &gt; Cherry. The letters are valid within a row, not across rows.</figcaption>
+  </figure>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>What is a simple effect?</div>
+    <p>The main effect of fertilisation averages its effect over the three varieties. If there is an interaction, that average hides the fact that the gain from F0 to F2 is 1.234 kg per plant in Saladette and only 0.483 kg in Cherry. A simple effect compares the levels of one factor <b>within a fixed level of the other</b>: fertilisation in Saladette, fertilisation in Cherry. Here the order of the levels is the same in every row, so the interaction is one of magnitude, not of rank; if F1 outperformed F2 in one variety, the recommendation would depend on the variety.</p>
+  </div>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b5-tomate-fig.png" alt="Grouped bars with letters for tomato"></div>
+    <figcaption><b>Figure 6.10.</b> The nine combinations with the letters of the joint comparison (Tukey, minimum difference 0.077 kg). Saladette with F2 is the only “a”; Saladette with F1 and Rio Grande with F2 share the “b”.</figcaption>
+  </figure>
+
+  <h3>Split-plots: the same table, different errors</h3>
+  <p>The irrigation × variety example was sown with the two irrigation systems on main plots and the four varieties on sub-plots. It is analysed by choosing <span class="ui">Split-plot in RCBD (main plots in blocks)</span>, with irrigation as the first factor.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b5-split-anova.png" alt="Split-plot ANOVA"></div>
+    <figcaption><b>Figure 6.11.</b> Split-plot ANOVA. Block and irrigation are tested against error a (2 degrees of freedom); variety and the interaction, against the residual (12). The error a row carries its own F against the residual: 1.530 (P = 0.2560), so the main plots did not vary much more than the small ones.</figcaption>
+  </figure>
+
+  <table class="compacta">
+    <caption><b>Table 6.6.</b> The same data analysed as a factorial in blocks and as a split-plot.</caption>
+    <thead><tr><th style="width:22%">Source</th><th class="c">Factorial: F</th><th class="c">Factorial: error df</th><th class="c">Split-plot: F</th><th class="c">Split-plot: error df</th></tr></thead>
+    <tbody>
+      <tr><td>Irrigation</td><td class="c">14,875.0</td><td class="c">14</td><td class="c">10,460.6</td><td class="c">2 (error a)</td></tr>
+      <tr><td>Variety</td><td class="c">3,040.0</td><td class="c">14</td><td class="c">3,269.9</td><td class="c">12</td></tr>
+      <tr><td>Irrigation × variety</td><td class="c">62.1</td><td class="c">14</td><td class="c">66.7</td><td class="c">12</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja importante">
+    <div class="caja-t"><span class="ico">!</span>Important · the change does not always show, but it is there</div>
+    <p>In this teaching example all the effects are so large that the verdict does not change. What does change is the basis of the irrigation test: 14 degrees of freedom in the factorial, 2 in the split-plot. With a critical F of 4.60 versus 18.51 for α = 0.05, a moderate irrigation effect that the factorial would declare significant may in fact not be. In a real trial, with an error a several times larger than error b, the F of the main-plot factor can drop to a tenth. The correct analysis is that of the design that was sown.</p>
+  </div>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b5-split-simples.png" alt="Simple effects in the split-plot"></div>
+    <figcaption><b>Figure 6.12.</b> Simple effects in the split-plot. Varieties within each irrigation are compared with error b. Irrigation within each variety needs a combined error, [(b − 1) E<sub>b</sub> + E<sub>a</sub>] / b, with Satterthwaite degrees of freedom (10.7); the app computes it and states it in the subtitle. In split-plots, all combinations are not compared together because there is no single error for those differences.</figcaption>
+  </figure>
+
+  <!-- 6.6 -->
+  <h2 id="s6-6"><span class="num">6.6</span>Trends, response curves and contrasts</h2>
+  <p>When the levels of a factor are numbers (doses, densities, dates) and there are three or more, the app adds to its card a trend analysis with <b>orthogonal polynomials</b> and the fitted curve. The letters say which doses differ; the curve says how the crop responds and where the optimum lies.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b5-tendencia.png" alt="Polynomial contrasts for nitrogen"></div>
+    <figcaption><b>Figure 6.13.</b> Polynomial contrasts for nitrogen. The sum of squares for doses (21.551) is partitioned into a linear component (19.771, F = 1203.4), a quadratic one (1.776, F = 108.1) and a negligible cubic one (0.005, P = 0.6075). The highest significant component is the quadratic: the response rises and levels off.</figcaption>
+  </figure>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b5-curva.png" alt="Response curve of maize to nitrogen"></div>
+    <figcaption><b>Figure 6.14.</b> Quadratic response curve fitted to the 16 plots: ŷ = 4.207 + 0.03323·x − 0.00009253·x², R² = 0.946. The maximum is at 179.5 kg of N per hectare, with an estimated 7.19 t/ha. The points are the means of each dose.</figcaption>
+  </figure>
+
+  <div class="caja importante">
+    <div class="caja-t"><span class="ico">!</span>Important · an optimum at the edge of the range tested</div>
+    <p>The maximum of 179.5 kg falls practically on the highest dose in the trial, 180 kg. That does not show that 180 kg is the optimum: it says that the trial did not reach the zone where yield starts to fall, and that the quadratic form, symmetric by construction, places its vertex there. A curve is not extrapolated beyond the doses tested. Moreover, the biological optimum is not the economic one: given the prices of grain and fertiliser, the most profitable dose lies before the maximum, where the slope of the curve equals the price ratio.</p>
+  </div>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Decision rule · which curve to report</div>
+    <table class="compacta">
+      <thead><tr><th style="width:40%">If the highest significant component is…</th><th>then…</th></tr></thead>
+      <tbody>
+        <tr><td>none</td><td>The response does not change systematically with the dose.</td></tr>
+        <tr><td>linear</td><td>A straight line: each unit of dose adds the same amount. There is no optimum within the range; higher doses are worth testing.</td></tr>
+        <tr><td>quadratic</td><td>A curve with a maximum or minimum; report the equation, R² and the optimum if it falls within the range.</td></tr>
+        <tr><td>cubic or higher</td><td>A more complex shape; with four or five doses it is usually noise or an atypical dose. Check before interpreting it.</td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">Exact polynomial contrasts require equally spaced doses; the curve is fitted with the actual dose values.</p>
+  </div>
+
+  <h3>Custom contrasts</h3>
+  <p>The last card in the block, <span class="ui">Custom contrast</span>, tests planned comparisons between groups of treatments. Choose the factor, type one coefficient per level in the order shown by <span class="ui">Level order</span> (they must sum to zero) and press <span class="ui">Test contrast</span>. Each contrast is added to the table.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b5-contraste.png" alt="Two planned contrasts for maize"></div>
+    <figcaption><b>Figure 6.15.</b> Two contrasts for maize. The first, 3, −1, −1, −1, compares the control without nitrogen with the average of the three doses: the estimate of −7.268 is three times that difference (2.42 t/ha), with P &lt; 0.0001. The second, 0, 0, −1, 1, compares 180 with 120 kg: 0.297 t/ha, P = 0.0095.</figcaption>
+  </figure>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>Why does the contrast give P = 0.0095 and Tukey 0.0393 for the same pair?</div>
+    <p>The difference between 180 and 120 kg is the same, 0.297 t/ha, with the same standard error. Tukey compares it with the distribution of the range of <i>four</i> means, because it protects all six pairs at once; the contrast compares it with a simple t, because it is <i>one</i> question planned before the trial. If the question “is it worth going from 120 to 180 kg?” was in the protocol, the contrast is legitimate and more powerful. If it was chosen after seeing the means, the right protection is Scheffé.</p>
+  </div>
+
+  <table class="compacta">
+    <caption><b>Table 6.7.</b> Useful contrasts for four treatments.</caption>
+    <thead><tr><th style="width:34%">Question</th><th style="width:22%">Coefficients</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td>Control versus the rest</td><td>3, −1, −1, −1</td><td>The control in first position.</td></tr>
+      <tr><td>Two groups of two</td><td>1, 1, −1, −1</td><td>For example, organic versus mineral sources.</td></tr>
+      <tr><td>A specific pair</td><td>0, 0, −1, 1</td><td>Equivalent to a t test with the ANOVA error.</td></tr>
+      <tr><td>Linear trend</td><td>−3, −1, 1, 3</td><td>The same one computed by the trend analysis.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Transformed responses and covariates</h3>
+  <p>If you created a transformed column in Block 4, choose it in <span class="ui">Response variable</span>. The ANOVA, the letters and the curve are computed on the transformed scale, and the table of means adds the <span class="ui">Back-transformed mean</span> column. If there are covariates, they enter the model as one more row of the ANOVA table and the means are adjusted to their average value.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b5-tomate-ln.png" alt="Variety means with the transformed response"></div>
+    <figcaption><b>Figure 6.16.</b> Tomato variety means with <code>Yield_kg_plant_ln</code>. The letters (a, b, c) come from the logarithmic scale; the back-transformed column gives the geometric means in kg per plant: Saladette 3.761, Rio Grande 3.412, Cherry 2.213. They are somewhat smaller than the arithmetic means because the mean of the logarithms always is.</figcaption>
+  </figure>
+
+  <!-- 6.7 -->
+  <h2 id="s6-7"><span class="num">6.7</span>Step-by-step examples</h2>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Step by step · maize × nitrogen, randomised complete blocks</div>
+    <ol class="pasos" style="margin-bottom:0">
+      <li>With the example loaded, press number <span class="ui">5</span>. The app chooses <span class="ui">Randomised complete block design (RCBD) ★ suggested</span>, Type III, α = 0.05 and Tukey, and runs the analysis.</li>
+      <li>Read the tiles and the table (figure 6.3): F(3, 9) = 437.27 for nitrogen, significant blocks, a CV of 2.1%.</li>
+      <li>Scroll down to <span class="ui">Means of Nitrogen_kg_ha</span> (figure 6.5): 180 kg a, 120 kg b, 60 kg c, 0 kg d.</li>
+      <li>Read the trend (figures 6.13 and 6.14): a quadratic response with its maximum at 179.5 kg.</li>
+      <li>In <span class="ui">Custom contrast</span> type <code>0,0,-1,1</code> and press <span class="ui">Test contrast</span> for the planned question of 120 versus 180 kg.</li>
+      <li>Copy the draft of the results (figure 6.4) and download the ANOVA table and the table of means as CSV.</li>
+    </ol>
+  </div>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Step by step · irrigation × variety as a split-plot</div>
+    <ol class="pasos" style="margin-bottom:0">
+      <li>Load <span class="ui">Split-plot · irrigation × variety</span> in Block 2 and check that <code>Irrigation</code> is the first factor: in split-plots, the first factor is the main-plot factor.</li>
+      <li>In Block 5 the app suggests <span class="ui">Factorial in RCBD</span>. Change it to <span class="ui">Split-plot in RCBD (main plots in blocks)</span> and press <span class="ui">Run the analysis</span>.</li>
+      <li>Check in <span class="ui">Tested against</span> that irrigation is tested against <span class="ui">Error a (main plot)</span> (figure 6.11).</li>
+      <li>Since the interaction is significant, read the simple effects (figure 6.12): V2 is the best variety under both irrigation systems, and drip outperforms furrow in all four varieties.</li>
+    </ol>
+  </div>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Step by step · wheat in a Latin square</div>
+    <ol class="pasos" style="margin-bottom:0">
+      <li>Load <span class="ui">Latin square · wheat</span>. In Block 5 the app chooses <span class="ui">Latin square</span>: the model is <code>Yield_t_ha ~ Row + Column + Treatment</code>.</li>
+      <li>Read the table (figure 6.17): the treatments differ (F(3, 6) = 164.10) and neither rows nor columns are significant.</li>
+      <li>The Tukey means rank C (4.510, a), D (4.090, b), B (3.792, c) and A (3.237, d).</li>
+    </ol>
+  </div>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b5-latino.png" alt="ANOVA of the wheat Latin square"></div>
+    <figcaption><b>Figure 6.17.</b> ANOVA of the Latin square. With only 6 degrees of freedom for the error, the <span class="ui">Residual df</span> tile does not reach the warning threshold, but it comes close: a 4 × 4 Latin square leaves little error, which is why squares from 5 × 5 to 8 × 8 are more common in the field.</figcaption>
+  </figure>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · changing the data resets the design</div>
+    <p>The app remembers the design you chose while you work with the same table and the same roles, even if you switch blocks or responses. When you load another file or change the roles in Block 2, it proposes the suggested design for the new structure again. If an analysis fails (for example, a model with no degrees of freedom for the error), the results card is hidden and only the message remains, so that it is not mistaken for the previous analysis.</p>
+  </div>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>What you learned</div>
+    <p>The field decides the design, and the app translates it into a model with its error strata. The ANOVA table is read from the interaction down to the main effects; the letters depend on the test chosen, which must be stated; and quantitative factors call for a curve, not just letters. A planned contrast answers the question that motivated the trial better than ten pairwise comparisons.</p>
+  </div>
+
+  <p style="margin-top:0.25in">With the results in hand, the next step is to present them. The Block 6 chapter covers the gallery of figures built from this analysis, the preset journal styles, editing, multi-panel figures and export at the resolution each journal requires.</p>
+</section>
+
+</body>
+</html>

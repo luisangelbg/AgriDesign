@@ -8,17 +8,23 @@ use strict; use warnings; use utf8;
 use open qw(:std :encoding(UTF-8));
 
 my $dir = shift or die "uso: perl herramientas/reunir-reglas.pl <carpeta del idioma>\n";
-my @caps = (
-  ['01-introduccion.html', 'k0', '1',  'Introducción a AgriDesign'],
-  ['02-bloque1.html',      'k1', 'B1', 'Inicio, simulador y teoría'],
-  ['03-bloque2.html',      'k2', 'B2', 'Datos y roles de las variables'],
-  ['04-bloque3.html',      'k3', 'B3', 'Estadística descriptiva'],
-  ['05-bloque4.html',      'k4', 'B4', 'Supuestos, transformaciones y no paramétricos'],
-  ['06-bloque5.html',      'k5', 'B5', 'Diseños, ANOVA y pruebas de medias'],
-  ['07-bloque6.html',      'k6', 'B6', 'Gráficos de resultados'],
-  ['08-bloque7.html',      'k7', 'B7', 'Informe y exportación'],
-  ['09-bloque8.html',      'k8', 'B8', 'Generador de diseños y potencia'],
+# los nombres de los capítulos y las palabras del índice siguen al idioma de la carpeta
+my %L = (
+  es => { sec => 'Sección', pref => 'Regla de decisión · ',
+          caps => ['Introducción a AgriDesign', 'Inicio, simulador y teoría', 'Datos y roles de las variables',
+                   'Estadística descriptiva', 'Supuestos, transformaciones y no paramétricos',
+                   'Diseños, ANOVA y pruebas de medias', 'Gráficos de resultados', 'Informe y exportación',
+                   'Generador de diseños y potencia'] },
+  en => { sec => 'Section', pref => 'Decision rule · ',
+          caps => ['Introduction to AgriDesign', 'Home, simulator and theory', 'Data and variable roles',
+                   'Descriptive statistics', 'Assumptions, transformations and non-parametric tests',
+                   'Designs, ANOVA and mean comparisons', 'Graphics of results', 'Report and export',
+                   'Design generator and power'] },
 );
+my $L = $L{$dir} or die "no sé los rótulos del idioma «$dir»\n";
+my @archivos = qw(01-introduccion.html 02-bloque1.html 03-bloque2.html 04-bloque3.html 05-bloque4.html
+                  06-bloque5.html 07-bloque6.html 08-bloque7.html 09-bloque8.html);
+my @caps = map { [$archivos[$_], 'k' . $_, $_ ? 'B' . $_ : '1', $L->{caps}[$_]] } 0 .. $#archivos;
 my @indice;
 my $cuerpo = '';
 my $n = 0;
@@ -49,10 +55,10 @@ for my $c (@caps) {
     $n++;
     my $extra = "";
     $box =~ s/^<div class="caja regla"[^>]*>/<div class="caja regla">/;
-    $box =~ s{(<div class="caja-t"><span class="ico">✓</span>.*?)</div>}{$1<span class="sec-ref">Sección $snum$extra</span></div>}s;
+    $box =~ s{(<div class="caja-t"><span class="ico">✓</span>.*?)</div>}{$1<span class="sec-ref">$L->{sec} $snum$extra</span></div>}s;
     $box =~ s/\n    /\n  /g;
     $cuerpo .= "\n  $box\n";
-    (my $corto = $tit) =~ s/^(?:<span>)?Regla de decisión · //;
+    (my $corto = $tit) =~ s/^(?:<span>)?\Q$L->{pref}\E//;
     $corto =~ s/<\/span>$// if $tit =~ /^<span>/;
     $corto =~ s/<span class="sym">(.*?)<\/span>/$1/g;
     $corto =~ s/<span style="[^"]*">(.*?)<\/span>/$1/g;

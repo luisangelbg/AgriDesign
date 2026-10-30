@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AgriDesign · User manual · Block 8: design generator and power</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;1,500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../interior.css">
+<!-- reparte el contenido en hojas tamaño carta, con encabezados y números de página -->
+<script src="../paginar.js"></script>
+<style>
+  figure.chica .marco { width: 70%; margin: 0 auto; }
+  figure.chica figcaption { margin-left: 15%; margin-right: 15%; }
+</style>
+</head>
+<body>
+
+<section class="capitulo" id="cap-b8" data-pestana="B8" data-orden="9" style="--acento: var(--b8)">
+  <div class="cap-apertura">
+    <div class="cap-num">B8</div>
+    <div class="cap-etiqueta">Chapter nine · Block 8 · Design generator</div>
+    <h1 data-corto="Block 8 · Design generator">Design generator and power</h1>
+    <div class="cap-regla"></div>
+    <p class="cap-resumen">The only block that needs no data: it is for planning the trial before sowing. Block 8 randomises the treatments of ten designs with a seed that makes the randomisation reproducible, draws the field layout with the plot numbers, works out the degrees of freedom of the analysis, generates a field book ready for data entry and answers the question worth asking first: how many replicates are needed to detect the difference that matters.</p>
+    <div class="cap-franja"><span class="k8"></span><span class="k8" style="opacity:.75"></span><span class="k8" style="opacity:.5"></span><span class="k8" style="opacity:.3"></span></div>
+    <ul class="cap-contenido">
+      <li><b>9.1</b>Plan before you sow</li>
+      <li><b>9.2</b>Randomisation with a seed</li>
+      <li><b>9.3</b>The field layout</li>
+      <li><b>9.4</b>The field book</li>
+      <li><b>9.5</b>How many replicates: power and detectable difference</li>
+    </ul>
+  </div>
+
+  <!-- 9.1 -->
+  <h2 id="s9-1"><span class="num">9.1</span>Plan before you sow</h2>
+  <p class="lead">Blocks 2 to 7 analyse a finished trial; Block 8 prepares the next one. It is available as soon as the app opens, without loading any table, and its output (the field book) returns to Block 2 once the measurements have been entered. This closes the cycle of figure 1.6.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b8-teoria.png" alt="The theory card of Block 8"></div>
+    <figcaption><b>Figure 9.1.</b> The <span class="ui">Planning a field experiment</span> card, with three topics: randomising properly, plot size, shape and blocks, and how many replicates.</figcaption>
+  </figure>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>Theory in brief · the decisions made before sowing</div>
+    <p>Everything the analysis can do later depends on four earlier decisions. <b>The design</b>, chosen according to the field and to how the treatments are applied (section 2.4). <b>The number of replicates</b>, calculated from the expected CV and the difference worth detecting (section 9.5). <b>The plot</b>: elongated in the direction of the fertility gradient, with border rows that are not harvested, and blocks laid across the gradient so that each block is uniform within. <b>The randomisation</b>, carried out within the structure of the design and documented with its seed. A mistake in any of these cannot be corrected on the computer.</p>
+  </div>
+
+  <table class="compacta">
+    <caption><b>Table 9.1.</b> Recommendations of the theory card on the plot.</caption>
+    <thead><tr><th style="width:30%">Aspect</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr><td>Shape</td><td>Long, narrow plots oriented along the gradient; blocks arranged across the gradient.</td></tr>
+      <tr><td>Harvest area</td><td>Discard border rows and plot ends: for example, harvest the 2 central rows × 4 m of a plot of 4 rows × 5 m.</td></tr>
+      <tr><td>Typical size</td><td>10 to 30 m² for cereals, 20 to 50 m² for maize; in pots, one or a few plants per pot and more replicates.</td></tr>
+      <tr><td>Protection</td><td>Guard rows around the trial and alleys between blocks to avoid interference: fertiliser drift, shading, lodging.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 9.2 -->
+  <h2 id="s9-2"><span class="num">9.2</span>Randomisation with a seed</h2>
+  <p>The <span class="ui">1 · Generate a randomised layout</span> card asks for the design, the seed and whatever that design needs: treatments, factor levels, replicates or checks. Fields that do not apply to the chosen design are hidden automatically.</p>
+
+  <figure>
+    <div class="marco" style="position:relative">
+      <img src="../img/en/b8-opciones.png" alt="Options of the design generator">
+      <span class="marca" style="left:27%;top:12.3%">1</span>
+      <span class="marca" style="left:45.2%;top:12.3%">2</span>
+      <span class="marca" style="left:56%;top:17.4%">3</span>
+      <span class="marca" style="left:71.8%;top:12.3%">4</span>
+      <span class="marca" style="left:49.5%;top:23.1%">5</span>
+      <span class="marca" style="left:46.4%;top:58.3%">6</span>
+    </div>
+    <figcaption><b>Figure 9.2.</b> The generator set up for a trial of four nitrogen rates in a randomised complete block design.</figcaption>
+  </figure>
+  <ul class="leyenda-marcas">
+    <li><span class="n">1</span><span class="ui">Design</span>: the ten designs of table 9.2.</li>
+    <li><span class="n">2</span><span class="ui">Seed</span>: the seed of the randomisation (2026 by default).</li>
+    <li><span class="n">3</span><span class="ui">new seed</span> sets a random seed between 1000 and 91,000.</li>
+    <li><span class="n">4</span><span class="ui">Replicates / blocks</span>: replicates, up to 50.</li>
+    <li><span class="n">5</span><span class="ui">Treatments</span>: one treatment per line, or <span class="ui">…or number of treatments</span> to use T1, T2… In factorial designs the levels of factors A, B and C appear here instead; in the augmented design, checks and new entries.</li>
+    <li><span class="n">6</span><span class="ui">Layout, numbering and field-book options</span> and the <span class="ui">Generate layout and field book</span> button.</li>
+  </ul>
+
+  <table>
+    <caption><b>Table 9.2.</b> The ten designs of the generator and how each one is randomised.</caption>
+    <thead><tr><th style="width:30%">Design in the app</th><th style="width:22%">Inputs required</th><th>How it is randomised</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Completely randomised design (CRD)</span></td><td>Treatments, replicates</td><td>All plots are shuffled together and arranged in a rectangle.</td></tr>
+      <tr><td><span class="ui">Randomised complete block design (RCBD)</span></td><td>Treatments, blocks</td><td>An independent randomisation within each block.</td></tr>
+      <tr><td><span class="ui">Latin square</span></td><td>Treatments</td><td>A cyclic square is built and its rows, columns and letter assignment are shuffled. There are as many replicates as treatments.</td></tr>
+      <tr><td><span class="ui">Factorial (A × B [× C]) in CRD</span> · <span class="ui">in RCBD</span></td><td>Levels of A, B and, optionally, C; replicates</td><td>The combinations are treated as treatments and randomised as in a completely randomised or a block design.</td></tr>
+      <tr><td><span class="ui">Split-plot in RCBD</span></td><td>Levels of A (main plot) and B (sub-plot), blocks</td><td>A is randomised within each block and B within each main plot, with a fresh randomisation each time.</td></tr>
+      <tr><td><span class="ui">Strip-plot (split-block) in RCBD</span></td><td>Levels of A and B, blocks</td><td>A in horizontal strips and B in vertical strips, with one randomisation per block in each direction.</td></tr>
+      <tr><td><span class="ui">Split-split-plot in RCBD</span></td><td>Levels of A, B and C, blocks</td><td>A on main plots, B on sub-plots and C on sub-sub-plots, each level randomised within the one above.</td></tr>
+      <tr><td><span class="ui">Resolvable incomplete blocks</span></td><td>Treatments, replicates, block size k</td><td>Each replicate is shuffled and cut into blocks of k plots. The number of treatments must be a multiple of k.</td></tr>
+      <tr><td><span class="ui">Augmented design</span></td><td>Checks, new entries, blocks</td><td>The entries are spread across the blocks; each block receives all the checks and is shuffled.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>Theory in brief · what a seed is</div>
+    <p>A computer does not truly draw lots: it generates a sequence of numbers that looks random, starting from an initial number, the <b>seed</b>. The same seed always produces the same sequence and therefore the same layout. This has two advantages. The plan can be regenerated if the sheet is lost, and a reviewer or colleague can check that the layout came from a randomisation and not from a choice made by hand. The seed is written in the protocol and in the field book, which the app includes in the <code>Info</code> sheet of the Excel file.</p>
+  </div>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Decision rule · when to change the seed</div>
+    <table class="compacta">
+      <thead><tr><th style="width:44%">If the layout…</th><th>then…</th></tr></thead>
+      <tbody>
+        <tr><td>has two neighbouring plots with the same treatment</td><td>Leave it: that is part of chance. “Improving” a randomisation by hand invalidates it.</td></tr>
+        <tr><td>is impossible in the field (irrigation that does not reach, machinery that does not fit)</td><td>Change the seed and record in the protocol the reason and the discarded seed.</td></tr>
+        <tr><td>must be repeated at another location</td><td>Use a different seed at each location and record them all.</td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">Never choose the seed by trying until the layout “looks right”: that is choosing the layout, not randomising it.</p>
+  </div>
+
+  <h3>Layout, numbering and field book</h3>
+  <p>The <span class="ui">Layout, numbering and field-book options</span> drop-down controls the geometry of the layout, the way plots are numbered and the column names in the field book.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b8-opciones-mas.png" alt="Layout, numbering and field-book options"></div>
+    <figcaption><b>Figure 9.3.</b> Layout, numbering and field-book options, with a response column named <code>Yield</code>, and below them the button that generates the layout and the field book.</figcaption>
+  </figure>
+
+  <table class="compacta">
+    <caption><b>Table 9.3.</b> The layout, numbering and field-book options.</caption>
+    <thead><tr><th style="width:36%">Option</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Plots per row within a block</span></td><td>Splits each block into rows of that number of plots; 0 puts the whole block in a single row.</td></tr>
+      <tr><td><span class="ui">Block arrangement</span> · <span class="ui">Blocks per row</span></td><td>Blocks one below the other, or side by side with a given number of blocks per row.</td></tr>
+      <tr><td><span class="ui">Alley between blocks</span></td><td>Leaves an empty row or column between blocks, representing an alley.</td></tr>
+      <tr><td><span class="ui">Plot numbering</span></td><td>Consecutive (1, 2, 3…) or by block (101, 102… 201, 202…).</td></tr>
+      <tr><td><span class="ui">Serpentine</span></td><td>Numbers in a zigzag: left to right in one row and right to left in the next. It saves walking when recording and harvesting.</td></tr>
+      <tr><td><span class="ui">Plot width</span> · <span class="ui">Plot length</span></td><td>Plot dimensions in metres, used to calculate the area of the trial.</td></tr>
+      <tr><td><span class="ui">Column name:…</span></td><td>The names of the block, factor and treatment columns in the field book.</td></tr>
+      <tr><td><span class="ui">Response columns to add</span></td><td>The empty response columns, separated by commas: <code>Yield_t_ha, Height_cm</code>.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · name the columns as you will analyse them</div>
+    <p>If the columns are called <code>Block</code>, <code>Row</code> and <code>Column</code>, Block 2 recognises them automatically when the field book is loaded. If the response carries its units in the name (<code>Yield_t_ha</code>), the figures and the report inherit them. It is worth settling the names here, before the field team starts recording.</p>
+  </div>
+
+  <!-- 9.3 -->
+  <h2 id="s9-3"><span class="num">9.3</span>The field layout</h2>
+  <p>Pressing <span class="ui">Generate layout and field book</span> brings up the <span class="ui">2 · Layout</span> card with six summary tiles, the layout and the skeleton ANOVA.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b8-rcbd.png" alt="Randomised complete block layout"></div>
+    <figcaption><b>Figure 9.4.</b> Four nitrogen rates in four blocks with seed 2026: 16 plots in 4 rows × 4 columns, 0.024 ha with 3 × 5 m plots. Each block has its outline and its name, each plot its number in the corner (in a zigzag) and its treatment, and the legend and the north arrow are on the right. Below, the skeleton ANOVA.</figcaption>
+  </figure>
+
+  <table class="compacta">
+    <caption><b>Table 9.4.</b> The summary tiles of the layout.</caption>
+    <thead><tr><th style="width:26%">Tile</th><th>What it shows</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Plots</span></td><td>Number of plots and size of the grid.</td></tr>
+      <tr><td><span class="ui">Treatments</span></td><td>Number of treatments (in the augmented design, checks plus entries).</td></tr>
+      <tr><td><span class="ui">Replicates / blocks</span></td><td>Replicates; in the Latin square, equal to the number of treatments.</td></tr>
+      <tr><td><span class="ui">Field area</span></td><td>Area of the plots in hectares and dimensions of the rectangle, without borders.</td></tr>
+      <tr><td><span class="ui">df error</span></td><td>Degrees of freedom of the first error term of the design; in amber if fewer than 10.</td></tr>
+      <tr><td><span class="ui">Seed</span></td><td>The seed used, so that it can be recorded.</td></tr>
+    </tbody>
+  </table>
+
+  <table class="compacta">
+    <caption><b>Table 9.5.</b> Skeleton ANOVAs generated by the app for some designs.</caption>
+    <thead><tr><th style="width:34%">Design</th><th>Sources and degrees of freedom</th></tr></thead>
+    <tbody>
+      <tr><td>Complete blocks, 4 treatments, 4 blocks</td><td>Blocks 3 · Treatments 3 · Error 9 · Total 15</td></tr>
+      <tr><td>5 × 5 Latin square</td><td>Rows 4 · Columns 4 · Treatments 4 · Error 12 · Total 24</td></tr>
+      <tr><td>Split-plot, 2 × 4, 3 blocks</td><td>Blocks 2 · A (main plot) 1 · Error a 2 · B (sub-plot) 3 · A × B 3 · Error b 12 · Total 23</td></tr>
+      <tr><td>Incomplete blocks, 9 treatments, k = 3, 3 replicates</td><td>Replicates 2 · Blocks within replicates 6 · Treatments (adjusted) 8 · Intra-block error 10 · Total 26</td></tr>
+      <tr><td>Augmented, 2 checks, 12 entries, 4 blocks</td><td>Blocks 3 · Checks 1 · Error (from checks) 3</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja importante">
+    <div class="caja-t"><span class="ico">!</span>Important · read the skeleton before sowing</div>
+    <p>Before a single seed is spent, the skeleton ANOVA tells you whether the trial will have enough information to judge the differences. A 4 × 4 complete block design leaves 9 degrees of freedom for error, below the recommended 10 to 12. In a split-plot of 2 irrigation methods × 4 varieties with 3 blocks, irrigation will be tested with only 2 degrees of freedom (error a), even though the varieties have 12: with 2 irrigation methods, either add replicates or accept that the comparison of irrigation methods will be insensitive. The <span class="ui">df error</span> tile flags that first error term in amber.</p>
+  </div>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b8-split.png" alt="Split-plot layout"></div>
+    <figcaption><b>Figure 9.5.</b> Split-plot with 2 irrigation methods (Furrow, Drip) on main plots and 4 varieties on sub-plots, in 4 blocks placed one below the other (the first two are shown in full). The thick outlines mark each main plot, labelled with its irrigation method; within them, the varieties change order from one main plot to the next because each is randomised separately.</figcaption>
+  </figure>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b8-latino.png" alt="Layout of a 5 × 5 Latin square"></div>
+    <figcaption><b>Figure 9.6.</b> 5 × 5 Latin square: each treatment appears once in every row and in every column.</figcaption>
+  </figure>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b8-aumentado.png" alt="Layout of an augmented design"></div>
+    <figcaption><b>Figure 9.7.</b> Augmented design with 2 checks repeated in all 4 blocks and 12 unreplicated new entries, in grey. The checks make it possible to estimate the error and to adjust the entries for the block effect.</figcaption>
+  </figure>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · the layout is just another figure</div>
+    <p>The layout is edited and exported like any other figure in the app (chapter 7). Its editor lets you choose what text each plot carries (the level, the full treatment or nothing), show or hide the numbers, the outlines of blocks and main plots, the legend, the dimensions and the north arrow, and adjust the spacing between plots. Exported as SVG or as a high-resolution PNG, it can be printed and taken to the field.</p>
+  </div>
+
+  <!-- 9.4 -->
+  <h2 id="s9-4"><span class="num">9.4</span>The field book</h2>
+  <p>The <span class="ui">3 · Field book</span> card contains one row per plot, in plot order, with the response columns left empty. It is exactly the long-format table that Block 2 reads, so the field records go straight into the analysis.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b8-libreta.png" alt="The generated field book"></div>
+    <figcaption><b>Figure 9.8.</b> The field book of the nitrogen trial: plot number, block, position in the field (row and column of the grid), treatment and the empty response column <code>Yield</code>. Plots 5 to 8 run along row 2 from right to left because of the zigzag numbering.</figcaption>
+  </figure>
+
+  <table class="compacta">
+    <caption><b>Table 9.6.</b> The columns of the field book, by design.</caption>
+    <thead><tr><th style="width:32%">Column</th><th>Appears in…</th></tr></thead>
+    <tbody>
+      <tr><td><code>Plot</code></td><td>All designs.</td></tr>
+      <tr><td><code>Block</code> (or the chosen name)</td><td>Designs with blocks or replicates.</td></tr>
+      <tr><td><code>IncBlock</code></td><td>Incomplete blocks: the block within the replicate.</td></tr>
+      <tr><td><code>Row</code> · <code>Column</code></td><td>Latin square: row and column of the design.</td></tr>
+      <tr><td><code>FieldRow</code> · <code>FieldCol</code></td><td>The other designs: position of the plot in the grid of the layout.</td></tr>
+      <tr><td><code>A</code> · <code>B</code> · <code>C</code></td><td>Factorials, split-plots and strip-plots.</td></tr>
+      <tr><td><code>Treatment</code></td><td>All: the treatment or the combination.</td></tr>
+      <tr><td><code>Type</code></td><td>Augmented: <code>check</code> or <code>entry</code>.</td></tr>
+      <tr><td>Responses</td><td>The columns typed in <span class="ui">Response columns to add</span>, empty.</td></tr>
+    </tbody>
+  </table>
+
+  <table class="compacta">
+    <caption><b>Table 9.7.</b> The three field-book buttons.</caption>
+    <thead><tr><th style="width:36%">Button</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Field book (CSV)</span></td><td>Downloads the field book as comma-separated text.</td></tr>
+      <tr><td><span class="ui">Field book (.xlsx)</span></td><td>Downloads an Excel workbook with two sheets: the field book and <code>Info</code>, with the design, the seed, the replicates and the date.</td></tr>
+      <tr><td><span class="ui">Open as data template in Block 2</span></td><td>Loads the field book into Block 2 without downloading it, to check that its structure is the one that will be analysed.</td></tr>
+    </tbody>
+  </table>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b8-plantilla.png" alt="The field book opened as a template in Block 2"></div>
+    <figcaption><b>Figure 9.9.</b> The field book opened as a template in Block 2. The position columns are recognised as identifiers, <code>Block</code> as the block, <code>Treatment</code> as a factor and <code>Yield</code> as an empty response. The detected structure is already that of a balanced randomised complete block design; only the yield remains to be entered.</figcaption>
+  </figure>
+
+  <ol class="pasos">
+    <li>Generate the layout and the field book, and write the seed in the protocol.</li>
+    <li>Press <span class="ui">Open as data template in Block 2</span> and confirm that the detected structure is that of the design you are going to sow.</li>
+    <li>Download the field book in Excel format and print the layout.</li>
+    <li>Enter the measurements in the empty column, without changing the order or the names of the columns.</li>
+    <li>Load the completed file in Block 2. The <span class="ui">Yield_t_ha is empty</span> notice disappears and the button to continue becomes available.</li>
+  </ol>
+
+  <!-- 9.5 -->
+  <h2 id="s9-5"><span class="num">9.5</span>How many replicates: power and detectable difference</h2>
+  <p>The <span class="ui">4 · Replicates and power</span> card answers two complementary questions: how many replicates are needed to detect a given difference, and what difference can be detected with the replicates you can afford. It is recalculated whenever any input changes.</p>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>Theory in brief · power, CV and difference</div>
+    <p><b>Power</b> is the probability that the trial declares significant a difference that really exists. It depends on three things: the difference to be detected, expressed as a percentage of the mean; the variability of the trial, measured by the CV; and the replicates. The app calculates the power of the comparison between two treatment means with a t-test that uses the error degrees of freedom of the design. The required number of replicates follows from r ≥ 2 (t<sub>α/2</sub> + t<sub>β</sub>)² (CV / d)², solved iteratively because the t values depend on the degrees of freedom. The formula yields the most useful rule of the block: <b>halving the CV is equivalent to quadrupling the replicates</b>.</p>
+  </div>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b8-potencia.png" alt="Replicates and power calculator"></div>
+    <figcaption><b>Figure 9.10.</b> With a CV of 15% and 4 treatments in blocks, detecting a difference of 15% of the mean with a power of 0.80 requires 17 replicates. With the 4 that can be afforded, the power is only 0.21 and the detectable difference is 33.4%. The table shows the power and the detectable difference for each number of replicates.</figcaption>
+  </figure>
+
+  <table class="compacta">
+    <caption><b>Table 9.8.</b> The inputs of the calculator.</caption>
+    <thead><tr><th style="width:32%">Field</th><th>What to enter</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Expected CV (%)</span></td><td>The ANOVA CV from earlier trials at the same site and with the same crop; Block 5 reports it.</td></tr>
+      <tr><td><span class="ui">Difference to detect (% of mean)</span></td><td>The smallest difference that would matter agronomically or economically.</td></tr>
+      <tr><td><span class="ui">α</span> · <span class="ui">Target power</span></td><td>Significance level (0.05) and target power (0.80 is usual; 0.90 for expensive trials or important decisions).</td></tr>
+      <tr><td><span class="ui">Number of treatments</span> · <span class="ui">Design</span></td><td>They determine the error degrees of freedom: (t − 1)(r − 1) in blocks, t(r − 1) in a completely randomised design.</td></tr>
+      <tr><td><span class="ui">Replicates you can afford</span></td><td>The replicates that the budget or the land allow, to see their power and their detectable difference.</td></tr>
+    </tbody>
+  </table>
+
+  <table class="compacta">
+    <caption><b>Table 9.9.</b> Replicates required with 4 treatments in a randomised complete block design, α = 0.05 and a power of 0.80, calculated with the app.</caption>
+    <thead><tr><th>CV of the trial</th><th class="c">10% difference</th><th class="c">15% difference</th><th class="c">20% difference</th></tr></thead>
+    <tbody>
+      <tr><td>5%</td><td class="c">5</td><td class="c">—</td><td class="c">—</td></tr>
+      <tr><td>8%</td><td class="c">—</td><td class="c">6</td><td class="c">—</td></tr>
+      <tr><td>10%</td><td class="c">17</td><td class="c">8</td><td class="c">—</td></tr>
+      <tr><td>15%</td><td class="c">36</td><td class="c">17</td><td class="c">—</td></tr>
+      <tr><td>20%</td><td class="c">—</td><td class="c">—</td><td class="c">17</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja dato">
+    <div class="dato-cifra">17 → 8</div>
+    <div class="dato-txt"><div class="caja-t">Lowering the CV pays off more than adding replicates</div>To detect a difference of 15%, 17 replicates are needed with a CV of 15% but only 8 with a CV of 10%. Making the plots more uniform, harvesting without borders, orienting the blocks correctly and using the right experimental unit usually costs much less than doubling the trial.</div>
+  </div>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b8-curvas.png" alt="Power and detectable-difference curves"></div>
+    <figcaption><b>Figure 9.11.</b> Left, power against replicates for differences of 5 to 30% with the chosen CV; the dashed line is the target power. Right, the detectable difference against replicates for CVs of 5 to 30%; the dashed line is the difference of interest. The chosen curve is drawn thicker in both.</figcaption>
+  </figure>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Decision rule · what to do with the result</div>
+    <table class="compacta">
+      <thead><tr><th style="width:44%">If the replicates required…</th><th>then…</th></tr></thead>
+      <tbody>
+        <tr><td>fit the land and the budget</td><td>Sow at least that many, and check that the skeleton ANOVA leaves 10 to 12 degrees of freedom for error.</td></tr>
+        <tr><td>are twice as many as possible</td><td>Work on the CV (plots, borders, blocks) or reduce the number of treatments: fewer treatments well tested are worth more than many poorly tested.</td></tr>
+        <tr><td>are far more than possible</td><td>Accept a larger detectable difference and state it in the protocol, or redesign the trial across several locations or seasons.</td></tr>
+        <tr><td>cannot be calculated (more than 200)</td><td>The difference of interest is too small for that CV; there is no point in sowing the trial that way.</td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">An underpowered trial is no saving: if it finds no differences, there is no way to tell whether there are none or whether it could not see them.</p>
+  </div>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · the calculation is for two means</div>
+    <p>The calculator answers for the comparison between two treatments with a t-test, which is the practical question in most trials. Mean-separation tests that control the familywise error rate (Tukey, Bonferroni) are more demanding, so with them it is advisable to add one or two replicates to what the calculator indicates, especially with many treatments.</p>
+  </div>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Step by step · planning the next nitrogen trial</div>
+    <ol class="pasos" style="margin-bottom:0">
+      <li>In Block 5 of the previous trial, note the CV: 2.1% in the maize example, an unusually low value; in a real yield trial it would be 10 to 15%.</li>
+      <li>In <span class="ui">4 · Replicates and power</span>, enter the CV, the difference that matters (for example 10%), 5 treatments if you will add a rate, and <span class="ui">RCBD</span>.</li>
+      <li>Read how many replicates are needed and compare them with those you can afford.</li>
+      <li>In <span class="ui">1 · Generate a randomised layout</span>, choose <span class="ui">Randomised complete block design (RCBD)</span>, enter the rates, the replicates and a new seed, and in the options set the plot size and <code>Yield_t_ha</code> as the response.</li>
+      <li>Press <span class="ui">Generate layout and field book</span>, and check the skeleton ANOVA and the <span class="ui">df error</span> tile.</li>
+      <li>Open the field book as a template in Block 2 to check it, and download it in Excel format together with the layout.</li>
+    </ol>
+  </div>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>What you learned</div>
+    <p>A good trial is decided before sowing: the design by the field, the replicates by the CV and the difference that matters, and the layout by a randomisation documented with its seed. The layout and the skeleton ANOVA show in advance whether the analysis will have enough to work with, and the field book ensures that the data reach Block 2 in the right format.</p>
+  </div>
+
+  <p style="margin-top:0.25in">This chapter completes the tour of the eight blocks. For quick reference, the appendices bring together the file formats, the decision rules of the whole manual, an English–Spanish glossary and solutions to the most frequent problems.</p>
+</section>
+
+</body>
+</html>

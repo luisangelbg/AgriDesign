@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AgriDesign · User’s Manual · Block 3: descriptive statistics</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;1,500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../interior.css">
+<!-- reparte el contenido en hojas tamaño carta, con encabezados y números de página -->
+<script src="../paginar.js"></script>
+<style>
+  figure.chica .marco { width: 70%; margin: 0 auto; }
+  figure.chica figcaption { margin-left: 15%; margin-right: 15%; }
+  figure.mini .marco { width: 56%; margin: 0 auto; }
+  figure.mini figcaption { margin-left: 22%; margin-right: 22%; }
+</style>
+</head>
+<body>
+
+<section class="capitulo" id="cap-b3" data-pestana="B3" data-orden="4" style="--acento: var(--b3)">
+  <div class="cap-apertura">
+    <div class="cap-num">B3</div>
+    <div class="cap-etiqueta">Chapter four · Block 3 · Descriptive</div>
+    <h1 data-corto="Block 3 · Descriptive statistics">Descriptive statistics</h1>
+    <div class="cap-regla"></div>
+    <p class="cap-resumen">Before testing anything, look at the data. Block 3 summarises the response by treatment, by block or by combination of factors, explains the coefficient of variation, skewness and outliers in plain language, and draws the exploratory plots that reveal typing errors and surprises before they reach the ANOVA.</p>
+    <div class="cap-franja"><span class="k3"></span><span class="k3" style="opacity:.75"></span><span class="k3" style="opacity:.5"></span><span class="k3" style="opacity:.3"></span></div>
+    <ul class="cap-contenido">
+      <li><b>4.1</b>Look before you test</li>
+      <li><b>4.2</b>Statistics by treatment, block and combination</li>
+      <li><b>4.3</b>The coefficient of variation and its benchmarks</li>
+      <li><b>4.4</b>Exploratory plots</li>
+      <li><b>4.5</b>Step-by-step example</li>
+    </ul>
+  </div>
+
+  <!-- 4.1 -->
+  <h2 id="s4-1"><span class="num">4.1</span>Look before you test</h2>
+  <p class="lead">An ANOVA condenses the whole experiment into a single F-test. Exploring first protects you from three classic mistakes: analysing a typing error as if it were a treatment effect, comparing means when the variances are very different, and reporting a mean for a variable whose distribution has no meaningful centre, such as highly skewed counts or bounded scores.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b3-teoria.png" alt="The theory card of Block 3"></div>
+    <figcaption><b>Figure 4.1.</b> The <span class="ui">Reading the numbers and the plots</span> card opens Block 3 with four topics: why explore first, which of SD, SE and CI belongs in the paper, how to read each plot, and what to do with outliers.</figcaption>
+  </figure>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>Theory in brief · four questions for one variable</div>
+    <p><b>Where is it?</b> Mean and median. If they differ noticeably, the distribution is skewed or has outliers. <b>How spread out is it?</b> Standard deviation, interquartile range and coefficient of variation. <b>What shape does it have?</b> Skewness (which side the tail stretches towards) and kurtosis (how heavy the tails are) relative to the normal distribution. <b>How is it structured?</b> Whether the groups differ in level, whether they differ in spread, and whether the blocks behave consistently. The table and plots of this block answer all four questions.</p>
+  </div>
+
+  <table>
+    <caption><b>Table 4.1.</b> Standard deviation, standard error and confidence interval: which one belongs in the paper.</caption>
+    <thead><tr><th style="width:24%">Statistic</th><th style="width:22%">Formula</th><th>Describes</th><th style="width:28%">Use it when…</th></tr></thead>
+    <tbody>
+      <tr><td><b>Standard deviation (SD)</b></td><td>√[Σ(y − ȳ)² / (n − 1)]</td><td>The variability of the individual plots.</td><td>You want to show how scattered the observations are.</td></tr>
+      <tr><td><b>Standard error (SE)</b></td><td>SD / √n</td><td>The precision of the mean.</td><td>You are comparing means; it is the usual bar in figures of treatment means.</td></tr>
+      <tr><td><b>95% confidence interval</b></td><td>ȳ ± t<sub>0.975, n−1</sub> · SE</td><td>The range of plausible values for the true mean.</td><td>You want the reader to judge differences by eye.</td></tr>
+      <tr><td><b>CV (%)</b></td><td>SD / ȳ × 100</td><td>The relative variability, free of units.</td><td>You are comparing precision between trials or between variables.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja importante">
+    <div class="caja-t"><span class="ico">!</span>Important · say in the figure caption what the bars are</div>
+    <p>An error bar can be a standard deviation, a standard error or a confidence interval, and the three differ greatly in size for the same data. With n = 4, the 95% interval is more than three times the standard error. Always write “mean ± SE”, or whatever applies, in the caption, and draw no conclusion from two standard-error bars overlapping: that is not the same as “not significant”. The test in Block 5 decides.</p>
+  </div>
+
+  <!-- 4.2 -->
+  <h2 id="s4-2"><span class="num">4.2</span>Statistics by treatment, block and combination</h2>
+  <p>The <span class="ui">Choose what to describe</span> card has three controls: the response, the grouping variable and the number of decimals. Everything else in the block (cards, table, interpretation and figures) is recalculated when any of them changes.</p>
+
+  <figure>
+    <div class="marco" style="position:relative">
+      <img src="../img/en/b3-controles.png" alt="Controls and summary cards of Block 3">
+      <span class="marca" style="left:31.8%;top:15.2%">1</span>
+      <span class="marca" style="left:46.8%;top:15.2%">2</span>
+      <span class="marca" style="left:66.4%;top:15.2%">3</span>
+      <span class="marca" style="left:18.2%;top:53.6%">4</span>
+      <span class="marca" style="left:68.2%;top:43.2%">5</span>
+    </div>
+    <figcaption><b>Figure 4.2.</b> Controls and summary cards for the maize and nitrogen example.</figcaption>
+  </figure>
+  <ul class="leyenda-marcas">
+    <li><span class="n">1</span><span class="ui">Response variable</span>: the response being described. If the table has several, they are chosen one at a time.</li>
+    <li><span class="n">2</span><span class="ui">Group by</span>: none (all observations), a factor, all treatment combinations (when there are two or more factors), the block, the row or the column.</li>
+    <li><span class="n">3</span><span class="ui">Decimals</span>: decimals of the table and the cards. <span class="ui">Recalculate</span> forces a recalculation.</li>
+    <li><span class="n">4</span>Eight cards summarising the whole response: observations, mean with its standard error, median with the interquartile range, standard deviation, CV, range, skewness and kurtosis.</li>
+    <li><span class="n">5</span>The coloured border of a card is a reading: green, nothing to report; amber, caution (here the CV of 20.4% and the moderate skewness); red, a problem.</li>
+  </ul>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b3-tabla.png" alt="Table of statistics by nitrogen dose"></div>
+    <figcaption><b>Figure 4.3.</b> The table of statistics by group, with the <span class="ui">Overall</span> row at the bottom and the <span class="ui">Download table (CSV)</span> button. With four plots per dose, the CVs within each dose range from 4.1 to 7.4%, far below the overall CV of 20.4%, because the latter includes the effect of the dose.</figcaption>
+  </figure>
+
+  <table class="compacta">
+    <caption><b>Table 4.2.</b> The columns of the table of statistics.</caption>
+    <thead><tr><th style="width:26%">Column</th><th>What it is</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">n</span></td><td>Observations with a value in the group.</td></tr>
+      <tr><td><span class="ui">Mean</span> · <span class="ui">SE</span> · <span class="ui">SD</span></td><td>Mean, standard error and standard deviation of the group.</td></tr>
+      <tr><td><span class="ui">CV %</span></td><td>Coefficient of variation of the group: SD / mean × 100.</td></tr>
+      <tr><td><span class="ui">Min</span> · <span class="ui">Q1</span> · <span class="ui">Median</span> · <span class="ui">Q3</span> · <span class="ui">Max</span></td><td>The five numbers of the box plot: minimum, first quartile, median, third quartile and maximum.</td></tr>
+      <tr><td><span class="ui">Skewness</span> · <span class="ui">Kurt</span></td><td>Skewness and excess kurtosis (0 for the normal distribution). With three or four observations they are very unstable; kurtosis is omitted when n = 3.</td></tr>
+      <tr><td><span class="ui">95 % CI low</span> · <span class="ui">95 % CI high</span></td><td>Limits of the 95% confidence interval for the group mean, using Student’s t with n − 1 degrees of freedom.</td></tr>
+      <tr><td><span class="ui">Overall</span></td><td>The last row: all the data together, ungrouped.</td></tr>
+    </tbody>
+  </table>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b3-bloque.png" alt="Statistics by block and interpretation"></div>
+    <figcaption><b>Figure 4.4.</b> The same data grouped by block (<span class="ui">Group by: Block</span>). The block means range from 5.712 to 6.413 t/ha, a difference of 0.700 (12.3%): there is a block effect, which the ANOVA in Block 5 will confirm. The CVs within each block (20.6 to 23.7%) are large because each block contains all four doses.</figcaption>
+  </figure>
+
+  <h3>With two factors: combinations and the two-way table</h3>
+  <p>When the table has two or more factors, the <span class="ui">Group by</span> menu also offers <span class="ui">All treatment combinations</span>, which describes each cell of the factorial, and the block adds a two-way table of means with the marginal means of each factor.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b3-tomate-tabla.png" alt="Statistics by variety × fertiliser combination"></div>
+    <figcaption><b>Figure 4.5.</b> The tomato example (3 varieties × 3 fertiliser levels in 3 blocks) described by combination: nine cells with three plants each. Kurtosis appears as “—” because it cannot be computed with n = 3.</figcaption>
+  </figure>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b3-tomate-dosvias.png" alt="Two-way table of means"></div>
+    <figcaption><b>Figure 4.6.</b> <span class="ui">Cell means</span>: the two-way table for the same example. The marginal means (the <span class="ui">Mean</span> column and row) summarise each factor separately; the cells, their combination. Saladette with F2 yields 4.337 kg per plant and Cherry with F0, 1.947.</figcaption>
+  </figure>
+
+  <!-- 4.3 -->
+  <h2 id="s4-3"><span class="num">4.3</span>The coefficient of variation and its benchmarks</h2>
+  <p>The CV is the statistic most often asked about in an agronomy seminar, and the most often misread. It is the standard deviation expressed as a percentage of the mean, so it does not depend on the units and allows the precision of trials on different crops, variables and years to be compared.</p>
+
+  <div class="caja dato">
+    <div class="dato-cifra">20.4 → 2.1</div>
+    <div class="dato-txt"><div class="caja-t">Two CVs for the same trial</div>The descriptive CV of the maize example is 20.4%: the standard deviation of the 16 plots includes the effect of the four doses and that of the blocks. The ANOVA CV, in Block 5, is 2.1%: it uses the square root of the error mean square, that is, what is left after removing doses and blocks. <b>Journals ask for the second one.</b> The first is only useful for comparing variables or for suspecting dirty data.</div>
+  </div>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Decision rule · reading the ANOVA CV in agricultural trials</div>
+    <table class="compacta">
+      <thead><tr><th style="width:22%">CV</th><th style="width:30%">Reading</th><th>Typical of…</th></tr></thead>
+      <tbody>
+        <tr><td><b>&lt; 10%</b></td><td>Excellent precision</td><td>Plant height, phenology, greenhouse and laboratory trials.</td></tr>
+        <tr><td><b>10 to 20%</b></td><td>Normal in the field</td><td>Grain yield in well-managed field plots.</td></tr>
+        <tr><td><b>20 to 30%</b></td><td>High; precision is limited</td><td>Yield under difficult conditions, counts, quality variables.</td></tr>
+        <tr><td><b>&gt; 30%</b></td><td>Very high; check</td><td>Insect counts, disease severity, or a trial with problems: heterogeneous land, lost plots, typing errors, a variable that calls for a transformation.</td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">The app applies these cut-offs to the cards and to the interpretation: green up to 20%, amber up to 30%, red above. They are benchmarks for yield; every variable has its own.</p>
+  </div>
+
+  <h3>The automatic interpretation</h3>
+  <p>Below the table, <span class="ui">What the numbers say</span> turns the statistics into sentences. Each sentence has a level (green, amber, red or informative) and says which block will resolve what it points out.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b3-interp.png" alt="The automatic interpretation"></div>
+    <figcaption><b>Figure 4.7.</b> <span class="ui">What the numbers say</span> for maize by dose: a high overall CV that is nonetheless explained, an approximately symmetric distribution, the highest dose yielding 70.4% more than the control, and similar group standard deviations (ratio 1.24).</figcaption>
+  </figure>
+
+  <table>
+    <caption><b>Table 4.3.</b> The sentences of the interpretation and what triggers them.</caption>
+    <thead><tr><th style="width:34%">Sentence</th><th>When it appears and what to do</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Overall CV of Y = x %</span></td><td>Always. Green below 20%, amber up to 30%, red above. Remember that this is the descriptive CV, not the ANOVA one.</td></tr>
+      <tr><td><span class="ui">Approximately symmetric distribution</span> · <span class="ui">Distribution is right- or left-skewed</span></td><td>Depending on whether the skewness is below or above 1. With positive skewness and positive values it suggests trying a logarithm or a square root; Block 4 will decide on the residuals, which is what matters.</td></tr>
+      <tr><td><span class="ui">N potential outliers by Tukey’s rule</span></td><td>Values more than 1.5 interquartile ranges beyond the quartiles, listed. Check them in the field book before deciding anything.</td></tr>
+      <tr><td><span class="ui">Highest mean: A; lowest: B</span></td><td>With two or more groups: the difference between the best and the worst, in units and as a percentage of the lower one. Whether it is significant is decided in Block 5, not here.</td></tr>
+      <tr><td><span class="ui">Group standard deviations are of similar size</span> · <span class="ui">…differ x-fold</span></td><td>Ratio of the largest to the smallest group standard deviation. Above 3 the variances are heterogeneous: Block 4 will test this with Levene or Bartlett and offer a transformation, Welch or non-parametric tests.</td></tr>
+      <tr><td><span class="ui">The spread grows with the mean</span></td><td>With four or more groups, when the correlation between means and standard deviations exceeds 0.7. Typical of counts and proportional variables; a logarithm or square root usually stabilises the variance.</td></tr>
+      <tr><td><span class="ui">N groups with fewer than 3 observations</span></td><td>SD, CV and intervals are not reliable in such small groups.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 4.4 -->
+  <h2 id="s4-4"><span class="num">4.4</span>Exploratory plots</h2>
+  <p>The <span class="ui">Exploratory figures</span> card draws up to nine figures, depending on what the table contains. All of them can be edited (<span class="ui">Edit figure</span>) and downloaded at publication resolution; the style settings you change are remembered for the following figures. The Block 6 chapter describes the editor in depth; here the point is what each figure shows and what to look for in it.</p>
+
+  <table>
+    <caption><b>Table 4.4.</b> The figures of Block 3 and when they appear.</caption>
+    <thead><tr><th style="width:26%">Figure</th><th style="width:24%">Appears when…</th><th>What to look for</th></tr></thead>
+    <tbody>
+      <tr><td>Histogram with density</td><td>Always</td><td>The shape of the whole sample. Two humps are usually two treatments or two blocks, not a problem.</td></tr>
+      <tr><td>Box plot</td><td>There are groups</td><td>Boxes of very different heights signal unequal variances; the circles, outliers.</td></tr>
+      <tr><td>Violin plot</td><td>There are groups</td><td>Bimodality that the box hides. It needs five or six observations per group to say anything.</td></tr>
+      <tr><td>Means with error bars</td><td>There are groups</td><td>The classic treatment figure; the caption must say what the bars are.</td></tr>
+      <tr><td>Individual points</td><td>There are groups</td><td>The honest picture with three or four replicates, where boxes and violins mislead.</td></tr>
+      <tr><td>Profiles by block</td><td>Grouping is by a factor and there is a block</td><td>One line per block across the treatments. Parallel lines: the ranking of the treatments is the same in every block (additivity). Crossing lines: block × treatment interaction or an odd plot.</td></tr>
+      <tr><td>Interaction plot</td><td>There are two factors</td><td>Parallel lines, no interaction; converging or crossing lines, interaction, and the main effects must be interpreted with care.</td></tr>
+      <tr><td>Scatter plot against the covariate</td><td>There is a covariate</td><td>If the response depends linearly on the covariate, the analysis of covariance in Block 5 will gain precision.</td></tr>
+      <tr><td>Correlation heat map</td><td>There are two or more responses</td><td>Which responses move together; with high correlations, a single result tells the same story twice.</td></tr>
+    </tbody>
+  </table>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b3-hist.png" alt="Histogram of yield"></div>
+    <figcaption><b>Figure 4.8.</b> Histogram of maize yield with the density curve (orange), the normal curve with the same mean and standard deviation (dotted blue) and the mean and median lines. The two humps are the doses: the low one on the left and the three high ones on the right.</figcaption>
+  </figure>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b3-box.png" alt="Box plot by dose"></div>
+    <figcaption><b>Figure 4.9.</b> Box plot by dose. The box runs from the first to the third quartile, the line is the median, the white diamond the mean, the whiskers reach the most extreme value within 1.5 interquartile ranges, and the dots are the plots. The four boxes have similar heights: homogeneous variances.</figcaption>
+  </figure>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b3-violin.png" alt="Violin plot by dose"></div>
+    <figcaption><b>Figure 4.10.</b> Violin plot by dose, with the inner box. With four observations per group the shape of the violin says little; it is included because with six or more replicates it shows the bimodality that the box conceals.</figcaption>
+  </figure>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b3-medias.png" alt="Means with standard error by dose"></div>
+    <figcaption><b>Figure 4.11.</b> Means ± standard error by dose, with the values printed. In the editor you can change the style (bars, points or palette), the type of error bar (SE, SD, 95% CI or none) and whether the observations are overlaid.</figcaption>
+  </figure>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b3-strip.png" alt="Individual points by dose"></div>
+    <figcaption><b>Figure 4.12.</b> The 16 plots one by one, with the mean ± SE shown as a cross. With four replicates this is the most honest figure: every plot is visible and there is nothing to over-interpret.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b3-perfiles.png" alt="Profiles by block"></div>
+    <figcaption><b>Figure 4.13.</b> Profiles by block: one line per block across the doses. The four lines rise together and hardly cross; block 1 stays on top at every dose and block 2 at the bottom. This is the picture of blocking that worked and of an additive model, the assumption of the randomised complete block design that Block 4 tests formally with Tukey’s additivity test.</figcaption>
+  </figure>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Decision rule · reading the profiles by block</div>
+    <table class="compacta">
+      <thead><tr><th style="width:40%">If the lines…</th><th>then…</th></tr></thead>
+      <tbody>
+        <tr><td>are nearly parallel and vertically separated</td><td>Blocking captured a real difference between blocks and the additive model is reasonable. This is what a good trial looks like.</td></tr>
+        <tr><td>are nearly parallel and overlap</td><td>The blocks do not differ; blocking cost no more than a few degrees of freedom.</td></tr>
+        <tr><td>cross at a single point</td><td>A suspicious plot. Look it up in the field book before going on.</td></tr>
+        <tr><td>cross all over the place</td><td>Block × treatment interaction: the ranking of the treatments changes from block to block. Check additivity in Block 4; a transformation may be needed.</td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">The same reading applies to the interaction plot between two factors, except that there the interaction may be the very result you are looking for.</p>
+  </div>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b3-interaccion.png" alt="Interaction plot, variety × fertiliser"></div>
+    <figcaption><b>Figure 4.14.</b> Interaction plot for the tomato example: one line per fertiliser level across the varieties. The three lines rise from Rio Grande to Saladette and fall at Cherry, but they are not parallel: the response to fertiliser is larger in Saladette than in Cherry. Block 5 will test whether that interaction is significant.</figcaption>
+  </figure>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b3-correl.png" alt="Correlation heat map between responses"></div>
+    <figcaption><b>Figure 4.15.</b> Pearson correlations between the two responses of the tomato example, with 27 complete plants: yield and height are barely related (r = −0.19), so each one tells something different and both are worth analysing.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="marco" style="position:relative">
+      <img src="../img/en/b3-editor.png" alt="The editor of a Block 3 figure">
+      <span class="marca" style="left:35.9%;top:63.4%">1</span>
+      <span class="marca" style="left:36.4%;top:67.3%">2</span>
+      <span class="marca" style="left:81.8%;top:71.3%">3</span>
+      <span class="marca" style="left:87.7%;top:81.6%">4</span>
+      <span class="marca" style="left:65.9%;top:87.4%">5</span>
+      <span class="marca" style="left:12.3%;top:95.4%">6</span>
+    </div>
+    <figcaption><b>Figure 4.16.</b> The box plot with its editor open.</figcaption>
+  </figure>
+  <ul class="leyenda-marcas">
+    <li><span class="n">1</span><span class="ui">Edit figure</span> opens and closes the editor.</li>
+    <li><span class="n">2</span>Two tabs: <span class="ui">Content &amp; colours</span>, with the options specific to each type of figure, and <span class="ui">Style &amp; typography</span>, with theme, typeface, font size, grid and dimensions, common to all.</li>
+    <li><span class="n">3</span>Title, subtitle, axis labels and palette; below them, one colour per group.</li>
+    <li><span class="n">4</span>The check boxes for this figure: observations, mean marker, outliers, n per group.</li>
+    <li><span class="n">5</span><span class="ui">Y axis from zero</span> and the sliders for width, opacity and point size.</li>
+    <li><span class="n">6</span>Format, resolution, background and the download button.</li>
+  </ul>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · the Y axis from zero</div>
+    <p>Figures of means with bars start at zero because a bar represents a quantity; boxes, violins and points do not, because what matters in them is the comparison between groups and an axis starting at zero would flatten the differences. The <span class="ui">Y axis from zero</span> check box reverses that decision for any figure. For yields of 4 to 7 t/ha, a figure of means without zero visually exaggerates the difference between doses; with zero, it shows it in proportion.</p>
+  </div>
+
+  <!-- 4.5 -->
+  <h2 id="s4-5"><span class="num">4.5</span>Step-by-step example</h2>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Step by step · maize × nitrogen</div>
+    <ol class="pasos" style="margin-bottom:0">
+      <li>With the example loaded in Block 2, press <span class="ui">Continue to descriptive statistics</span> or number <span class="ui">3</span> on the bar. The block opens already calculated, with <code>Yield_t_ha</code> as the response and <code>Nitrogen_kg_ha</code> as the grouping.</li>
+      <li>Read the cards (figure 4.2): 16 complete observations, mean 6.032 ± 0.308, median 6.380, standard deviation 1.232, CV 20.4%, range 3.910 to 7.480, skewness −0.62 and kurtosis −1.02.</li>
+      <li>Scroll down to the table (figure 4.3). The means by dose rise from 4.215 to 7.183 t/ha and the CVs within each dose are 4 to 7%.</li>
+      <li>Read the interpretation (figure 4.7): the difference between the highest dose and the control is 2.967 t/ha (70.4%) and the standard deviations are similar (ratio 1.24). Nothing to correct.</li>
+      <li>Change <span class="ui">Group by</span> to <span class="ui">Block (block)</span> (figure 4.4): the block means differ by 0.700 t/ha. Set the factor back.</li>
+      <li>Check the figures: in the box plot the four boxes have similar heights and there are no outliers; in the profiles by block the lines are nearly parallel. The trial is ready for Block 4.</li>
+      <li>To save the table, press <span class="ui">Download table (CSV)</span>; the figures are downloaded one at a time with <span class="ui">Download figure</span> or all together from Block 6.</li>
+    </ol>
+  </div>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Step by step · tomato, variety × fertiliser</div>
+    <ol class="pasos" style="margin-bottom:0">
+      <li>In Block 2, load <span class="ui">Factorial 3×3 in RCBD · tomato</span> and move on to Block 3. The initial response is <code>Yield_kg_plant</code>; the second one, <code>Height_cm</code>, is chosen in <span class="ui">Response variable</span>.</li>
+      <li>The cards show 27 observations, mean 3.156, CV 25.7% and skewness −0.02. The high CV is once again the effect of the treatments: the varieties differ a great deal from one another.</li>
+      <li>Choose <span class="ui">All treatment combinations</span> in <span class="ui">Group by</span> (figure 4.5) and look at the two-way table (figure 4.6): Saladette is the best variety at all three fertiliser levels, and F2 the best level for all three varieties.</li>
+      <li>In the interaction plot (figure 4.14) the lines are not parallel: the gain from F0 to F2 is 1.2 kg in Saladette and 0.5 kg in Cherry. Make a note of it for Block 5.</li>
+      <li>The correlation map (figure 4.15) shows that yield and height are almost unrelated (r = −0.19).</li>
+    </ol>
+  </div>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>What you learned</div>
+    <p>Block 3 does not test hypotheses: it describes. Its job is to bring you to the ANOVA knowing what the data look like: whether there are suspicious plots, whether the variances are similar, whether the blocks behave alike and whether the factors seem to interact. A high descriptive CV is not bad news when the treatments explain it; a box much taller than the others or a line that crosses the rest is, and it is resolved in the field book or in Block 4, never by deleting data.</p>
+  </div>
+
+  <p style="margin-top:0.25in">With the data explored, the next step is to check the assumptions of the analysis of variance formally. The Block 4 chapter explains why they are checked on the residuals, which tests the app uses, how to choose a transformation with the Box–Cox profile, and when to switch to the non-parametric route.</p>
+</section>
+
+</body>
+</html>

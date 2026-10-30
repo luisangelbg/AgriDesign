@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AgriDesign · User manual · Block 2: Data and variable roles</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;1,500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../interior.css">
+<!-- reparte el contenido en hojas tamaño carta, con encabezados y números de página -->
+<script src="../paginar.js"></script>
+<style>
+  figure.chica .marco { width: 70%; margin: 0 auto; }
+  figure.chica figcaption { margin-left: 15%; margin-right: 15%; }
+  figure.mini .marco { width: 56%; margin: 0 auto; }
+  figure.mini figcaption { margin-left: 22%; margin-right: 22%; }
+</style>
+</head>
+<body>
+
+<section class="capitulo" id="cap-b2" data-pestana="B2" data-orden="3" style="--acento: var(--b2)">
+  <div class="cap-apertura">
+    <div class="cap-num">B2</div>
+    <div class="cap-etiqueta">Chapter three · Block 2 · Data</div>
+    <h1 data-corto="Block 2 · Data and variable roles">Data and variable roles</h1>
+    <div class="cap-regla"></div>
+    <p class="cap-resumen">Everything starts with a table. Block 2 reads it from almost any format, checks that it is well formed, proposes a role for each column and works out the structure of the experiment: how many treatments, how many blocks, how many replicates and whether the design is balanced. It is the step that prevents the most errors in the whole analysis.</p>
+    <div class="cap-franja"><span class="k2"></span><span class="k2" style="opacity:.75"></span><span class="k2" style="opacity:.5"></span><span class="k2" style="opacity:.3"></span></div>
+    <ul class="cap-contenido">
+      <li><b>3.1</b>What a field book should look like</li>
+      <li><b>3.2</b>File formats and the clipboard</li>
+      <li><b>3.3</b>The tidy-table check</li>
+      <li><b>3.4</b>Roles: response, factor, block, covariate</li>
+      <li><b>3.5</b>Detected structure and balance</li>
+      <li><b>3.6</b>Converting a wide table to long format</li>
+      <li><b>3.7</b>Step-by-step example</li>
+    </ul>
+  </div>
+
+  <!-- 3.1 -->
+  <h2 id="s3-1"><span class="num">3.1</span>What a field book should look like</h2>
+  <p class="lead">Block 2 opens with a theory card of six collapsible topics, entitled <span class="ui">Before you upload: what a good agricultural experiment needs</span>. It is worth reading before you load your first table, because the app will judge the data by those same criteria.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b2-teoria.png" alt="The Block 2 theory card with the first topic expanded"></div>
+    <figcaption><b>Figure 3.1.</b> The Block 2 theory card. The first topic, the three principles of experimental design, is open; the other five expand with a click.</figcaption>
+  </figure>
+
+  <table class="compacta">
+    <caption><b>Table 3.1.</b> The six topics of the theory card.</caption>
+    <thead><tr><th style="width:36%">Topic in the app</th><th>What it contains</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">1 · The three principles of experimental design (Fisher)</span></td><td>Replication, randomisation and local control, with their illustrations, and a list of everything else a protocol must state: objective and hypothesis, experimental and observational unit, control, response variables with their units, number of replicates justified by the expected CV, uniform management and borders.</td></tr>
+      <tr><td><span class="ui">2 · Vocabulary the platform uses</span></td><td>Treatment, factor, factorial, experimental unit, replicate, block, response variable, covariate, experimental error and CV (table 3.2).</td></tr>
+      <tr><td><span class="ui">3 · How to arrange your table (one row per plot)</span></td><td>The one-row-per-plot rule, with a correct and an incorrect example side by side, and seven data-entry tips.</td></tr>
+      <tr><td><span class="ui">4 · Types of variables and the role each column plays</span></td><td>Measurement scales (nominal, ordinal, counts, proportions, continuous, quantitative factor), the usual role of each and its consequences for the analysis.</td></tr>
+      <tr><td><span class="ui">5 · Which design do I have? (quick guide)</span></td><td>A quick guide from the layout to the design and its model; the same logic as the decision rule in section 2.4.</td></tr>
+      <tr><td><span class="ui">6 · Accepted file formats</span></td><td>The formats the app reads (section 3.2).</td></tr>
+    </tbody>
+  </table>
+
+  <table>
+    <caption><b>Table 3.2.</b> The program’s vocabulary, as it is used in messages and reports. The second column gives the equivalent term in the Spanish interface.</caption>
+    <thead><tr><th style="width:22%">In the app</th><th style="width:22%">In the Spanish interface</th><th>Meaning</th><th style="width:22%">Example</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Treatment</span></td><td>Tratamiento</td><td>A condition whose effect you want to measure.</td><td>0, 60, 120 and 180 kg of N per hectare</td></tr>
+      <tr><td><span class="ui">Factor</span></td><td>Factor</td><td>A group of related treatments: its <i>levels</i>.</td><td>Factor “Nitrogen” with 4 levels</td></tr>
+      <tr><td><span class="ui">Factorial</span></td><td>Factorial</td><td>Two or more factors studied together, in all their combinations.</td><td>3 varieties × 3 rates = 9 treatments</td></tr>
+      <tr><td><span class="ui">Experimental unit (plot)</span></td><td>Unidad experimental (parcela)</td><td>The smallest unit that receives a treatment independently.</td><td>A 5 × 4 m plot, a pot, a tree</td></tr>
+      <tr><td><span class="ui">Replicate</span></td><td>Repetición</td><td>A complete set of all the treatments (in block designs) or one unit per treatment.</td><td>Block 1, block 2…</td></tr>
+      <tr><td><span class="ui">Block</span></td><td>Bloque</td><td>A group of homogeneous plots that contains all the treatments.</td><td>A strip of land along the slope</td></tr>
+      <tr><td><span class="ui">Response variable</span></td><td>Variable de respuesta</td><td>What is measured on each unit.</td><td>Yield (t/ha), height (cm), severity (1–9)</td></tr>
+      <tr><td><span class="ui">Covariate</span></td><td>Covariable</td><td>A numeric variable measured before the treatment acts, used to adjust the response.</td><td>Initial plant stand, soil N</td></tr>
+      <tr><td><span class="ui">Experimental error</span></td><td>Error experimental</td><td>Variation among identically treated units; the yardstick against which differences between treatments are judged.</td><td>The residual mean square</td></tr>
+      <tr><td><span class="ui">CV (%)</span></td><td>Coeficiente de variación</td><td>Square root of the error mean square divided by the grand mean, times one hundred: the precision of the trial.</td><td>Yield: below 15 to 20% is acceptable</td></tr>
+    </tbody>
+  </table>
+
+  <h3>One row per plot, one column per variable</h3>
+  <p>The app reads tables in <b>long format</b>: the first row holds the column names and each subsequent row is one experimental unit. Factors, blocks, rows and columns go in text or code columns, repeated on every row; responses go in numeric columns. It is the same arrangement used by statistical software and by spreadsheet pivot tables, and it is what a well-kept field book produces (figure 1.3).</p>
+
+  <div class="caja importante">
+    <div class="caja-t"><span class="ico">!</span>Important · what confuses any program</div>
+    <ul style="margin:0.04in 0 0">
+      <li><b>Merged cells.</b> Only the first one keeps the value; the others are left empty. Unmerge them and fill every row.</li>
+      <li><b>Title, note or total rows</b> inside the table. Put them on another sheet.</li>
+      <li><b>Long headers or headers with symbols.</b> Use short names without spaces: <code>Yield_t_ha</code>, <code>Height_cm</code>, <code>Block</code>.</li>
+      <li><b>Two decimal separators</b> in the same table, thousands separators or units inside the cells: <code>4.6</code>, not <code>4,6 t/ha</code>.</li>
+      <li><b>Missing plots entered as 0.</b> Leave the cell empty or type <code>NA</code>. A zero is a yield of zero, not a missing value.</li>
+      <li><b>Levels written in several ways.</b> <code>Control</code>, <code>control</code> and <code>Control </code> (with a trailing space) are three different treatments to a computer.</li>
+      <li><b>Wide tables</b>, with one treatment or one block per column. The app converts them (section 3.6), but does not analyse them as they are.</li>
+    </ul>
+  </div>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · values that are always read as missing</div>
+    <p>An empty cell and the codes <code>NA</code>, <code>N/A</code>, <code>NaN</code>, <code>null</code>, <code>none</code>, <code>.</code>, <code>-</code>, <code>--</code>, <code>?</code>, <code>nd</code>, <code>s/d</code>, <code>missing</code>, <code>faltante</code> and spreadsheet errors (<code>#N/A</code>, <code>#DIV/0!</code>, <code>#VALUE!</code>, <code>#REF!</code>) are treated as missing data, regardless of case. Any other text in a numeric column is flagged as “numbers mixed with text”.</p>
+  </div>
+
+  <!-- 3.2 -->
+  <h2 id="s3-2"><span class="num">3.2</span>File formats and the clipboard</h2>
+  <p>The <span class="ui">1 · Load your data</span> card accepts a file in three ways: by dragging it onto the dashed area, by clicking the area to browse for it, or by pasting the contents of the clipboard. Below it are seven examples ready to load.</p>
+
+  <figure>
+    <div class="marco" style="position:relative">
+      <img src="../img/en/b2-carga.png" alt="The data loading card">
+      <span class="marca" style="left:23%;top:15%">1</span>
+      <span class="marca" style="left:29.9%;top:36.3%">2</span>
+      <span class="marca" style="left:61.6%;top:36.3%">3</span>
+      <span class="marca" style="left:40.6%;top:50.1%">4</span>
+      <span class="marca" style="left:36.7%;top:56.1%">5</span>
+    </div>
+    <figcaption><b>Figure 3.2.</b> The Block 2 loading card.</figcaption>
+  </figure>
+  <ul class="leyenda-marcas">
+    <li><span class="n">1</span>Area onto which you drag the file, or click to browse for it; the chips show the accepted extensions.</li>
+    <li><span class="n">2</span><span class="ui">Text delimiter</span>: the separator of text files; on automatic, the app infers it by counting commas, semicolons, tabs and vertical bars.</li>
+    <li><span class="n">3</span><span class="ui">Decimal separator</span>: point or comma; on automatic, the one that predominates in the table is chosen. When the workbook has several sheets, a third menu, <span class="ui">Sheet</span>, appears here.</li>
+    <li><span class="n">4</span><span class="ui">Paste from the clipboard instead</span>: a box for pasting a range copied from the spreadsheet, and the <span class="ui">Use pasted data</span> button.</li>
+    <li><span class="n">5</span><span class="ui">Or try an example dataset</span>: the seven examples of table 1.4.</li>
+  </ul>
+
+  <table>
+    <caption><b>Table 3.3.</b> Formats the app reads and how it handles them.</caption>
+    <thead><tr><th style="width:24%">Format</th><th style="width:22%">Extensions</th><th>How it is read</th></tr></thead>
+    <tbody>
+      <tr><td><b>Excel workbooks</b></td><td>.xlsx, .xlsm, .xlsb, .xls</td><td>The first sheet is read; if there are several, the <span class="ui">Sheet</span> menu lets you switch. Merged cells are detected and reported. Dates are kept as text and are not analysed.</td></tr>
+      <tr><td><b>Open formats</b></td><td>.ods, .csv, .tsv, .txt, .dat, .prn</td><td>Text with any separator: comma, semicolon, tab or vertical bar. Double quotes protect fields that contain the separator. A .tsv file is always read with tabs.</td></tr>
+      <tr><td><b>JSON</b></td><td>.json</td><td>A list of objects (one per plot), a list of lists, an object with <code>columns</code> and <code>data</code>, or an object with one list per column.</td></tr>
+      <tr><td><b>Clipboard</b></td><td>—</td><td>A range copied from Excel arrives separated by tabs; text separated by commas or semicolons is also accepted. It is recorded as <code>pasted-data.txt</code>.</td></tr>
+      <tr><td><b>Block 8 template</b></td><td>—</td><td>The field book generated by Block 8 can be opened directly here, with empty response columns, to check the design before sowing (chapter 9).</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · the examples need the local server or the online version</div>
+    <p>The seven examples are in the <code>data/</code> folder and the app reads them with a request to the server. If you open <code>index.html</code> by double-clicking it, the browser blocks that request for security reasons and the app warns: <span class="ui">Could not load the example. Open the app through server.ps1</span>. With <code>Open AgriDesign.bat</code> or with the online version, the examples load instantly. Your own files are always read, however the app is opened.</p>
+  </div>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · decimal comma</div>
+    <p>Spreadsheets set to Spanish and many other locales use a decimal comma and export <code>4,65</code>. On automatic, the app counts how many cells look like <code>4,65</code> and how many like <code>4.65</code> and chooses the separator that predominates; the loading message states which one it used (<span class="ui">Decimal separator: comma</span>). If a table mixes both, set the correct separator in the menu and load it again: cells with the other separator will be read as missing and the column will be flagged <span class="ui">numbers mixed with text</span>.</p>
+  </div>
+
+  <!-- 3.3 -->
+  <h2 id="s3-3"><span class="num">3.3</span>The tidy-table check</h2>
+  <p>On loading, the app examines the grid before interpreting it: it looks for the header row, counts the columns, and detects title rows, merged cells, unnamed columns, repeated names, rows with extra cells, empty rows and total rows. Each finding appears as a notice below the loading message; when there is none, a single green notice says <span class="ui">Tidy table</span>.</p>
+
+  <table>
+    <caption><b>Table 3.4.</b> The notices of the grid check and what the app does in each case.</caption>
+    <thead><tr><th style="width:8%">Level</th><th style="width:34%">Notice</th><th>What happened and what the app does</th></tr></thead>
+    <tbody>
+      <tr><td><span class="no">⚠</span></td><td><span class="ui">N title rows above the header</span></td><td>There were rows with one or two cells before the wide header row (a title, a date). They are skipped and the header is taken from the first wide row; check the preview.</td></tr>
+      <tr><td><span class="no">⛔</span></td><td><span class="ui">N merged cell ranges detected</span></td><td>Excel workbooks only. Merged cells leave all but the first cell empty. Unmerge them and fill every row; the app does not guess.</td></tr>
+      <tr><td><span class="no">⚠</span></td><td><span class="ui">N columns without a name</span></td><td>They are named V1, V2… according to their position. Give them a short header.</td></tr>
+      <tr><td><span class="no">⚠</span></td><td><span class="ui">Duplicated column names</span></td><td>The second repeated column receives the suffix _2, the third _3.</td></tr>
+      <tr><td><span class="no">⚠</span></td><td><span class="ui">N rows with more cells than the header</span></td><td>Notes or totals written next to the table. The extra cells are discarded.</td></tr>
+      <tr><td><span class="no">ℹ</span></td><td><span class="ui">N empty rows removed</span></td><td>Blank rows are ignored.</td></tr>
+      <tr><td><span class="no">⛔</span></td><td><span class="ui">N summary rows (Total / Mean) inside the data</span></td><td>Rows whose first cell reads Total, Mean, Average, Promedio, Suma, Sum or Media. They are removed: the app computes the averages itself, and those rows would otherwise be analysed as plots.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Example · a table with deliberate errors</div>
+    <p>To see the notices in action, paste this table, exactly as it is, into <span class="ui">Paste from the clipboard instead</span> and press <span class="ui">Use pasted data</span>. It has a title row, an unnamed column with a margin note, the control written in three ways and a total row.</p>
+    <pre style="margin:0.06in 0 0;font-size:9pt">Ensayo maíz 2026
+Block,Treatment,Yield,
+1,Control,4.6,nota al margen
+1,control,6.2,
+2,Control ,3.9,
+2,control,5.5,
+3,Control,4.3,
+3,control,5.9,
+Total,,30.4,</pre>
+  </div>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b2-avisos.png" alt="The grid-check notices for the table with errors"></div>
+    <figcaption><b>Figure 3.3.</b> What the app reports for the example table: it read 6 rows and 4 columns, skipped the title row, named the column without a header V4 and removed the total row.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b2-avisos-roles.png" alt="The roles and structure of the table with errors"></div>
+    <figcaption><b>Figure 3.4.</b> The problems that the grid check cannot solve show up further down, in the variable table and in the structure: the treatment column has two levels, Control and control, and is flagged <span class="ui">levels differ only by case</span> in its checks; column V4 has 5 of its 6 values missing (83%) and a single level; and, because the app took V4 for a second factor, the factorial appears incomplete and with a single replicate. Everything is fixed in the field book: one name for the control and no notes column.</figcaption>
+  </figure>
+
+  <div class="caja importante">
+    <div class="caja-t"><span class="ico">!</span>Important · the app protects the analysis; it does not correct your file</div>
+    <p>The notices describe what the app did in order to carry on (skip, rename, discard). Your original file never changes. If a notice surprises you, correct the field book in the spreadsheet and load it again: it is the only way for the final report to describe clean data rather than a patch. The <span class="ui">Download tidy CSV</span> button of section 3.5 saves the tidy version the app is using, without the excluded columns.</p>
+  </div>
+
+  <!-- 3.4 -->
+  <h2 id="s3-4"><span class="num">3.4</span>Roles: response, factor, block, covariate</h2>
+  <p>The <span class="ui">2 · Variable roles and design structure</span> card shows one row per column of the table. The app profiles each column, decides whether it is numeric or categorical and proposes a <b>role in the experiment</b>. The menu in the third column lets you correct it; everything that follows in the app depends on that choice.</p>
+
+  <figure>
+    <div class="marco" style="position:relative">
+      <img src="../img/en/b2-roles.png" alt="The role legend and the variable table">
+      <span class="marca" style="left:62.0%;top:29.6%">1</span>
+      <span class="marca" style="left:18.5%;top:52.9%">2</span>
+      <span class="marca" style="left:37.8%;top:52.9%">3</span>
+      <span class="marca" style="left:65.7%;top:52.9%">4</span>
+      <span class="marca" style="left:81.2%;top:88.2%">5</span>
+      <span class="marca" style="left:93.3%;top:52.9%">6</span>
+    </div>
+    <figcaption><b>Figure 3.5.</b> Roles in the maize and nitrogen example.</figcaption>
+  </figure>
+  <ul class="leyenda-marcas">
+    <li><span class="n">1</span>Legend of the eight possible roles, with their colours (table 3.5).</li>
+    <li><span class="n">2</span><span class="ui">Detected</span>: what the app saw in the column (block code, integer codes with 4 levels, continuous numeric…).</li>
+    <li><span class="n">3</span><span class="ui">Role in the experiment</span>: the proposed role, which you can edit. Text columns cannot be a response or a covariate.</li>
+    <li><span class="n">4</span>How many values there are, how many are missing, how many levels or distinct values, and a summary: the levels, or the mean, standard deviation and range.</li>
+    <li><span class="n">5</span>A miniature distribution: a histogram for responses, a count per level for factors and blocks.</li>
+    <li><span class="n">6</span><span class="ui">Checks</span>: the column’s warning flags (table 3.7) or an <span class="ui">ok</span>.</li>
+  </ul>
+
+  <table>
+    <caption><b>Table 3.5.</b> The eight roles and what the app does with each.</caption>
+    <thead><tr><th style="width:24%">Role</th><th>What it is</th><th style="width:32%">Consequence for the analysis</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Response (Y)</span></td><td>What was measured: yield, height, biomass, pH, score. Numeric columns only.</td><td>Each response is analysed separately in Blocks 3 to 5.</td></tr>
+      <tr><td><span class="ui">Treatment factor</span></td><td>What is being compared: variety, rate, irrigation. Two or more columns with this role form a factorial.</td><td>Its levels are the treatments; their combinations, the cells of the factorial.</td></tr>
+      <tr><td><span class="ui">Block / replicate</span></td><td>Local control: block, replicate, lot, year, location.</td><td>Enters the model as a block term; decides between complete randomisation and blocks.</td></tr>
+      <tr><td><span class="ui">Row (Latin square)</span></td><td>The row of a Latin square or of a row–column design.</td><td>Together with a <i>Column</i> column, it allows the Latin square.</td></tr>
+      <tr><td><span class="ui">Column (Latin square)</span></td><td>The column of a Latin square.</td><td>Likewise.</td></tr>
+      <tr><td><span class="ui">Covariate (ANCOVA)</span></td><td>A numeric variable measured before the treatment acts: initial stand, initial weight, soil analysis.</td><td>Enters the model as a regressor; the means are adjusted to its average.</td></tr>
+      <tr><td><span class="ui">Identifier / plot</span></td><td>Plot number, sample identifier, position in the field.</td><td>Not analysed; kept for the field maps and the report.</td></tr>
+      <tr><td><span class="ui">Exclude</span></td><td>A column of no interest.</td><td>Ignored, and left out of the tidy CSV.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Decision rule · how the app proposes the role of a column</div>
+    <table class="compacta">
+      <thead><tr><th style="width:46%">If the column…</th><th>the app proposes…</th></tr></thead>
+      <tbody>
+        <tr><td>is called Block, Rep, Replicate, Bloque, Repetición or R (in any combination of upper and lower case)</td><td><span class="ui">Block / replicate</span></td></tr>
+        <tr><td>is called Row, Fila, Hilera, Renglón · Col, Column, Columna</td><td><span class="ui">Row</span> · <span class="ui">Column</span></td></tr>
+        <tr><td>is called Plot, Parcela, ID, Sample, Muestra, Obs… and all its values are distinct</td><td><span class="ui">Identifier / plot</span></td></tr>
+        <tr><td>is text with up to 40 levels</td><td><span class="ui">Treatment factor</span></td></tr>
+        <tr><td>is text with all its values distinct, or with more than 40 categories</td><td><span class="ui">Identifier / plot</span> · <span class="ui">Exclude</span></td></tr>
+        <tr><td>is numeric with a few integer values, each repeated almost the same number of times, and is not named like a measurement</td><td><span class="ui">Treatment factor</span>, labelled <span class="ui">Integer codes (n levels)</span></td></tr>
+        <tr><td>is numeric with few values, but with unequal counts or a measurement name (score, yield, height, peso, altura…)</td><td><span class="ui">Response (Y)</span>, with the flag <span class="ui">integer codes → factor?</span></td></tr>
+        <tr><td>is called Cov, Covariate, Covariable, Initial, Inicial, Stand…</td><td><span class="ui">Covariate (ANCOVA)</span></td></tr>
+        <tr><td>is numeric and has no variation</td><td><span class="ui">Exclude</span>, labelled <span class="ui">Constant</span></td></tr>
+        <tr><td>is numeric and none of the previous rules applies</td><td><span class="ui">Response (Y)</span></td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">These are proposals. A column with codes 1, 2, 3, 4 for the varieties looks numeric: if the app leaves it as a response, change it to a factor. And the other way round: a score from 1 to 9 with even counts may be taken for treatment codes.</p>
+  </div>
+
+  <table class="compacta">
+    <caption><b>Table 3.6.</b> What the <span class="ui">Detected</span> column says.</caption>
+    <thead><tr><th style="width:40%">Label</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Numeric (continuous)</span> · <span class="ui">Numeric (integers)</span></td><td>At least 90% of the non-empty cells are numbers; whether all are integers or not.</td></tr>
+      <tr><td><span class="ui">Integer codes (n levels)</span></td><td>Integers with few values and even counts: they look like treatment codes.</td></tr>
+      <tr><td><span class="ui">Numeric (n distinct values)</span></td><td>Numbers with few distinct values but unequal counts: possibly a short scale.</td></tr>
+      <tr><td><span class="ui">Numeric (covariate?)</span></td><td>Numeric, with a covariate name.</td></tr>
+      <tr><td><span class="ui">Categorical (n levels)</span></td><td>Text with n levels.</td></tr>
+      <tr><td><span class="ui">Block code</span> · <span class="ui">Row code</span> · <span class="ui">Column code</span></td><td>Recognised by the column name.</td></tr>
+      <tr><td><span class="ui">Identifier</span> · <span class="ui">Field position / plot number</span></td><td>All values distinct, or the name of a position in the field.</td></tr>
+      <tr><td><span class="ui">Constant</span></td><td>No variation.</td></tr>
+      <tr><td><span class="ui">Empty (to be filled in)</span></td><td>A column without values: a field-book template.</td></tr>
+    </tbody>
+  </table>
+
+  <table class="compacta">
+    <caption><b>Table 3.7.</b> The flags of the <span class="ui">Checks</span> column. Red flags call for a correction; grey ones are warnings.</caption>
+    <thead><tr><th style="width:36%">Flag</th><th>What it means and what to do</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">zero variance</span></td><td>All values are equal; the column cannot be analysed.</td></tr>
+      <tr><td><span class="ui">N missing</span> · <span class="ui">N% missing</span></td><td>Missing cells; shown in red above 20%. Rows with a missing response are omitted for that variable.</td></tr>
+      <tr><td><span class="ui">numbers mixed with text</span></td><td>Between 50 and 90% of the cells are numbers: some cells contain text, units or the other decimal separator.</td></tr>
+      <tr><td><span class="ui">skewed</span> · <span class="ui">strongly skewed</span></td><td>Skewness greater than 1, or than 2, in a response. Block 4 will assess a transformation.</td></tr>
+      <tr><td><span class="ui">N outliers |z|&gt;3</span></td><td>Values more than three standard deviations from the mean. Check in the field book that they are not data-entry errors.</td></tr>
+      <tr><td><span class="ui">negative values</span></td><td>A response with negative values and none equal to zero; unusual for yields or weights.</td></tr>
+      <tr><td><span class="ui">integer codes → factor?</span></td><td>The column looks like codes; confirm whether it is a factor or a response.</td></tr>
+      <tr><td><span class="ui">levels differ only by case</span></td><td>Two levels differ only in capitalisation: Control and control. Make them the same in the field book.</td></tr>
+      <tr><td><span class="ui">levels with trailing spaces</span></td><td>A level has leading or trailing spaces. Remove them.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 3.5 -->
+  <h2 id="s3-5"><span class="num">3.5</span>Detected structure and balance</h2>
+  <p>Once the roles are assigned, the app works out the structure of the experiment and summarises it in cards under <span class="ui">Detected structure</span>: observations, responses, factors with their levels and number of combinations, blocking, covariates and replication. Below them come a list of checks and, when there is a block or two factors, a table of observations per cell. Every time you change a role, everything is recalculated.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b2-estructura.png" alt="The detected structure of the maize and nitrogen example"></div>
+    <figcaption><b>Figure 3.6.</b> Structure of the maize and nitrogen example: 16 observations, one response, one factor with 4 levels, 4 blocks and 4 replicates per treatment, balanced. The checks confirm the replication and the complete blocks, and the table of observations per cell shows a 1 at each crossing of rate and block. At the bottom, <span class="ui">Download tidy CSV</span> and the button to continue.</figcaption>
+  </figure>
+
+  <table>
+    <caption><b>Table 3.8.</b> The structure checks.</caption>
+    <thead><tr><th style="width:8%">Level</th><th style="width:36%">Check</th><th>What it means</th></tr></thead>
+    <tbody>
+      <tr><td><span class="no">⛔</span></td><td><span class="ui">No response variable</span> · <span class="ui">No treatment factor</span></td><td>An essential role is missing. Without both you cannot continue.</td></tr>
+      <tr><td><span class="no">ℹ</span></td><td><span class="ui">This looks like a wide table</span></td><td>Several numeric responses and no factor: the treatments are in the columns. Use the converter (section 3.6).</td></tr>
+      <tr><td><span class="no">⛔</span></td><td><span class="ui">Factor X has a single level</span></td><td>A factor needs at least two levels.</td></tr>
+      <tr><td><span class="no">⚠</span></td><td><span class="ui">Factor X has N levels</span></td><td>More than 30 levels: is it a factor or an identifier?</td></tr>
+      <tr><td><span class="no">⚠</span></td><td><span class="ui">N treatment combinations never observed</span></td><td>The factorial is incomplete: some cells have no data. Interactions are only partly estimable; consider analysing the observed combinations as a single factor.</td></tr>
+      <tr><td><span class="no">⛔</span></td><td><span class="ui">Some treatments have a single observation</span></td><td>Without replication there is no experimental error. It is almost always an unconverted wide table or a wrongly assigned role.</td></tr>
+      <tr><td><span class="no">⚠</span></td><td><span class="ui">Only 2 replicates for some treatments</span></td><td>Two replicates give a very imprecise estimate of the error; three or more are recommended.</td></tr>
+      <tr><td><span class="no">✅</span></td><td><span class="ui">Replication: r per treatment</span></td><td>Balanced if all treatments have the same number of observations; if not, the app warns that it will use type III sums of squares.</td></tr>
+      <tr><td><span class="no">✅</span></td><td><span class="ui">Complete blocks</span></td><td>Each treatment appears exactly once in each block: randomised complete blocks.</td></tr>
+      <tr><td><span class="no">✅</span></td><td><span class="ui">Generalised complete blocks</span></td><td>Each treatment appears more than once per block: generalised blocks, with an estimable block × treatment interaction.</td></tr>
+      <tr><td><span class="no">ℹ</span></td><td><span class="ui">Incomplete blocks</span></td><td>Not all treatments are in every block: incomplete blocks (lattice, alpha) or missing plots.</td></tr>
+      <tr><td><span class="no">⛔</span></td><td><span class="ui">Blocking column with one level</span></td><td>A single block blocks nothing.</td></tr>
+      <tr><td><span class="no">✅</span></td><td><span class="ui">Latin square structure</span></td><td>Treatments, rows and columns in equal number.</td></tr>
+      <tr><td><span class="no">⚠</span></td><td><span class="ui">Row–column layout is not a Latin square</span></td><td>The three numbers do not match: it will be analysed as a row–column design.</td></tr>
+      <tr><td><span class="no">ℹ</span></td><td><span class="ui">Y is empty</span></td><td>The response has no values: it is a field-book template. The structure is already valid; fill in the measurements and load it again.</td></tr>
+      <tr><td><span class="no">⚠</span></td><td><span class="ui">Y: N missing values</span></td><td>Missing plots: the design is no longer balanced for that variable.</td></tr>
+      <tr><td><span class="no">ℹ</span></td><td><span class="ui">Y spans more than one order of magnitude</span></td><td>The maximum is more than 20 times the minimum: a logarithm may be needed.</td></tr>
+      <tr><td><span class="no">ℹ</span></td><td><span class="ui">Y looks like a short ordinal scale</span></td><td>Integers from 0 to 10 with few distinct values or a score-like name: the non-parametric route of Block 4 is advisable.</td></tr>
+      <tr><td><span class="no">ℹ</span></td><td><span class="ui">Y looks like a percentage</span></td><td>Values between 0 and 100 with a name suggesting a percentage, incidence, germination or mortality: an arcsine or logit transformation may be needed.</td></tr>
+    </tbody>
+  </table>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b2-latino.png" alt="Structure of the Latin square example"></div>
+    <figcaption><b>Figure 3.7.</b> The wheat Latin square example: the Row and Column columns are recognised by their names, blocking appears as <span class="ui">Row × Column</span> and the check confirms 4 treatments × 4 rows × 4 columns.</figcaption>
+  </figure>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b2-ordinal.png" alt="Structure of the severity score example"></div>
+    <figcaption><b>Figure 3.8.</b> The fungicide example: 20 plots, 4 fungicides in 5 complete blocks, and a notice that <code>Severity_score</code> looks like a short ordinal scale, with the recommendation to follow the non-parametric route of Block 4.</figcaption>
+  </figure>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b2-dividida.png" alt="Structure of the split-plot example"></div>
+    <figcaption><b>Figure 3.9.</b> The irrigation × variety example: two factors, 2 × 4 = 8 combinations, 3 blocks and 3 replicates. The table of observations per cell crosses the first factor with the block: 4 plots of each irrigation treatment in each block, the four varieties. The app cannot tell from the table that irrigation was applied to main plots; that is declared when you choose the design in Block 5.</figcaption>
+  </figure>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · what is enabled when you continue</div>
+    <p>The <span class="ui">Continue to descriptive statistics</span> button and Blocks 3, 4, 5 and 7 in the top bar become available when there is at least one response with values, at least one factor and no combination with a single observation. Block 6 becomes available after an analysis has been run in Block 5. While any red check remains on screen, the button stays grey.</p>
+  </div>
+
+  <!-- 3.6 -->
+  <h2 id="s3-6"><span class="num">3.6</span>Converting a wide table to long format</h2>
+  <p>Many field books are entered “wide”: one row per block and one column per treatment, or one row per plot and one column per sampling date. The app reads them, but cannot find the factor: all the numeric columns look like responses. The <span class="ui">Tool · Convert a wide table to long format</span> card stacks those columns into one column of names and one of values.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b2-ancha.png" alt="The wide table just loaded"></div>
+    <figcaption><b>Figure 3.10.</b> The <span class="ui">Wide table (needs reshaping)treatments as columns — try the converter</span> example just after loading: 4 rows, a block column and four numeric columns (N0, N60, N120, N180) that the app takes for four responses.</figcaption>
+  </figure>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b2-ancha-avisos.png" alt="The notices for the wide table"></div>
+    <figcaption><b>Figure 3.11.</b> The structure gives it away: there is no factor, and the notice <span class="ui">This looks like a wide table</span> points to the converter. The button to continue stays grey.</figcaption>
+  </figure>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b2-convertidor.png" alt="The wide-table converter"></div>
+    <figcaption><b>Figure 3.12.</b> The converter proposes keeping the block, factor and identifier columns as identifiers and stacking the responses. The two text boxes name the new columns.</figcaption>
+  </figure>
+
+  <ol class="pasos">
+    <li>Under <span class="ui">Keep as identifiers</span>, tick the columns that describe the plot and must be repeated on each new row: block, identifier, other factors. In the example, <code>Block</code>.</li>
+    <li>Under <span class="ui">Stack these columns</span>, tick the columns to be stacked: the four rates.</li>
+    <li>Type the name of the column that will receive the stacked headers in <span class="ui">Name for the new factor column</span> (for example <code>Nitrogen</code>) and that of the value column in <span class="ui">Name for the new value column</span> (<code>Yield_t_ha</code>).</li>
+    <li>Press <span class="ui">Reshape to long format</span>. The long table replaces the wide one, goes through the same check, and the app proposes the roles again. The file name receives the suffix <code>_long</code>.</li>
+  </ol>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b2-convertida.png" alt="The table converted to long format"></div>
+    <figcaption><b>Figure 3.13.</b> After converting, here with the default names <code>Treatment</code> and <code>Value</code>: 16 rows, the factor column recognised as categorical with 4 levels (N0, N60, N120, N180) and the value column as the response. The structure is the same as that of the original maize and nitrogen example: complete blocks, 4 replicates, balanced.</figcaption>
+  </figure>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · levels that are text</div>
+    <p>The levels of the new factor are the stacked headers, so <code>N0</code>, <code>N60</code>… are text, not numbers. For the ANOVA and mean comparisons this does not matter. If you want to fit the dose–response curve in Block 5, the levels must be numeric: name the columns of the wide table <code>0</code>, <code>60</code>, <code>120</code>, <code>180</code> before loading it, or use the long table with the rate as numbers directly, as in the original example.</p>
+  </div>
+
+  <!-- 3.7 -->
+  <h2 id="s3-7"><span class="num">3.7</span>Step-by-step example</h2>
+  <p>The manual’s guiding example, maize and nitrogen in randomised complete blocks, is loaded and checked in under a minute. The following chapters start from here.</p>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Step by step · maize × nitrogen</div>
+    <ol class="pasos" style="margin-bottom:0">
+      <li>On the home page, press <span class="ui">Start with my data</span>, or the number <span class="ui">2</span> in the top bar.</li>
+      <li>Under <span class="ui">Or try an example dataset</span>, press <span class="ui">RCBD · maize × nitrogen4 N doses, 4 blocks, yield t/ha</span>. The green message confirms <span class="ui">rcbd_maize_nitrogen.csv — 16 rows × 3 columns read. Decimal separator: point</span>, and the <span class="ui">Tidy table</span> notice says that the grid is clean.</li>
+      <li>Check the roles (figure 3.5): <code>Block</code> as block, <code>Nitrogen_kg_ha</code> as factor (integer codes with 4 levels: 0, 60, 120, 180) and <code>Yield_t_ha</code> as response, with mean 6.032, standard deviation 1.232 and range 3.91 to 7.48 t/ha. Nothing needs to be changed.</li>
+      <li>Read the structure (figure 3.6): 16 observations, 4 treatments, 4 blocks, 4 replicates, complete blocks, balanced.</li>
+      <li>Scroll down to <span class="ui">Data preview</span> to see the table as the app read it (figure 3.14): the first row of each block is rate 0.</li>
+      <li>Press <span class="ui">Continue to descriptive statistics</span>.</li>
+    </ol>
+  </div>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b2-vista-previa.png" alt="The table preview"></div>
+    <figcaption><b>Figure 3.14.</b> <span class="ui">Data preview</span> shows up to 200 rows of the table as read, with the columns in the order of the file.</figcaption>
+  </figure>
+
+  <table class="compacta">
+    <caption><b>Table 3.9.</b> What to expect when loading the other examples.</caption>
+    <thead><tr><th style="width:28%">Example</th><th>What the app detects</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">CRD · bean varieties5 varieties, 4 reps, yield kg/plot</span></td><td>20 plots; <code>Plot</code> as identifier (all values distinct), <code>Variety</code> as a factor with 5 levels, <code>Yield_kg_plot</code> as response; no block: 4 replicates, balanced.</td></tr>
+      <tr><td><span class="ui">Latin square · wheat4 treatments, 4 rows × 4 columns</span></td><td><code>Row</code> and <code>Column</code> by their names, <code>Treatment</code> with 4 levels; <span class="ui">Latin square structure</span> (figure 3.7).</td></tr>
+      <tr><td><span class="ui">Factorial 3×3 in RCBD · tomatovariety × fertiliser, 3 blocks, 2 responses</span></td><td>27 plants; <code>Variety</code> and <code>Fertilizer</code> as factors (3 × 3 = 9 combinations), 3 blocks, two responses, <code>Yield_kg_plant</code> and <code>Height_cm</code>, which are analysed separately.</td></tr>
+      <tr><td><span class="ui">Split-plot · irrigation × variety2 main plots, 4 sub-plots, 3 blocks</span></td><td>24 plots; two factors, 3 blocks, 3 replicates (figure 3.9). The split-plot design is declared in Block 5.</td></tr>
+      <tr><td><span class="ui">Ordinal scores · fungicides1–9 severity scale, 5 blocks (non-parametric)</span></td><td>20 plots, 4 fungicides, 5 blocks and the ordinal-scale notice (figure 3.8).</td></tr>
+      <tr><td><span class="ui">Wide table (needs reshaping)treatments as columns — try the converter</span></td><td>No factor; it has to be converted (section 3.6).</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja dato">
+    <div class="dato-cifra">1 min</div>
+    <div class="dato-txt"><div class="caja-t">Before moving on</div>Spend a minute on Block 2 every time you load new data: confirm the role of each column, look at the flags in the <span class="ui">Checks</span> column and read the structure checks. A factor taken for a response, a control written in two ways or an unconverted wide table invalidate everything that follows, and here they show up immediately.</div>
+  </div>
+
+  <p style="margin-top:0.25in">With the table checked and the roles confirmed, the next step is to look at the data before testing anything. The Block 3 chapter presents descriptive statistics by treatment, block and combination, the coefficient of variation and the exploratory graphics.</p>
+</section>
+
+</body>
+</html>

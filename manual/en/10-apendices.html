@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AgriDesign · User’s Manual · Appendices</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;1,500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../interior.css">
+<!-- reparte el contenido en hojas tamaño carta, con encabezados y números de página -->
+<script src="../paginar.js"></script>
+<style>
+  .caja-t .sec-ref { margin-left: auto; letter-spacing: 0.08em; font-size: 7.4pt; opacity: 0.85; }
+  /* archivos de ejemplo */
+  .pre-t { font-family: var(--sans); font-size: 8.5pt; color: var(--gris); margin: 0.12in 0 0; letter-spacing: 0.02em; }
+  .pre-t b { color: var(--negro); font-weight: 500; }
+  pre.archivo { font-family: var(--mono); font-size: 7.9pt; line-height: 1.38; color: var(--negro); background: #f5f7f4; border: 1px solid var(--linea); border-left: 3px solid var(--acento); border-radius: 0 4px 4px 0; padding: 0.07in 0.12in; margin: 0.05in 0 0.16in; white-space: pre-wrap; break-inside: avoid; }
+  .ejemplo-archivo { break-inside: avoid; }
+  /* índice de reglas */
+  ul.indice-reglas { list-style: none; padding: 0; margin: 0.12in 0 0.2in; display: grid; grid-template-columns: 1fr 1fr; column-gap: 0.35in; font-family: var(--sans); font-size: 8.8pt; }
+  ul.indice-reglas li { margin: 0; padding: 0.035in 0; border-top: 1px solid var(--linea); break-inside: avoid; }
+  ul.indice-reglas li b { display: inline-block; min-width: 2.7em; color: var(--negro); font-weight: 500; }
+  ul.indice-reglas li.grupo { grid-column: 1 / -1; border-top: 0; padding-top: 0.12in; font-weight: 500; color: var(--negro); }
+  ul.indice-reglas li.grupo .chip { margin-right: 0.55em; }
+  h3.ap-cap { font-size: 13pt; }
+  h3.ap-cap .chip { font-size: 8.5pt; margin-right: 0.55em; position: relative; top: -0.12em; }
+  /* glosario */
+  tr.letra td { background: #eef2ee !important; font-family: var(--serif); font-size: 12.5pt; font-weight: 600; color: var(--negro); }
+  td.termino b { font-family: var(--serif); font-size: 10.5pt; }
+</style>
+</head>
+<body>
+
+<section class="capitulo" id="apendices" data-pestana="A" data-orden="10" style="--acento: var(--bx)">
+  <div class="cap-apertura">
+    <div class="cap-num">A–D</div>
+    <div class="cap-etiqueta">Appendices · reference material</div>
+    <h1 data-corto="Appendices">Appendices</h1>
+    <div class="cap-regla"></div>
+    <p class="cap-resumen">The appendices are not meant to be read from start to finish but to be consulted. Here you will find the exact rules the app follows to read a table and the layout each design requires, the manual’s decision rules gathered in one place, a glossary of abbreviations and terms with their Spanish names, and solutions to the most common problems, with the app’s messages exactly as they appear on screen.</p>
+    <div class="cap-franja"><span class="kx"></span><span class="kx" style="opacity:.75"></span><span class="kx" style="opacity:.5"></span><span class="kx" style="opacity:.3"></span></div>
+    <ul class="cap-contenido">
+      <li><b>A</b>File and table formats</li>
+      <li><b>B</b>Decision rules at a glance</li>
+      <li><b>C</b>English–Spanish glossary</li>
+      <li><b>D</b>Troubleshooting</li>
+    </ul>
+  </div>
+
+  <!-- ====================================================================== A -->
+  <h2 id="ap-a"><span class="num">A</span>File and table formats</h2>
+  <p class="lead">AgriDesign reads any rectangular table, provided it has one row per experimental unit and one column per variable. This appendix sets out the exact rules the app uses to interpret a file, the column layout each design requires and the files the app produces.</p>
+
+  <h3>A.1 How the app reads a file</h3>
+  <table class="compacta">
+    <caption><b>Table A.1.</b> Input formats.</caption>
+    <thead><tr><th style="width:22%">Extension</th><th>How it is read</th></tr></thead>
+    <tbody>
+      <tr><td><code>.xlsx</code> <code>.xlsm</code> <code>.xlsb</code> <code>.xls</code> <code>.ods</code></td><td>With the spreadsheet reader bundled in <code>vendor/</code>. The first sheet is read; if there are several, the <span class="ui">Sheet</span> menu appears. Merged cells are detected and reported.</td></tr>
+      <tr><td><code>.csv</code> <code>.txt</code> <code>.dat</code> <code>.prn</code></td><td>UTF-8 text. The delimiter is detected among comma, semicolon, tab and vertical bar by choosing the one that occurs the same number of times in the first ten lines. Double quotes protect fields that contain the delimiter.</td></tr>
+      <tr><td><code>.tsv</code></td><td>Tab-separated text, always.</td></tr>
+      <tr><td><code>.json</code></td><td>A list of objects (one per plot), a list of lists with the headers in the first one, a <code>{columns, data}</code> object, or an object with one list per column.</td></tr>
+      <tr><td>Clipboard</td><td>Like a text file; a range copied from Excel arrives tab-separated.</td></tr>
+    </tbody>
+  </table>
+
+  <table class="compacta">
+    <caption><b>Table A.2.</b> Rules applied to every table before it is interpreted.</caption>
+    <thead><tr><th style="width:26%">Aspect</th><th>Rule</th></tr></thead>
+    <tbody>
+      <tr><td>Header row</td><td>The first row with at least half of its cells filled (and a minimum of two). Earlier rows are skipped as titles.</td></tr>
+      <tr><td>Column names</td><td>Unnamed columns are called V1, V2…; repeated names receive the suffix _2, _3…</td></tr>
+      <tr><td>Discarded rows</td><td>Empty rows, and rows whose first cell is Total, Mean, Average, Promedio, Suma, Sum or Media, regardless of case.</td></tr>
+      <tr><td>Surplus cells</td><td>Cells to the right of the last named column are discarded.</td></tr>
+      <tr><td>Missing data</td><td>Empty cell, <code>NA</code>, <code>N/A</code>, <code>NaN</code>, <code>null</code>, <code>none</code>, <code>.</code>, <code>-</code>, <code>--</code>, <code>?</code>, <code>nd</code>, <code>s/d</code>, <code>sd</code>, <code>missing</code>, <code>faltante</code>, <code>inf</code>, <code>-inf</code> and spreadsheet errors (<code>#N/A</code>, <code>#DIV/0!</code>, <code>#VALUE!</code>, <code>#VALOR!</code>, <code>#REF!</code>, <code>#NAME?</code>).</td></tr>
+      <tr><td>Decimal separator</td><td>In automatic mode, the app counts, in the first 500 rows, the cells that look like <code>4,65</code> and those that look like <code>4.65</code>; the majority wins. With a decimal comma, points are taken as thousands separators.</td></tr>
+      <tr><td>Ignored characters</td><td>Spaces inside a number and a trailing % sign: <code>85 %</code> is read as 85.</td></tr>
+      <tr><td>Numeric column</td><td>At least 90% of the non-empty cells are numbers and there are at least two. Between 50 and 90%, the column is treated as text and flagged “numbers mixed with text”.</td></tr>
+    </tbody>
+  </table>
+
+  <table class="compacta">
+    <caption><b>Table A.3.</b> Column names the app recognises when proposing a role (regardless of case). The remaining rules are in section 3.4.</caption>
+    <thead><tr><th style="width:26%">Proposed role</th><th>Exact names</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Block / replicate</span></td><td>Block, Blocks, Blk, Bloque, Bloques, Rep, Reps, Replicate, Replication, Repeticion, Repetición, R</td></tr>
+      <tr><td><span class="ui">Row</span></td><td>Row, Fila, Hilera, Renglon, Renglón</td></tr>
+      <tr><td><span class="ui">Column</span></td><td>Col, Column, Columna</td></tr>
+      <tr><td><span class="ui">Identifier / plot</span></td><td>Plot, PlotNo, Plot_No, FieldRow, FieldCol, Field_Row, Field_Col always; ID, Parcela, Unit, UE, Sample, Muestra, Obs, No, N°, Num, Number, Planta, Plant when all their values are distinct</td></tr>
+      <tr><td><span class="ui">Covariate (ANCOVA)</span></td><td>Names beginning with Cov, Covariate, Covariable, Initial, Inicial, X0, Stand or Plants_per_plot</td></tr>
+    </tbody>
+  </table>
+
+  <h3>A.2 The layout each design requires</h3>
+  <p>All designs use the same long table; what changes is which columns are present and which role they receive. In the table, R is response, F factor, B block, Ro row, Co column and X covariate.</p>
+
+  <table>
+    <caption><b>Table A.4.</b> Columns and roles for each design in Block 5.</caption>
+    <thead><tr><th style="width:30%">Design</th><th style="width:30%">Columns and roles</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Completely randomised</td><td>F · R</td><td>Replication may be unequal.</td></tr>
+      <tr><td>Randomised complete blocks</td><td>B · F · R</td><td>Each treatment once per block.</td></tr>
+      <tr><td>Generalised blocks</td><td>B · F · R</td><td>Some treatment more than once in a block.</td></tr>
+      <tr><td>Latin square</td><td>Ro · Co · F · R</td><td>As many rows and columns as treatments.</td></tr>
+      <tr><td>Incomplete blocks</td><td>B (replicate) · B (block) · F · R</td><td>Two columns with the block role: the first is the replicate and the second the block within it.</td></tr>
+      <tr><td>Augmented</td><td>B · F · R</td><td>F holds checks and entries; the checks are repeated in every block.</td></tr>
+      <tr><td>Factorial (completely randomised or in blocks)</td><td>[B] · F · F [· F · F] · R</td><td>From 2 to 4 factors.</td></tr>
+      <tr><td>Split-plot</td><td>B · F (main plot) · F (sub-plot) · R</td><td>The order of the factors in the table matters: the first is the main-plot factor.</td></tr>
+      <tr><td>Strip-plot</td><td>B · F (horizontal strip) · F (vertical strip) · R</td><td>Three error terms.</td></tr>
+      <tr><td>Split-split-plot</td><td>B · F · F · F · R</td><td>Main plot, sub-plot and sub-sub-plot, in that order.</td></tr>
+      <tr><td>Nested</td><td>F (upper) · F (nested) · R</td><td>The levels of the nested factor may be written differently within each upper level or repeated; the app treats them within each one.</td></tr>
+      <tr><td>Repeated measures over time</td><td>B · F · F (date) · R</td><td>Analysed as a split-plot with date as the sub-plot.</td></tr>
+      <tr><td>With a covariate</td><td>Any of the above + X</td><td>The covariate is numeric and was measured before the treatment was applied.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="ejemplo-archivo">
+  <p class="pre-t"><b>Randomised complete blocks</b> · <code>rcbd_maize_nitrogen.csv</code></p>
+  <pre class="archivo">Block,Nitrogen_kg_ha,Yield_t_ha
+1,0,4.62
+1,60,6.21
+1,120,7.34
+…</pre>
+  </div>
+  <div class="ejemplo-archivo">
+  <p class="pre-t"><b>Latin square</b> · <code>latin_square_wheat.csv</code></p>
+  <pre class="archivo">Row,Column,Treatment,Yield_t_ha
+1,1,A,3.28
+1,2,B,3.91
+…</pre>
+  </div>
+  <div class="ejemplo-archivo">
+  <p class="pre-t"><b>Split-plot</b> · <code>split_plot_irrigation.csv</code> (irrigation comes first because it is the main plot)</p>
+  <pre class="archivo">Block,Irrigation,Variety,Yield_t_ha
+1,Drip,V1,8.42
+1,Drip,V2,9.15
+…</pre>
+  </div>
+  <div class="ejemplo-archivo">
+  <p class="pre-t"><b>Factorial in blocks with two responses</b> · <code>factorial_tomato_rcbd.csv</code></p>
+  <pre class="archivo">Block,Variety,Fertilizer,Yield_kg_plant,Height_cm
+1,Rio Grande,F0,2.85,118
+1,Rio Grande,F1,3.62,131
+…</pre>
+  </div>
+  <div class="ejemplo-archivo">
+  <p class="pre-t"><b>Blocks with a covariate</b> (illustrative example, not included in the app)</p>
+  <pre class="archivo">Pen,Block,Diet,Initial_weight_kg,Final_weight_kg
+1,1,Control,24.1,38.6
+2,1,Silage,23.4,40.2
+…</pre>
+  </div>
+
+  <h3>A.3 Files produced by the app</h3>
+  <table class="compacta">
+    <caption><b>Table A.5.</b> Output files and the block that generates them.</caption>
+    <thead><tr><th style="width:36%">File</th><th>Contents</th><th style="width:10%" class="c">Block</th></tr></thead>
+    <tbody>
+      <tr><td><code>{file}_clean.csv</code></td><td>The tidy table used by the app, without excluded columns.</td><td class="c">2</td></tr>
+      <tr><td><code>{response}_descriptives.csv</code></td><td>Statistics by group.</td><td class="c">3</td></tr>
+      <tr><td><code>{response}_anova.csv</code> · <code>…_means.csv</code></td><td>ANOVA table; means with letters for each factor.</td><td class="c">5</td></tr>
+      <tr><td>Figures: <code>.png</code> <code>.tif</code> <code>.svg</code> <code>.jpg</code> <code>.webp</code></td><td>Each figure, with a name that describes its content. PNG and TIFF record the dpi of the chosen resolution.</td><td class="c">3–8</td></tr>
+      <tr><td><code>{response}_figures_{dpi}dpi.zip</code></td><td>All the figures in the gallery and a <code>README.txt</code>.</td><td class="c">6</td></tr>
+      <tr><td><code>{title}.html</code></td><td>The self-contained report.</td><td class="c">7</td></tr>
+      <tr><td><code>{title}_package.zip</code></td><td>Report, data, tables in CSV and figures (section 8.4).</td><td class="c">7</td></tr>
+      <tr><td><code>field_book_{design}_seed{seed}.csv</code> · <code>.xlsx</code></td><td>The field book; the Excel workbook also contains the <code>Info</code> sheet.</td><td class="c">8</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · the CSV files written by the app</div>
+    <p>All output CSV files use a comma as delimiter, a decimal point and UTF-8 encoding with a byte order mark, so that Excel displays accented characters correctly in any language setting. If your Excel opens the file in a single column, use <b>Data › From Text/CSV</b> and choose the comma as delimiter.</p>
+  </div>
+
+  <!-- ====================================================================== B -->
+  <h2 id="ap-b" data-nueva-hoja><span class="num">B</span>Decision rules at a glance</h2>
+  <p class="lead">The manual’s decision rules, in the order of the app. Each box gives the section that explains the theory behind it. Read them as guides for interpretation, not as laws: the crop, the site and the aim of the trial always come first.</p>
+<!-- reglas: inicio (lo escribe herramientas/reunir-reglas.pl; no editar a mano) -->
+  <ul class="indice-reglas">
+    <li class="grupo"><span class="chip k0">1</span>Introduction to AgriDesign</li>
+    <li><b>1.9</b>Reading a P value</li>
+    <li class="grupo"><span class="chip k1">B1</span>Home, simulator and theory</li>
+    <li><b>2.2</b>Block or not?</li>
+    <li><b>2.4</b>From the field layout to the design</li>
+    <li class="grupo"><span class="chip k2">B2</span>Data and variable roles</li>
+    <li><b>3.4</b>How the app proposes the role of a column</li>
+    <li class="grupo"><span class="chip k3">B3</span>Descriptive statistics</li>
+    <li><b>4.3</b>Reading the ANOVA CV in agricultural trials</li>
+    <li><b>4.4</b>Reading the profiles by block</li>
+    <li class="grupo"><span class="chip k4">B4</span>Assumptions, transformations and non-parametric tests</li>
+    <li><b>5.2</b>The grade of the diagnosis</li>
+    <li><b>5.2</b>What to do with a suspicious plot</li>
+    <li><b>5.5</b>ANOVA, transformation or ranks</li>
+    <li class="grupo"><span class="chip k5">B5</span>Designs, ANOVA and mean comparisons</li>
+    <li><b>6.3</b>What to read first in the table</li>
+    <li><b>6.6</b>Which curve to report</li>
+    <li class="grupo"><span class="chip k6">B6</span>Graphics of results</li>
+    <li><b>7.1</b>What a figure caption must include</li>
+    <li><b>7.2</b>Reading the residual map</li>
+    <li class="grupo"><span class="chip k7">B7</span>Report and export</li>
+    <li><b>8.3</b>What to take from the report into a paper</li>
+    <li class="grupo"><span class="chip k8">B8</span>Design generator and power</li>
+    <li><b>9.2</b>When to change the seed</li>
+    <li><b>9.5</b>What to do with the result</li>
+  </ul>
+
+  <h3 class="ap-cap"><span class="chip k0">1</span>Introduction to AgriDesign</h3>
+
+  <div class="caja regla">
+  <div class="caja-t"><span class="ico">✓</span>Decision rule · reading a P value<span class="sec-ref">Section 1.9</span></div>
+  <table class="compacta">
+    <thead><tr><th style="width:24%">P value</th><th style="width:28%">Evidence against equal means</th><th>How to write it</th></tr></thead>
+    <tbody>
+      <tr><td><b>P &lt; 0.001</b></td><td>Very strong</td><td>“The treatment effect was highly significant.”</td></tr>
+      <tr><td><b>0.001 ≤ P &lt; 0.01</b></td><td>Strong</td><td>“The effect was significant.”</td></tr>
+      <tr><td><b>0.01 ≤ P &lt; 0.05</b></td><td>Moderate</td><td>“There was evidence of differences”; it is worth confirming in another season or location.</td></tr>
+      <tr><td><b>P ≥ 0.05</b></td><td>Insufficient</td><td>“No differences were detected.” Do not claim that the treatments <i>are equal</i>: there may not have been enough replicates.</td></tr>
+    </tbody>
+  </table>
+  <p class="regla-pie">Always report the exact P value, the F with its degrees of freedom and the effect size (the means with their standard errors, or η²), not just whether the result is significant.</p>
+  </div>
+
+  <h3 class="ap-cap"><span class="chip k1">B1</span>Home, simulator and theory</h3>
+
+  <div class="caja regla">
+  <div class="caja-t"><span class="ico">✓</span>Decision rule · block or not?<span class="sec-ref">Section 2.2</span></div>
+  <table class="compacta">
+    <thead><tr><th style="width:44%">If the experimental units…</th><th>then…</th></tr></thead>
+    <tbody>
+      <tr><td>are in the field, on land with uneven slope, moisture or history</td><td>Randomised complete blocks, with the blocks perpendicular to the gradient.</td></tr>
+      <tr><td>have two crossed gradients (rows and columns, animals and periods)</td><td>Latin square, if the number of treatments allows it.</td></tr>
+      <tr><td>are handled in different batches, days or lots</td><td>Each batch is a block, even if the land is uniform.</td></tr>
+      <tr><td>are pots on a uniform bench or animals of the same weight and age</td><td>Complete randomisation; you gain degrees of freedom and lose nothing.</td></tr>
+      <tr><td>are so many that a block cannot hold all the treatments</td><td>Incomplete blocks (lattices, alpha designs), Block 5.</td></tr>
+    </tbody>
+  </table>
+  <p class="regla-pie">When in doubt, block: the cost is r − 1 degrees of freedom; the benefit can be half the error.</p>
+  </div>
+
+  <div class="caja regla">
+  <div class="caja-t"><span class="ico">✓</span>Decision rule · from the field layout to the design<span class="sec-ref">Section 2.4</span></div>
+  <table class="compacta">
+    <thead><tr><th style="width:40%">Your experiment has…</th><th style="width:26%">Design</th><th>Typical case</th></tr></thead>
+    <tbody>
+      <tr><td>One factor, homogeneous units, no gradient</td><td>Completely randomised</td><td>Pots on a bench; animals of the same weight</td></tr>
+      <tr><td>One factor, one known gradient</td><td>Randomised complete blocks</td><td>Slope of the land; litter or barn; sampling day</td></tr>
+      <tr><td>One factor, two gradients</td><td>Latin square</td><td>Rows × columns of the field; animals × periods</td></tr>
+      <tr><td>Two or more factors studied together</td><td>Factorial, completely randomised or in blocks</td><td>Variety × fertiliser; breed × diet</td></tr>
+      <tr><td>One factor on main plots and another within them</td><td>Split-plot</td><td>Irrigation × varieties; pasture × stocking rate</td></tr>
+      <tr><td>Many treatments, blocks that cannot hold them all</td><td>Incomplete blocks (lattice, alpha)</td><td>Variety trials with 20 to 100 entries</td></tr>
+      <tr><td>A numeric variable measured before treatment</td><td>Any of the above + covariate</td><td>Initial weight; plant stand; soil analysis</td></tr>
+    </tbody>
+  </table>
+  <p class="regla-pie">This is the same table the app shows under <span class="ui">Choosing the design from the layout</span>; the Block 5 chapter develops it design by design.</p>
+  </div>
+
+  <h3 class="ap-cap"><span class="chip k2">B2</span>Data and variable roles</h3>
+
+  <div class="caja regla">
+  <div class="caja-t"><span class="ico">✓</span>Decision rule · how the app proposes the role of a column<span class="sec-ref">Section 3.4</span></div>
+  <table class="compacta">
+    <thead><tr><th style="width:46%">If the column…</th><th>the app proposes…</th></tr></thead>
+    <tbody>
+      <tr><td>is called Block, Rep, Replicate, Bloque, Repetición or R (in any combination of upper and lower case)</td><td><span class="ui">Block / replicate</span></td></tr>
+      <tr><td>is called Row, Fila, Hilera, Renglón · Col, Column, Columna</td><td><span class="ui">Row</span> · <span class="ui">Column</span></td></tr>
+      <tr><td>is called Plot, Parcela, ID, Sample, Muestra, Obs… and all its values are distinct</td><td><span class="ui">Identifier / plot</span></td></tr>
+      <tr><td>is text with up to 40 levels</td><td><span class="ui">Treatment factor</span></td></tr>
+      <tr><td>is text with all its values distinct, or with more than 40 categories</td><td><span class="ui">Identifier / plot</span> · <span class="ui">Exclude</span></td></tr>
+      <tr><td>is numeric with a few integer values, each repeated almost the same number of times, and is not named like a measurement</td><td><span class="ui">Treatment factor</span>, labelled <span class="ui">Integer codes (n levels)</span></td></tr>
+      <tr><td>is numeric with few values, but with unequal counts or a measurement name (score, yield, height, peso, altura…)</td><td><span class="ui">Response (Y)</span>, with the flag <span class="ui">integer codes → factor?</span></td></tr>
+      <tr><td>is called Cov, Covariate, Covariable, Initial, Inicial, Stand…</td><td><span class="ui">Covariate (ANCOVA)</span></td></tr>
+      <tr><td>is numeric and has no variation</td><td><span class="ui">Exclude</span>, labelled <span class="ui">Constant</span></td></tr>
+      <tr><td>is numeric and none of the previous rules applies</td><td><span class="ui">Response (Y)</span></td></tr>
+    </tbody>
+  </table>
+  <p class="regla-pie">These are proposals. A column with codes 1, 2, 3, 4 for the varieties looks numeric: if the app leaves it as a response, change it to a factor. And the other way round: a score from 1 to 9 with even counts may be taken for treatment codes.</p>
+  </div>
+
+  <h3 class="ap-cap"><span class="chip k3">B3</span>Descriptive statistics</h3>
+
+  <div class="caja regla">
+  <div class="caja-t"><span class="ico">✓</span>Decision rule · reading the ANOVA CV in agricultural trials<span class="sec-ref">Section 4.3</span></div>
+  <table class="compacta">
+    <thead><tr><th style="width:22%">CV</th><th style="width:30%">Reading</th><th>Typical of…</th></tr></thead>
+    <tbody>
+      <tr><td><b>&lt; 10%</b></td><td>Excellent precision</td><td>Plant height, phenology, greenhouse and laboratory trials.</td></tr>
+      <tr><td><b>10 to 20%</b></td><td>Normal in the field</td><td>Grain yield in well-managed field plots.</td></tr>
+      <tr><td><b>20 to 30%</b></td><td>High; precision is limited</td><td>Yield under difficult conditions, counts, quality variables.</td></tr>
+      <tr><td><b>&gt; 30%</b></td><td>Very high; check</td><td>Insect counts, disease severity, or a trial with problems: heterogeneous land, lost plots, typing errors, a variable that calls for a transformation.</td></tr>
+    </tbody>
+  </table>
+  <p class="regla-pie">The app applies these cut-offs to the cards and to the interpretation: green up to 20%, amber up to 30%, red above. They are benchmarks for yield; every variable has its own.</p>
+  </div>
+
+  <div class="caja regla">
+  <div class="caja-t"><span class="ico">✓</span>Decision rule · reading the profiles by block<span class="sec-ref">Section 4.4</span></div>
+  <table class="compacta">
+    <thead><tr><th style="width:40%">If the lines…</th><th>then…</th></tr></thead>
+    <tbody>
+      <tr><td>are nearly parallel and vertically separated</td><td>Blocking captured a real difference between blocks and the additive model is reasonable. This is what a good trial looks like.</td></tr>
+      <tr><td>are nearly parallel and overlap</td><td>The blocks do not differ; blocking cost no more than a few degrees of freedom.</td></tr>
+      <tr><td>cross at a single point</td><td>A suspicious plot. Look it up in the field book before going on.</td></tr>
+      <tr><td>cross all over the place</td><td>Block × treatment interaction: the ranking of the treatments changes from block to block. Check additivity in Block 4; a transformation may be needed.</td></tr>
+    </tbody>
+  </table>
+  <p class="regla-pie">The same reading applies to the interaction plot between two factors, except that there the interaction may be the very result you are looking for.</p>
+  </div>
+
+  <h3 class="ap-cap"><span class="chip k4">B4</span>Assumptions, transformations and non-parametric tests</h3>
+
+  <div class="caja regla">
+  <div class="caja-t"><span class="ico">✓</span>Decision rule · the grade of the diagnosis<span class="sec-ref">Section 5.2</span></div>
+  <table class="compacta">
+    <thead><tr><th style="width:9%">Grade</th><th style="width:33%">When</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr><td><b>A</b></td><td>All checks green.</td><td>Go on to Block 5 with the original scale.</td></tr>
+      <tr><td><b>B</b></td><td>One amber warning.</td><td>The ANOVA is acceptable. Mention the check in the methods; if the warning concerns variances, be careful with the mean comparisons.</td></tr>
+      <tr><td><b>C</b></td><td>One red check, or two amber warnings.</td><td>Compare the transformations or use the non-parametric route, and report which you chose and why.</td></tr>
+      <tr><td><b>D</b></td><td>Two or more red checks.</td><td>A transformation will hardly fix everything: rank-based procedures are the safe option, or a generalised linear model for counts and proportions.</td></tr>
+    </tbody>
+  </table>
+  <p class="regla-pie">Each test is coloured according to its P value: green if P ≥ α, amber if α/5 ≤ P &lt; α (between 0.01 and 0.05 with α = 0.05) and red if P &lt; α/5.</p>
+  </div>
+
+  <div class="caja regla">
+  <div class="caja-t"><span class="ico">✓</span>Decision rule · what to do with a suspicious plot<span class="sec-ref">Section 5.2</span></div>
+  <table class="compacta">
+    <thead><tr><th style="width:40%">If in the field book you find…</th><th>then…</th></tr></thead>
+    <tbody>
+      <tr><td>a typing error (a misplaced decimal point, two transposed digits)</td><td>Correct the value in the file and reload it.</td></tr>
+      <tr><td>a plot damaged by animals, flooding or irrigation failure, documented</td><td>Declare it missing (empty cell) and say so in the methods.</td></tr>
+      <tr><td>nothing abnormal</td><td>The value stays. If it is very influential, analyse with and without it and report both.</td></tr>
+    </tbody>
+  </table>
+  <p class="regla-pie">A value is never deleted just because it is in the way. A large unexplained residual is information about the trial, not an error.</p>
+  </div>
+
+  <div class="caja regla">
+  <div class="caja-t"><span class="ico">✓</span>Decision rule · ANOVA, transformation or ranks<span class="sec-ref">Section 5.5</span></div>
+  <table class="compacta">
+    <thead><tr><th style="width:44%">If…</th><th>then…</th></tr></thead>
+    <tbody>
+      <tr><td>the grade is A or B and the response is continuous</td><td>ANOVA on the original scale (Block 5).</td></tr>
+      <tr><td>the grade is C or D and a conventional transformation raises it to A or B</td><td>ANOVA with the transformed response and back-transformed means.</td></tr>
+      <tr><td>no transformation is enough</td><td>The non-parametric route for the design, or a generalised linear model for counts and proportions.</td></tr>
+      <tr><td>the response is an ordinal score (1 to 5, 1 to 9)</td><td>The non-parametric route, whatever the assumptions say.</td></tr>
+      <tr><td>the data are normal but the variances very unequal, with a single factor and no blocks</td><td>Welch with Games–Howell.</td></tr>
+    </tbody>
+  </table>
+  <p class="regla-pie">Rank tests lose little power when the data are normal (about 5% for Kruskal–Wallis compared with the F-test) and can gain a great deal when they are not.</p>
+  </div>
+
+  <h3 class="ap-cap"><span class="chip k5">B5</span>Designs, ANOVA and mean comparisons</h3>
+
+  <div class="caja regla">
+  <div class="caja-t"><span class="ico">✓</span>Decision rule · what to read first in the table<span class="sec-ref">Section 6.3</span></div>
+  <table class="compacta">
+    <thead><tr><th style="width:40%">If…</th><th>then…</th></tr></thead>
+    <tbody>
+      <tr><td>there is a significant interaction</td><td>Read the cell means and the simple effects (section 6.5). Main effects on their own can be misleading.</td></tr>
+      <tr><td>there is no interaction and a main effect is significant</td><td>Separate the means of that factor (section 6.4).</td></tr>
+      <tr><td>the factor is quantitative (doses, densities, dates)</td><td>Fit the trend (section 6.6) in addition to, or instead of, the letters.</td></tr>
+      <tr><td>the block is significant</td><td>It is not a result about the treatments: it says that blocking was worthwhile.</td></tr>
+      <tr><td>the treatment F is not significant</td><td>Do not separate means with the LSD: the difference is not protected. Report the absence of differences with its power in mind.</td></tr>
+    </tbody>
+  </table>
+  <p class="regla-pie">In the paper, report for each factor and interaction the F with its two degrees of freedom and the P value, the CV of the trial and, preferably, the partial η².</p>
+  </div>
+
+  <div class="caja regla">
+  <div class="caja-t"><span class="ico">✓</span>Decision rule · which curve to report<span class="sec-ref">Section 6.6</span></div>
+  <table class="compacta">
+    <thead><tr><th style="width:40%">If the highest significant component is…</th><th>then…</th></tr></thead>
+    <tbody>
+      <tr><td>none</td><td>The response does not change systematically with the dose.</td></tr>
+      <tr><td>linear</td><td>A straight line: each unit of dose adds the same amount. There is no optimum within the range; higher doses are worth testing.</td></tr>
+      <tr><td>quadratic</td><td>A curve with a maximum or minimum; report the equation, R² and the optimum if it falls within the range.</td></tr>
+      <tr><td>cubic or higher</td><td>A more complex shape; with four or five doses it is usually noise or an atypical dose. Check before interpreting it.</td></tr>
+    </tbody>
+  </table>
+  <p class="regla-pie">Exact polynomial contrasts require equally spaced doses; the curve is fitted with the actual dose values.</p>
+  </div>
+
+  <h3 class="ap-cap"><span class="chip k6">B6</span>Graphics of results</h3>
+
+  <div class="caja regla">
+  <div class="caja-t"><span class="ico">✓</span>Decision rule · what a figure caption must include<span class="sec-ref">Section 7.1</span></div>
+  <table class="compacta">
+    <thead><tr><th style="width:34%">Element</th><th>How to write it</th></tr></thead>
+    <tbody>
+      <tr><td>What the bars are</td><td>“Means ± standard error (n = 4)”. Never implicit.</td></tr>
+      <tr><td>What the letters mean</td><td>“Means with the same letter do not differ significantly (Tukey, α = 0.05)”. The test goes in the caption, not in the title.</td></tr>
+      <tr><td>Double letters</td><td>“ab” belongs to both groups; it is not corrected by hand.</td></tr>
+      <tr><td>Y axis</td><td>Bars start at zero; points may zoom in, and the caption says so.</td></tr>
+      <tr><td>Units</td><td>In the axis label: “Grain yield (t ha⁻¹)”.</td></tr>
+      <tr><td>Colour</td><td>Colour-blind-safe palettes (Okabe–Ito, Paul Tol) and, if the figure will be printed in grey, distinct markers or line types as well as colour.</td></tr>
+    </tbody>
+  </table>
+  <p class="regla-pie">The app's figures already state in the subtitle the type of bar and the test behind the letters. Copy that information into the caption before deleting the subtitle.</p>
+  </div>
+
+  <div class="caja regla">
+  <div class="caja-t"><span class="ico">✓</span>Decision rule · reading the residual map<span class="sec-ref">Section 7.2</span></div>
+  <table class="compacta">
+    <thead><tr><th style="width:44%">If the colours…</th><th>then…</th></tr></thead>
+    <tbody>
+      <tr><td>are scattered with no pattern, like a random chequerboard</td><td>The design absorbed the variation of the land. As expected.</td></tr>
+      <tr><td>form a strip of the same sign along a row or column</td><td>A gradient that blocking did not capture; in the next trial, orient the blocks perpendicular to that strip.</td></tr>
+      <tr><td>form a patch in one corner</td><td>A local problem (waterlogging, edge, shade); check the field notebook.</td></tr>
+      <tr><td>stand out in a single plot</td><td>A suspect plot; compare it with the table of suspect observations in Block 4.</td></tr>
+    </tbody>
+  </table>
+  <p class="regla-pie">The <span class="ui">Centre the colour scale at zero</span> checkbox is ticked by default in the residual map so that the neutral colour corresponds to a zero residual.</p>
+  </div>
+
+  <h3 class="ap-cap"><span class="chip k7">B7</span>Report and export</h3>
+
+  <div class="caja regla">
+  <div class="caja-t"><span class="ico">✓</span>Decision rule · what to take from the report into a paper<span class="sec-ref">Section 8.3</span></div>
+  <table class="compacta">
+    <thead><tr><th style="width:36%">From the report…</th><th>into the manuscript…</th></tr></thead>
+    <tbody>
+      <tr><td>Methods paragraph</td><td>Into the materials and methods section, after adding what the app cannot know: location, soil, crop management, plot size and dates.</td></tr>
+      <tr><td>ANOVA table</td><td>Summarised: F with its degrees of freedom and P for each source, and the CV. The full table goes to the supplementary material.</td></tr>
+      <tr><td>Means with letters</td><td>Into a table in the paper, with the caption the report already provides (test, α, minimum difference).</td></tr>
+      <tr><td>Draft results</td><td>As a starting point; replace the column names with readable names and add the agronomic interpretation.</td></tr>
+      <tr><td>Figures</td><td>From the ZIP or the Block 6 gallery, at the journal’s resolution (chapter 7), not from the PDF.</td></tr>
+      <tr><td>Appendices and data</td><td>Into the supplementary material.</td></tr>
+    </tbody>
+  </table>
+  <p class="regla-pie">The figure captions in the report repeat the title of each figure; in the paper, rewrite them with the information in table 7.1.</p>
+  </div>
+
+  <h3 class="ap-cap"><span class="chip k8">B8</span>Design generator and power</h3>
+
+  <div class="caja regla">
+  <div class="caja-t"><span class="ico">✓</span>Decision rule · when to change the seed<span class="sec-ref">Section 9.2</span></div>
+  <table class="compacta">
+    <thead><tr><th style="width:44%">If the layout…</th><th>then…</th></tr></thead>
+    <tbody>
+      <tr><td>has two neighbouring plots with the same treatment</td><td>Leave it: that is part of chance. “Improving” a randomisation by hand invalidates it.</td></tr>
+      <tr><td>is impossible in the field (irrigation that does not reach, machinery that does not fit)</td><td>Change the seed and record in the protocol the reason and the discarded seed.</td></tr>
+      <tr><td>must be repeated at another location</td><td>Use a different seed at each location and record them all.</td></tr>
+    </tbody>
+  </table>
+  <p class="regla-pie">Never choose the seed by trying until the layout “looks right”: that is choosing the layout, not randomising it.</p>
+  </div>
+
+  <div class="caja regla">
+  <div class="caja-t"><span class="ico">✓</span>Decision rule · what to do with the result<span class="sec-ref">Section 9.5</span></div>
+  <table class="compacta">
+    <thead><tr><th style="width:44%">If the replicates required…</th><th>then…</th></tr></thead>
+    <tbody>
+      <tr><td>fit the land and the budget</td><td>Sow at least that many, and check that the skeleton ANOVA leaves 10 to 12 degrees of freedom for error.</td></tr>
+      <tr><td>are twice as many as possible</td><td>Work on the CV (plots, borders, blocks) or reduce the number of treatments: fewer treatments well tested are worth more than many poorly tested.</td></tr>
+      <tr><td>are far more than possible</td><td>Accept a larger detectable difference and state it in the protocol, or redesign the trial across several locations or seasons.</td></tr>
+      <tr><td>cannot be calculated (more than 200)</td><td>The difference of interest is too small for that CV; there is no point in sowing the trial that way.</td></tr>
+    </tbody>
+  </table>
+  <p class="regla-pie">An underpowered trial is no saving: if it finds no differences, there is no way to tell whether there are none or whether it could not see them.</p>
+  </div>
+<!-- reglas: fin -->
+
+  <!-- ====================================================================== C -->
+<!-- ui:literal -->
+  <h2 id="ap-c" data-nueva-hoja><span class="num">C</span>English–Spanish glossary</h2>
+  <p class="lead">The abbreviations and terms used in the manual, with a short definition, their Spanish name (the one the app shows when switched to Spanish and the one used in the Spanish-language literature) and the section where they are explained in detail.</p>
+
+  <h3>C.1 Abbreviations</h3>
+  <table class="compacta">
+    <caption><b>Table C.1.</b> Abbreviations used in the manual and in the app. Where the Spanish abbreviation differs, it follows the English one.</caption>
+    <thead><tr><th style="width:12%">Abbreviation</th><th style="width:38%">Meaning</th><th style="width:12%">Abbreviation</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><b>ANCOVA</b></td><td>Analysis of covariance</td><td><b>LS mean</b></td><td>Least-squares (adjusted) mean</td></tr>
+      <tr><td><b>ANOVA</b></td><td>Analysis of variance</td><td><b>LSD</b></td><td>Fisher’s least significant difference</td></tr>
+      <tr><td><b>ART</b></td><td>Aligned rank transform</td><td><b>MS · CM</b></td><td>Mean square</td></tr>
+      <tr><td><b>BIBD</b></td><td>Balanced incomplete block design</td><td><b>MSD</b></td><td>Minimum significant difference of a test</td></tr>
+      <tr><td><b>CI · IC</b></td><td>Confidence interval</td><td><b>MSE · CME</b></td><td>Error mean square</td></tr>
+      <tr><td><b>CRD · DCA</b></td><td>Completely randomised design</td><td><b>RCBD · DBCA</b></td><td>Randomised complete block design</td></tr>
+      <tr><td><b>CSV</b></td><td>Comma-separated values</td><td><b>REGWQ</b></td><td>Ryan–Einot–Gabriel–Welsch multiple range test</td></tr>
+      <tr><td><b>CV</b></td><td>Coefficient of variation</td><td><b>RMSE</b></td><td>Root mean square error</td></tr>
+      <tr><td><b>df · gl</b></td><td>Degrees of freedom</td><td><b>SD · DE</b></td><td>Standard deviation</td></tr>
+      <tr><td><b>DOI</b></td><td>Digital object identifier</td><td><b>SE · EE</b></td><td>Standard error</td></tr>
+      <tr><td><b>dpi</b></td><td>Dots per inch</td><td><b>SNK</b></td><td>Student–Newman–Keuls test</td></tr>
+      <tr><td><b>FDR</b></td><td>False discovery rate</td><td><b>SS · SC</b></td><td>Sum of squares</td></tr>
+      <tr><td><b>HSD</b></td><td>Tukey’s honestly significant difference</td><td><b>SVG · PNG · TIFF</b></td><td>Vector and bitmap image formats</td></tr>
+      <tr><td><b>η²<sub>p</sub></b></td><td>Partial eta squared: effect size</td><td><b>ZIP</b></td><td>Compressed archive holding several files</td></tr>
+    </tbody>
+  </table>
+
+  <h3>C.2 Terms</h3>
+  <table class="compacta">
+    <caption><b>Table C.2.</b> Glossary in alphabetical order.</caption>
+    <thead><tr><th style="width:26%">Term</th><th>Definition</th><th style="width:9%" class="c">Section</th></tr></thead>
+    <tbody>
+      <tr class="letra"><td colspan="3">A</td></tr>
+      <tr><td class="termino"><b>Additivity</b><br><span class="small">aditividad</span></td><td>Block and treatment effects add up: there is no block × treatment interaction. It is tested with Tukey’s one degree of freedom.</td><td class="c">5.2</td></tr>
+      <tr><td class="termino"><b>Arcsine square root</b><br><span class="small">arcoseno</span></td><td>The arcsin √(p) transformation for percentages that come from counts.</td><td class="c">5.4</td></tr>
+      <tr><td class="termino"><b>Assumptions of the ANOVA</b><br><span class="small">supuestos del ANOVA</span></td><td>Independence, normality and homogeneity of variances of the error, and additivity in block designs.</td><td class="c">5.1</td></tr>
+      <tr><td class="termino"><b>Augmented design</b><br><span class="small">diseño aumentado</span></td><td>Checks repeated in every block plus new unreplicated entries; the error is estimated from the checks.</td><td class="c">6.1</td></tr>
+      <tr class="letra"><td colspan="3">B</td></tr>
+      <tr><td class="termino"><b>Back-transformed mean</b><br><span class="small">media destransformada</span></td><td>A mean calculated on the transformed scale and returned to the original scale.</td><td class="c">5.4 · 6.6</td></tr>
+      <tr><td class="termino"><b>Block</b><br><span class="small">bloque</span></td><td>A group of similar units that receives all the treatments; it separates the variation between groups from the error.</td><td class="c">1.3</td></tr>
+      <tr><td class="termino"><b>Block profile</b><br><span class="small">perfil por bloque</span></td><td>A plot with one line per block across the treatments; parallel lines indicate additivity.</td><td class="c">4.4</td></tr>
+      <tr><td class="termino"><b>Box–Cox</b></td><td>Family of power transformations (y<sup>λ</sup> − 1)/λ; its likelihood profile shows which power the data support.</td><td class="c">5.4</td></tr>
+      <tr class="letra"><td colspan="3">C</td></tr>
+      <tr><td class="termino"><b>Coefficient of variation</b><br><span class="small">coeficiente de variación</span></td><td>Standard deviation divided by the mean, as a percentage. The ANOVA CV uses the square root of the MSE and measures the precision of the trial.</td><td class="c">4.3</td></tr>
+      <tr><td class="termino"><b>Compact letter display</b><br><span class="small">letras</span></td><td>Summary of a mean comparison test: two means that share a letter do not differ.</td><td class="c">6.4</td></tr>
+      <tr><td class="termino"><b>Contrast</b><br><span class="small">contraste</span></td><td>A planned comparison between groups of treatments, defined by coefficients that sum to zero.</td><td class="c">6.6</td></tr>
+      <tr><td class="termino"><b>Control, check</b><br><span class="small">testigo</span></td><td>The reference treatment against which the others are compared.</td><td class="c">6.4 · 9.3</td></tr>
+      <tr><td class="termino"><b>Covariate</b><br><span class="small">covariable</span></td><td>A numeric variable measured before the treatment that is included in the model to adjust the means.</td><td class="c">3.4</td></tr>
+      <tr class="letra"><td colspan="3">D</td></tr>
+      <tr><td class="termino"><b>Detectable difference</b><br><span class="small">diferencia detectable</span></td><td>The smallest difference, as a percentage of the mean, that a trial detects with the desired power.</td><td class="c">9.5</td></tr>
+      <tr class="letra"><td colspan="3">E</td></tr>
+      <tr><td class="termino"><b>Error stratum</b><br><span class="small">estrato de error</span></td><td>Each error term in a design with several unit sizes; each source is tested against its own.</td><td class="c">6.1</td></tr>
+      <tr><td class="termino"><b>Experimental error</b><br><span class="small">error experimental</span></td><td>Variation between units treated alike; the yardstick against which differences are judged.</td><td class="c">1.3</td></tr>
+      <tr><td class="termino"><b>Experimental unit, plot</b><br><span class="small">unidad experimental</span></td><td>The smallest unit that receives a treatment independently: plot, pot, pen.</td><td class="c">1.3</td></tr>
+      <tr class="letra"><td colspan="3">F</td></tr>
+      <tr><td class="termino"><b>Factorial</b><br><span class="small">factorial</span></td><td>Two or more factors studied together in all their combinations.</td><td class="c">6.5</td></tr>
+      <tr><td class="termino"><b>Field book</b><br><span class="small">libreta de campo</span></td><td>The table with one row per plot in which the measurements are recorded.</td><td class="c">9.4</td></tr>
+      <tr><td class="termino"><b>Field layout, field map</b><br><span class="small">croquis</span></td><td>Plan of the trial showing the position of each plot and its treatment.</td><td class="c">9.3</td></tr>
+      <tr class="letra"><td colspan="3">I</td></tr>
+      <tr><td class="termino"><b>Interaction</b><br><span class="small">interacción</span></td><td>The effect of one factor depends on the level of the other.</td><td class="c">6.5</td></tr>
+      <tr class="letra"><td colspan="3">L</td></tr>
+      <tr><td class="termino"><b>Latin square</b><br><span class="small">cuadro latino</span></td><td>A design that blocks in two directions: each treatment appears once in each row and in each column.</td><td class="c">6.1</td></tr>
+      <tr><td class="termino"><b>Least-squares mean</b><br><span class="small">media ajustada</span></td><td>The mean predicted by the model with the other factors averaged and the covariates at their means.</td><td class="c">6.4</td></tr>
+      <tr class="letra"><td colspan="3">M</td></tr>
+      <tr><td class="termino"><b>Mean-separation test</b><br><span class="small">prueba de separación de medias</span></td><td>A procedure that compares treatment means pairwise or against a control.</td><td class="c">6.2</td></tr>
+      <tr class="letra"><td colspan="3">O</td></tr>
+      <tr><td class="termino"><b>Observational unit</b><br><span class="small">unidad observacional</span></td><td>What is measured, which may be smaller than the experimental unit: a plant within the plot, an animal within the pen.</td><td class="c">1.3</td></tr>
+      <tr><td class="termino"><b>Orthogonal polynomial contrasts</b><br><span class="small">polinomios ortogonales</span></td><td>Contrasts that partition the sum of squares of a quantitative factor into linear, quadratic and cubic components.</td><td class="c">6.6</td></tr>
+      <tr class="letra"><td colspan="3">P</td></tr>
+      <tr><td class="termino"><b>Power</b><br><span class="small">potencia</span></td><td>The probability of detecting a difference that exists: 1 − β.</td><td class="c">9.5</td></tr>
+      <tr><td class="termino"><b>P-value</b><br><span class="small">valor P</span></td><td>The probability of a result as extreme as the one observed if there were no effect.</td><td class="c">1.9</td></tr>
+      <tr class="letra"><td colspan="3">R</td></tr>
+      <tr><td class="termino"><b>Random seed</b><br><span class="small">semilla</span></td><td>The starting number of the random number generator; the same seed reproduces the same randomisation.</td><td class="c">9.2</td></tr>
+      <tr><td class="termino"><b>Randomisation</b><br><span class="small">aleatorización</span></td><td>Assigning the treatments to the units by lot. It protects against unknown biases and justifies the F test.</td><td class="c">1.3 · 9.2</td></tr>
+      <tr><td class="termino"><b>Ranks</b><br><span class="small">rangos</span></td><td>The positions of the ordered observations; the basis of non-parametric tests.</td><td class="c">5.5</td></tr>
+      <tr><td class="termino"><b>Replicate</b><br><span class="small">repetición</span></td><td>Applying each treatment to several units; it allows the error to be estimated.</td><td class="c">1.3</td></tr>
+      <tr><td class="termino"><b>Residual</b><br><span class="small">residual</span></td><td>What remains of each observation after removing the model effects. The assumptions are checked on them.</td><td class="c">5.1</td></tr>
+      <tr class="letra"><td colspan="3">S</td></tr>
+      <tr><td class="termino"><b>Simple effect</b><br><span class="small">efecto simple</span></td><td>The effect of one factor within a fixed level of the other; it is read when there is an interaction.</td><td class="c">6.5</td></tr>
+      <tr><td class="termino"><b>Skeleton ANOVA</b><br><span class="small">esqueleto del ANOVA</span></td><td>The sources and their degrees of freedom, worked out before any data exist.</td><td class="c">9.3</td></tr>
+      <tr><td class="termino"><b>Split-plot</b><br><span class="small">parcela dividida</span></td><td>One factor on main plots and another on sub-plots within them; two error terms.</td><td class="c">6.5</td></tr>
+      <tr><td class="termino"><b>Strip-plot, split-block</b><br><span class="small">franjas</span></td><td>A design with one factor in horizontal strips and another in vertical strips within each block.</td><td class="c">6.1</td></tr>
+      <tr><td class="termino"><b>Studentized residual</b><br><span class="small">residual estudentizado</span></td><td>A residual divided by its standard error; an absolute value above 2.5 flags a suspect plot.</td><td class="c">5.2</td></tr>
+      <tr class="letra"><td colspan="3">T</td></tr>
+      <tr><td class="termino"><b>Transformation</b><br><span class="small">transformación</span></td><td>A change of scale of the response (logarithm, square root, arcsine) to meet the assumptions.</td><td class="c">5.4</td></tr>
+      <tr><td class="termino"><b>Treatment</b><br><span class="small">tratamiento</span></td><td>A condition whose effect is to be measured.</td><td class="c">3.1</td></tr>
+      <tr><td class="termino"><b>Treatment factor</b><br><span class="small">factor</span></td><td>A group of related treatments; its variants are the levels.</td><td class="c">3.4</td></tr>
+      <tr><td class="termino"><b>Type I and III sums of squares</b><br><span class="small">sumas de cuadrados tipo I y III</span></td><td>Sequential, or adjusted for all other terms; they coincide with balanced data.</td><td class="c">6.2</td></tr>
+      <tr><td class="termino"><b>Type I error</b><br><span class="small">error tipo I</span></td><td>Declaring a difference that does not exist. Its probability is α.</td><td class="c">2.2</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ====================================================================== D -->
+<!-- /ui:literal -->
+  <h2 id="ap-d" data-nueva-hoja><span class="num">D</span>Troubleshooting</h2>
+  <p class="lead">The most common problems, grouped by the point at which they arise. Messages are given as they appear on screen with the app in English; <code>{n}</code> marks a part that varies.</p>
+
+  <h3>D.1 Opening the app and keeping your work</h3>
+  <table class="compacta">
+    <caption><b>Table D.1.</b> Problems when opening the app and when returning to it.</caption>
+    <thead><tr><th style="width:27%">Symptom or message</th><th style="width:27%">Cause</th><th>What to do</th><th style="width:7%" class="c">See</th></tr></thead>
+    <tbody>
+      <tr><td>The page appears without colours or buttons, or does not respond.</td><td>Only <code>index.html</code> was copied, without <code>js/</code>, <code>css/</code> and <code>vendor/</code>, or the browser is out of date.</td><td>Keep the whole folder and use an up-to-date browser.</td><td class="c">1.5</td></tr>
+      <tr><td><code>No se pudo iniciar en el puerto 8800.</code> (“Could not start on port 8800”; the local server prints this message in Spanish only.)</td><td>Another copy of the app, or another program, is using the port.</td><td>Close the other window, or start with <code>.\server.ps1 -Port 8801</code> and open that address.</td><td class="c">1.5</td></tr>
+      <tr><td>After reloading the page, the data and analyses have disappeared.</td><td>The app does not save the data or the results: they live in the page while it is open. It only remembers the figure style and resolution.</td><td>Download the report and the ZIP package from Block 7 before closing. Your original data file is not changed.</td><td class="c">1.5</td></tr>
+      <tr><td>The figure style is not kept.</td><td>It is stored separately in each browser and for each way of opening the app (double-click or local server). A private window stores nothing.</td><td>Always open the app the same way and in the same browser.</td><td class="c">7.3</td></tr>
+      <tr><td>A block in the bar is greyed out.</td><td>Blocks 3, 4, 5 and 7 wait for a table with a valid response and factor; Block 6 waits for an analysis from Block 5.</td><td>Review the structure checks in Block 2, or run Block 5.</td><td class="c">3.5</td></tr>
+    </tbody>
+  </table>
+
+  <h3>D.2 Loading the data</h3>
+  <table class="compacta">
+    <caption><b>Table D.2.</b> Problems when reading a file in Block 2.</caption>
+    <thead><tr><th style="width:27%">Symptom or message</th><th style="width:27%">Cause</th><th>What to do</th><th style="width:7%" class="c">See</th></tr></thead>
+    <tbody>
+      <tr><td><code>Could not load the example. Open the app through server.ps1</code></td><td>The app was opened by double-clicking and the browser blocks reading the <code>data/</code> folder.</td><td>Open it with <code>Open AgriDesign.bat</code> or use the online version. Your own files can be read with a double-click.</td><td class="c">3.2</td></tr>
+      <tr><td><code>Could not read the spreadsheet: …</code></td><td>The workbook is password-protected, damaged, or open in the cloud without having been downloaded.</td><td>Remove the protection, save it again as <code>.xlsx</code> or CSV, or copy it to your computer.</td><td class="c">A.1</td></tr>
+      <tr><td><code>Could not read the JSON file</code> or <code>Unrecognised JSON layout</code></td><td>The JSON is not one of the four supported forms.</td><td>Use a list of objects, one per plot.</td><td class="c">A.1</td></tr>
+      <tr><td><code>The file has no data.</code></td><td>All rows are empty, or the sheet read is not the one with the data.</td><td>Choose the correct sheet in <span class="ui">Sheet</span>.</td><td class="c">3.2</td></tr>
+      <tr><td>Accented letters turned into “�”.</td><td>The CSV was saved with an old encoding.</td><td>Save it as CSV UTF-8 or use <code>.xlsx</code>.</td><td class="c">A.1</td></tr>
+      <tr><td>A numeric column comes out as text or flagged <span class="ui">numbers mixed with text</span>.</td><td>Units inside the cells, two decimal separators, or text in some cells.</td><td>Clean those cells in the field book, or set the separator under <span class="ui">Decimal separator</span> and load again.</td><td class="c">3.2</td></tr>
+      <tr><td>The number <code>1.234</code> was read as 1234.</td><td>The table uses a decimal comma and the point was taken as a thousands separator.</td><td>Set <span class="ui">Decimal separator: Point (4.65)</span> if you actually use a point.</td><td class="c">A.1</td></tr>
+      <tr><td>There is one row too many, or one missing.</td><td>A title row above the headers, or a totals row with a different name.</td><td>Check the preview and the warnings; remove titles and totals from the sheet.</td><td class="c">3.3</td></tr>
+      <tr><td><code>Select at least one column to stack.</code></td><td>No column was ticked for stacking in the wide-table converter.</td><td>Tick the treatment columns under <span class="ui">Stack these columns</span>.</td><td class="c">3.6</td></tr>
+    </tbody>
+  </table>
+
+  <h3>D.3 Roles and design structure</h3>
+  <table class="compacta">
+    <caption><b>Table D.3.</b> Problems with column roles.</caption>
+    <thead><tr><th style="width:27%">Symptom or message</th><th style="width:27%">Cause</th><th>What to do</th><th style="width:7%" class="c">See</th></tr></thead>
+    <tbody>
+      <tr><td><code>No treatment factor</code> with treatments coded 1, 2, 3.</td><td>The column looks numeric and was taken as a response.</td><td>Change its role to <span class="ui">Treatment factor</span>.</td><td class="c">3.4</td></tr>
+      <tr><td><code>This looks like a wide table</code></td><td>The treatments are in columns.</td><td>Use the long-format converter.</td><td class="c">3.6</td></tr>
+      <tr><td><code>Some treatments have a single observation</code></td><td>An unconverted wide table, a block taken as a factor, or a misspelt level.</td><td>Check the roles and levels.</td><td class="c">3.5</td></tr>
+      <tr><td><span class="ui">levels differ only by case</span> or <span class="ui">levels with trailing spaces</span></td><td>A level written in two ways: <code>Control</code> and <code>control </code>.</td><td>Make the spelling consistent in the field book and load again.</td><td class="c">3.4</td></tr>
+      <tr><td><code>{n} treatment combinations never observed</code></td><td>An incomplete factorial or a cell lost entirely.</td><td>Analyse the observed combinations as a single factor, or check whether part of the table is missing.</td><td class="c">3.5</td></tr>
+      <tr><td><code>Row–column layout is not a Latin square</code></td><td>Rows, columns and treatments do not have the same number.</td><td>Check the table; if the design is row–column without being a square, analyse it with blocks.</td><td class="c">3.5</td></tr>
+      <tr><td>The design that was sown is not available in Block 5.</td><td>Roles are missing: two block columns for incomplete blocks, row and column for the Latin square, two factors for a split-plot.</td><td>Assign the roles in table A.4 in Block 2.</td><td class="c">A.2</td></tr>
+    </tbody>
+  </table>
+
+  <h3>D.4 Assumptions and analysis</h3>
+  <table class="compacta">
+    <caption><b>Table D.4.</b> Problems in Blocks 4 and 5.</caption>
+    <thead><tr><th style="width:27%">Symptom or message</th><th style="width:27%">Cause</th><th>What to do</th><th style="width:7%" class="c">See</th></tr></thead>
+    <tbody>
+      <tr><td><code>Too few complete observations.</code></td><td>Fewer than four rows with a complete response and factors.</td><td>Check the missing values in the response and the factors.</td><td class="c">5.2</td></tr>
+      <tr><td><code>The model leaves {n} residual degrees of freedom: nothing can be tested.</code></td><td>One observation per combination with all interactions included.</td><td>Untick <span class="ui">include all factor interactions</span> or check the roles.</td><td class="c">5.2</td></tr>
+      <tr><td><code>No residual degrees of freedom: the model is saturated.</code></td><td>The chosen design asks for more than the data can provide.</td><td>Choose the design that matches the structure (table A.4).</td><td class="c">6.1</td></tr>
+      <tr><td><code>Box–Cox needs strictly positive values</code></td><td>The response has zeros or negative values.</td><td>Use the transformations with a constant, ln(y + 1) or √(y + 0.5).</td><td class="c">5.4</td></tr>
+      <tr><td>The main-plot factor comes out highly significant in a factorial.</td><td>A trial sown as a split-plot was analysed as a factorial.</td><td>Choose <span class="ui">Split-plot in RCBD (main plots in blocks)</span> with that factor first.</td><td class="c">6.5</td></tr>
+      <tr><td>The trend analysis does not appear.</td><td>The factor levels are not numbers (<code>N0</code>, <code>N60</code>) or there are fewer than three.</td><td>Write the rates as numbers in the field book.</td><td class="c">3.6 · 6.6</td></tr>
+      <tr><td><code>Enter {n} numeric coefficients.</code> or <code>Coefficients must sum to zero.</code></td><td>The contrast has a coefficient too few or too many, or they do not sum to zero.</td><td>Enter one per level, in the order shown under <span class="ui">Level order</span>.</td><td class="c">6.6</td></tr>
+      <tr><td>Letters “ab” that seem contradictory.</td><td>The test is not transitive: that mean does not differ from either of the two groups.</td><td>Report them as they are.</td><td class="c">6.4</td></tr>
+    </tbody>
+  </table>
+
+  <h3>D.5 Figures, report and generator</h3>
+  <table class="compacta">
+    <caption><b>Table D.5.</b> Problems in Blocks 6, 7 and 8.</caption>
+    <thead><tr><th style="width:27%">Symptom or message</th><th style="width:27%">Cause</th><th>What to do</th><th style="width:7%" class="c">See</th></tr></thead>
+    <tbody>
+      <tr><td><code>No analysis yet. Run Block 5 first</code></td><td>Block 5 has not been run, or the data or roles changed and the previous analysis was discarded.</td><td>Run Block 5 and come back.</td><td class="c">7.1</td></tr>
+      <tr><td>The edits made to a figure have disappeared.</td><td>The gallery was rebuilt after a new analysis or after <span class="ui">Rebuild gallery</span>.</td><td>Finish the analysis before polishing the figures.</td><td class="c">7.3</td></tr>
+      <tr><td><code>Tick at least two figures</code> or <code>Up to 8 panels.</code></td><td>The multi-panel composer needs two to eight ticked figures.</td><td>Tick <span class="ui">Add to multi-panel figure</span> on the figures you want.</td><td class="c">7.4</td></tr>
+      <tr><td><code>Export failed: …</code></td><td>Almost always, a very large figure at 12× that exceeds the browser’s memory.</td><td>Lower the resolution or reduce <span class="ui">Width (px)</span>.</td><td class="c">7.5</td></tr>
+      <tr><td>Lettering of 3 to 4 points in the published figure.</td><td>The figure was reduced to the width of a column.</td><td>Follow table 7.8: less width and a larger font size.</td><td class="c">7.5</td></tr>
+      <tr><td>The report does not include the figures of a block.</td><td>Those figures had not been drawn.</td><td>Open the block, return to Block 7 and press <span class="ui">Build / refresh preview</span>.</td><td class="c">8.2</td></tr>
+      <tr><td><code>Allow pop-ups to print.</code></td><td>The browser blocked the report window.</td><td>Allow pop-ups for the app, or download the HTML and print it from there.</td><td class="c">8.3</td></tr>
+      <tr><td><code>Could not build the package: …</code></td><td>Almost always, many figures at 900 dpi that exceed the browser’s memory.</td><td>Choose 300 dpi or <span class="ui">SVG only</span>.</td><td class="c">8.4</td></tr>
+      <tr><td><code>The number of treatments ({t}) must be a multiple of the block size ({k}).</code></td><td>In incomplete blocks, k does not divide the number of treatments.</td><td>Change k or the number of treatments.</td><td class="c">9.2</td></tr>
+      <tr><td><code>Enter the levels of factor C.</code></td><td>Split-split-plot without levels for the third factor.</td><td>Enter the levels of C separated by commas.</td><td class="c">9.2</td></tr>
+      <tr><td>The field book opened as a template will not let you continue.</td><td>The response is empty: this is expected.</td><td>Record the measurements and load the completed file.</td><td class="c">9.4</td></tr>
+    </tbody>
+  </table>
+
+  <p style="margin-top:0.3in">If a problem is not listed here, first check the table in the Block 2 preview: most analysis errors begin with a field book that has merged cells, levels written in two ways or treatments in columns.</p>
+</section>
+
+</body>
+</html>

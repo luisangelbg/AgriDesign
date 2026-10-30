@@ -100,7 +100,7 @@ Rules followed by every block:
 
 ## User manual
 
-A complete user manual in Spanish (163 pages) is available as [`manual/AgriDesign User's Manual.pdf`](manual/AgriDesign%20User's%20Manual.pdf). Its HTML sources, one file per chapter, are in `manual/es/`; `manual/LEEME.md` explains how to rebuild the PDF.
+A complete user manual is available in English, [`manual/en/AgriDesign User's Manual (English).pdf`](manual/en/AgriDesign%20User's%20Manual%20%28English%29.pdf) (170 pages, with screenshots of the English interface), and in Spanish, [`manual/AgriDesign User's Manual.pdf`](manual/AgriDesign%20User's%20Manual.pdf) (174 pages). Their HTML sources, one file per chapter, are in `manual/en/` and `manual/es/`; `manual/LEEME.md` explains how to rebuild them.
 
 ## How to cite
 

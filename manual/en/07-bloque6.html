@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AgriDesign · User manual · Block 6: graphics of results</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;1,500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../interior.css">
+<!-- reparte el contenido en hojas tamaño carta, con encabezados y números de página -->
+<script src="../paginar.js"></script>
+<style>
+  figure.chica .marco { width: 70%; margin: 0 auto; }
+  figure.chica figcaption { margin-left: 15%; margin-right: 15%; }
+  figure.mini .marco { width: 56%; margin: 0 auto; }
+  figure.mini figcaption { margin-left: 22%; margin-right: 22%; }
+  .dos-figs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.16in; }
+  .dos-figs figure { margin: 0.08in 0 0.16in; }
+</style>
+</head>
+<body>
+
+<section class="capitulo" id="cap-b6" data-pestana="B6" data-orden="7" style="--acento: var(--b6)">
+  <div class="cap-apertura">
+    <div class="cap-num">B6</div>
+    <div class="cap-etiqueta">Chapter seven · Block 6 · Means &amp; graphics</div>
+    <h1 data-corto="Block 6 · Graphics of results">Graphics of results</h1>
+    <div class="cap-regla"></div>
+    <p class="cap-resumen">A table of means with letters convinces a reviewer; a good figure convinces a reader. From the Block 5 analysis, Block 6 builds a gallery of editable figures for every result: means with letters in four presentations, differences with intervals, response curves, interactions, heat maps, variance partitioning and field maps. With journal styles, multi-panel figures and batch export at whatever resolution is required.</p>
+    <div class="cap-franja"><span class="k6"></span><span class="k6" style="opacity:.75"></span><span class="k6" style="opacity:.5"></span><span class="k6" style="opacity:.3"></span></div>
+    <ul class="cap-contenido">
+      <li><b>7.1</b>Which figure for which result</li>
+      <li><b>7.2</b>The gallery and the style presets</li>
+      <li><b>7.3</b>Editing a figure</li>
+      <li><b>7.4</b>Multi-panel figures</li>
+      <li><b>7.5</b>Exporting at the journal’s resolution</li>
+    </ul>
+  </div>
+
+  <!-- 7.1 -->
+  <h2 id="s7-1"><span class="num">7.1</span>Which figure for which result</h2>
+  <p class="lead">Block 6 computes nothing new: it draws the analysis carried out in Block 5, with its adjusted means, its standard errors, its letters and its curve. If <span class="ui">No analysis yet. Run Block 5 first</span> appears when you open it, that analysis has not been run or the data have changed since; the <span class="ui">Go to Block 5</span> button takes you there.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b6-teoria.png" alt="The Block 6 theory card"></div>
+    <figcaption><b>Figure 7.1.</b> The <span class="ui">Making a figure a reviewer will like</span> card: which figure suits each result, how to state error bars and letters, and the technical requirements of journals.</figcaption>
+  </figure>
+
+  <table>
+    <caption><b>Table 7.1.</b> The right figure for each result, and what to avoid.</caption>
+    <thead><tr><th style="width:28%">Result</th><th>Best figure</th><th style="width:26%">Avoid</th></tr></thead>
+    <tbody>
+      <tr><td>Means of a qualitative factor (varieties, products)</td><td>Points or bars with SE and letters; sorted by the mean if the levels have no natural order.</td><td>3D bars, pie charts.</td></tr>
+      <tr><td>Few replicates (3 or 4)</td><td>All the observations together with the mean: the reader judges the spread.</td><td>Bars that hide the data.</td></tr>
+      <tr><td>Quantitative factor (doses, densities, dates)</td><td>Response curve: means ± SE with the fitted equation and the optimum.</td><td>Bars with letters: they throw away the trend.</td></tr>
+      <tr><td>Two factors</td><td>Interaction plot (lines) if the interaction matters; grouped bars or a heat map if there are many levels.</td><td>Separate figures of the main effects when the interaction is significant.</td></tr>
+      <tr><td>“Which pairs differ?”</td><td>Differences with confidence intervals.</td><td>Letters alone when there are many treatments.</td></tr>
+      <tr><td>Trial with rows and columns</td><td>Field map coloured by the residual to reveal spatial trends.</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Decision rule · what a figure caption must include</div>
+    <table class="compacta">
+      <thead><tr><th style="width:34%">Element</th><th>How to write it</th></tr></thead>
+      <tbody>
+        <tr><td>What the bars are</td><td>“Means ± standard error (n = 4)”. Never implicit.</td></tr>
+        <tr><td>What the letters mean</td><td>“Means with the same letter do not differ significantly (Tukey, α = 0.05)”. The test goes in the caption, not in the title.</td></tr>
+        <tr><td>Double letters</td><td>“ab” belongs to both groups; it is not corrected by hand.</td></tr>
+        <tr><td>Y axis</td><td>Bars start at zero; points may zoom in, and the caption says so.</td></tr>
+        <tr><td>Units</td><td>In the axis label: “Grain yield (t ha⁻¹)”.</td></tr>
+        <tr><td>Colour</td><td>Colour-blind-safe palettes (Okabe–Ito, Paul Tol) and, if the figure will be printed in grey, distinct markers or line types as well as colour.</td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">The app's figures already state in the subtitle the type of bar and the test behind the letters. Copy that information into the caption before deleting the subtitle.</p>
+  </div>
+
+  <!-- 7.2 -->
+  <h2 id="s7-2"><span class="num">7.2</span>The gallery and the style presets</h2>
+  <p>The gallery builds itself when the block opens and is rebuilt every time Block 5 produces a new analysis. At the top is the <span class="ui">Gallery settings</span> card; below it, one card per result with its figures.</p>
+
+  <figure>
+    <div class="marco" style="position:relative">
+      <img src="../img/en/b6-ajustes.png" alt="The gallery settings card">
+      <span class="marca" style="left:19.2%;top:11.2%">1</span>
+      <span class="marca" style="left:58.3%;top:15.2%">2</span>
+      <span class="marca" style="left:19.2%;top:24%">3</span>
+      <span class="marca" style="left:19.2%;top:38.8%">4</span>
+      <span class="marca" style="left:19.2%;top:49.7%">5</span>
+    </div>
+    <figcaption><b>Figure 7.2.</b> <span class="ui">Gallery settings</span> with the maize example: 7 figures.</figcaption>
+  </figure>
+  <ul class="leyenda-marcas">
+    <li><span class="n">1</span><span class="ui">Y axis label (units)</span>: the Y-axis label for all figures, with units. If left empty, the column name is used.</li>
+    <li><span class="n">2</span><span class="ui">Rebuild gallery</span> redraws the gallery with the new label.</li>
+    <li><span class="n">3</span>Six style presets that apply to all the figures at once (table 7.3).</li>
+    <li><span class="n">4</span>Batch export: format, resolution and a ZIP with all the figures.</li>
+    <li><span class="n">5</span>The multi-panel figure composer (section 7.4).</li>
+  </ul>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · column names and labels</div>
+    <p>The figures use the column names exactly as they appear in the table: <code>Yield_t_ha</code>, <code>Nitrogen_kg_ha</code>. For a figure in a paper, type something like “Grain yield (t ha⁻¹)” in <span class="ui">Y axis label</span> and press <span class="ui">Rebuild gallery</span>. The X-axis label and the titles are changed figure by figure in the editor (section 7.3). Another option is to give the columns good names from the field notebook onwards.</p>
+  </div>
+
+  <table>
+    <caption><b>Table 7.2.</b> The figures in the gallery and when they appear. Maize produces 7; the tomato factorial, 15; the wheat Latin square, 8.</caption>
+    <thead><tr><th style="width:28%">Figure</th><th style="width:26%">Appears for…</th><th>What it shows</th></tr></thead>
+    <tbody>
+      <tr><td>Means as bars</td><td>each factor</td><td>Adjusted means ± SE with letters, axis from zero.</td></tr>
+      <tr><td>Means as points</td><td>each factor</td><td>The same means with 95% confidence intervals, axis fitted to the data.</td></tr>
+      <tr><td>Box plot with letters</td><td>each factor</td><td>The distribution of the plots of each level, with the mean and the letters.</td></tr>
+      <tr><td>Observations with letters</td><td>each factor</td><td>Each plot as a point, the mean ± SE and the letters.</td></tr>
+      <tr><td>Differences with intervals</td><td>each factor</td><td>Each pair of means with its difference ± the critical difference of the test; significant ones in red.</td></tr>
+      <tr><td>Response curve</td><td>each quantitative factor with 3 or more levels</td><td>Means with letters and the fitted polynomial curve, its equation and the optimum.</td></tr>
+      <tr><td>Interaction plot (two orientations)</td><td>each pair of factors with an interaction in the model</td><td>Lines with simple-effect letters: the levels of the second factor within each level of the first.</td></tr>
+      <tr><td>Grouped bars</td><td>ditto</td><td>The combinations with the letters of the joint comparison (or of the simple effects in split-plots).</td></tr>
+      <tr><td>Cell heat map</td><td>ditto</td><td>The two-way table coloured by the mean, with letters.</td></tr>
+      <tr><td>Variance partitioning</td><td>always</td><td>The fraction of the total sum of squares attributable to each source and to the error.</td></tr>
+      <tr><td>Field maps (response and residuals)</td><td>designs with row and column</td><td>The trial as it was laid out in the field, coloured by the response and by the residual.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Four presentations of the same means</h3>
+  <p>For each factor, the gallery offers the same result in four forms. This is not redundancy: each journal, each number of replicates and each audience calls for a different one.</p>
+
+  <div class="dos-figs">
+    <figure>
+      <div class="marco"><img src="../img/en/b6-bars.png" alt="Means as bars"></div>
+      <figcaption><b>Figure 7.3.</b> Bars with SE and letters: the classic presentation, axis from zero.</figcaption>
+    </figure>
+    <figure>
+      <div class="marco"><img src="../img/en/b6-points.png" alt="Means as points with CI"></div>
+      <figcaption><b>Figure 7.4.</b> Points with 95% intervals: the axis fits the data and the differences are easier to see.</figcaption>
+    </figure>
+    <figure>
+      <div class="marco"><img src="../img/en/b6-box.png" alt="Box plots with letters"></div>
+      <figcaption><b>Figure 7.5.</b> Box plots with the plots, the mean (diamond) and the letters.</figcaption>
+    </figure>
+    <figure>
+      <div class="marco"><img src="../img/en/b6-strip.png" alt="Observations with letters"></div>
+      <figcaption><b>Figure 7.6.</b> Each plot with the mean ± SE: the honest option with four replicates.</figcaption>
+    </figure>
+  </div>
+
+  <div class="dos-figs">
+    <figure>
+      <div class="marco"><img src="../img/en/b6-diff.png" alt="Differences with intervals"></div>
+      <figcaption><b>Figure 7.7.</b> Pairwise differences with the Tukey test interval. An interval that crosses zero is not significant; the one for 120 − 180 comes close but does not cross it (−0.30, critical difference 0.283).</figcaption>
+    </figure>
+    <figure>
+      <div class="marco"><img src="../img/en/b6-trend.png" alt="Response curve with letters"></div>
+      <figcaption><b>Figure 7.8.</b> Response curve with the Tukey letters at each dose, the equation, R² and the maximum at 179.5 kg.</figcaption>
+    </figure>
+  </div>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b6-ss.png" alt="Partition of the sum of squares"></div>
+    <figcaption><b>Figure 7.9.</b> Partition of the sum of squares for maize: nitrogen explains 94.7%, blocks 4.7% and the error 0.6%. A compact way of showing the ANOVA table in a presentation.</figcaption>
+  </figure>
+
+  <h3>Two factors: interaction, grouped bars and heat map</h3>
+
+  <div class="dos-figs">
+    <figure>
+      <div class="marco"><img src="../img/en/b6-tom-int.png" alt="Interaction plot for tomato"></div>
+      <figcaption><b>Figure 7.10.</b> Variety × fertilisation interaction with the fertilisation letters within each variety. The second orientation, with fertilisation on the X axis, is generated as well.</figcaption>
+    </figure>
+    <figure>
+      <div class="marco"><img src="../img/en/b6-tom-heat.png" alt="Heat map for tomato"></div>
+      <figcaption><b>Figure 7.11.</b> Heat map of the nine cells with the mean and the letter of the joint comparison: Saladette with F2 is the darkest cell (4.34, a).</figcaption>
+    </figure>
+  </div>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · overlapping letters</div>
+    <p>In the interaction plot, when two means almost coincide (Cherry with F1 and F2 in figure 7.10), their letters can overlap. There are three ways out: reduce <span class="ui">Letter size</span> in the editor; turn off <span class="ui">Letters at each point</span> and use the grouped bars or the heat map, where each cell has its own space; or export as SVG and move the letter in a vector editor.</p>
+  </div>
+
+  <h3>Field maps: the trial as it was on the ground</h3>
+  <p>When the design has a row and a column, the gallery draws the actual layout of the trial twice: coloured by the response and coloured by the model residual. The second is a diagnostic tool: if positive residuals cluster in a corner or along a strip, there is a spatial trend the design did not absorb.</p>
+
+  <div class="dos-figs">
+    <figure>
+      <div class="marco"><img src="../img/en/b6-campo.png" alt="Field map of yield"></div>
+      <figcaption><b>Figure 7.12.</b> Yield of the wheat Latin square in its position: treatment C is the darkest in all four rows.</figcaption>
+    </figure>
+    <figure>
+      <div class="marco"><img src="../img/en/b6-residuos.png" alt="Field map of the residuals"></div>
+      <figcaption><b>Figure 7.13.</b> Residuals on a red–blue scale centred at zero: positive in red, negative in blue. There are no patches; only plot D in row 4, column 1 stands out (+0.12).</figcaption>
+    </figure>
+  </div>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Decision rule · reading the residual map</div>
+    <table class="compacta">
+      <thead><tr><th style="width:44%">If the colours…</th><th>then…</th></tr></thead>
+      <tbody>
+        <tr><td>are scattered with no pattern, like a random chequerboard</td><td>The design absorbed the variation of the land. As expected.</td></tr>
+        <tr><td>form a strip of the same sign along a row or column</td><td>A gradient that blocking did not capture; in the next trial, orient the blocks perpendicular to that strip.</td></tr>
+        <tr><td>form a patch in one corner</td><td>A local problem (waterlogging, edge, shade); check the field notebook.</td></tr>
+        <tr><td>stand out in a single plot</td><td>A suspect plot; compare it with the table of suspect observations in Block 4.</td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">The <span class="ui">Centre the colour scale at zero</span> checkbox is ticked by default in the residual map so that the neutral colour corresponds to a zero residual.</p>
+  </div>
+
+  <h3>Style presets</h3>
+  <p>The <span class="ui">Style presets</span> buttons change the theme, typeface, grid and font size of all the figures in the gallery at once, and are remembered for figures drawn later in any block.</p>
+
+  <table class="compacta">
+    <caption><b>Table 7.3.</b> The six style presets.</caption>
+    <thead><tr><th style="width:32%">Button</th><th>What it changes</th><th style="width:26%">For…</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Colour (screen)</span></td><td>Light theme, Helvetica, grid, AgriDesign palette.</td><td>Working on screen; it also restores colour after greyscale.</td></tr>
+      <tr><td><span class="ui">Journal (black axes, no grid, Arial)</span></td><td>Black axes, no grid, Arial, font 10% larger.</td><td>Most journals.</td></tr>
+      <tr><td><span class="ui">Journal serif (Times)</span></td><td>The same, with Times New Roman.</td><td>Journals and theses with a serif typeface.</td></tr>
+      <tr><td><span class="ui">Greyscale print</span></td><td>Journal style with a greyscale palette.</td><td>Black-and-white printing.</td></tr>
+      <tr><td><span class="ui">Presentation (large fonts)</span></td><td>Font 50% larger, bold axis titles, dashed grid.</td><td>Slides and posters.</td></tr>
+      <tr><td><span class="ui">Dark background</span></td><td>Dark background, font 20% larger.</td><td>Presentations with a dark background.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="dos-figs">
+    <figure>
+      <div class="marco"><img src="../img/en/b6-revista.png" alt="Journal style"></div>
+      <figcaption><b>Figure 7.14.</b> <span class="ui">Journal (black axes, no grid, Arial)</span>: black axes, no grid, framed legend.</figcaption>
+    </figure>
+    <figure>
+      <div class="marco"><img src="../img/en/b6-grises.png" alt="Greyscale style"></div>
+      <figcaption><b>Figure 7.15.</b> <span class="ui">Greyscale print</span>: the three fertilisation levels in three distinguishable greys.</figcaption>
+    </figure>
+  </div>
+
+  <!-- 7.3 -->
+  <h2 id="s7-3"><span class="num">7.3</span>Editing a figure</h2>
+  <p>Below each figure is the <span class="ui">Edit figure — titles, colours, fonts, sizes</span> link, which opens a two-tab editor, and the export bar. Changes are shown instantly. The editor was introduced in chapter 4 (figure 4.16) with the content tab; the style tab, common to all figures, is shown here.</p>
+
+  <figure>
+    <div class="marco" style="position:relative">
+      <img src="../img/en/b6-estilo.png" alt="The style and typography tab">
+      <span class="marca" style="left:36%;top:75.1%">1</span>
+      <span class="marca" style="left:16.3%;top:79.5%">2</span>
+      <span class="marca" style="left:39.8%;top:79.5%">3</span>
+      <span class="marca" style="left:50.4%;top:82.2%">4</span>
+      <span class="marca" style="left:65.2%;top:89.9%">5</span>
+      <span class="marca" style="left:69.3%;top:95.9%">6</span>
+      <span class="marca" style="left:4.8%;top:97.5%">7</span>
+    </div>
+    <figcaption><b>Figure 7.16.</b> The <span class="ui">Style &amp; typography</span> tab of the bar chart.</figcaption>
+  </figure>
+  <ul class="leyenda-marcas">
+    <li><span class="n">1</span>The two tabs: <span class="ui">Content &amp; colours</span> and <span class="ui">Style &amp; typography</span>.</li>
+    <li><span class="n">2</span><span class="ui">Theme</span>: Light, Paper, Dark, Minimal or Journal.</li>
+    <li><span class="n">3</span><span class="ui">Font family</span>: Helvetica, Arial, Georgia, Times New Roman, Segoe UI, Calibri, Cambria or monospace.</li>
+    <li><span class="n">4</span>Four size sliders: all, titles, axes and ticks, labels and legend.</li>
+    <li><span class="n">5</span><span class="ui">Bold axis titles</span>, <span class="ui">Gridlines</span> and <span class="ui">Dashed gridlines</span>.</li>
+    <li><span class="n">6</span><span class="ui">Width (px)</span> and <span class="ui">Height (px)</span>: the base size of the figure, from 400 to 2400 by 300 to 2000.</li>
+    <li><span class="n">7</span>Just below the editor: this figure's export bar (section 7.5) and the checkbox for adding it to a multi-panel figure.</li>
+  </ul>
+
+  <table class="compacta">
+    <caption><b>Table 7.4.</b> Options in the <span class="ui">Content &amp; colours</span> tab, by figure.</caption>
+    <thead><tr><th style="width:26%">Figure</th><th>Specific options</th></tr></thead>
+    <tbody>
+      <tr><td>All</td><td>Title, subtitle, axis labels.</td></tr>
+      <tr><td>Means (bars and points)</td><td>Style (bars, points or lollipop), error bars (SE, SD, 95% CI, none), letters, printed values, sort by the mean, axis from zero, bar width, font size, single colour or one per level.</td></tr>
+      <tr><td>Box plot and observations</td><td>Palette or single colour, observations, mean marker, letters, axis from zero, box width or horizontal jitter, point and font size; for observations, the mean bar (SE, SD, CI or the mean only).</td></tr>
+      <tr><td>Differences</td><td>Colour of the non-significant and of the significant ones, sort by the difference, printed values.</td></tr>
+      <tr><td>Interaction</td><td>Palette, colour per series, legend position, line width, marker size, distinct line types, error bars, letters at each point, axis from zero, font size.</td></tr>
+      <tr><td>Heat map and field maps</td><td>Colour map (13, including Viridis and Cividis, which is colour-blind-safe), printed values and letters or labels, decimals; in field maps, centring the scale at zero.</td></tr>
+      <tr><td>Variance partitioning</td><td>Palette, colour per source, printed percentages.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · what is remembered and what is not</div>
+    <p>Options marked as shared (theme, typeface, font sizes, grid) are saved in the browser and applied to figures drawn later. Titles, labels, per-level colours and dimensions belong to each figure. When the gallery is rebuilt (<span class="ui">Rebuild gallery</span> or a new analysis), individual edits are lost: finish the analysis before polishing the figures.</p>
+  </div>
+
+  <!-- 7.4 -->
+  <h2 id="s7-4"><span class="num">7.4</span>Multi-panel figures</h2>
+  <p>Journals often ask for several graphs in a single figure with panels (a), (b), (c). Below each figure in the gallery there is an <span class="ui">Add to multi-panel figure</span> checkbox; tick two to eight of them and press <span class="ui">Build multi-panel figure</span> in the gallery settings. The composer arranges the panels in one or two columns (three if there are more than four), labels them and shows them below the settings.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b6-panel.png" alt="Four-panel figure"></div>
+    <figcaption><b>Figure 7.17.</b> A four-panel figure for maize: (a) means as bars, (b) all the plots, (c) differences with intervals and (d) response curve. The panels share the style and are exported as a single image.</figcaption>
+  </figure>
+
+  <table class="compacta">
+    <caption><b>Table 7.5.</b> Options of the multi-panel figure editor.</caption>
+    <thead><tr><th style="width:30%">Option</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Columns</span></td><td>Number of columns in the grid, from 1 to 4.</td></tr>
+      <tr><td><span class="ui">Panel labels</span></td><td>(a) (b) (c), A B C, a b c or no labels.</td></tr>
+      <tr><td><span class="ui">Label size</span></td><td>Size of the panel labels.</td></tr>
+      <tr><td><span class="ui">Gap between panels</span></td><td>Space between panels.</td></tr>
+      <tr><td><span class="ui">Keep panel titles</span></td><td>Keeps or removes the title of each panel; in a paper they are usually removed and described in the caption.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja importante">
+    <div class="caja-t"><span class="ico">!</span>Important · panels that are compared</div>
+    <p>If two panels show the same variable to compare treatments or years, they must have the same Y-axis scale; otherwise the reader compares heights that are not comparable. Adjust <span class="ui">Y axis from zero</span> or the dimensions of each figure before ticking it, and edit each panel in the gallery: the composer takes the figures as they are at that moment.</p>
+  </div>
+
+  <!-- 7.5 -->
+  <h2 id="s7-5"><span class="num">7.5</span>Exporting at the journal’s resolution</h2>
+  <p>Each figure is downloaded on its own with its export bar, and all of them together with <span class="ui">Download all figures (ZIP)</span>.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b6-exportar.png" alt="The export bar of a figure"></div>
+    <figcaption><b>Figure 7.18.</b> The export bar with TIFF selected: format, resolution, background, download button and the resulting size, 3480 × 2120 pixels, which at 300 dpi measure 29.5 × 17.9 cm.</figcaption>
+  </figure>
+
+  <table>
+    <caption><b>Table 7.6.</b> Export formats.</caption>
+    <thead><tr><th style="width:24%">Format</th><th>When to use it</th></tr></thead>
+    <tbody>
+      <tr><td><b>TIFF</b></td><td>The format many journals ask for at submission. Uncompressed, with the resolution recorded in the file.</td></tr>
+      <tr><td><b>PNG</b></td><td>Documents, theses and most journals; lossless, small file, with the resolution recorded. Supports a transparent background.</td></tr>
+      <tr><td><b>SVG</b></td><td>Vector: it scales without losing sharpness and can be edited in Inkscape, Illustrator or PowerPoint. If the journal asks for EPS or PDF, convert it in Inkscape.</td></tr>
+      <tr><td><b>JPG</b> · <b>WEBP</b></td><td>Only for the web or photographs; their lossy compression blurs letters and thin lines.</td></tr>
+    </tbody>
+  </table>
+
+  <table class="compacta">
+    <caption><b>Table 7.7.</b> The resolutions in the menu. Batch export offers the same five and the formats PNG, TIFF, SVG, JPG or PNG + SVG.</caption>
+    <thead><tr><th style="width:36%">Option</th><th class="c">Multiplies the base size</th><th class="c">dpi recorded</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Screen · 2× (150 dpi)</span></td><td class="c">×2</td><td class="c">150</td><td>Screen, drafts.</td></tr>
+      <tr><td><span class="ui">High · 4× (300 dpi)</span></td><td class="c">×4</td><td class="c">300</td><td>Colour and halftone figures (the default).</td></tr>
+      <tr><td><span class="ui">Very high · 6× (450 dpi)</span></td><td class="c">×6</td><td class="c">450</td><td>Combined line-and-colour figures.</td></tr>
+      <tr><td><span class="ui">Publication · 8× (600 dpi)</span></td><td class="c">×8</td><td class="c">600</td><td>Line art: graphs without shading.</td></tr>
+      <tr><td><span class="ui">Maximum · 12× (900 dpi)</span></td><td class="c">×12</td><td class="c">900</td><td>Journals that require 900 to 1000 dpi for line art.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>Theory in brief · pixels, dpi and centimetres</div>
+    <p>What the journal checks is how many pixels the figure has <b>at the width at which it will be printed</b>. A column is about 8.5 cm wide and a full page 17.5 cm; at 300 dpi that is 1004 and 2067 pixels wide. The app records in the file the dpi of the option chosen and shows the corresponding physical size (29.5 cm for the bar chart exported at 4×, 3480 pixels), but the journal will shrink the figure to its column: 3480 pixels in 17.5 cm is equivalent to 505 dpi, more than enough. What you do need to watch when shrinking is the <b>font size</b>, which shrinks in the same proportion.</p>
+  </div>
+
+  <table class="compacta">
+    <caption><b>Table 7.8.</b> Recommended settings for lettering of 8 to 12 points once printed.</caption>
+    <thead><tr><th style="width:24%">Destination</th><th class="c">Final width</th><th class="c">Width (px)</th><th class="c">Font size: all</th><th class="c">Resolution</th><th>Approximate result</th></tr></thead>
+    <tbody>
+      <tr><td>Double column</td><td class="c">17.5 cm</td><td class="c">860 (default)</td><td class="c">1.3</td><td class="c">4× or 8×</td><td>8 pt tick labels, 10 pt axis labels; about 3500 or 7000 px wide.</td></tr>
+      <tr><td>Single column</td><td class="c">8.5 cm</td><td class="c">600</td><td class="c">1.8</td><td class="c">4×</td><td>8 pt tick labels, 9 pt axis labels; 2400 px wide.</td></tr>
+      <tr><td>Slide</td><td class="c">full screen</td><td class="c">1200</td><td class="c"><span class="ui">Presentation</span> preset</td><td class="c">2×</td><td>2400 px, lettering legible from the back of the room.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja dato">
+    <div class="dato-cifra">8–12 pt</div>
+    <div class="dato-txt"><div class="caja-t">Font size at final size</div>Most agricultural journals require 8 to 12 points for text in figures, in Arial, Helvetica or Times. With the default size, a figure shrunk to one column ends up with 3- to 4-point lettering, which is illegible. Before exporting, reduce the width and increase the font size (table 7.8), or use the <span class="ui">Journal (black axes, no grid, Arial)</span> style as a starting point.</div>
+  </div>
+
+  <h3>Batch export</h3>
+  <ol class="pasos">
+    <li>Apply the style preset you want and edit the figures you are going to use.</li>
+    <li>In <span class="ui">Batch export</span> choose the format (<span class="ui">PNG + SVG</span> saves both versions of each figure) and the resolution.</li>
+    <li>Press <span class="ui">Download all figures (ZIP)</span>. The button reads <span class="ui">Preparing…</span> while it generates the images.</li>
+    <li>The ZIP, named for example <code>Yield_t_ha_figures_300dpi.zip</code>, contains all the figures in the gallery, the multi-panel figure if you built one, and a <code>README.txt</code> with the response, the design, the mean-separation test, α and the resolution.</li>
+  </ol>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · file names</div>
+    <p>Each figure is saved with a name that describes its content: <code>Yield_t_ha_Nitrogen_kg_ha_bars.png</code>, <code>…_curve.tif</code>, <code>…_interaction.svg</code>, <code>…_field_residuals.png</code>. That way they sort themselves in the manuscript folder.</p>
+  </div>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Step by step · the maize figure for a paper</div>
+    <ol class="pasos" style="margin-bottom:0">
+      <li>With the Block 5 analysis done, open Block 6. The maize gallery has 7 figures.</li>
+      <li>In <span class="ui">Y axis label (units)</span> type “Grain yield (t ha⁻¹)” and press <span class="ui">Rebuild gallery</span>.</li>
+      <li>Press <span class="ui">Journal (black axes, no grid, Arial)</span>.</li>
+      <li>On the response curve, open <span class="ui">Edit figure</span>: change the X-axis label to “Nitrogen (kg ha⁻¹)”, delete the title (it will go in the caption) and, in <span class="ui">Style &amp; typography</span>, set <span class="ui">Font size: all</span> to 1.3.</li>
+      <li>In its export bar choose <span class="ui">TIFF</span> and <span class="ui">Publication · 8× (600 dpi)</span>, and press <span class="ui">Download figure</span>.</li>
+      <li>Write the caption: “Response of maize yield to nitrogen dose. Means of four replicates; means with the same letter do not differ (Tukey, α = 0.05). Curve: ŷ = 4.207 + 0.03323x − 0.00009253x², R² = 0.946”.</li>
+    </ol>
+  </div>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>What you learned</div>
+    <p>Each result has its figure: letters for qualitative factors, curves for quantitative ones, lines or heat maps for interactions, and field maps for checking the land. The style is decided once for the whole gallery; labels and colours, figure by figure. And resolution is thought through backwards: first the width and font size at which the figure will be printed, then the pixels.</p>
+  </div>
+
+  <p style="margin-top:0.25in">With the figures ready, all that remains is to bring everything together. The Block 7 chapter presents the automatic report, with written-up methods, tables and figures exactly as you edited them, its printing to PDF and the ZIP package with data, tables and figures.</p>
+</section>
+
+</body>
+</html>

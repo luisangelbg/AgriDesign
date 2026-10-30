@@ -54,7 +54,9 @@ manual/
     10-apendices.html  apéndices: A formatos de archivo y acomodo por diseño, B reglas de decisión reunidas
                        (las escribe herramientas/reunir-reglas.pl), C glosario inglés–español, D solución
                        de problemas con los mensajes de la app
-  en/                  versión en inglés (pendiente)
+  en/                  versión en inglés: mismas partes y marcado, capturas en img/en/ (tomadas con
+                       capturas.ps1 -Idioma en -Destino ..imgn) y «AgriDesign User's Manual (English).pdf» (170 hojas).
+                       Se obtiene con perl herramientas/reunir-reglas.pl en y perl herramientas/unir-manual.pl en
 ```
 
 ## Ver una parte
@@ -121,7 +123,7 @@ Un `click:` sobre un botón de descarga deja al navegador esperando: hay que apu
 
 ## Cómo obtener el PDF
 
-El PDF completo en español está en `manual/AgriDesign User's Manual.pdf` (163 hojas). Si se corrige una parte, se vuelve a generar con los pasos siguientes y se reemplaza ese archivo.
+El PDF completo en español está en `manual/AgriDesign User's Manual.pdf` (174 hojas). Si se corrige una parte, se vuelve a generar con los pasos siguientes y se reemplaza ese archivo.
 
 **Manual completo**, con el servidor local en marcha:
 

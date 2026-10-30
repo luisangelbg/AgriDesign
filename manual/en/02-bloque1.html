@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AgriDesign · User manual · Block 1: Home, simulator and theory</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;1,500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../interior.css">
+<!-- reparte el contenido en hojas tamaño carta, con encabezados y números de página -->
+<script src="../paginar.js"></script>
+<style>
+  figure.chica .marco { width: 70%; margin: 0 auto; }
+  figure.chica figcaption { margin-left: 15%; margin-right: 15%; }
+  figure.mini .marco { width: 56%; margin: 0 auto; }
+  figure.mini figcaption { margin-left: 22%; margin-right: 22%; }
+</style>
+</head>
+<body>
+
+<section class="capitulo" id="cap-b1" data-pestana="B1" data-orden="2" style="--acento: var(--b1)">
+  <div class="cap-apertura">
+    <div class="cap-num">B1</div>
+    <div class="cap-etiqueta">Chapter two · Block 1 · Home</div>
+    <h1 data-corto="Block 1 · Home, simulator and theory">Home, simulator and theory</h1>
+    <div class="cap-regla"></div>
+    <p class="cap-resumen">The app’s home page is more than a welcome screen. It is a map of the whole program; a laboratory where you can see, with the app’s own ANOVA engine, how much a trial gains from blocking; a catalogue of the designs and methods it covers; and a summary of the theory you need to defend your analysis.</p>
+    <div class="cap-franja"><span class="k1"></span><span class="k1" style="opacity:.75"></span><span class="k1" style="opacity:.5"></span><span class="k1" style="opacity:.3"></span></div>
+    <ul class="cap-contenido">
+      <li><b>2.1</b>The home page and the workflow</li>
+      <li><b>2.2</b>The simulator: blocks versus complete randomisation</li>
+      <li><b>2.3</b>Kinds of experiment, designs and methods</li>
+      <li><b>2.4</b>The theory in plain language</li>
+      <li><b>2.5</b>How to cite the software</li>
+    </ul>
+  </div>
+
+  <!-- 2.1 -->
+  <h2 id="s2-1"><span class="num">2.1</span>The home page and the workflow</h2>
+  <p class="lead">When you open <code>index.html</code>, Block 1 appears. It reads from top to bottom, like a brochure: first what the program does, then how to work through it, then a simulator to experiment with, the galleries of blocks, kinds of trial, designs and methods, the theory and, finally, how to cite it.</p>
+
+  <table>
+    <caption><b>Table 2.1.</b> Sections of the home page, in the order in which they appear.</caption>
+    <thead><tr><th style="width:29%">Section in the app</th><th>What it contains</th><th style="width:26%">What it is for</th></tr></thead>
+    <tbody>
+      <tr><td><b>Introduction</b><br><span class="small">four buttons and five guarantees</span></td><td><span class="ui">Start with my data</span>, <span class="ui">Try the simulator</span>, <span class="ui">Read the theory</span> and <span class="ui">How to cite</span>; an illustration of a block trial with crops and livestock; the link <span class="ui">Open a worked example</span>.</td><td>Going straight to loading data, to the guiding example or to any of the sections below.</td></tr>
+      <tr><td><span class="ui">How it works</span></td><td>The seven steps of a trial, from the field book to the next trial (figure 2.1).</td><td>Placing each block within the logic of an experiment.</td></tr>
+      <tr><td><span class="ui">Try it: why blocking beats a completely randomised layout</span></td><td>The simulator of blocks versus complete randomisation (section 2.2).</td><td>Understanding, through play, what blocking does to experimental error and power.</td></tr>
+      <tr><td><span class="ui">What's inside</span></td><td>One card per analysis block, with an illustration and a description.</td><td>Jumping to a block with one click.</td></tr>
+      <tr><td><span class="ui">Every kind of experiment</span></td><td>Six families of trials and the designs that usually go with them.</td><td>Confirming that your experiment fits the program (section 1.4).</td></tr>
+      <tr><td><span class="ui">Designs covered</span></td><td>A gallery of eleven designs with their layouts (table 2.6).</td><td>Recognising the design you planted.</td></tr>
+      <tr><td><span class="ui">Methods covered</span></td><td>Eight method cards grouped by family (table 2.7).</td><td>Seeing at a glance everything that can be computed.</td></tr>
+      <tr><td><span class="ui">What it brings together</span></td><td>The capabilities the program brings together in a single workflow.</td><td>Justifying its use in a project or a thesis.</td></tr>
+      <tr><td><span class="ui">The theory, in plain language</span></td><td>Seven collapsible topics with rules of thumb (section 2.4).</td><td>Reviewing the theory before interpreting or defending results.</td></tr>
+      <tr><td><span class="ui">How to cite AgriDesign</span></td><td>The citation of the program in APA and BibTeX formats, ready to copy (section 2.5).</td><td>Citing it correctly in your paper or thesis.</td></tr>
+    </tbody>
+  </table>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b1-flujo.png" alt="The seven steps of How it works"></div>
+    <figcaption><b>Figure 2.1.</b> The <span class="ui">How it works</span> section: seven steps that follow the order in which an agricultural experiment is conducted and reported.</figcaption>
+  </figure>
+
+  <table class="compacta">
+    <caption><b>Table 2.2.</b> The seven steps on the home page and the blocks that carry them out.</caption>
+    <thead><tr><th style="width:10%">Step</th><th style="width:24%">In the app</th><th>What is done</th><th style="width:16%">Blocks</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><span class="ui">Load &amp; check</span></td><td>Load the field book, one row per plot, and give each column a role.</td><td><span class="chip k2">2</span></td></tr>
+      <tr><td>2</td><td><span class="ui">Explore</span></td><td>Descriptive statistics and exploratory graphics by treatment and block.</td><td><span class="chip k3">3</span></td></tr>
+      <tr><td>3</td><td><span class="ui">Check assumptions</span></td><td>Normality, homogeneity of variances and additivity on the residuals; transform or switch to ranks.</td><td><span class="chip k4">4</span></td></tr>
+      <tr><td>4</td><td><span class="ui">Analyse</span></td><td>ANOVA of the design as planted, mean comparisons, trends and contrasts.</td><td><span class="chip k5">5</span></td></tr>
+      <tr><td>5</td><td><span class="ui">Illustrate</span></td><td>Editable figures with letters, at journal resolution.</td><td><span class="chip k6">6</span></td></tr>
+      <tr><td>6</td><td><span class="ui">Publish</span></td><td>Report, tables and ZIP package.</td><td><span class="chip k7">7</span></td></tr>
+      <tr><td>7</td><td><span class="ui">Plan the next one</span></td><td>Randomisation, field layout, field book and number of replicates for the next trial.</td><td><span class="chip k8">8</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · navigating from the home page</div>
+    <p>The four buttons in the introduction are shortcuts: <span class="ui">Start with my data</span> opens Block 2, and the other three scroll down to the simulator, the theory or the citation on the same page. The <span class="ui">What's inside</span> cards take you to their block, but those that need data stay greyed out until you load a table; Block 8 is always available because it plans trials that do not exist yet. The <span class="ui">Go to Block 2: load your data</span> button at the foot of the home page does the same as the first button.</p>
+  </div>
+
+  <!-- 2.2 -->
+  <h2 id="s2-2"><span class="num">2.2</span>The simulator: blocks versus complete randomisation</h2>
+  <p class="lead">The simulator answers a question every student asks at least once: <b>why block?</b> It lays out the same four-treatment trial twice on a field with a fertility gradient, once completely at random and once in randomised complete blocks, analyses both layouts with the same ANOVA engine that Block 5 uses, and lets you compare them.</p>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>Theory in brief · what is inside the simulator</div>
+    <p>Each plot produces a simulated yield: 10 + treatment effect + fertility of its row + noise. The four treatments have stepped effects from 0 to δ (T1 the smallest, T4 the largest), fertility increases from the top row to the bottom row by the amount set on the slider, and the noise is normal with standard deviation 1. The units of δ and of the gradient are therefore <b>standard deviations of the noise</b>. The two layouts share fertility and noise plot by plot; only which treatment falls in each plot changes. In the completely randomised layout, the 16 treatments are drawn over the whole field; in the block layout, each row is a block and the draw is made within it. The ANOVA of the randomised layout has a single term, treatment; the block ANOVA also has the block term, and that term takes up the variation between rows.</p>
+  </div>
+
+  <figure>
+    <div class="marco" style="position:relative">
+      <img src="../img/en/b1-simulador.png" alt="The simulator with the default randomisation">
+      <span class="marca" style="left:17.5%;top:25.7%">1</span>
+      <span class="marca" style="left:82.4%;top:29.8%">2</span>
+      <span class="marca" style="left:41.8%;top:34%">3</span>
+      <span class="marca" style="left:74.4%;top:34%">4</span>
+      <span class="marca" style="left:17.5%;top:62%">5</span>
+      <span class="marca" style="left:17.5%;top:70.7%">6</span>
+    </div>
+    <figcaption><b>Figure 2.2.</b> The simulator as it appears when the app opens: four treatments, four replicates, a difference of 1.2 standard deviations between the best and the worst treatment, and a gradient of 2.0 standard deviations from the top row to the bottom row.</figcaption>
+  </figure>
+  <ul class="leyenda-marcas">
+    <li><span class="n">1</span><span class="ui">Randomise again</span> repeats the draw with the same seed; <span class="ui">New random seed</span> changes the seed; <span class="ui">Run 300 randomisations</span> estimates the power.</li>
+    <li><span class="n">2</span>Three sliders: replicates, difference between treatments and fertility gradient.</li>
+    <li><span class="n">3</span>The completely randomised layout: rows of the field, and the treatment and simulated yield of each plot.</li>
+    <li><span class="n">4</span>The same field in randomised complete blocks: each row contains all four treatments.</li>
+    <li><span class="n">5</span>Readout cards for each layout: F, P value, CV and degrees of freedom. The P value is highlighted when it is below 0.05.</li>
+    <li><span class="n">6</span>A paragraph compares the error mean squares of the two layouts and states which one gave the smaller P value in this randomisation.</li>
+  </ul>
+
+  <h3>The controls</h3>
+  <table>
+    <caption><b>Table 2.3.</b> The three sliders and what each one does.</caption>
+    <thead><tr><th style="width:22%">Slider</th><th style="width:14%">Range</th><th>Meaning</th><th style="width:30%">If you increase it…</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Replicates (blocks)</span></td><td>2 to 6</td><td>Number of rows in the field; in the block layout, number of blocks.</td><td>More degrees of freedom for error and more precise means in both layouts.</td></tr>
+      <tr><td><span class="ui">Treatment difference</span></td><td>0 to 3 SD</td><td>Difference between the best and the worst treatment, in standard deviations of the noise; the other two lie at the thirds.</td><td>The effect is easier to detect. At 0 there is no effect, and what is measured is the type I error.</td></tr>
+      <tr><td><span class="ui">Fertility gradient</span></td><td>0 to 4 SD</td><td>How much more the bottom row yields than the top row, in standard deviations of the noise.</td><td>The randomised layout loses precision; the block layout is unaffected.</td></tr>
+    </tbody>
+  </table>
+
+  <table>
+    <caption><b>Table 2.4.</b> The readout cards of each layout.</caption>
+    <thead><tr><th style="width:14%">Card</th><th>What it is</th><th style="width:44%">How to read it</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">F</span></td><td>Ratio of the treatment mean square to the error mean square.</td><td>Close to 1, the treatments vary as much as identically treated plots; large, they vary more.</td></tr>
+      <tr><td><span class="ui">p</span></td><td>P value of the treatment effect in that randomisation.</td><td>Below 0.05 (highlighted): the layout detected the effect this time. A single run does not tell you which design is better; that is what power is for.</td></tr>
+      <tr><td><span class="ui">CV</span></td><td>Coefficient of variation: square root of the error mean square divided by the mean, as a percentage.</td><td>The precision of the trial. It is the first thing to change when you block.</td></tr>
+      <tr><td><span class="ui">df</span></td><td>Degrees of freedom for treatment and for error.</td><td>Blocks cost r − 1 error degrees of freedom: 12 versus 9 with four replicates.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja dato">
+    <div class="dato-cifra">1.90 → 0.76</div>
+    <div class="dato-txt"><div class="caja-t">The error mean square in the randomisation of figure 2.2</div>The gradient of 2.0 standard deviations inflates the error of the randomised layout to 1.90; in the block layout, the block term absorbs 74% of the total sum of squares and the error falls to 0.76. The CV drops from 13.0 to 8.3%. With the same noise and the same treatments, the block trial is two and a half times as precise.</div>
+  </div>
+
+  <div class="caja importante">
+    <div class="caja-t"><span class="ico">!</span>Important · one run is not a test</div>
+    <p>In the randomisation of figure 2.2, neither layout detected the effect (P = 0.857 and P = 0.985), and in that run the randomised layout even gave the smaller P value. This is to be expected: with a difference of 1.2 standard deviations spread over four treatments, the effect is small and the chance of a single run dominates. What sets the designs apart is how <b>often</b> they detect the effect over many runs, that is, their power. That is why the <span class="ui">Run 300 randomisations</span> button is the most important part of the simulator.</p>
+  </div>
+
+  <h3>Four exercises with the simulator</h3>
+  <p>The power figures quoted below come from the app itself, with the seed it opens with (300 randomisations per scenario). If you press <span class="ui">New random seed</span> you will get similar, not identical, values: power estimated from 300 runs has an error of about ±3 percentage points.</p>
+
+  <h4>Exercise 1 · With a gradient, blocks win</h4>
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Step by step</div>
+    <ol class="pasos" style="margin-bottom:0">
+      <li>On the home page, press <span class="ui">Try the simulator</span>. Leave the sliders as they are: 4 replicates, difference 1.2 SD, gradient 2.0 SD.</li>
+      <li>Read the cards: the CV of the randomised layout is 13.0% and that of the block layout 8.3%.</li>
+      <li>Press <span class="ui">Run 300 randomisations</span>. Two bars appear with the proportion of runs in which each layout gave P &lt; 0.05.</li>
+      <li>Press <span class="ui">Randomise again</span> several times: the yields change, and the power bars disappear until you request them again.</li>
+    </ol>
+  </div>
+  <figure class="media">
+    <div class="marco"><img src="../img/en/b1-potencia.png" alt="Power with a gradient of 2 standard deviations"></div>
+    <figcaption><b>Figure 2.3.</b> Power with the default scenario: the randomised layout detects the effect in 16% of the runs and the block layout in 24%. The same difference between treatments, with the same number of plots, is detected one and a half times as often when you block.</figcaption>
+  </figure>
+
+  <h4>Exercise 2 · Without a gradient, blocks only cost</h4>
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Step by step</div>
+    <ol class="pasos" style="margin-bottom:0">
+      <li>Drag <span class="ui">Fertility gradient</span> down to 0.0 SD. The field is now uniform.</li>
+      <li>Notice that the block layout does not change at all: same yields, same CV, same P value. The randomised layout improves, because there is no longer a gradient in its way.</li>
+      <li>Press <span class="ui">Run 300 randomisations</span>.</li>
+    </ol>
+  </div>
+  <figure class="media">
+    <div class="marco"><img src="../img/en/b1-sin-gradiente.png" alt="Power without a gradient"></div>
+    <figcaption><b>Figure 2.4.</b> Without a gradient both layouts perform alike: 23% and 24%. The block term used up three error degrees of freedom for nothing, but the loss is small.</figcaption>
+  </figure>
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>What you learned</div>
+    <p>Blocking has a fixed cost, the r − 1 degrees of freedom taken by the block term, and a benefit that depends on how much variation there is between blocks. If the field is uniform, the benefit is nil and the cost is barely noticeable; if there is a gradient, the benefit is large. Since you almost never know in advance that a field is uniform, in the field blocking is the safe bet. In a greenhouse or laboratory with truly homogeneous units, complete randomisation is acceptable and slightly more powerful.</p>
+  </div>
+
+  <h4>Exercise 3 · The gradient sinks complete randomisation, not the blocks</h4>
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Step by step</div>
+    <ol class="pasos" style="margin-bottom:0">
+      <li>Raise <span class="ui">Fertility gradient</span> to 4.0 SD. The CV of the randomised layout jumps to 17.8%; that of the block layout stays at 8.3%.</li>
+      <li>Press <span class="ui">Run 300 randomisations</span>: 9% versus 24%.</li>
+      <li>Now raise <span class="ui">Treatment difference</span> to 2.0 SD and run the 300 randomisations again with gradients of 4.0, 2.0 and 0.0.</li>
+    </ol>
+  </div>
+  <table class="compacta">
+    <caption><b>Table 2.5.</b> Power estimated from 300 randomisations (with the seed the app opens with). Difference and gradient in standard deviations of the noise.</caption>
+    <thead><tr><th class="c">Replicates</th><th class="c">Difference</th><th class="c">Gradient</th><th class="c">Completely randomised</th><th class="c">Randomised blocks</th><th>Reading</th></tr></thead>
+    <tbody>
+      <tr><td class="c">4</td><td class="c">1.2</td><td class="c">0.0</td><td class="c">23%</td><td class="c">24%</td><td>Without a gradient, they tie.</td></tr>
+      <tr><td class="c">4</td><td class="c">1.2</td><td class="c">2.0</td><td class="c">16%</td><td class="c">24%</td><td>Default scenario.</td></tr>
+      <tr><td class="c">4</td><td class="c">1.2</td><td class="c">4.0</td><td class="c">9%</td><td class="c">24%</td><td>Complete randomisation sinks; the blocks do not change.</td></tr>
+      <tr><td class="c">4</td><td class="c">2.0</td><td class="c">0.0</td><td class="c">55%</td><td class="c">56%</td><td>Larger effect: more power in both.</td></tr>
+      <tr><td class="c">4</td><td class="c">2.0</td><td class="c">2.0</td><td class="c">39%</td><td class="c">56%</td><td>The blocks detect it almost one and a half times as often.</td></tr>
+      <tr><td class="c">4</td><td class="c">2.0</td><td class="c">4.0</td><td class="c">20%</td><td class="c">56%</td><td>Almost three times as often.</td></tr>
+      <tr><td class="c">4</td><td class="c">1.5</td><td class="c">2.0</td><td class="c">23%</td><td class="c">34%</td><td>Intermediate.</td></tr>
+      <tr><td class="c">2</td><td class="c">1.2</td><td class="c">2.0</td><td class="c">5%</td><td class="c">9%</td><td>With two replicates almost nothing is detected.</td></tr>
+      <tr><td class="c">6</td><td class="c">1.2</td><td class="c">2.0</td><td class="c">24%</td><td class="c">31%</td><td>More replicates help both.</td></tr>
+      <tr><td class="c">4</td><td class="c">0.0</td><td class="c">2.0</td><td class="c">6%</td><td class="c">7%</td><td>No effect: only false positives, close to 5%.</td></tr>
+    </tbody>
+  </table>
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>What you learned</div>
+    <p>The block column is the same in every row with the same number of replicates and the same difference, whatever the gradient. In the simulator the gradient runs exactly along the rows and each row is a block, so the block term removes it completely; what is left in the error is only the noise. In the field blocking is never this perfect, because fertility also varies within each block, but the lesson holds: <b>what the block captures leaves the error for good, and what it does not capture stays there</b>. That is why blocks are laid out perpendicular to the gradient, so that each block is as uniform as possible within and as different as possible from the others.</p>
+  </div>
+
+  <h4>Exercise 4 · No effect: the type I error</h4>
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Step by step</div>
+    <ol class="pasos" style="margin-bottom:0">
+      <li>Lower <span class="ui">Treatment difference</span> to 0.0 SD: the four treatments are identical.</li>
+      <li>Leave the gradient at 2.0 and press <span class="ui">Run 300 randomisations</span>. Both bars end up close to 5% (6 and 7% in table 2.5).</li>
+      <li>Press <span class="ui">Randomise again</span> several times and note in how many runs the P value is highlighted even though there is no effect.</li>
+    </ol>
+  </div>
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>What you learned</div>
+    <p>When there is no effect, the proportion of runs with P &lt; 0.05 is the type I error, and both designs keep it close to the nominal 5%. This is what randomisation guarantees: <b>the gradient does not produce false differences between treatments</b> in either layout, because the draw spreads fertility without favouring anyone. What the gradient does do in the randomised layout is hide the true differences. Without randomisation, if for convenience T1 were always sown in the top row, the false-positive rate would soar and no ANOVA could correct it.</p>
+  </div>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Decision rule · block or not?</div>
+    <table class="compacta">
+      <thead><tr><th style="width:44%">If the experimental units…</th><th>then…</th></tr></thead>
+      <tbody>
+        <tr><td>are in the field, on land with uneven slope, moisture or history</td><td>Randomised complete blocks, with the blocks perpendicular to the gradient.</td></tr>
+        <tr><td>have two crossed gradients (rows and columns, animals and periods)</td><td>Latin square, if the number of treatments allows it.</td></tr>
+        <tr><td>are handled in different batches, days or lots</td><td>Each batch is a block, even if the land is uniform.</td></tr>
+        <tr><td>are pots on a uniform bench or animals of the same weight and age</td><td>Complete randomisation; you gain degrees of freedom and lose nothing.</td></tr>
+        <tr><td>are so many that a block cannot hold all the treatments</td><td>Incomplete blocks (lattices, alpha designs), Block 5.</td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">When in doubt, block: the cost is r − 1 degrees of freedom; the benefit can be half the error.</p>
+  </div>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · use in class</div>
+    <p>The simulator is designed to be projected. A sequence that works well: show the default scenario and ask which layout students prefer; run the 300 randomisations; raise the gradient and repeat; lower the difference to zero to discuss the type I error; and close with the maize and nitrogen example of Block 5, where the block effect is real (F = 21.69, P = 0.0002).</p>
+  </div>
+
+  <!-- 2.3 -->
+  <h2 id="s2-3"><span class="num">2.3</span>Kinds of experiment, designs and methods</h2>
+  <p>Below the simulator, the home page shows four galleries. They are the program’s catalogue: they tell you whether your experiment fits and what it is analysed with, and the block cards take you straight to each block.</p>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b1-bloques.png" alt="The seven analysis block cards"></div>
+    <figcaption><b>Figure 2.5.</b> <span class="ui">What's inside</span>: one card per analysis block, with its illustration, a label with the verb of the stage (import, explore, diagnose, analyse, illustrate, publish, plan) and a list of what it does. Clicking a card opens the block.</figcaption>
+  </figure>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b1-tipos.png" alt="The six families of experiments"></div>
+    <figcaption><b>Figure 2.6.</b> <span class="ui">Every kind of experiment</span>: field crops, horticulture and greenhouse, perennial crops, livestock, germination and laboratory, and scores on scales. Each card names the typical experimental unit and the designs and methods that usually go with it (table 1.2).</figcaption>
+  </figure>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b1-disenos.png" alt="The gallery of eleven designs"></div>
+    <figcaption><b>Figure 2.7.</b> <span class="ui">Designs covered</span>: each layout shows how the treatments (colours) are arranged in the plots (rectangles). The same layouts reappear in Block 5 when you choose the design and in Block 8 when you generate it.</figcaption>
+  </figure>
+
+  <table>
+    <caption><b>Table 2.6.</b> The designs in the gallery, with the model that Block 5 fits and a typical case. The variants with several plots per block and treatment (generalised blocks) and with plots split twice (split-split-plot) are chosen within Block 5.</caption>
+    <thead><tr><th style="width:24%">In the app</th><th style="width:30%">Model</th><th>Typical case</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">CRD</span></td><td>y = μ + treatment + ε</td><td>Pots on a bench; homogeneous animals fed individually.</td></tr>
+      <tr><td><span class="ui">RCBD</span></td><td>y = μ + block + treatment + ε</td><td>Field plots with a gradient; work batches.</td></tr>
+      <tr><td><span class="ui">Latin square</span></td><td>y = μ + row + column + treatment + ε</td><td>Two crossed gradients; animals × periods.</td></tr>
+      <tr><td><span class="ui">Factorial</span></td><td>y = μ + [block] + A + B + A×B + ε</td><td>Variety × fertilisation; breed × diet.</td></tr>
+      <tr><td><span class="ui">Split-plot</span></td><td>Main plot with its error (a) and sub-plot with its own (b)</td><td>Irrigation or tillage on main plots, varieties within them.</td></tr>
+      <tr><td><span class="ui">Strip-plot</span></td><td>Horizontal and vertical strips, three errors</td><td>Two factors applied with machinery in crossed strips.</td></tr>
+      <tr><td><span class="ui">Lattice / alpha</span></td><td>Incomplete blocks within replicates; intra-block analysis</td><td>Variety trials with 20 to 100 entries.</td></tr>
+      <tr><td><span class="ui">Balanced incomplete block</span></td><td>Blocks smaller than the number of treatments, balanced by pairs</td><td>Sensory panels; trials with few units per block.</td></tr>
+      <tr><td><span class="ui">Augmented</span></td><td>Checks replicated in blocks and new entries without replication</td><td>Early generations of a breeding programme.</td></tr>
+      <tr><td><span class="ui">Nested (hierarchical)</span></td><td>B nested within A</td><td>Seed lots within varieties; pens within farms.</td></tr>
+      <tr><td><span class="ui">Repeated measures</span></td><td>Split-plot in time</td><td>Several harvests from the same coffee bush; monthly weights of the same animal.</td></tr>
+    </tbody>
+  </table>
+
+  <figure class="chica">
+    <div class="marco"><img src="../img/en/b1-metodos.png" alt="The gallery of eight methods"></div>
+    <figcaption><b>Figure 2.8.</b> <span class="ui">Methods covered</span>: eight cards grouped by family, from residual diagnostics to planning the next trial.</figcaption>
+  </figure>
+
+  <table class="compacta">
+    <caption><b>Table 2.7.</b> The eight method cards and the block where each is used.</caption>
+    <thead><tr><th style="width:18%">Family</th><th style="width:26%">Card</th><th>Content</th><th style="width:10%">Block</th></tr></thead>
+    <tbody>
+      <tr><td>Assumptions</td><td><span class="ui">Residual diagnostics</span></td><td>Shapiro–Wilk, Levene, Bartlett, Tukey’s additivity test, Q–Q and residual plots.</td><td><span class="chip k4">4</span></td></tr>
+      <tr><td>Assumptions</td><td><span class="ui">Transformations</span></td><td>Logarithm, square root, arcsine, logit, reciprocal; Box–Cox profile.</td><td><span class="chip k4">4</span></td></tr>
+      <tr><td>Non-parametric</td><td><span class="ui">Rank-based ANOVA</span></td><td>Kruskal–Wallis, Friedman, Scheirer–Ray–Hare, aligned ranks, Welch.</td><td><span class="chip k4">4</span></td></tr>
+      <tr><td>ANOVA</td><td><span class="ui">Fourteen designs</span></td><td>The designs in the catalogue with their error strata and type I and III sums of squares.</td><td><span class="chip k5">5</span></td></tr>
+      <tr><td>ANOVA</td><td><span class="ui">Least-squares means</span></td><td>Means adjusted for blocks and covariates, back-transformed when needed.</td><td><span class="chip k5">5</span></td></tr>
+      <tr><td>Mean comparisons</td><td><span class="ui">Eleven procedures</span></td><td>Tukey, LSD, Bonferroni, Šidák, Holm, Duncan, SNK, REGWQ, Scheffé, Dunnett, Games–Howell.</td><td><span class="chip k5">5</span></td></tr>
+      <tr><td>Mean comparisons</td><td><span class="ui">Simple effects &amp; contrasts</span></td><td>Slices with combined errors, orthogonal polynomials, custom contrasts.</td><td><span class="chip k5">5</span></td></tr>
+      <tr><td>Planning</td><td><span class="ui">Randomisation &amp; power</span></td><td>Seeded layouts, field books, replicates for a target difference.</td><td><span class="chip k8">8</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · “fourteen designs”</div>
+    <p>The home page speaks of fourteen designs, while the gallery shows eleven layouts. The difference lies in the variants chosen within Block 5: the generalised block (several plots per block and treatment), the split-plot in a completely randomised design and the split-split-plot. Analysis of covariance does not count as a design: it is a covariate added to any of them.</p>
+  </div>
+
+  <!-- 2.4 -->
+  <h2 id="s2-4"><span class="num">2.4</span>The theory in plain language</h2>
+  <p>The <span class="ui">The theory, in plain language</span> section brings together seven collapsible topics. They are no substitute for a course on experimental design, but they are enough to plan a sensible trial and to defend its analysis in a seminar. Each block repeats, next to its results, the part it needs.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b1-teoria.png" alt="The seven theory topics with the first one expanded"></div>
+    <figcaption><b>Figure 2.9.</b> The seven theory topics, with the first one expanded: replication, randomisation and local control, each with its illustration. Clicking a title opens or closes the topic.</figcaption>
+  </figure>
+
+  <table>
+    <caption><b>Table 2.8.</b> The seven topics and the central idea of each.</caption>
+    <thead><tr><th style="width:32%">Topic in the app</th><th>Central idea</th><th style="width:12%">Taken up again in</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">What every experiment must have</span></td><td>Replication, randomisation and local control. The standard error of a mean is s/√r; measuring the same plot several times is not replication.</td><td>Ch. 1, §1.3</td></tr>
+      <tr><td><span class="ui">The experimental unit decides everything</span></td><td>The unit is whatever receives the treatment independently: the plot, the pot, the pen when all the animals eat from the same feeder. Counting animals as replicates when the pen was treated invents significance.</td><td><span class="chip k2">2</span></td></tr>
+      <tr><td><span class="ui">Choosing the design from the layout</span></td><td>A table that goes from the layout in the field to the design: one gradient, blocks; two, Latin square; one factor on main plots and another within them, split-plot; many treatments, incomplete blocks; a measurement taken beforehand, covariate.</td><td><span class="chip k5">5</span></td></tr>
+      <tr><td><span class="ui">Reading the ANOVA table</span></td><td>Each F is compared with <i>its own</i> error; in a split-plot there are two. The CV measures precision: 10 to 20% is normal for field yield. A significant block says nothing about the treatments: it says that blocking was worthwhile.</td><td><span class="chip k5">5</span></td></tr>
+      <tr><td><span class="ui">Which mean-separation test</span></td><td>Tukey by default; LSD only after a significant F and with few treatments; Duncan, less and less accepted; Dunnett against a control; Scheffé for contrasts chosen after seeing the data; Games–Howell with unequal variances. For quantitative factors, a curve and an optimum, not letters.</td><td><span class="chip k5">5</span></td></tr>
+      <tr><td><span class="ui">When the assumptions fail</span></td><td>Assumptions are checked on the residuals. Unequal variances do more harm than imperfect normality. Counts, square root; percentages, arcsine or logit; multiplicative effects, logarithm; ordinal scales, ranks.</td><td><span class="chip k4">4</span></td></tr>
+      <tr><td><span class="ui">How many replicates</span></td><td>The number of replicates depends on the CV and on the difference you want to detect. Reducing the CV is usually cheaper than adding replicates. At least 10 to 12 degrees of freedom for error.</td><td><span class="chip k8">8</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja dato">
+    <div class="dato-cifra">17 → 6</div>
+    <div class="dato-txt"><div class="caja-t">Replicates needed to detect a 15% difference</div>With a CV of 15%, a block trial needs about 17 replicates to detect a difference of 15% of the mean with the usual power; with a CV of 8%, 6 are enough (four treatments, power of 0.80). Halving the CV, through uniform units, borders, well-oriented blocks and the right experimental unit, is equivalent to multiplying the replicates by four. Block 8 does this calculation with your own numbers.</div>
+  </div>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Decision rule · from the field layout to the design</div>
+    <table class="compacta">
+      <thead><tr><th style="width:40%">Your experiment has…</th><th style="width:26%">Design</th><th>Typical case</th></tr></thead>
+      <tbody>
+        <tr><td>One factor, homogeneous units, no gradient</td><td>Completely randomised</td><td>Pots on a bench; animals of the same weight</td></tr>
+        <tr><td>One factor, one known gradient</td><td>Randomised complete blocks</td><td>Slope of the land; litter or barn; sampling day</td></tr>
+        <tr><td>One factor, two gradients</td><td>Latin square</td><td>Rows × columns of the field; animals × periods</td></tr>
+        <tr><td>Two or more factors studied together</td><td>Factorial, completely randomised or in blocks</td><td>Variety × fertiliser; breed × diet</td></tr>
+        <tr><td>One factor on main plots and another within them</td><td>Split-plot</td><td>Irrigation × varieties; pasture × stocking rate</td></tr>
+        <tr><td>Many treatments, blocks that cannot hold them all</td><td>Incomplete blocks (lattice, alpha)</td><td>Variety trials with 20 to 100 entries</td></tr>
+        <tr><td>A numeric variable measured before treatment</td><td>Any of the above + covariate</td><td>Initial weight; plant stand; soil analysis</td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">This is the same table the app shows under <span class="ui">Choosing the design from the layout</span>; the Block 5 chapter develops it design by design.</p>
+  </div>
+
+  <!-- 2.5 -->
+  <h2 id="s2-5"><span class="num">2.5</span>How to cite the software</h2>
+  <p>If AgriDesign helped you with a thesis, a paper or a technical report, cite the program: that way readers know which tool and which version produced the calculations, and others can repeat them. Name the statistical methods you used (the design, the mean-comparison test, the transformation) in the text exactly as the app names them in its results and in the methods paragraph of the report.</p>
+
+  <figure class="media">
+    <div class="marco"><img src="../img/en/b1-cita.png" alt="Citation box on the home page"></div>
+    <figcaption><b>Figure 2.10.</b> The <span class="ui">How to cite AgriDesign</span> section: the reference in APA format, the buttons to copy it in APA or BibTeX, the links to the Zenodo record and to the source code, and the collapsible BibTeX entry.</figcaption>
+  </figure>
+
+  <ol class="pasos">
+    <li>On the home page, press <span class="ui">How to cite</span>; the page scrolls down to the citation box.</li>
+    <li>Press <span class="ui">Copy reference (APA)</span> or <span class="ui">Copy BibTeX</span>. A notice next to the buttons confirms that the reference has been copied to the clipboard.</li>
+    <li>Paste the citation into your reference manager or your document and adapt it to the journal’s style.</li>
+    <li>State in the methods the version and the settings you used (design, sums of squares, mean-comparison test, α, transformation). The Block 7 report drafts that paragraph with the actual values of the analysis and includes the same citation.</li>
+  </ol>
+
+  <div class="cita">Barrera-Guzmán, L. Á. (2026). AgriDesign: a browser-based platform for the design and analysis of agricultural experiments (Version 1.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.22683046</div>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · the DOI</div>
+    <p>The digital object identifier (DOI) in the citation, 10.5281/zenodo.22683046, is the <b>concept DOI</b>: it always resolves to the latest version of the program. Each version also has its own DOI, shown in that version’s record in the archive; the one for version 1.0 is 10.5281/zenodo.22683047. Cite the concept DOI together with the version number; if the journal requires that anyone be able to retrieve exactly the version you used, cite that version’s DOI. The DOIs of every version and the full metadata are in the repository’s <code>CITATION.cff</code> file, which GitHub displays under <span class="ui">Cite this repository</span>.</p>
+  </div>
+
+  <div class="caja importante">
+    <div class="caja-t"><span class="ico">!</span>Important · report the settings too</div>
+    <p>Citing the program is not enough for another researcher to repeat your analysis. State in the methods the AgriDesign version, the design and the fitted model, the type of sums of squares, the mean-separation test and its α level, the transformation if there was one and, for layouts generated in Block 8, the <b>random seed</b>. The automatic report of Block 7 drafts that paragraph with the values you actually used.</p>
+  </div>
+
+  <p style="margin-top:0.25in">With the home page, the simulator and the theory at hand, the next step is to load your own data. The Block 2 chapter explains what a field book should look like, the formats the app accepts, the table check, the variable roles and the wide-table converter, with the maize and nitrogen example step by step.</p>
+</section>
+
+</body>
+</html>

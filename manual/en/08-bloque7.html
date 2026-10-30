@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AgriDesign · User manual · Block 7: report and export</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;1,500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../interior.css">
+<!-- reparte el contenido en hojas tamaño carta, con encabezados y números de página -->
+<script src="../paginar.js"></script>
+<style>
+  figure.chica .marco { width: 70%; margin: 0 auto; }
+  figure.chica figcaption { margin-left: 15%; margin-right: 15%; }
+  .arbol { font-family: Consolas, "Courier New", monospace; font-size: 9pt; line-height: 1.45; background: #f4f6f3; border-radius: 6px; padding: 0.1in 0.16in; margin: 0.08in 0 0.16in; white-space: pre; }
+</style>
+</head>
+<body>
+
+<section class="capitulo" id="cap-b7" data-pestana="B7" data-orden="8" style="--acento: var(--b7)">
+  <div class="cap-apertura">
+    <div class="cap-num">B7</div>
+    <div class="cap-etiqueta">Chapter eight · Block 7 · Report</div>
+    <h1 data-corto="Block 7 · Report and export">Report and export</h1>
+    <div class="cap-regla"></div>
+    <p class="cap-resumen">The last step of the analysis brings everything together in a single document. Block 7 writes a self-contained report with a title, objective, materials and methods, data, assumptions, ANOVA table, means with letters, contrasts, the figures exactly as you edited them, appendices and the software citation. It downloads as HTML, prints to PDF and is bundled into a ZIP with the data, the tables as CSV and the figures at the chosen resolution: supplementary material ready for the journal or the thesis committee.</p>
+    <div class="cap-franja"><span class="k7"></span><span class="k7" style="opacity:.75"></span><span class="k7" style="opacity:.5"></span><span class="k7" style="opacity:.3"></span></div>
+    <ul class="cap-contenido">
+      <li><b>8.1</b>What the report contains</li>
+      <li><b>8.2</b>Details, sections and preview</li>
+      <li><b>8.3</b>From the report to the PDF and the manuscript</li>
+      <li><b>8.4</b>The ZIP package</li>
+    </ul>
+  </div>
+
+  <!-- 8.1 -->
+  <h2 id="s8-1"><span class="num">8.1</span>What the report contains</h2>
+  <p class="lead">The report is built from the analysis currently on screen in Block 5 and, if they were run, from the assumption checks of Block 4 and the figures of Blocks 3 to 6. It repeats no calculations: it takes the results exactly as they stand. The natural order is therefore to finish the analysis, polish the figures and only then open Block 7.</p>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b7-teoria.png" alt="The theory card of Block 7"></div>
+    <figcaption><b>Figure 8.1.</b> The <span class="ui">What goes into a good results report</span> card: methods, results, figures, reproducibility and how to obtain the PDF.</figcaption>
+  </figure>
+
+  <table>
+    <caption><b>Table 8.1.</b> The parts of the report, in the order in which they appear. Those marked as optional are switched on in the <span class="ui">Sections</span> list.</caption>
+    <thead><tr><th style="width:26%">Part</th><th>What it contains</th><th style="width:16%">Source</th></tr></thead>
+    <tbody>
+      <tr><td><b>Header</b></td><td>Title, authors, affiliation, trial, date of generation and name of the data file.</td><td>Report details</td></tr>
+      <tr><td><b>Objective</b></td><td>The objective, if one was written.</td><td>Report details</td></tr>
+      <tr><td><b>Materials and methods</b></td><td>A drafted paragraph: design and replication, factors with their levels, response and units, covariates, transformation, assumption checks, model, error strata, type of sums of squares, mean-comparison test and α, polynomial contrasts, and the version and DOI of the software.</td><td>Blocks 2, 4 and 5</td></tr>
+      <tr><td><b>Data</b> (optional)</td><td>Size of the table, observations analysed and statistics by treatment.</td><td>Block 2</td></tr>
+      <tr><td><b>Assumptions</b> (optional)</td><td>The rating, the model and the table of assumption tests. It appears only if Block 4 was run on the same response.</td><td>Block 4</td></tr>
+      <tr><td><b>Results</b></td><td>ANOVA table with its footnote, the draft results text from Block 5, means with letters and the minimum difference, polynomial contrasts and cell tables for interactions.</td><td>Block 5</td></tr>
+      <tr><td><b>Figures</b> (optional)</td><td>The figures from the selected blocks, numbered, grouped by block and embedded as vector graphics.</td><td>Blocks 3 to 6</td></tr>
+      <tr><td><b>Appendix A</b> (optional)</td><td>Pairwise comparisons for each factor, with difference, standard error, test statistic and adjusted P.</td><td>Block 5</td></tr>
+      <tr><td><b>Appendix B</b> (optional)</td><td>The complete data table as loaded.</td><td>Block 2</td></tr>
+      <tr><td><b>How to cite</b> (optional)</td><td>The software citation in APA style, the DOI, the repository and the BibTeX entry.</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · the language of the report</div>
+    <p>The report is written in whatever language the interface is using at that moment: in English if the app is in English, and in Spanish if the language is switched with the <span class="ui">ES&nbsp;|&nbsp;EN</span> toggle before the preview is built. This also applies to the date, to the table and figure captions and to the methods paragraph. Since the app opens in Spanish by default, check the toggle before building a report for a journal that publishes in English, and press <span class="ui">Build / refresh preview</span> again after switching. The downloaded HTML opens and can be edited in any word processor (Word, LibreOffice); tables and figures are preserved.</p>
+  </div>
+
+  <!-- 8.2 -->
+  <h2 id="s8-2"><span class="num">8.2</span>Details, sections and preview</h2>
+  <p>When Block 7 is opened after an analysis, the app proposes a title, builds the preview and shows the <span class="ui">1 · Report details</span> card. If there is no analysis yet, the notice <span class="ui">No analysis yet. Run Block 5 first</span> appears instead.</p>
+
+  <figure>
+    <div class="marco" style="position:relative">
+      <img src="../img/en/b7-detalles.png" alt="The report details card">
+      <span class="marca" style="left:26%;top:9.4%">1</span>
+      <span class="marca" style="left:51%;top:18.3%">2</span>
+      <span class="marca" style="left:33.6%;top:26.8%">3</span>
+      <span class="marca" style="left:28%;top:37.9%">4</span>
+      <span class="marca" style="left:44.8%;top:60.2%">5</span>
+      <span class="marca" style="left:64%;top:80.6%">6</span>
+    </div>
+    <figcaption><b>Figure 8.2.</b> The report details filled in for the maize example.</figcaption>
+  </figure>
+  <ul class="leyenda-marcas">
+    <li><span class="n">1</span><span class="ui">Title</span>, <span class="ui">Authors</span>, <span class="ui">Affiliation</span> and <span class="ui">Trial (site, season)</span>: the report header. The proposed title (“Effect of … on …”) follows the analysis for as long as you leave it untouched; a title you type yourself is kept.</li>
+    <li><span class="n">2</span><span class="ui">Response units</span>: the units, which the methods paragraph writes next to the response.</li>
+    <li><span class="n">3</span><span class="ui">Objective (optional)</span>: the objective, in a section of its own.</li>
+    <li><span class="n">4</span><span class="ui">Sections</span>: which optional parts to include (table 8.1).</li>
+    <li><span class="n">5</span><span class="ui">Figures to include</span> and <span class="ui">Build / refresh preview</span>: which blocks contribute figures, and the button that rebuilds the preview with your changes.</li>
+    <li><span class="n">6</span><span class="ui">Copy methods paragraph</span> copies the methods paragraph to the clipboard; beside it, the size of the report and how many tables and figures it contains.</li>
+  </ul>
+
+  <div class="caja importante">
+    <div class="caja-t"><span class="ico">!</span>Important · only figures that have been drawn are included</div>
+    <p>The report takes the figures that exist on the page at that moment, with their edits. Those of Block 3 are drawn when that block is opened; those of Block 4, when the diagnostics are run; those of Block 6, when the gallery is opened. If a box under <span class="ui">Figures to include</span> adds nothing, open that block first and press <span class="ui">Build / refresh preview</span> again. Loading another table or changing the roles discards the previous figures and results, and the report again asks for the Block 5 analysis.</p>
+  </div>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · repeated figures</div>
+    <p>The figure of means with letters is drawn in Block 5 and again in the Block 6 gallery. With the default boxes (Blocks 5 and 6) it appears twice in the report. For a shorter report, keep only <span class="ui">Block 6 · result graphics</span>, which contains the four presentations of the means, the response curve and the variance partition.</p>
+  </div>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b7-vista.png" alt="The preview and export card"></div>
+    <figcaption><b>Figure 8.3.</b> <span class="ui">2 · Preview and export</span>: the download and print buttons, the package options and, below them, the preview of the report exactly as it will be downloaded. With the default sections, the maize example gives a report of about 77 KB with 5 tables and 9 figures.</figcaption>
+  </figure>
+
+  <h3>A tour of the maize report</h3>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b7-inf-portada.png" alt="Header, objective, methods and data of the report"></div>
+    <figcaption><b>Figure 8.4.</b> The beginning of the report: header, objective, the materials and methods paragraph and the data section with table 1.</figcaption>
+  </figure>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>The methods paragraph for the maize example</div>
+    <p>“The experiment was laid out as a <b>randomised complete block design</b> with 4 blocks. Treatment factor was Nitrogen_kg_ha (4 levels: 0, 60, 120, 180). The response variable was <b>Yield_t_ha</b> (t ha⁻¹). Residuals were checked for normality (Shapiro–Wilk), homogeneity of variances (Levene’s test) and additivity (Tukey’s one-degree-of-freedom test). Data were analysed by analysis of variance according to the model y = μ + β + τ + ε with a single error term and Type III sums of squares. Treatment means were compared with Tukey HSD (Tukey–Kramer) at α = 0.05, and trends over quantitative factors were examined with orthogonal polynomial contrasts. All computations were performed with AgriDesign version 1.0 (Barrera-Guzmán, 2026; https://doi.org/10.5281/zenodo.22683046), a browser-based platform for the design and analysis of agricultural experiments.” The sentence on the residuals appears only when Block 4 has been run on the same response (table 8.2); in figure 8.4 it is absent.</p>
+  </div>
+
+  <table class="compacta">
+    <caption><b>Table 8.2.</b> What the methods paragraph writes, depending on the analysis.</caption>
+    <thead><tr><th style="width:36%">If the analysis has…</th><th>the paragraph adds…</th></tr></thead>
+    <tbody>
+      <tr><td>blocks · rows and columns · neither</td><td>“with 4 blocks” · “with 4 rows × 4 columns” · “with 4 replicates per treatment”.</td></tr>
+      <tr><td>units typed in <span class="ui">Response units</span></td><td>The units in parentheses after the response.</td></tr>
+      <tr><td>covariates</td><td>“… was included as covariate (ANCOVA)”.</td></tr>
+      <tr><td>a response transformed in Block 4</td><td>The transformation, and the statement that means are reported back-transformed; the name of the response without its suffix (<code>_ln</code>, <code>_sqrt</code>…).</td></tr>
+      <tr><td>Block 4 diagnostics on the same response</td><td>The checks of normality, homogeneity and, if there were blocks, additivity. If Block 4 was not run, the sentence is left out: the report does not claim checks that were never made.</td></tr>
+      <tr><td>error strata (split-plot, strip-plot)</td><td>“with the appropriate error strata” instead of “a single error term”.</td></tr>
+      <tr><td>a quantitative factor with 3 or more levels</td><td>The mention of orthogonal polynomial contrasts.</td></tr>
+    </tbody>
+  </table>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b7-inf-resultados.png" alt="Results of the report"></div>
+    <figcaption><b>Figure 8.5.</b> The results section: ANOVA table with CV, R², grand mean and the key to the asterisks in its caption; the results paragraph with F<sub>3,9</sub> as a subscript; the means with letters and the honestly significant difference (HSD) in the caption; and the polynomial contrasts.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b7-inf-figuras.png" alt="Figures of the report"></div>
+    <figcaption><b>Figure 8.6.</b> The figures, grouped by source block and numbered. They are embedded as vector graphics, so they stay sharp at any magnification and in the PDF.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="marco"><img src="../img/en/b7-inf-cita.png" alt="Software citation in the report"></div>
+    <figcaption><b>Figure 8.7.</b> The end of the report: the software citation, the concept DOI, the source code, the online version and the BibTeX entry.</figcaption>
+  </figure>
+
+  <!-- 8.3 -->
+  <h2 id="s8-3"><span class="num">8.3</span>From the report to the PDF and the manuscript</h2>
+  <p>The preview card offers two direct outputs, and Block 7 offers a third one designed for the manuscript.</p>
+
+  <table>
+    <caption><b>Table 8.3.</b> The ways of getting the report out of the app.</caption>
+    <thead><tr><th style="width:28%">Button</th><th>What it does</th><th style="width:28%">Use it to…</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Download report (HTML)</span></td><td>Saves a self-contained HTML file with the tables and figures inside. It opens without an internet connection in any browser.</td><td>Archive the analysis, send it, edit it in a word processor.</td></tr>
+      <tr><td><span class="ui">Print / save as PDF</span></td><td>Opens the report in a new window and launches the browser’s print dialogue. If the browser blocks pop-ups, the app warns: <span class="ui">Allow pop-ups to print</span>.</td><td>Produce a PDF for the supervisor, the committee or the records.</td></tr>
+      <tr><td><span class="ui">Copy methods paragraph</span></td><td>Copies the methods paragraph, as text, to the clipboard and confirms it with a green message.</td><td>Paste it into the manuscript or thesis.</td></tr>
+    </tbody>
+  </table>
+
+  <ol class="pasos">
+    <li>Press <span class="ui">Print / save as PDF</span>. A tab opens with the report and the print dialogue.</li>
+    <li>Under <b>Destination</b>, choose <b>Save as PDF</b>.</li>
+    <li>Leave the default margins: the report already sets 18 mm margins for A4 paper. If you print on US Letter, change it under <b>Paper size</b>.</li>
+    <li>Turn on <b>Background graphics</b> to keep the colour of the table headers and boxes.</li>
+    <li>Press <b>Save</b>.</li>
+  </ol>
+
+  <div class="caja dato">
+    <div class="dato-cifra">8 pages</div>
+    <div class="dato-txt"><div class="caja-t">The maize report in print</div>With the default sections, the report for the maize example fills 8 A4 pages: two of text and tables and six of figures, usually two per page. Figures are never split across pages, and each section heading stays on the same page as its first figure.</div>
+  </div>
+
+  <div class="caja regla">
+    <div class="caja-t"><span class="ico">✓</span>Decision rule · what to take from the report into a paper</div>
+    <table class="compacta">
+      <thead><tr><th style="width:36%">From the report…</th><th>into the manuscript…</th></tr></thead>
+      <tbody>
+        <tr><td>Methods paragraph</td><td>Into the materials and methods section, after adding what the app cannot know: location, soil, crop management, plot size and dates.</td></tr>
+        <tr><td>ANOVA table</td><td>Summarised: F with its degrees of freedom and P for each source, and the CV. The full table goes to the supplementary material.</td></tr>
+        <tr><td>Means with letters</td><td>Into a table in the paper, with the caption the report already provides (test, α, minimum difference).</td></tr>
+        <tr><td>Draft results</td><td>As a starting point; replace the column names with readable names and add the agronomic interpretation.</td></tr>
+        <tr><td>Figures</td><td>From the ZIP or the Block 6 gallery, at the journal’s resolution (chapter 7), not from the PDF.</td></tr>
+        <tr><td>Appendices and data</td><td>Into the supplementary material.</td></tr>
+      </tbody>
+    </table>
+    <p class="regla-pie">The figure captions in the report repeat the title of each figure; in the paper, rewrite them with the information in table 7.1.</p>
+  </div>
+
+  <!-- 8.4 -->
+  <h2 id="s8-4"><span class="num">8.4</span>The ZIP package</h2>
+  <p><span class="ui">Download full package (ZIP)</span> gathers into a single file everything needed to reproduce and publish the analysis. Before pressing it, choose how the figures are packaged: <span class="ui">PNG + SVG</span> (default), <span class="ui">TIFF + SVG</span>, <span class="ui">JPG + SVG</span> or <span class="ui">SVG only</span>, at 300, 600 or 900 dpi. While the package is being prepared, the button reads <span class="ui">Packing…</span>.</p>
+
+  <div class="arbol">Nitrogen_response_of_maize…_package.zip
+├── report.html                          the complete report
+├── README.txt                           what each folder holds
+├── data/
+│   └── rcbd_maize_nitrogen.csv          the data as loaded
+├── tables/
+│   ├── anova.csv                        the ANOVA table
+│   ├── means_Nitrogen_kg_ha.csv         means, SE and letters
+│   └── pairwise_Nitrogen_kg_ha.csv      pairwise comparisons
+└── figures/
+    ├── svg/                             each figure as a vector file
+    └── png/                             each figure at the chosen resolution</div>
+
+  <table class="compacta">
+    <caption><b>Table 8.4.</b> The package for the maize example with the figures of Blocks 3 to 6, as PNG + SVG at 300 dpi.</caption>
+    <thead><tr><th style="width:34%">Content</th><th class="c">Files</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td>Report and README</td><td class="c">2</td><td>The report takes up about 190 KB with all the figures.</td></tr>
+      <tr><td>Data</td><td class="c">1</td><td>CSV with comma separator and decimal point.</td></tr>
+      <tr><td>Tables</td><td class="c">3</td><td>ANOVA, plus means and comparisons for each treatment factor.</td></tr>
+      <tr><td>Figures</td><td class="c">42</td><td>21 figures, each as SVG and as PNG.</td></tr>
+      <tr><td><b>Total</b></td><td class="c"><b>48</b></td><td>5.8 MB. It took about 23 seconds to generate on a desktop computer.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="caja nota">
+    <div class="caja-t"><span class="ico">i</span>Note · the package as supplementary material</div>
+    <p>Many journals and data repositories require the analysis to be reproducible. The ZIP already makes that possible: the original data, the tables in an open format, the figures as vector graphics and a report that states the version and DOI of the software. Upload it as it is as supplementary material, or to a repository such as Zenodo together with the paper.</p>
+  </div>
+
+  <div class="caja ejemplo">
+    <div class="caja-t"><span class="ico">▸</span>Step by step · the maize report</div>
+    <ol class="pasos" style="margin-bottom:0">
+      <li>Work through Blocks 3, 4, 5 and 6 with the maize example so that their figures are drawn.</li>
+      <li>Open Block 7. In the details, type the title, authors, affiliation, trial, <code>t ha⁻¹</code> in <span class="ui">Response units</span> and the objective.</li>
+      <li>Under <span class="ui">Sections</span>, tick <span class="ui">Appendix: pairwise comparisons</span>. Under <span class="ui">Figures to include</span>, untick <span class="ui">Block 5</span> to avoid repeated figures.</li>
+      <li>Press <span class="ui">Build / refresh preview</span> and check the report in the preview.</li>
+      <li>Press <span class="ui">Copy methods paragraph</span> and paste it into your draft.</li>
+      <li>Press <span class="ui">Print / save as PDF</span> and save the PDF.</li>
+      <li>Choose <span class="ui">TIFF + SVG</span> and <span class="ui">600 dpi</span>, and press <span class="ui">Download full package (ZIP)</span>.</li>
+    </ol>
+  </div>
+
+  <div class="caja teoria">
+    <div class="caja-t"><span class="ico">θ</span>What you learned</div>
+    <p>The report faithfully mirrors what you did in the previous blocks: if an analysis is missing, it is missing from the report; if you edited a figure, it goes in edited. The methods paragraph describes only what was actually done and cites the version of the software. The PDF is for reading and archiving; the ZIP, for publishing and reproducing.</p>
+  </div>
+
+  <p style="margin-top:0.25in">With the analysis published, the cycle closes by planning the next trial. The Block 8 chapter presents the design generator: randomisation with a seed, the field layout, the field book for recording data and the calculation of the number of replicates.</p>
+</section>
+
+</body>
+</html>
