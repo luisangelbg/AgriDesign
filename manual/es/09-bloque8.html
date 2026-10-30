@@ -66,12 +66,12 @@
   <figure>
     <div class="marco" style="position:relative">
       <img src="../img/b8-opciones.png" alt="Opciones del generador de diseños">
-      <span class="marca" style="left:9.3%;top:18.5%">1</span>
-      <span class="marca" style="left:35.6%;top:18.5%">2</span>
-      <span class="marca" style="left:52.5%;top:18.5%">3</span>
-      <span class="marca" style="left:62%;top:18.5%">4</span>
-      <span class="marca" style="left:9.3%;top:34%">5</span>
-      <span class="marca" style="left:9.3%;top:56%">6</span>
+      <span class="marca" style="left:28.0%;top:11.0%">1</span>
+      <span class="marca" style="left:47.0%;top:12.1%">2</span>
+      <span class="marca" style="left:59.6%;top:17.3%">3</span>
+      <span class="marca" style="left:74.2%;top:12.1%">4</span>
+      <span class="marca" style="left:49.5%;top:23.1%">5</span>
+      <span class="marca" style="left:52.4%;top:60.9%">6</span>
     </div>
     <figcaption><b>Figura 9.2.</b> El generador preparado para un ensayo de cuatro dosis de nitrógeno en bloques completos al azar.</figcaption>
   </figure>
@@ -89,7 +89,7 @@
     <thead><tr><th style="width:30%">Diseño en la app</th><th style="width:22%">Datos que pide</th><th>Cómo se sortea</th></tr></thead>
     <tbody>
       <tr><td><span class="ui">Diseño completamente al azar</span></td><td>Tratamientos, repeticiones</td><td>Todas las parcelas se barajan juntas y se acomodan en un rectángulo.</td></tr>
-      <tr><td><span class="ui">DISEÑO DE BLOQUES COMPLETOS AL AZAR</span></td><td>Tratamientos, bloques</td><td>Un sorteo independiente dentro de cada bloque.</td></tr>
+      <tr><td><span class="ui">Diseño de bloques completos al azar (DBCA)</span></td><td>Tratamientos, bloques</td><td>Un sorteo independiente dentro de cada bloque.</td></tr>
       <tr><td><span class="ui">Cuadro latino</span></td><td>Tratamientos</td><td>Se construye un cuadrado cíclico y se barajan filas, columnas y la asignación de letras. Las repeticiones son tantas como tratamientos.</td></tr>
       <tr><td><span class="ui">Factorial (A × B [× C]) completamente al azar</span> · <span class="ui">en bloques al azar</span></td><td>Niveles de A, B y, opcionalmente, C; repeticiones</td><td>Las combinaciones se tratan como tratamientos y se sortean como en azar completo o en bloques.</td></tr>
       <tr><td><span class="ui">Parcelas divididas en bloques al azar</span></td><td>Niveles de A (parcela grande) y B (subparcela), bloques</td><td>Se sortea A dentro de cada bloque y B dentro de cada parcela grande, cada vez con un sorteo nuevo.</td></tr>
@@ -123,7 +123,7 @@
 
   <figure>
     <div class="marco"><img src="../img/b8-opciones-mas.png" alt="Opciones de acomodo, numeración y libreta"></div>
-    <figcaption><b>Figura 9.3.</b> Opciones de acomodo, numeración y libreta, con una columna de respuesta llamada <code>Yield_t_ha</code>.</figcaption>
+    <figcaption><b>Figura 9.3.</b> Opciones de acomodo, numeración y libreta, con una columna de respuesta llamada <code>Rendimiento</code> y, debajo, el botón que genera el acomodo y la libreta de campo.</figcaption>
   </figure>
 
   <table class="compacta">
@@ -326,7 +326,7 @@
       <li>En el Bloque 5 del ensayo anterior, anota el CV: 2.1&nbsp;% en el ejemplo de maíz, un valor inusualmente bajo; en un ensayo real de rendimiento sería de 10 a 15&nbsp;%.</li>
       <li>En <span class="ui">4 · Repeticiones y potencia</span> escribe el CV, la diferencia que importa (por ejemplo 10&nbsp;%), 5 tratamientos si agregarás una dosis y <span class="ui">En bloques</span>.</li>
       <li>Lee cuántas repeticiones hacen falta y compáralas con las que puedes pagar.</li>
-      <li>En <span class="ui">1 · Generar un acomodo aleatorizado</span> elige <span class="ui">DISEÑO DE BLOQUES COMPLETOS AL AZAR</span>, escribe las dosis, las repeticiones y una semilla nueva, y en las opciones pon el tamaño de parcela y <code>Yield_t_ha</code> como respuesta.</li>
+      <li>En <span class="ui">1 · Generar un acomodo aleatorizado</span> elige <span class="ui">Diseño de bloques completos al azar (DBCA)</span>, escribe las dosis, las repeticiones y una semilla nueva, y en las opciones pon el tamaño de parcela y <code>Yield_t_ha</code> como respuesta.</li>
       <li>Pulsa <span class="ui">Generar el acomodo y la libreta de campo</span>, revisa el esqueleto del ANOVA y la tarjeta <span class="ui">g.l. del error</span>.</li>
       <li>Abre la libreta como plantilla en el Bloque 2 para comprobarla, y descárgala en Excel junto con el croquis.</li>
     </ol>

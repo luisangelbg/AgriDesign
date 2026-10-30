@@ -60,7 +60,7 @@ b3-strip|1000|620|ex:0;step:3;hide:.fig-editor;hide:.fig-tools;scroll:%23fig3_st
 b3-perfiles|1000|620|ex:0;step:3;hide:.fig-editor;hide:.fig-tools;scroll:%23fig3_profiles,10
 b3-interaccion|1000|620|ex:3;step:3;hide:.fig-editor;hide:.fig-tools;scroll:%23fig3_interaction,10
 b3-correl|1000|660|ex:3;step:3;hide:.fig-editor;hide:.fig-tools;scroll:%23fig3_corr,10
-b3-editor|1100|960|ex:0;step:3;open:%23fig3_box%20details.fig-editor;scroll:%23fig3_box,10
+b3-editor|1100|1040|ex:0;step:3;open:%23fig3_box%20details.fig-editor;scroll:%23fig3_box,10
 
 # ---------- capítulo 5 · Bloque 4 ----------
 b4-teoria|1400|860|ex:0;step:4;scroll:%23panel-4%20.theory-card,16

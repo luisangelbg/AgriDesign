@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<title>PopGeneticsPro · Manual de usuario</title>
+<title>AgriDesign · Manual de usuario</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- documento generado por herramientas/unir-manual.pl: no se edita a mano; se corrigen las partes -->
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -18,8 +18,8 @@
   figure.chica figcaption { margin-left: 15%; margin-right: 15%; }
   figure.mini .marco { width: 56%; margin: 0 auto; }
   figure.mini figcaption { margin-left: 22%; margin-right: 22%; }
-  .par { display: grid; grid-template-columns: 1fr 1fr; gap: 0.16in; }
-  .par figure { margin: 0.08in 0 0.16in; }
+  .dos-figs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.16in; }
+  .dos-figs figure { margin: 0.08in 0 0.16in; }
   .arbol { font-family: Consolas, "Courier New", monospace; font-size: 9pt; line-height: 1.45; background: #f4f6f3; border-radius: 6px; padding: 0.1in 0.16in; margin: 0.08in 0 0.16in; white-space: pre; }
   .caja-t .sec-ref { margin-left: auto; letter-spacing: 0.08em; font-size: 7.4pt; opacity: 0.85; }
   .pre-t { font-family: var(--sans); font-size: 8.5pt; color: var(--gris); margin: 0.12in 0 0; letter-spacing: 0.02em; }
@@ -894,24 +894,25 @@
 
   <figure>
     <div class="marco" style="position:relative">
-      <img src="../img/app-figura.png" alt="Figura editable del Bloque 5 con su panel de edición abierto">
-      <span class="marca" style="left:41%;top:5%">1</span>
-      <span class="marca" style="left:10.4%;top:60%">2</span>
-      <span class="marca" style="left:20.4%;top:64.6%">3</span>
-      <span class="marca" style="left:71.6%;top:78%">4</span>
-      <span class="marca" style="left:19%;top:84.6%">5</span>
-      <span class="marca" style="left:56%;top:93.6%">6</span>
+      <img src="../img/app-figura.png" alt="Figura editable del Bloque 5 con sus botones de edición">
+      <span class="marca" style="left:30.6%;top:6.3%">1</span>
+      <span class="marca" style="left:52.9%;top:6.3%">2</span>
+      <span class="marca" style="left:69.8%;top:6.3%">3</span>
+      <span class="marca" style="left:54.4%;top:15.7%">4</span>
+      <span class="marca" style="left:67%;top:19.6%">5</span>
+      <span class="marca" style="left:61%;top:83%">6</span>
     </div>
-    <figcaption><b>Figura 1.5.</b> Una figura del Bloque 5 (rendimiento de maíz por dosis de nitrógeno, medias con letras de Tukey) con su panel de edición abierto.</figcaption>
+    <figcaption><b>Figura 1.5.</b> Una figura del Bloque 5 (rendimiento de maíz por dosis de nitrógeno, medias con letras de Tukey) con sus botones de edición.</figcaption>
   </figure>
   <ul class="leyenda-marcas">
-    <li><span class="n">1</span>La figura se redibuja al instante con cada cambio.</li>
-    <li><span class="n">2</span><span class="ui">Editar la figura</span> abre y cierra el panel de edición.</li>
-    <li><span class="n">3</span>Dos pestañas: contenido y colores, estilo y tipografía.</li>
-    <li><span class="n">4</span>Un color por nivel o un solo color; paleta, barras de error y estilo de barras o puntos.</li>
-    <li><span class="n">5</span>Letras, medias impresas, orden por magnitud y eje Y desde cero.</li>
-    <li><span class="n">6</span>Formato, resolución, fondo y descarga, con el tamaño resultante en píxeles y centímetros.</li>
+    <li><span class="n">1</span>El encabezado de la tarjeta nombra la respuesta y el factor de la figura.</li>
+    <li><span class="n">2</span>El botón ✎ (<span class="ui">Editar esta figura</span>) abre el editor de títulos, ejes, series, leyenda, textos y anotaciones; la figura se redibuja al instante con cada cambio.</li>
+    <li><span class="n">3</span>Abre la figura en el estudio de figuras, una pantalla dividida para editarla y exportarla.</li>
+    <li><span class="n">4</span>El subtítulo dice qué se grafica: media ± error estándar, con letras de la prueba de Tukey (Tukey–Kramer).</li>
+    <li><span class="n">5</span>Letras sobre las barras: las dosis que no comparten letra difieren; aquí las cuatro difieren.</li>
+    <li><span class="n">6</span>Debajo de la figura, el análisis de tendencia reparte la suma de cuadrados de tratamientos en contrastes de polinomios ortogonales (lineal, cuadrático…).</li>
   </ul>
+
 
   <h3>Términos de la interfaz</h3>
   <p>La app es bilingüe: el botón <span class="ui">EN&nbsp;|&nbsp;ES</span> de la barra superior cambia el idioma de toda la interfaz, y el de junto (☾ / ☀) cambia entre el modo claro y el oscuro. La elección se guarda para la próxima vez. Este manual describe la versión en español. Como las revistas científicas publican en inglés, esta tabla reúne los términos de los dos idiomas: sirve para pasar de un lado a otro y para nombrar los métodos al escribir el artículo.</p>
@@ -1619,12 +1620,12 @@ Total,,30.4,</pre>
   <figure>
     <div class="marco" style="position:relative">
       <img src="../img/b2-roles.png" alt="La leyenda de roles y la tabla de variables">
-      <span class="marca" style="left:10.8%;top:19%">1</span>
-      <span class="marca" style="left:21.2%;top:63%">2</span>
-      <span class="marca" style="left:35.4%;top:63%">3</span>
-      <span class="marca" style="left:44.4%;top:63%">4</span>
-      <span class="marca" style="left:79.6%;top:63%">5</span>
-      <span class="marca" style="left:88.2%;top:63%">6</span>
+      <span class="marca" style="left:62.0%;top:29.6%">1</span>
+      <span class="marca" style="left:21.0%;top:52.9%">2</span>
+      <span class="marca" style="left:39.9%;top:52.9%">3</span>
+      <span class="marca" style="left:68.2%;top:52.9%">4</span>
+      <span class="marca" style="left:81.2%;top:88.2%">5</span>
+      <span class="marca" style="left:94.8%;top:52.9%">6</span>
     </div>
     <figcaption><b>Figura 3.5.</b> Roles del ejemplo de maíz y nitrógeno.</figcaption>
   </figure>
@@ -1634,7 +1635,7 @@ Total,,30.4,</pre>
     <li><span class="n">3</span><span class="ui">Papel en el experimento</span>: el papel propuesto, editable. Las columnas de texto no pueden ser respuesta ni covariable.</li>
     <li><span class="n">4</span>Cuántos valores hay, cuántos faltan, cuántos niveles o valores distintos y un resumen: los niveles, o media, desviación estándar y rango.</li>
     <li><span class="n">5</span>Una distribución en miniatura: histograma para las respuestas, conteo por nivel para factores y bloques.</li>
-    <li><span class="n">6</span><span class="ui">Testigos</span>: las señales de alerta de la columna (tabla 3.7) o un <span class="ui">bien</span>.</li>
+    <li><span class="n">6</span><span class="ui">Revisiones</span>: las señales de alerta de la columna (tabla 3.7) o un <span class="ui">bien</span>.</li>
   </ul>
 
   <table>
@@ -1895,11 +1896,11 @@ Total,,30.4,</pre>
   <figure>
     <div class="marco" style="position:relative">
       <img src="../img/b3-controles.png" alt="Controles y tarjetas de resumen del Bloque 3">
-      <span class="marca" style="left:10.6%;top:22%">1</span>
-      <span class="marca" style="left:30.4%;top:22%">2</span>
-      <span class="marca" style="left:50%;top:22%">3</span>
-      <span class="marca" style="left:10.6%;top:52%">4</span>
-      <span class="marca" style="left:63%;top:52%">5</span>
+      <span class="marca" style="left:34.5%;top:15.2%">1</span>
+      <span class="marca" style="left:49.8%;top:15.2%">2</span>
+      <span class="marca" style="left:67.0%;top:15.2%">3</span>
+      <span class="marca" style="left:18.2%;top:53.6%">4</span>
+      <span class="marca" style="left:68.2%;top:43.2%">5</span>
     </div>
     <figcaption><b>Figura 4.2.</b> Controles y tarjetas de resumen para el ejemplo de maíz y nitrógeno.</figcaption>
   </figure>
@@ -1908,7 +1909,7 @@ Total,,30.4,</pre>
     <li><span class="n">2</span><span class="ui">Agrupar por</span>: ninguna (todas las observaciones), un factor, todas las combinaciones de tratamiento (cuando hay dos o más factores), el bloque, la fila o la columna.</li>
     <li><span class="n">3</span><span class="ui">Decimales</span>: decimales de la tabla y de las tarjetas. <span class="ui">Recalcular</span> fuerza el recálculo.</li>
     <li><span class="n">4</span>Ocho tarjetas con el resumen de toda la respuesta: observaciones, media con su error estándar, mediana con el rango intercuartílico, desviación estándar, CV, rango, asimetría y curtosis.</li>
-    <li><span class="n">5</span>El borde de color de una tarjeta es una lectura: verde, sin novedad; ámbar, atención (aquí el CV de 20.4&nbsp;% y la asimetría moderada); rojo, problema.</li>
+    <li><span class="n">5</span>El borde de color de una tarjeta es una lectura: verde, sin novedad; ámbar, atención (aquí el CV de 20.4&nbsp;%); rojo, problema.</li>
   </ul>
 
   <figure>
@@ -2070,12 +2071,12 @@ Total,,30.4,</pre>
   <figure>
     <div class="marco" style="position:relative">
       <img src="../img/b3-editor.png" alt="El editor de una figura del Bloque 3">
-      <span class="marca" style="left:10.4%;top:60.8%">1</span>
-      <span class="marca" style="left:22.6%;top:65%">2</span>
-      <span class="marca" style="left:72%;top:73%">3</span>
-      <span class="marca" style="left:26%;top:80%">4</span>
-      <span class="marca" style="left:10.4%;top:87%">5</span>
-      <span class="marca" style="left:56.6%;top:93.6%">6</span>
+      <span class="marca" style="left:39.3%;top:58.5%">1</span>
+      <span class="marca" style="left:36.4%;top:62.1%">2</span>
+      <span class="marca" style="left:85.8%;top:65.8%">3</span>
+      <span class="marca" style="left:89.5%;top:75.3%">4</span>
+      <span class="marca" style="left:65.9%;top:80.7%">5</span>
+      <span class="marca" style="left:7.4%;top:93.2%">6</span>
     </div>
     <figcaption><b>Figura 4.16.</b> El diagrama de caja con su editor abierto.</figcaption>
   </figure>
@@ -2187,12 +2188,12 @@ Total,,30.4,</pre>
   <figure>
     <div class="marco" style="position:relative">
       <img src="../img/b4-veredicto.png" alt="Controles, calificación y tarjetas del diagnóstico">
-      <span class="marca" style="left:9.3%;top:20%">1</span>
-      <span class="marca" style="left:29%;top:20%">2</span>
-      <span class="marca" style="left:48.6%;top:20%">3</span>
-      <span class="marca" style="left:9.3%;top:35%">4</span>
-      <span class="marca" style="left:9.3%;top:48%">5</span>
-      <span class="marca" style="left:9.3%;top:69%">6</span>
+      <span class="marca" style="left:34.5%;top:9.4%">1</span>
+      <span class="marca" style="left:53.9%;top:9.4%">2</span>
+      <span class="marca" style="left:69.2%;top:9.4%">3</span>
+      <span class="marca" style="left:55.8%;top:26.8%">4</span>
+      <span class="marca" style="left:19.8%;top:33.8%">5</span>
+      <span class="marca" style="left:57.1%;top:56.9%">6</span>
     </div>
     <figcaption><b>Figura 5.2.</b> Diagnóstico del ejemplo de maíz y nitrógeno.</figcaption>
   </figure>
@@ -2575,13 +2576,13 @@ Total,,30.4,</pre>
   <figure>
     <div class="marco" style="position:relative">
       <img src="../img/b5-opciones.png" alt="Opciones del análisis del Bloque 5">
-      <span class="marca" style="left:9.3%;top:22%">1</span>
-      <span class="marca" style="left:29%;top:22%">2</span>
-      <span class="marca" style="left:48.6%;top:22%">3</span>
-      <span class="marca" style="left:68.2%;top:22%">4</span>
-      <span class="marca" style="left:9.3%;top:49%">5</span>
-      <span class="marca" style="left:9.3%;top:79%">6</span>
-      <span class="marca" style="left:49.6%;top:73%">7</span>
+      <span class="marca" style="left:34.5%;top:12.1%">1</span>
+      <span class="marca" style="left:52.7%;top:12.1%">2</span>
+      <span class="marca" style="left:73.4%;top:12.1%">3</span>
+      <span class="marca" style="left:34.6%;top:32.3%">4</span>
+      <span class="marca" style="left:59.2%;top:32.3%">5</span>
+      <span class="marca" style="left:19.7%;top:56.7%">6</span>
+      <span class="marca" style="left:70%;top:54.2%">7</span>
     </div>
     <figcaption><b>Figura 6.2.</b> Opciones para el ejemplo de maíz y nitrógeno.</figcaption>
   </figure>
@@ -2993,7 +2994,7 @@ Total,,30.4,</pre>
   <h3>Cuatro presentaciones de las mismas medias</h3>
   <p>Para cada factor, la galería ofrece el mismo resultado en cuatro formas. No es redundancia: cada revista, cada número de repeticiones y cada público piden una distinta.</p>
 
-  <div class="par">
+  <div class="dos-figs">
     <figure>
       <div class="marco"><img src="../img/b6-bars.png" alt="Medias en barras"></div>
       <figcaption><b>Figura 7.3.</b> Barras con EE y letras: la presentación clásica, eje desde cero.</figcaption>
@@ -3012,7 +3013,7 @@ Total,,30.4,</pre>
     </figure>
   </div>
 
-  <div class="par">
+  <div class="dos-figs">
     <figure>
       <div class="marco"><img src="../img/b6-diff.png" alt="Diferencias con intervalos"></div>
       <figcaption><b>Figura 7.7.</b> Diferencias por pares con el intervalo de la prueba de Tukey. Un intervalo que cruza el cero no es significativo; el de 120 − 180 lo roza pero no lo cruza (−0.30, diferencia crítica 0.283).</figcaption>
@@ -3030,7 +3031,7 @@ Total,,30.4,</pre>
 
   <h3>Dos factores: interacción, barras agrupadas y mapa de calor</h3>
 
-  <div class="par">
+  <div class="dos-figs">
     <figure>
       <div class="marco"><img src="../img/b6-tom-int.png" alt="Gráfico de interacción del jitomate"></div>
       <figcaption><b>Figura 7.10.</b> Interacción variedad × fertilización con las letras de la fertilización dentro de cada variedad. La segunda orientación, fertilización en el eje X, se genera también.</figcaption>
@@ -3049,7 +3050,7 @@ Total,,30.4,</pre>
   <h3>Mapas de campo: el ensayo como estaba en el terreno</h3>
   <p>Cuando el diseño tiene fila y columna, la galería dibuja el croquis real del ensayo dos veces: coloreado por la respuesta y coloreado por el residual del modelo. El segundo es una herramienta de diagnóstico: si los residuales positivos se juntan en una esquina o en una franja, hay una tendencia espacial que el diseño no absorbió.</p>
 
-  <div class="par">
+  <div class="dos-figs">
     <figure>
       <div class="marco"><img src="../img/b6-campo.png" alt="Mapa de campo del rendimiento"></div>
       <figcaption><b>Figura 7.12.</b> Rendimiento del cuadro latino de trigo en su posición: el tratamiento C es el más oscuro en las cuatro filas.</figcaption>
@@ -3090,7 +3091,7 @@ Total,,30.4,</pre>
     </tbody>
   </table>
 
-  <div class="par">
+  <div class="dos-figs">
     <figure>
       <div class="marco"><img src="../img/b6-revista.png" alt="Estilo de revista"></div>
       <figcaption><b>Figura 7.14.</b> <span class="ui">Revista</span>: ejes negros, sin rejilla, leyenda con marco.</figcaption>
@@ -3541,12 +3542,12 @@ Total,,30.4,</pre>
   <figure>
     <div class="marco" style="position:relative">
       <img src="../img/b8-opciones.png" alt="Opciones del generador de diseños">
-      <span class="marca" style="left:9.3%;top:18.5%">1</span>
-      <span class="marca" style="left:35.6%;top:18.5%">2</span>
-      <span class="marca" style="left:52.5%;top:18.5%">3</span>
-      <span class="marca" style="left:62%;top:18.5%">4</span>
-      <span class="marca" style="left:9.3%;top:34%">5</span>
-      <span class="marca" style="left:9.3%;top:56%">6</span>
+      <span class="marca" style="left:28.0%;top:11.0%">1</span>
+      <span class="marca" style="left:47.0%;top:12.1%">2</span>
+      <span class="marca" style="left:59.6%;top:17.3%">3</span>
+      <span class="marca" style="left:74.2%;top:12.1%">4</span>
+      <span class="marca" style="left:49.5%;top:23.1%">5</span>
+      <span class="marca" style="left:52.4%;top:60.9%">6</span>
     </div>
     <figcaption><b>Figura 9.2.</b> El generador preparado para un ensayo de cuatro dosis de nitrógeno en bloques completos al azar.</figcaption>
   </figure>
@@ -3564,7 +3565,7 @@ Total,,30.4,</pre>
     <thead><tr><th style="width:30%">Diseño en la app</th><th style="width:22%">Datos que pide</th><th>Cómo se sortea</th></tr></thead>
     <tbody>
       <tr><td><span class="ui">Diseño completamente al azar</span></td><td>Tratamientos, repeticiones</td><td>Todas las parcelas se barajan juntas y se acomodan en un rectángulo.</td></tr>
-      <tr><td><span class="ui">DISEÑO DE BLOQUES COMPLETOS AL AZAR</span></td><td>Tratamientos, bloques</td><td>Un sorteo independiente dentro de cada bloque.</td></tr>
+      <tr><td><span class="ui">Diseño de bloques completos al azar (DBCA)</span></td><td>Tratamientos, bloques</td><td>Un sorteo independiente dentro de cada bloque.</td></tr>
       <tr><td><span class="ui">Cuadro latino</span></td><td>Tratamientos</td><td>Se construye un cuadrado cíclico y se barajan filas, columnas y la asignación de letras. Las repeticiones son tantas como tratamientos.</td></tr>
       <tr><td><span class="ui">Factorial (A × B [× C]) completamente al azar</span> · <span class="ui">en bloques al azar</span></td><td>Niveles de A, B y, opcionalmente, C; repeticiones</td><td>Las combinaciones se tratan como tratamientos y se sortean como en azar completo o en bloques.</td></tr>
       <tr><td><span class="ui">Parcelas divididas en bloques al azar</span></td><td>Niveles de A (parcela grande) y B (subparcela), bloques</td><td>Se sortea A dentro de cada bloque y B dentro de cada parcela grande, cada vez con un sorteo nuevo.</td></tr>
@@ -3598,7 +3599,7 @@ Total,,30.4,</pre>
 
   <figure>
     <div class="marco"><img src="../img/b8-opciones-mas.png" alt="Opciones de acomodo, numeración y libreta"></div>
-    <figcaption><b>Figura 9.3.</b> Opciones de acomodo, numeración y libreta, con una columna de respuesta llamada <code>Yield_t_ha</code>.</figcaption>
+    <figcaption><b>Figura 9.3.</b> Opciones de acomodo, numeración y libreta, con una columna de respuesta llamada <code>Rendimiento</code> y, debajo, el botón que genera el acomodo y la libreta de campo.</figcaption>
   </figure>
 
   <table class="compacta">
@@ -3801,7 +3802,7 @@ Total,,30.4,</pre>
       <li>En el Bloque 5 del ensayo anterior, anota el CV: 2.1&nbsp;% en el ejemplo de maíz, un valor inusualmente bajo; en un ensayo real de rendimiento sería de 10 a 15&nbsp;%.</li>
       <li>En <span class="ui">4 · Repeticiones y potencia</span> escribe el CV, la diferencia que importa (por ejemplo 10&nbsp;%), 5 tratamientos si agregarás una dosis y <span class="ui">En bloques</span>.</li>
       <li>Lee cuántas repeticiones hacen falta y compáralas con las que puedes pagar.</li>
-      <li>En <span class="ui">1 · Generar un acomodo aleatorizado</span> elige <span class="ui">DISEÑO DE BLOQUES COMPLETOS AL AZAR</span>, escribe las dosis, las repeticiones y una semilla nueva, y en las opciones pon el tamaño de parcela y <code>Yield_t_ha</code> como respuesta.</li>
+      <li>En <span class="ui">1 · Generar un acomodo aleatorizado</span> elige <span class="ui">Diseño de bloques completos al azar (DBCA)</span>, escribe las dosis, las repeticiones y una semilla nueva, y en las opciones pon el tamaño de parcela y <code>Yield_t_ha</code> como respuesta.</li>
       <li>Pulsa <span class="ui">Generar el acomodo y la libreta de campo</span>, revisa el esqueleto del ANOVA y la tarjeta <span class="ui">g.l. del error</span>.</li>
       <li>Abre la libreta como plantilla en el Bloque 2 para comprobarla, y descárgala en Excel junto con el croquis.</li>
     </ol>
